@@ -1,0 +1,40 @@
+---
+description: Always regenerate merged prompts and matrix Dart after editing tools sources
+globs: tools/**/*.txt, tools/**/*.json, tools/merge_*.py, tools/gen_*.py
+alwaysApply: false
+---
+
+# Prompt and matrix source merge
+
+**Never hand-edit generated artifacts.** Edit sources under `tools/`, then rebuild.
+
+## Generated outputs (do not edit by hand)
+
+| Source | Generated |
+|--------|-----------|
+| `tools/*.txt` (prompt stack) | `lib/core/constants/suno_system_prompt_v2_candidate.dart`, `elite_human_lyricist_directive.dart`, `server/app/suno_system_prompt_v2.py` |
+| `tools/drum_matrix.json` | `lib/core/utils/drum_matrix_data.dart` |
+| `tools/genre_fx_matrix.json` | `lib/core/utils/genre_fx_matrix_data.dart` |
+| `tools/live_instrument_matrix.json` | `lib/core/utils/live_instrument_matrix_data.dart` |
+| `tools/code_translation_matrix.json` | `lib/core/utils/code_translation_matrix_data.dart` |
+| `tools/genre_hardware_profiles_v2_1.json` | `lib/core/constants/genre_hardware_profiles_data.dart` |
+
+## Required after source edits
+
+Run from repo root:
+
+```bash
+python tools/merge_all.py
+```
+
+Or prompt-only: `python tools/merge_suno_v2_prompt.py`
+
+**Always run merge** at the end of any task that changes `tools/*.txt` or matrix `tools/*.json`. Do not leave generated Dart/Python out of sync with sources.
+
+## Edit order
+
+1. Change source file(s) in `tools/`
+2. Run `python tools/merge_all.py`
+3. Commit sources and generated files together when the user asks for a commit
+
+See `tools/README.md` and `docs/CREATION_PIPELINE.md` for merge order.

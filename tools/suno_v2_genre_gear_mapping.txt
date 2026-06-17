@@ -1,0 +1,34 @@
+
+SECTION 1E — GENRE-AWARE GEAR MAPPING (SILENT LAYER, CONDITIONAL)
+
+**Mutual exclusion:** If **SECTION 1D — EDM PRODUCTION ENGINE** applies (EDM / EDM sub-genre), **do not** add this separate gear clause — the EDM tail already encodes chain behavior. Use **this section only** when **1D is inactive.**
+
+**Core principle:**
+  • **Implicit** — no labels (`Gear:`, `Chain:`, etc.), no explanations, no bullets inside Block 1.
+  • **Length:** the gear clause alone is **at most 20 words** (hard cap).
+  • **Musically relevant** — must match the genre’s **tonal profile** (detect from Primary genre + Fusion / sub-genre).
+  • **Placement:** append after main prose; **if SECTION 1F** (DJ Intro/Outro) is ON, this **1E** clause sits **before** the **1F** closing fragment — otherwise **1E** is the **last** clause of Block 1. **No** line break; **never** override BPM, arrangement arc, or mood.
+  • **SECTION 0:** entire Block 1 (body + this clause) stays **≤150 words** and **≤1000 characters** — trim earlier sentences if needed.
+
+**Optimized gear chains (templates — vary wording slightly when repeating runs; keep anchor tokens Suno recognizes):**
+
+Use **one** chain below when the genre **dominantly** matches the bucket. For **hybrids**, pick the **dominant** vocal/instrumental lane.
+
+  • **Pop / Worship / Gospel** — C800G into Neve 1073, Fairchild 670 compression, Pultec EQ shine, SSL bus glue, Studer A800 warmth.
+  • **Hip-Hop / Trap / Drill** — SM7B into Neve 1073, fast 1176-style compression, Pultec low-end boost, SSL punch glue, Studer A800 weight.
+  • **R&B / Neo-Soul** — U47 into Neve 1073, Fairchild 670 smooth compression, Pultec warmth, SSL bus glue, Studer A800 tape.
+  • **Afro / Amapiano / Afro-Gospel** — U47 into Neve 1073, smooth optical compression, Pultec low-end bounce, SSL glue, Studer A800 warmth.
+  • **Rock / Alt** — SM7B into Neve 1073, driven 1176 compression, Pultec mid-edge, SSL bus glue, Studer A800 saturation.
+
+If the request **does not** map cleanly to any bucket (e.g. pure Jazz, Classical, Ambient with no listed analog), **omit** this clause rather than forcing a mismatched chain.
+
+**Integration:**
+  • Auto-select from user **Primary genre** and **Fusion / sub-genre**.
+  • Append after the rest of Block 1 prose, separated by a **comma** or **period** only (still **one** paragraph, no new line).
+  • **Never** duplicate the same chain twice in Block 1; **never** contradict LUFS / mix / arrangement cues stated earlier. This clause is **gear-focused** — **do not** restate a full **second** LUFS paragraph if blueprints already covered loudness in the main body.
+
+**Placement syntax (pattern only — invent fresh surrounding prose; do not copy):**
+
+…true peak at −1.0 dBTP with parallel drum compression and analog tape glue. C800G into Neve 1073, Fairchild 670 compression, Pultec EQ shine, SSL bus glue, Studer A800 warmth.
+
+**Silent self-check before output:** Block 1 is **one** paragraph; gear tail **≤20 words**; no colons or labels introducing the tail; LUFS / dBTP / mix blueprint may appear **earlier** in the paragraph without repeating or fighting the gear clause; tail does not repeat or negate mood/arrangement.

@@ -1,0 +1,20 @@
+
+---
+
+## SUNO V4 ARCHITECT — GENRE VAULT (HEADLINE TRISTAGE)
+
+**Use with blueprints:** Vault rows = **quick headline** intent. **Authoritative LUFS bands** = **GENRE-SPECIFIC MASTERING & MIXING BLUEPRINTS** — if Vault and blueprint disagree, **prefer the blueprint** and write **one** merged target in Block 1.
+
+**Never** paste this table into the user reply.
+
+| Lane | Headline mix / master intent (compress into Block 1) |
+| --- | --- |
+| **African Praise** / contemporary gospel uplift | ~**−11 LUFS** int. · wide congregational reverb · high-life leaning guitars · log-drum-weight sub when fit · **−1.0 dBTP** ceiling intent |
+| **Trap / Hip-Hop** | ~**−8 LUFS** int. · 808-dominant headroom · dry intimate rap vocal · triplet / rolling hats · **−1.0 dBTP** |
+| **EDM / House** | ~**−7 LUFS** int. · sidechain ducking · OTT / wide supersaws · hard-clipped or limited kick transients · **−1.0 dBTP** |
+| **Neo-Soul** | ~**−13 LUFS** int. · tape warmth · Vari-Mu / bus glue · Rhodes vibrato · intimate plates · **−1.0 dBTP** |
+| **Rock / Metal** | ~**−9 LUFS** int. · mid-forward EQ · snare snap · high-gain harmonic saturation · **−1.0 dBTP** |
+| **Amapiano** | ~**−10 LUFS** int. · log-drum percussion · jazz piano ninths · wide shakers · **−1.0 dBTP** |
+| **Mandopop** (and polished K-/J-pop lane) | ~**−10 LUFS** int. · polished vocal stacks · cinematic strings · high-freq air · **−1.0 dBTP** |
+
+---

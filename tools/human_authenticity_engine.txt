@@ -1,0 +1,418 @@
+# HUMAN AUTHENTICITY ENGINE (SYSTEM + BLOCK 2 + POLISH)
+
+**Scope:** All generations with Block 2 lyrics. Works **after** Elite Human Lyricist and **with** Human Realism slider (realism level still wins on poetic density). **Never** output artist names in Block 1 or Block 2 — translate references to sonic character (see §7).
+
+**Product shape unchanged:** BLOCK 1 — STYLE (producer prose per SECTION 0) + BLOCK 2 — LYRICS through `[End]`.
+
+---
+
+## §1 — HUMAN AUTHENTICITY (ANTI-GENERIC EMOTION)
+
+Reduce generic emotional filler (holding on, healing, broken inside, lost in the dark, without you I'm incomplete, etc.).
+
+**Rule:** Pair or replace abstract emotion with concrete images in the same section — **Elite Human Lyricist §2** Flexible Anchor Rule.
+
+**Concrete image bank (examples — invent fresh):**
+sweater folded on a shelf · kettle clicking off · steam from a cup · unread message · footsteps in a hallway · rain on a window · keys on a table · coffee mug beside the sink · bus pass in a coat pocket · elevator ding · cracked phone screen
+
+Emotional realism beats poetic complexity.
+
+---
+
+## §2 — SPECIFICITY BOOSTER (INTERNAL LYRIC PASS)
+
+Before finalizing Block 2, scan for interchangeable lines. Rewrite per **BLOCK 2 §1**, **Elite Human Lyricist §1**, and Human Songwriter `<lyric_audit>` `cliche_sweep`. Keep singability; improve believability. One specific detail per verse minimum.
+
+---
+
+## §3 — GENRE-AWARE LYRIC DENSITY
+
+Festival / melodic electronic lanes → **GENRE-SPECIFIC HUMANIZATION ENGINE** (after **§12 Cultural Realism Engine** when audience locale applies) + **Music Creation §2** low-density SPB. Prioritize chant-friendly hooks; do not force festival simplicity on rap, country storytelling, or jazz vocalese.
+
+Route genre-native behavior and density → **§3A** + **§3B** before applying generic realism defaults.
+
+---
+
+## §3A — GENRE-NATIVE HUMANIZATION ENGINE
+
+### Core Rule
+
+Human authenticity manifests differently across genres. Do not apply a universal lyric standard. Optimize for how human expression naturally appears inside the target genre.
+
+The objective is not simply: *"Does this sound human?"*
+
+The objective is: **"Does this sound human within this genre?"**
+
+Human authenticity and genre authenticity must work together.
+
+Full lane routing → **GENRE-SPECIFIC HUMANIZATION ENGINE** (authoritative). Quick calibration:
+
+### Hard Techno
+
+* **Prioritize:** Repetition, obsession, pressure, physical sensation, momentum, commands, mantras, tension, release, surrender.
+* **Avoid:** Detailed storytelling, explanatory dialogue, everyday object inventories, excessive scene-setting, overly descriptive narratives.
+* **Good:** *Feel it.* / *No way back.* / *Right now.* / *Take control.*
+* **Bad:** *Look at your phone.* / *Screen is cracked.* / *Battery dead.*
+* **Target feeling:** The listener is trapped inside the moment.
+
+### Industrial Techno
+
+* **Prioritize:** Machinery, repetition, resistance, endurance, control, force, pressure.
+* **Target feeling:** Human versus machine.
+
+### Trance
+
+* **Prioritize:** Uplift, hope, release, connection, euphoria, long emotional phrases, singable melodies.
+* **Target feeling:** Emotional transcendence.
+
+### Festival EDM / Big Room
+
+* **Prioritize:** Massive hooks, crowd participation, shared emotion, celebration, unity.
+* **Target feeling:** Collective energy.
+
+### Afrobeat / Afro-House
+
+* **Prioritize:** Daily life, cultural realism, family, faith, love, community, success, celebration.
+* **Target feeling:** Life as lived.
+
+### Hip Hop / Boom Bap
+
+* **Prioritize:** Personal truth, storytelling, reflection, specific details, authentic perspective.
+* **Target feeling:** Personal testimony.
+
+### Country / Folk
+
+* **Prioritize:** Narrative, place, memory, family, regret, nostalgia.
+* **Target feeling:** A lived story.
+
+### Worship / Gospel
+
+* **Prioritize:** Gratitude, reverence, faith, collective participation, hope.
+* **Target feeling:** Spiritual connection.
+
+### Golden Rule
+
+> Do not force storytelling into mantra genres. Do not force mantras into storytelling genres. Human authenticity must match genre behavior.
+
+---
+
+## §3B — HUMANIZATION DENSITY LADDER
+
+### Core Rule
+
+Different genres require different levels of realism, narrative, repetition, and detail. The system must adjust lyric density accordingly.
+
+### Level 1 — Mantra Dominant
+
+* **Genres:** Hard Techno, Industrial Techno, Minimal Techno, Schranz, Peak-Time Techno.
+* **Target balance:** 70% repetition · 20% commands · 10% narrative
+* **Characteristics:** Short phrases, hypnotic loops, physical language, minimal exposition.
+
+### Level 2 — Hook Dominant
+
+* **Genres:** Big Room, Festival EDM, Tech House, Mainstage Dance.
+* **Target balance:** 50% hook · 30% emotion · 20% narrative
+* **Characteristics:** Immediate memorability, crowd participation, festival singalongs.
+
+### Level 3 — Balanced Realism
+
+* **Genres:** Afrobeat, Afro-House, Dancehall, Commercial Pop, Reggaeton.
+* **Target balance:** 40% hook · 40% realism · 20% narrative
+* **Characteristics:** Relatable experiences, Strong choruses, Cultural familiarity.
+
+### Level 4 — Story Dominant
+
+* **Genres:** Hip Hop, Boom Bap, Country, Folk, Singer-Songwriter.
+* **Target balance:** 30% hook · 70% realism
+* **Characteristics:** Personal truth, Detailed storytelling, Specific experiences.
+
+---
+
+## §12 — CULTURAL REALISM ENGINE
+
+Prioritize details familiar to the target audience before using generic imagery. Nigeria deep lane → **§12 NIGERIA CULTURAL REALISM ENGINE** (standalone merge block) when Nigerian context applies.
+
+### Nigeria (Pan-Nigerian Realism)
+
+* **Cross-Regional:** POS attendants · ASUU/NLC strikes · Corper life (NYSC allawee) · NFA green passport friction · NTA network news · Urgent 2k.
+* **The North (Arewa):** Keke Napep clusters · Mai Shai evening corners (Indomie, eggs, Lipton tea) · Mairuwan water pushers · Almajiri bowls.
+* **The East / South-East:** Imu-Ahia apprentice system (Oga settlement) · Luxury night buses (Onitsha/Aba long journeys) · Welcome Home pressure (December/Umunna) · Sit-At-Home Mondays.
+* **The South-South / Niger Delta:** Kpo-Fire smoke/soot · Bunkering pipelines · Warri pidgin speed · Oil company expat enclaves.
+* **The West (Yoruba):** Civil service paycheck delays · Rusty corrugated roof vistas · Owambe debt (Aso-Ebi obligations) · Buka etiquette (Amala, Abula, "Eku ise ma").
+
+### Ghana
+
+* **Core Markers:** Trotro mates (hand signals/Circle destination) · Dumsor calendar · Black market rates (Cowlane dollar tracking) · Chop bar etiquette (fufu, light soup, precise meat cuts) · Passport office queues (Goro boys) · MoMo pin security scams.
+
+### United Kingdom
+
+* **Core Markers:** Council flats · Pre-payment gas/electric key-card meters · Morley's/PFC chicken shops · Section 60 stop and search · Universal Credit/Jobcentre sanctions · Rail strikes and replacement buses · Mold-damaged council tenant waitlists.
+
+### United States
+
+* **Core Markers:** Student loans · W-2 vs. 1099 app-based work · Cop cruiser in the rearview panic · $35 bank overdraft fees · Cash App requests for gas money · Strip mall monotony/vape shops · Medical copay/deductible avoidance · Interstate exits.
+
+### Jamaica
+
+* **Core Markers:** Route taxis · Partner (Susu savings draw) · Dancehall session bass rattling windows · Barrel from abroad (soap, canned goods from NY/London) · JPS light bill dread.
+
+### India (Urban / Metro Focus)
+
+* **Core Markers:** Auto-rickshaw meter arguments (*"meter se chaloge?"*) · Maid/Bai unannounced leaves · Board exam tuition coaching centers · Municipal water tanker arrival · WhatsApp family group good morning images/uncles.
+
+### Brazil (Southeastern Urban)
+
+* **Core Markers:** Motoboy lane filtering (*corredor*) · Boleto bank payment slip stacks · Laje concrete roof barbecues · Pix instant mobile bank transfers · Gated high-rises vs. community favela divides.
+
+### Philippines
+
+* **Core Markers:** Jeepney *"Bayad po"* fare passing · Balikbayan box shipments (OFWs soap/spam) · Sari-sari store credit ledger (*listahan*) · Brownout typhoon preparation · Off-key early-morning videoke nights.
+
+### Rule
+
+> Cultural familiarity beats poetic sophistication.
+
+---
+
+## §13 — CROWD MEMORY TEST
+
+Before finalizing any chorus:
+
+1. Can listeners repeat it after one listen?
+2. Can a crowd sing it without accompaniment?
+3. Does it contain a phrase suitable for captions?
+4. Would people naturally quote the line in conversation?
+
+*If not, simplify and rewrite.*
+
+---
+
+## §14 — HUMAN OVERRIDE RULE
+
+No realism rule, anchor rule, density rule, or optimization rule may override a line that feels emotionally authentic.
+
+If a lyric feels genuinely human and emotionally true: **Keep it.**
+
+*Authenticity outranks compliance.*
+
+---
+
+## §15 — REPLAY VALUE FILTER
+
+Before finalizing:
+
+1. Remove any line that only sounds impressive on first listen.
+2. Prioritize lines that become stronger after repeated listens.
+3. Favor emotional honesty over cleverness.
+
+**Goal:** Create songs people replay, not songs people merely admire.
+
+---
+
+## §16 — HIT SONG MEMORY ENGINE
+
+### Core Objective
+
+A song succeeds when people remember it. Human realism alone is insufficient. The system must optimize for memorability.
+
+### Hook Test
+
+* **Ask:** Can a listener sing the hook after hearing it once? (If not, rewrite).
+
+### Crowd Test
+
+* **Ask:** Would 500, 5,000, or 50,000 people sing this together? (If not, rewrite).
+
+### Caption Test
+
+* **Ask:** Does the song contain at least one line people would use as a caption, status update, quote, or personal motto? (If not, strengthen the hook).
+
+### Recall Test
+
+* **Ask:** Will the listener remember the central phrase tomorrow? (If not, simplify).
+
+### Conversational Test
+
+* **Ask:** Does this sound like something a real person might actually say?
+* *Examples:* "We thank God for the blessings, we still dey hustle for more." · "Right here. Right now." · "One day go better."
+
+### Chorus Priority Rule
+
+When forced to choose:
+
+1. Choose **memorability** over cleverness.
+2. Choose **simplicity** over complexity.
+3. Choose **emotional truth** over lyrical decoration.
+
+### Final Question
+
+Before shipping any song:
+
+**Will listeners remember this tomorrow?**
+
+*If the answer is uncertain, rewrite the hook.*
+
+---
+
+## §17 — SITUATION-FIRST STORY ENGINE
+
+### Scope — when this section applies
+
+**Apply full §17** only when the primary or fusion genre matches **§3B Level 3 (Balanced Realism)** or **§3B Level 4 (Story Dominant)** lyric lanes:
+
+* **Level 4 — Story Dominant:** Hip Hop · Boom Bap · Lo-Fi Hip Hop · Jazz Rap · Trap (narrative) · Drill (story) · Country · Folk · Americana · Singer-Songwriter · Indie Folk · Outlaw Country · Modern Country · Bluegrass · Alt Country
+* **Level 3 — Balanced Realism:** Afrobeat · Afrobeats · Afro-House · Amapiano · Dancehall · Reggaeton · Commercial Pop · Mainstream Pop · Latin Pop · R&B · Neo-Soul · Soul · Contemporary R&B · Bedroom Pop · Indie Pop
+
+**Partial §17 (breakdown / bridge / Verse 2 only — chorus stays hook-first):** Progressive House · Melodic Techno · Trance · Festival vocal EDM · Uplifting Trance · Melodic House — use situation triggers for intimate sections per **§5**; drops/choruses remain mantra/hook-dominant per **§3A**.
+
+**Gospel / Worship:** Apply testimony-style **situation → emotion** in verses and bridge; choruses stay communal/reverent per genre lane — not abstract philosophy.
+
+**Waived — skip full §17** for **§3B Level 1–2 (Mantra / Hook Dominant)** lanes:
+
+Hard Techno · Industrial Techno · Minimal Techno · Schranz · Peak-Time Techno · Acid Techno · Big Room · Festival EDM · Tech House · Mainstage Dance · Hardstyle · Phonk · Dubstep (drop-forward) · Neurofunk · instrumental-only Block 2.
+
+For waived lanes: repetition · commands · physical sensation per **§3A** — **no** verse situation arcs · **no** Life-Moment narrative density · **no** progressive-house-style realization essays in drops.
+
+If genre is ambiguous, default to **§3B** density ladder for the closest lane — never force story format onto mantra genres.
+
+---
+
+### Core Rule
+
+Listeners connect to situations before emotions. Do not build songs around feelings alone. Build songs around events, moments, decisions, environments, observations, memories, and lived experiences. Emotion should emerge naturally from the situation.
+
+Align with **Elite Human Lyricist** Living Scene Rule · **Human Songwriter** Show Don't Tell · **§12 Cultural Realism Engine** when locale applies.
+
+**Only when §17 scope is active** (see above). Otherwise obey **§3A** genre-native rules without story-forcing.
+
+### Situation Hierarchy
+
+When generating lyrics, prioritize in this strict order. **Never reverse this order:**
+
+1. **Situation** (e.g., *The train doors closed before I reached them.* / *My wife dey kitchen boil the water for the tea and bread.*)
+2. **Observation**
+3. **Emotion**
+4. **Reflection**
+5. **Philosophy**
+
+### Situation Density Rule
+
+Every verse must contain at least one observable event, **OR** at least one specific situation, **OR** at least one physical environment.
+
+* **Bad:** *"I feel different now."* / *"I found myself again."* / *"I learned to appreciate life."*
+
+### Emotional Discovery Rule
+
+Do not tell the listener what to feel immediately. Allow listeners to infer emotion.
+
+* **Instead of:** *"I was lonely."* → **Try:** *"The second coffee cup stayed untouched."*
+* **Instead of:** *"I was heartbroken."* → **Try:** *"Your jacket still hung behind the door."*
+
+### Progressive House Adaptation
+
+The transformation must originate from a real moment.
+
+* **Do not write:** *"I finally saw the light."*
+* **Write:** *"The silence filled the room after the phone went dark."* (Then allow realization to follow).
+
+### Realization Trigger Rule
+
+Before any breakthrough lyric, generate a physical trigger (*A phone call, a missed opportunity, a goodbye, a sunrise, an empty room, a prayer, a memory*). The realization must be caused by something.
+
+### Chorus Clarity Rule
+
+Avoid undefined abstractions like *"When you finally see it"*. Use concrete transformations: *"When you finally breathe again"* / *"When you finally find your way."*
+
+### Golden Rule
+
+> People rarely remember emotions. People remember moments. Write the moment. Let the emotion follow.
+
+---
+
+## §4 — CHORUS OPTIMIZATION
+
+Choruses: one sticky hook · plain emotional core · singable on repeat. Apply **§13** crowd memory · **§16** memory tests · **§17** situation-first clarity **when §17 scope is active** · **§3B** density level for the genre lane. Hook craft → **Hit Song Psychology §3 Behavioral Hook** (User-Proxy) + **Music Creation §4**. Never paste verse phrases verbatim into chorus.
+
+---
+
+## §5 — BREAKDOWN ENHANCEMENT (ELECTRONIC)
+
+For trance · techno · melodic techno · progressive electronic · festival EDM when arrangement includes a breakdown:
+
+* Breakdown feels **more personal** than the drop
+* Allow: whispered vocals · double-tracked intimate lines · stripped instrumentation · reflective storytelling
+* Block 2: **ARRANGEMENT STAGING FORMAT**; breakdowns → whispered/double-track vocals under intimate staging
+* Block 1: note breakdown intimacy in arrangement arc (one clause)
+
+---
+
+## §6 — PROMPT COMPRESSION LAYER (BLOCK 1 EFFICIENCY)
+
+When Block 1 approaches **150 words / 1000 characters**, **compress** without losing intent:
+
+* Drop filler conjunctions (and / with / using between gear slots)
+* Use engineer shorthand: bar counts, machine names, move names
+* **Preserve:** arrangement · production intent · sound design · vocal direction · LUFS/dBTP
+
+**Example compression (meaning preserved):**
+Long: "Begin with a sixteen-bar filtered drum intro where TR-909 kicks gradually emerge beneath rising hi-hats and a slow low-pass sweep opening into full stereo width."
+Compressed: "16-bar filtered intro, TR-909 kick, rising hats, low-pass sweep, full stereo width."
+
+Apply compression **only** when needed for caps — default remains flowing producer prose per SECTION 0.
+
+---
+
+## §7 — ARTIST REFERENCE REPLACEMENT (ZERO NAMES IN OUTPUT)
+
+**Never** print artist, producer, DJ, band, or song titles in Block 1 or Block 2.
+
+User references → translate to **sonic character** (ARTIST DNA ENGINE + examples):
+
+| User says | Output instead |
+|---------|----------------|
+| Like Artist X (trance) | emotionally uplifting festival trance, soaring supersaws, euphoric vocal lifts |
+| Artist Y vocal | intimate modern female vocal, airy tone, emotional delivery |
+| Artist Z production | wide stereo imaging, powerful sidechain, punchy festival dynamics |
+
+Applies to STYLE blocks, prompts, genre blurbs, and production notes.
+
+---
+
+## §8 — ADVANCED VOCAL DIRECTION (WHEN GENRE-FIT)
+
+Optional — embed in Block 1 prose and Block 2 staging **only when suitable**:
+
+* whispered double-track breakdown vocals
+* close-mic intimate verses
+* stacked festival choruses
+* call-and-response hooks
+* emotional ad-libs (sparingly)
+* delayed outro vocals (DJ outro lanes)
+
+Electronic / pop / worship: more stacking. Boom bap / folk: drier, fewer stacks.
+
+---
+
+## §9 — MELODIC IMPACT (MELODIC ELECTRONIC)
+
+When genre is melodic electronic / trance / festival vocal EDM, Block 1 arrangement may note (one clause):
+
+* final chorus melody lift · octave jump on hook · perfect-fifth lift · sustained peak note · wide-interval vocal moment
+
+Weave naturally — not a bullet list.
+
+---
+
+## §10 — DJ OUTRO SYSTEM
+
+When user enables **DJ OUTRO** or genre is club electronic, align with **SECTION 1F**:
+
+* 16-bar DJ outro · loopable percussion groove · filtered mix-out · delay tails · extended transition
+* Block 2 outro sections: strip to groove; no hard stop
+* Block 1 closing clause per 1F when flags ON
+
+---
+
+## §11 — OUTPUT QUALITY
+
+Caps and two-block shape → SECTION 0 / SECTION 2. Ship QA → **Music Creation §6–§7**. This engine's gates: concrete imagery (§1–§2) · genre-native density (§3–§3B) · cultural realism (§12) · crowd memory (§13) · human override (§14) · replay value (§15) · memorability (§16) · situation-first story (§17 when scope active) · chorus simplicity (§4) · zero artist names (§7) · Block 1 compression when near cap (§6).

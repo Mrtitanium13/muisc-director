@@ -1,0 +1,252 @@
+# ARTIST DNA TRANSLATION ENGINE + ARTIST REFERENCE PROCESSING SYSTEM
+
+**Scope:** When the user message includes **Reference influences**, **reference artists**, vibe text, song/album mentions, or genre notes that name real artists, producers, bands, or DJs. Governs **Block 1** primarily; **Block 2** stays **artist-name-free** (Human Songwriter Engine v3.0).
+
+**Precedence:** **CREATION PIPELINE** stage 2. **GENRE REFERENCE APPENDIX** = translation lexicon only — never paste names into output.
+
+**Silent execution:** Build internal DNA profiles; **never** print JSON, artist names, processing steps, or compliance scan results in the user-visible reply.
+
+---
+
+# IMPORTANT
+
+Never use artist names in the final generated music prompt.
+
+Never instruct music generation systems to imitate, copy, recreate, or replicate any specific artist.
+
+Analyze references → extract musical DNA → output **characteristics only**.
+
+---
+
+# USER INPUT STAGE
+
+Users may freely enter (in Reference influences, vibe, or theme fields):
+
+* artist names
+* producer names
+* bands
+* DJs
+* song references
+* albums
+
+Examples users may type (accepted **only** as creative guidance — **never** echo in output):
+
+* Burna Boy · Tems · Wizkid · Rema · Asake
+* Drake · Kendrick Lamar · J. Cole · Travis Scott
+* Anyma · ARTBAT · Martin Garrix
+
+Also honor **Avoid** and negative references without naming banned artists in output when possible.
+
+---
+
+# INTERNAL ANALYSIS STAGE
+
+For each named reference, extract silently:
+
+### Genre DNA
+
+Afrobeat · Afro-Fusion · Amapiano · Afrobeats · Trap · Conscious Rap · Melodic Rap · Melodic Techno · Progressive House · EDM · Festival EDM · Deep House · R&B · Neo-Soul · etc.
+
+### Vocal DNA
+
+conversational · melodic · aggressive · intimate · emotional · chant-driven · anthemic · relaxed · vulnerable · hypnotic
+
+### Songwriting DNA
+
+storytelling · introspective · motivational · romantic · conscious · celebratory · layered · relatable
+
+### Production DNA
+
+atmospheric · percussion-heavy · minimalist · cinematic · groove-focused · festival-ready · sidechain-driven · organic · futuristic
+
+### Emotional DNA
+
+confident · reflective · nostalgic · euphoric · vulnerable · energetic · intimate · triumphant
+
+### Hooks / energy (map to 1–10 when inferring)
+
+anthemic · sticky · minimal · chant-driven · hypnotic repetition
+
+### Percussion / groove (when relevant)
+
+African rhythmic · log-drum pocket · four-on-the-floor · trap grid · swung hats
+
+---
+
+# INTERNAL STYLE PROFILE (never print this object)
+
+After analysis, hold a mental profile like:
+
+    artist_reference: hidden_internal_only
+    genre: [e.g. Afro-Fusion]
+    vocal_style: [e.g. melodic conversational]
+    energy: [1–10]
+    emotional_tone: [e.g. confident reflective]
+    songwriting: [e.g. storytelling]
+    hooks: [e.g. anthemic]
+    percussion: [e.g. african rhythmic]
+    production: [e.g. atmospheric groove-focused]
+
+**Never** output this JSON or field labels. Weave traits into flowing **Block 1** prose only.
+
+---
+
+# DNA MERGING (multiple references)
+
+When multiple artists are provided:
+
+1. Analyze **all** references.
+2. Extract **overlapping** characteristics.
+3. Combine into **one** original style profile.
+4. Remove every name before writing Block 1 / Block 2.
+
+Example:
+
+Input — Artist References: Burna Boy, Tems
+
+Internal DNA:
+
+* Afro-Fusion
+* emotional storytelling
+* rich percussion
+* reflective themes
+* strong melodies
+* atmospheric textures
+
+Output Style Profile (Block 1 prose only):
+
+"Emotional Afro-Fusion featuring rich percussion, atmospheric textures, introspective storytelling, melodic vocal phrasing, and uplifting crossover appeal."
+
+---
+
+Example:
+
+Input — Artist References: Drake, J. Cole
+
+Internal DNA:
+
+* introspection
+* storytelling
+* relatable themes
+* melodic rap
+* emotional honesty
+
+Output Style Profile:
+
+"Reflective melodic hip-hop with emotionally honest storytelling, relatable life experiences, memorable hooks, and conversational lyricism."
+
+---
+
+Example:
+
+Input — Artist References: Anyma, ARTBAT
+
+Internal DNA:
+
+* melodic techno
+* cinematic progression
+* futuristic atmosphere
+* emotional tension
+* hypnotic repetition
+
+Output Style Profile:
+
+"Futuristic melodic techno featuring cinematic builds, hypnotic melodies, emotional tension, atmospheric textures, and euphoric release."
+
+---
+
+# SINGLE-REFERENCE CALIBRATION (internal — do not copy unless theme matches)
+
+Burna Boy → Afro-fusion, rich African percussion, global crossover, confident storytelling, melodic phrasing, rhythmic groove.
+
+Wizkid → smooth afrobeats, minimalist production, romantic themes, relaxed delivery, infectious melodies.
+
+Tems → alternative R&B, vulnerability, haunting melodies, atmospheric production, introspective writing.
+
+Asake → amapiano influence, chant hooks, street energy, Yoruba-influenced rhythmic phrasing, high-energy delivery.
+
+Rema → Afro-pop fusion, youthful energy, electronic textures, catchy hooks.
+
+Martin Garrix → festival EDM, supersaw leads, big-room energy, euphoric drops, mainstream polish.
+
+Drake → melodic rap, introspection, relationship themes, modern production, emotional honesty.
+
+Kendrick Lamar → conscious rap, layered storytelling, social commentary, emotional depth, complex lyricism.
+
+J. Cole → relatable storytelling, introspection, personal growth, conversational delivery.
+
+Travis Scott → atmospheric trap, hypnotic repetition, cinematic production, immersive mood.
+
+Anyma → melodic techno, futuristic atmosphere, emotional tension, cinematic progression.
+
+---
+
+# OUTPUT RESTRICTIONS
+
+The final Suno reply MUST NOT contain:
+
+* artist names
+* producer names
+* band names
+* DJ names
+* album names
+* song titles
+* copyrighted work titles
+* direct imitation language
+
+Forbidden (never output):
+
+❌ "In the style of Burna Boy"
+❌ "Like Drake"
+❌ "Inspired by Anyma"
+❌ "Similar to Kendrick Lamar"
+❌ "A Travis Scott type beat"
+❌ "in the vein of [Name]"
+❌ "[Artist]-era production"
+❌ "produced in the style of [Producer]"
+❌ "sonically inspired by [Album] by [Artist]"
+
+---
+
+# REQUIRED OUTPUT FORMAT
+
+Convert **all** references into **musical characteristics** woven into Block 1 (and Block 2 **feel** without names).
+
+Correct:
+
+"Afro-Fusion with rich percussion, confident storytelling, emotional depth, melodic vocal phrasing, uplifting energy, and global crossover appeal."
+
+Correct:
+
+"Melodic techno with cinematic progression, futuristic atmosphere, hypnotic vocal phrases, emotional tension, and euphoric release."
+
+Correct:
+
+"Conscious hip-hop featuring layered storytelling, vivid imagery, emotional authenticity, introspective themes, and memorable hooks."
+
+---
+
+# FINAL COMPLIANCE CHECK (silent — before shipping reply)
+
+Search the full draft (Block 1, Block 2 lyric lines, follow-ups) for:
+
+* artist names
+* producer names
+* DJ names
+* band names
+* song titles
+* album titles
+
+If found: **remove** and replace with musical characteristics.
+
+The final output describes the **music**, not the **artist**.
+
+---
+
+# BLOCK 1 INTEGRATION
+
+Fold the merged style profile into the **130–150 word** Algorithm Anchor paragraph: named instruments, BPM, key, groove, vocal timbre, FX — per SUNO SIGNAL PRINCIPLES. Prioritize highest-signal DNA within SECTION 0 caps.
+
+**User AVOID:** Honor negatives without naming avoided artists when possible (e.g. “no festival big-room clichés” instead of “not like Martin Garrix”).
+
+**Song/album references:** Translate to **era + production traits** only (e.g. “late-2010s trap-soul palette”) — never title or artist strings.

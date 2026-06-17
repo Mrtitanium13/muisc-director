@@ -1,0 +1,88 @@
+
+---
+
+## GENRE-SPECIFIC MASTERING & MIXING BLUEPRINTS (internal reference — REQUIRED IN BLOCK 1)
+
+**Mandatory use:** For **every** generation, map the user’s **primary genre / sub-genre** to the closest row below and fold that row’s **Mixing architecture**, **Instrumentation** (when it informs mix texture), and **Mastering** line into **Block 1** as **one flowing paragraph** alongside the Algorithm Anchor and sonic layers. Include explicitly: the **LUFS integration-range** guidance, the **dBTP true-peak / ceiling** value, and **at least one** named technique from the row (OTT, parallel compression, tape glue, sidechain pump, etc.). These targets steer Suno toward **high-quality, mastered-sounding** output — treat them as **first-class** Block 1 content, not an optional appendix.
+
+**Never** paste this whole section or these headings into the user reply. Stay within Block 1 word/character caps; compress phrasing if needed, **do not** drop LUFS + dBTP + one concrete move.
+
+### 1. Hip-Hop / Boom Bap / Trap / Drill
+
+**Mixing architecture:** Bottom-up balancing; 808 and kick established first to define headroom. Parallel compression on drums for "knock" while maintaining transients.
+
+**Instrumentation:** SP-1200 grit on drum chops. 808s with portamento slides and distortion at the clip threshold.
+
+**Mastering:** −7 to −9 LUFS (Trap) / −10 to −12 LUFS (Boom Bap). −1.0 dBTP ceiling. Dynamic EQ to control 808 fundamental peaks.
+
+### 2. EDM / House / Techno / Hardstyle
+
+**Mixing architecture:** Aggressive sidechain ducking on bass/synths triggered by kick. Mono-compatible low end (sub-200 Hz) with ultra-wide Haas effect on leads.
+
+**Instrumentation:** OTT (upward/downward) compression on synths. Hard-limited festival kicks with sharp transient punch.
+
+**Mastering:** −6 to −8 LUFS. −1.0 dBTP ceiling. Hard clipping before the final limiter to shave transients.
+
+### 3. R&B / Neo-Soul / Bedroom R&B
+
+**Mixing architecture:** Vocal intimacy and "breath" using warm plate reverbs. LCR panning for organic instrument separation.
+
+**Instrumentation:** Rhodes/piano with sustain-pedal wash and soft vibrato. Fretless bass with smooth harmonic bloom.
+
+**Mastering:** −12 to −14 LUFS. −1.0 dBTP ceiling. Analog tape emulation for high-end roll-off and harmonic glue.
+
+### 4. Rock / Metal / Punk
+
+**Mixing architecture:** Mid-forward EQ priority; subtractive EQ around 3 kHz to clear space for vocals. SSL-style bus compression (~2:1) for cohesive glue.
+
+**Instrumentation:** Drum room mic saturation for physical space. Guttural-friendly vowel shaping on vocals.
+
+**Mastering:** −8 to −10 LUFS (Metal) / ~−12 LUFS (Indie). −1.0 dBTP ceiling. Preserve snare snap through transparent limiting.
+
+### 5. Praise & Worship / Gospel
+
+**Mixing architecture:** Wide congregational mix with long natural reverb tails. Intimate verses swelling into anthemic, multi-layered choruses.
+
+**Instrumentation:** Clean chorus electric guitars and SATB choir harmonies. B3 organ with natural tonewheel grit.
+
+**Mastering:** −12 to −14 LUFS. −1.0 dBTP ceiling. Preserve high dynamic range for emotional builds.
+
+### 6. Mandopop / K-Pop / J-Pop
+
+**Mixing architecture:** Polished commercial pop prioritizing vocal clarity and melodic presence. Cinematic strings blended with pentatonic leads.
+
+**Instrumentation:** Clean programmed drums with woodblock or gong accents. Traditional textures (erhu, guzheng, etc.) woven into Western pop structures.
+
+**Mastering:** −8 to −10 LUFS. −1.0 dBTP ceiling. Bright high-frequency excitement without harsh sibilance.
+
+### 7. Amapiano / Afrobeats
+
+**Mixing architecture:** Deep log-drum grooves locked to round sub-bass. Shaker-heavy polyrhythmic percussion on the 16th-note grid.
+
+**Instrumentation:** Jazz piano with major-ninth chords and bright attack. Wide stereo room reverb on female vocal hooks.
+
+**Mastering:** −9 to −11 LUFS. −1.0 dBTP ceiling. Deep low-end warmth with a transparent top end.
+
+### 8. Vinahouse
+
+**Mixing architecture:** Bouncy four-on-the-floor kick with sharp offbeat accents. Fast 16th hi-hats and percussive cymbal rushes.
+
+**Instrumentation:** Đàn tranh zither or synthesized flute hooks. Pentatonic vocal chops with controlled sibilance and wide panning.
+
+**Mastering:** −7 to −9 LUFS. −1.0 dBTP ceiling. Maximum bright energy and hard-hitting drop dynamics.
+
+### 9. Reggae / Dancehall
+
+**Mixing architecture:** Riddim focus — bass and drum interplay as the primary structure. Dub-style delay throws on snare and vocals.
+
+**Instrumentation:** Bubble organ and muted guitar skanks. Emphasis on the third-beat kick/snare feel.
+
+**Mastering:** −10 to −12 LUFS. −1.0 dBTP ceiling. Warm, analog-style saturation.
+
+### 10. Jazz / Blues / Cinematic
+
+**Mixing architecture:** Minimal compression to preserve natural dynamics. Large hall or chamber reverb for cinematic depth.
+
+**Instrumentation:** Solo violin or cello with expressive vibrato. Acoustic rhythm sections with soft rim-clicks.
+
+**Mastering:** −14 to −16 LUFS. −1.0 dBTP ceiling. High fidelity; avoid clipping to preserve timbre.

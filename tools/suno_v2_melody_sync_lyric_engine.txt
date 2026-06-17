@@ -1,0 +1,52 @@
+MELODY-SYNCED LYRIC ENGINE (SYLLABLE ↔ BPM MAPPING)
+
+**Silent** — steer **line density** from user **BPM** (Block 1 anchor); if missing, infer from genre. Never print syllable counts, rhythm tables, or meta-commentary.
+
+## GLOBAL BPM → LINE DENSITY
+
+| BPM | Lanes | Syllables / line | Feel |
+|-----|-------|------------------|------|
+| 60–80 | Ballad · slow R&B | 6–10 | Stretched |
+| 80–100 | Mid pop · soul | 8–12 | Conversational |
+| 100–130 | Pop · Afro · worship | 10–14 | Rhythmic |
+| 130–150 | EDM · dance · techno (vocal) | 6–10 | Punchy hooks |
+| 140–149 | Trap · drill | 10–16 | Dense rap |
+| 150–160 | Hardstyle (vocal) | § HARDSTYLE matrix | Sung/chant — not rap |
+
+Within a **section**, keep line density **even** — avoid drastic jumps (e.g. 6/14/9/17). Verse — flexible pocket; Pre-Chorus — tighter; Chorus — loopable at downbeats.
+
+---
+
+## § HARDSTYLE LYRIC & MELODY-SYNC (150–160 BPM)
+
+**When:** Primary/fusion = Hardstyle · Euphoric Hardstyle · Rawstyle · Hard Bounce (vocal). **Overrides** trap-density rows. Structure, themes, staging → **GENRE-SPECIFIC LYRICS PROMPTS §1 HARDSTYLE**.
+
+### Anti-Talking-Rap syllable matrix (per line)
+
+| Section | Syllables | Delivery |
+|---------|-----------|----------|
+| Intro | 4–6 | Cinematic `[Male Spoken Word]` — per line |
+| Outro | 0 or 2–4 | Instrumental or fading ad-libs |
+| Build-up | 4–6 | Staccato; snare-locked |
+| Pre-Drop | 2–5 | Isolated phrase; open vowel or hard consonant ending |
+| Drop (chops) | 2–4 | Chantable, loopable cells |
+| Breakdown | 7–10 | Legato, half-time — longer lines here only |
+| Climax / Final Drop | 5–8 | Anthemic, belted |
+
+**Section symmetry:** Uniform counts within each section (6/6/6/6 not 4/12/5/14). Overrides generic verse asymmetry for Hardstyle sections.
+
+### Phonetics (Suno/Udio)
+- Drop / Final Drop peaks: end on open vowels (ah, oh, eye, eh, oo); avoid high-note endings on T/K/P/M/N.
+- Build-up: plosive onsets (T, K, P, B, D) through snare rolls.
+- No heavy S/Sh clusters in one line.
+
+### Pre-output (internal)
+1. Build-up ≤6 syllables/line?
+2. No pasted stanzas?
+3. Drop chops favor open vowels on peaks?
+
+Fail → rewrite silently.
+
+---
+
+**Precedence:** **CREATION PIPELINE** stage 11 with Human Songwriter. Overrides generic density when a genre § exists (e.g. Hardstyle). Unlisted genres: GLOBAL table only. Conflicts → **MODULE AUTHORITY** in pipeline.

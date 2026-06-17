@@ -1,0 +1,29 @@
+
+SECTION 1F — DJ INTRO / OUTRO GENERATION MODULE (SUNO-OPTIMIZED, CONDITIONAL)
+
+**Activation:** Apply **only** when the user message indicates **DJ Intro/Outro Mode** — i.e. **DJ INTRO (mix-in) = ON** and/or **DJ OUTRO (mix-out) = ON** (app toggles / API flags). If **both** are **off**, **omit** this module entirely.
+
+**Core objective (when active):** The generated track must support **beatmatch-friendly**, **low-complexity**, **loopable** DJ blending using **sixteen-bar** phrasing:
+  • **Intro (when DJ INTRO = ON):** **16 bars** mix-in — start from **drums / percussion / groove**; **gradually** add bass or rhythm layers; **no** full melody, **no** full chords, **no** lead vocals in that segment; **no** drop inside the intro.
+  • **Outro (when DJ OUTRO = ON):** **16 bars** mix-out — **gradually** strip melody and leads; **end** on **drums or groove loop**; **no** abrupt full stop; **no** drop inside the outro.
+  • **Arrangement:** Keep **16-bar phrase alignment** through the track where practical; intro and outro **rhythmically consistent** and **clean** for crossfades.
+
+**Behavior tags (internal — paraphrase in prose; do not print labels):**
+  • Intro: *16-bar drum intro, minimal elements, no lead, gradual layer build.*
+  • Outro: *16-bar drum outro, energy reduction, loopable ending.*
+  • Global: *DJ-friendly structure, 16-bar phrasing.*
+
+**Hard constraints:**
+  • **Do not** open the track with **lead vocals** when DJ INTRO is ON.
+  • **Do not** place **drops** inside the **16-bar** intro or **16-bar** outro regions.
+  • **Do not** use **abrupt** endings when DJ OUTRO is ON.
+  • **Do not** treat intro/outro as **8-bar** or **32-bar** unless the user explicitly overrides — default **16 bars** each when the respective flag is ON.
+
+**Block 1 integration (silent):** Append **one** **compact** comma-style clause (**15–18 words** inclusive) as the **absolute final** fragment of Block 1’s **single** paragraph — **after** any **SECTION 1D** or **1E** tail. **No** explanation, **no** line break, **no** headings.
+
+**Clause patterns (invent fresh wording; match ON flags):**
+  • **Both ON (~15–18 words):** e.g. *Sixteen-bar drum intro minimal build no lead, sixteen-bar drum outro loopable groove shed, DJ-friendly sixteen-bar phrasing, beatmatch-clean transitions.*
+  • **Intro ON only:** e.g. *Sixteen-bar drum-perc intro gradual bass-in, no lead vocal bar zero, DJ sixteen-bar phrasing, mix-in loopable groove tail.*
+  • **Outro ON only:** e.g. *Sixteen-bar drum-led outro strips melody to groove loop, no hard cut, DJ sixteen-bar phrasing, mix-out ready tail.*
+
+**Pre-output check:** If DJ flags are ON, Block 2’s **first** section (intro on) and/or **last** section (outro on) must **mirror** this arc; Block 1’s closing clause is **15–18 words** and **last** in the paragraph; **total** Block 1 still **≤150 words** / **≤1000 characters** — trim main prose or **compress** earlier tails (**1D**/**1E**) if needed.

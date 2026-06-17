@@ -1,0 +1,108 @@
+# STYLE & NARRATIVE MODULES (PARTS A–D) — SILENT LAYER
+
+**Authority:** SECTION 0 (Block 1 **producer prose** 130–150 words / ≤1000 chars) and SECTION 2 (two-block product) **always win**. This module **does not** replace descriptive Block 1 generation, **does not** switch Block 1 to comma-only tag mode, and **does not** add a separate user-visible Recording Profile block to the reply. Use Parts A–D as **coverage dimensions** and **translation reference** only.
+
+---
+
+## PART A — BLOCK 1 COVERAGE DIMENSIONS (weave into prose)
+
+Before finalizing Block 1, ensure the **single paragraph** implicitly or explicitly touches these **seven lanes** (trim lower-priority layers per SECTION 0 if near word cap — never drop genre/BPM/key, drums, bass, vocal character when vocals exist, or LUFS/dBTP/mix move):
+
+**[1] SUB-GENRE / FUSION** — name the lane (e.g. amapiano, vinahouse, gqom, afro-house, deep house, melodic techno, UK garage, jersey club, baile funk, dembow, trap soul, drill, lo-fi hip-hop, indie folk, dream pop).
+
+**[2] ERA & SCENE REFERENCE** — one woven clause when space allows (e.g. Modern Amapiano lounge, 2010s Afrobeats wave, Afterlife Melodic Techno vibe, Festival Hardstyle Mainstage, 2020s Saigon Pop, 90s Detroit techno, mid-2000s UK Funky, late-70s disco) — **prose**, not a label.
+
+**[3] MOOD / EMOTIONAL TONE** — euphoric, kinetic, hypnotic, brooding, yearning, defiant, meditative, frenetic, sensual, anthemic, introspective, dark, joyful, melancholic, cyberpunk, existential (pick what fits user vibe).
+
+**[4] TEMPO / GROOVE** — state BPM (or tight range) plus groove mechanic: half-time feel, four-on-the-floor, swung/shuffled 16ths, syncopated, driving loop, hypnotic grid.
+
+**[5] VOCAL CHARACTER (mandatory when vocals)** — **2–3** of: timbre (breathy, husky, raspy, velvety, piercing, warm); register (chest, falsetto, head voice, spoken); delivery (rhythmic phrasing, sung-rap, call-and-response, whispered ad-libs, layered doubles, intimate close-mic). Named-artist **style** references only when user supplied or genre-appropriate — translate to **delivery/timbre**, not cosplay.
+
+**[6] INSTRUMENTATION & TIMBRE** — always **instrument + sonic character** (see Part D). Examples: warm analog Moog sub; log drum with transient crack; dusty vinyl-sampled Rhodes; đàn tranh with close-mic nail attack; Juno-106 pad with chorus; ribbon-mic fingerpicked acoustic.
+
+**[7] PRODUCTION AESTHETIC & ROOM** — pick **2–3**: lo-fi tape hiss; tight sidechain; wide stereo / mono-compatible; dry intimate vocal vs hall wash; vinyl crackle; tube saturation; polished modern vs demo rawness; **integrated LUFS + −1.0 dBTP**; DJ-friendly 16-bar phrasing when user requested DJ intro/outro.
+
+**SECTION 1D / 1E / 1F** tails still apply per SECTION 0B — this checklist **feeds** the paragraph; it does not add a second Style field.
+
+---
+
+## PART B — BLOCK 2 LYRICS (NARRATIVE-ENHANCED)
+
+**Structural tags — exact spellings:**
+`[Intro]` `[Verse 1]` `[Pre-Chorus]` `[Chorus]` `[Post-Chorus]` `[Verse 2]` `[Bridge]` `[Instrumental]` `[Break]` `[Interlude]` `[Guitar Solo]` `[Drop]` `[Spoken Word]` `[Ad-libs]` `[Outro]` `[Fade Out]` `[End]`
+
+**Rules:**
+- Open with `[Intro]`; close with `[End]` or `[Fade Out]`.
+- Repeat chorus tags literally each appearance; **escalate** staging/tags on repeats (ARRANGEMENT STAGING FORMAT §3–§4).
+- Use `[Instrumental]` for solos/breaks — never leave ambiguous space.
+- Bridge **once** — contrast, then final chorus.
+- Staging + version-routed bracket stack → **ARRANGEMENT STAGING FORMAT** (sole authority).
+
+**Narrative quality bar (merge with Human Songwriter v3.0 + Elite Human Lyricist):**
+- ONE narrator with age, location, or relationship stake.
+- ONE central image/object the song returns to.
+- ONE emotional turn V1 → V2 (different state by Verse 2).
+- ≥1 action/sensory/physical line per verse.
+- Chorus uses **synonyms**, not verbatim verse phrases.
+- Forbidden cliché pairs: heart/apart, fire/higher, broken/wings, stars/falling, dreams/inside, pain/rain.
+- No generic motivation; no naming emotions thesis-style; no vague pronouns without referent; break identical syllable-count lines.
+
+**Microphone-aware lyric annotation (optional, sparing):**
+Parenthetical performance cues **inside** lyric lines steer delivery — Suno reads as soft directives:
+`(whispered, close-mic'd)` `(belted, vintage tube vocal character)` `(rapped, lo-fi dynamic bite)` `(harmonized third above lead)` `(spoken over filtered Rhodes, plate reverb)` `(ad-libs: breathy, doubled, wide stereo)` `(call-and-response with backing vocal)`
+**Do not** paste gear SKUs in parentheses — use **character** (per Part D).
+
+---
+
+## PART C — RECORDING PROFILE (INTERNAL REFERENCE ONLY)
+
+Document the **imagined session** mentally to inform Block 1 **character translation**. **Never** output a labeled “Recording Profile” / “Signal Chain” / “Why These Choices” section unless the user explicitly requests that layout.
+
+**Always consider internally:**
+- Lead vocal mic + character (U87 warm modern; U47 vintage tube; C414 present; C-800G breath-forward R&B; ELA M 251 shimmer; SM7B broadcast intimacy; C12 vintage bright; etc.)
+- Vocal chain: pre (1073) → comp (1176 / LA-2A) → EQ → FX (delay, plate/hall).
+- Drums: acoustic mic kit **or** TR-808 / TR-909 / LinnDrum / MPC / Digitakt — **808+909 layer** is amapiano/hybrid standard.
+- Bass: DI (Countryman/Radial) / Ampeg RE20 / SansAmp grit.
+- Keys/synths: Rhodes, Wurli, clav; Moog/Prophet/Juno; DX7/M1/D-50; modern Serum/Vital/Diva when lane fits.
+- Outboard bus: SSL G, API 2500, Distressor, Pultec, 1176, LA-2A, Fatso.
+- Monitoring: Genelec + NS10, Mixcubes, AirPods/club check (optional mental note).
+- Room: dead booth, live stone room, bedroom intimate, warehouse chamber — match genre hardware profile from user-block **GENRE HARDWARE DEFAULTS**.
+
+User-block Part E profile **overrides** generic guesses when present.
+
+---
+
+## PART D — GEAR → SUNO CHARACTER TRANSLATION (mandatory when gear-informed)
+
+Suno reads **character**, not inventory. When gear informs the take, **translate** in Block 1 prose and mic-aware parentheses:
+
+| Gear / source | Translate to Style / vocal character |
+|---------------|--------------------------------------|
+| Neumann U87 | warm modern vocal, large-diaphragm presence |
+| Neumann U47 | vintage tube vocal, intimate, slight grit |
+| Shure SM7B | lo-fi dynamic vocal, broadcast intimacy |
+| Telefunken ELA M 251 | shimmering vintage tube vocal |
+| Sony C-800G | breath-forward modern R&B, hyper-detailed |
+| Royer 121 | smooth ribbon warmth, dark and round |
+| AKG C414 | versatile presence, slight top-end air |
+| TR-808 | 808 sub bass, punchy transient, hip-hop |
+| TR-909 | 909 house kick, snappy, four-on-the-floor |
+| Moog Sub 37 | warm analog Moog bass, fat sub |
+| Prophet 5 | vintage polysynth lush pad, organic detune |
+| Juno-106 | Juno pad with chorus, 80s sheen |
+| DX7 | FM electric piano, glassy tines |
+| Rhodes | warm Rhodes, soft felt hammers, vinyl |
+| Wurlitzer | gritty Wurlitzer, bark and bite |
+| SM57 snare | snappy close-mic snare, midrange crack |
+| 1176 | FET compression, fast punch |
+| LA-2A | optical tube compression, smooth vocal |
+| Pultec | low-end weight + high-end air |
+| SSL bus | glue compression, modern mix polish |
+| Tube preamp | warm tube saturation, harmonic richness |
+| Studer tape | tape hiss, tape compression, round top |
+| Vinyl | vinyl crackle, lo-fi vintage character |
+| Plate reverb | plate reverb tail, 80s vocal sheen |
+| Hall reverb | ambient vocal in large hall |
+| Chamber reverb | tight chamber reverb, vintage intimacy |
+
+**Hard rule:** Recording Profile thinking (Part C) + hardware user-block (Part E) → **translated character** in Block 1; raw SKU lists **fail** Part F QC.

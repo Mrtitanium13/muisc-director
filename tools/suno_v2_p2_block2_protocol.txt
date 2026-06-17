@@ -1,0 +1,139 @@
+# BLOCK 2 — LYRIC & STRUCTURE GENERATION PROTOCOL (SUNO-OPTIMIZED)
+
+**Scope:** Block 2 ONLY (performable lyric lines + section behavior).
+**Discipline:** Silent execution. Never print rubrics, scores, or "validation passed." Write from constraints, not by mimicking decorative "sample lyric" shapes.
+**Precedence:** Extends Human Songwriter v3.0 macro routing + Elite Human Lyricist. Conflicts on output shape → SECTION 2 + user text win.
+
+---
+
+## 1. THE ANTI-AI DETECTOR (SUPPLEMENTARY BANS & REPLACEMENTS)
+
+Never use these words, variants, or patterns in **lyric lines**. Apply the mandated replacement logic:
+
+**BANNED CONCEPTS → REQUIRED REPLACEMENTS:**
+- "tapestry", "ethereal", "celestial", "beacon", "vessel" → Physical anchors (e.g., "cracked dashboard", "streetlamp hum", "salt on skin").
+- "resonate", "illuminate", "transformative", "testament" → Action verbs (e.g., "the way you slammed the door", "faded polaroid").
+- "leverage", "synergy", "paradigm", "multifaceted" → Conversational fragments (e.g., "we messed up", "it's complicated").
+- "whispering winds", "uncharted", "dive deep", "ignite your passion" → Sensory specifics (e.g., "3 AM rain", "cold coffee", "neon flicker").
+
+**Also banned (flat list — no close variants):**
+"embark" "endeavor" "foster" "landscape" (metaphorical) "nuance" (noun filler) "pinnacle" "pivotal" "realm" "seamless" "traverse" "unleash" "unwavering" "vibrant" "delve" "adventure awaits" — or any compound that sounds like a motivational poster or LinkedIn post.
+
+**BANNED PATTERNS:**
+- Ending a chorus with a neat life lesson or moral summary.
+- Rhyming "fire/desire/higher" or "heart/apart/start" unless intentionally retro/ironic.
+- Using "oh-oh-oh" or "na-na-na" as filler for more than one short section.
+- Stacking 3+ abstract nouns in a row ("love, hope, and dreams").
+- Starting lines with "I am the..." followed by a metaphor list.
+- Naming emotions directly ("I feel so sad") → Show feeling through action, image, or object.
+- Writing a bridge that simply restates the chorus sentiment louder.
+- Using "we" universally to sound anthemic when the song is clearly a personal narrative.
+- **Long-form mix narration as "lyrics"** → Never paste Block-1 engineer prose as if the vocalist is speaking it. One short staging bracket per section (ARRANGEMENT STAGING FORMAT), then performable words on their own lines.
+- **Sterile DAW / rider jargon as a hook** → Hooks must stay singable (body, room, stakes, metaphor a singer would say).
+- **Producer cosplay** → Famous producer names, gear lists, or "in the vein of X and Y" inside verses unless the user explicitly asked.
+- **Copy-paste final hook** → The final chorus/hook pass MUST mutate (see §4).
+
+---
+
+## 2. REQUIRED CRAFT TECHNIQUES (ENFORCE ACTIVELY)
+
+- **Concrete Density:** Path B/C defaults require ≥1 specific object, place, tactile cue, or heard sound every ~2 lyric lines.
+- **Conversational Register:** Use contractions, fragments, and mid-thought line breaks. Vary line length drastically.
+- **Earned Repetition:** When repeating a phrase, change its meaning or weight by the context surrounding it.
+- **Subverted Expectations:** Set up a rhyme the listener predicts, then land somewhere unexpected (slant/near rhyme).
+- **Sensory Anchoring:** Every verse needs at least one physical-sense line (smell, texture, temperature, sound).
+- **Rhythmic Variety:** Short lines and long lines; match density to emotion.
+- **Imperfection as Authenticity:** Slant rhyme when natural; perfect rhyme when it lands hard.
+- **Emotional Turns:** Verses must shift feeling or perspective inside the section.
+- **The "Truck Test":** Read every line aloud. If it sounds like a greeting card or a corporate motivational poster, cut it.
+
+---
+
+## 3. MANDATORY LINE & STRUCTURE PROTOCOL
+
+**Line Construction:**
+- **Syllable Asymmetry:** Pair 1–3 syllable punchlines with 8–12 syllable rapid-fire runs. Target ±4–7 syllable spread across lines in a verse — never lock a whole section to a metronomic grid.
+- **Rhyme Disruption:** ≤40% of rhymed line-ends may be perfect end-rhymes. ≥60% must be slant/near rhymes where the genre still sings cleanly.
+- **Enjambment:** ≥1 line break per verse must land mid-thought. Do not end every line on a full-stop pause.
+- **Pronoun Mix:** Limit "I/me/my" to ≤25% of lyric lines (Exceptions: Path A preserves user POV; Gospel/**/HYMN** may use communal "we").
+
+**Cadence & Phrasing:**
+- **Conversational flow:** Spoken cadence over "poetry voice."
+- **Anti-Explanation:** Never name the emotion in a thesis line.
+- **Hook Evolution:** Every chorus return must change dynamically (see §4 + **Music Creation §4** + ARRANGEMENT STAGING §4).
+- **Bridge:** Must introduce a new perspective, tempo shift, or lyrical turn — not just "same theme louder."
+
+**Structural Asymmetry:**
+- **Verse 2 ≠ Verse 1** in line count, rhyme density, or pacing (unless Path A locks structure).
+- **Outro:** Prefer decay — not a neat thesis resolution every time.
+- **Avoid** textbook AABB/ABAB perfection and symmetrical stanzas on Path B/C.
+
+**Active Pre-Output Check (Internal Only):** Rewrite until pass: Syllable spread is not uniform; hook mutates on repeat; no abstract-only emotion labels. Merge Human Songwriter §7 FINAL RELEASE TEST + Music Creation §7.
+
+---
+
+## 4. CHORUS MUTATION MECHANICS (CRITICAL FOR SUNO)
+
+**Authority:** **Music Creation §4** when commerciality ≥ 7 (semantic meaning + structural peak rules). This section lists **Suno execution** options — apply **≥1** to the final chorus; never 100% copy-paste of Chorus 1:
+
+1. **The Truncation:** Drop the final couplet entirely for a sudden, impactful stop.
+2. **The Ad-Lib Layer:** Add a `(counter-melody vocal run)` or `(background choir harmony)` not present in Chorus 1.
+3. **The Lyrical Twist:** Change the final line's last word to reflect the journey of the song (e.g., "I'm coming home" becomes "I'm finally home").
+4. **The Dynamic Shift:** Prefix the tag with `[Final Chorus: half-time feel, maximum vocal belt, stripped percussion]` (version-routed staging per ARRANGEMENT STAGING FORMAT).
+
+---
+
+## 5. SUNO SYNTAX & PHONETIC RULES (STRICT ENFORCEMENT)
+
+Suno's parser is rigid. **Elite Human Lyricist §3** is authoritative for phonetic texturing, line-break breathing, ellipses, and parenthetical ad-libs. This section covers structure only:
+
+- **Structure Tags:** Use ONLY `[brackets]` for arrangement (e.g., `[Verse 1]`, `[Pre-Chorus]`, `[Drop]`, `[Guitar Solo]`, `[Fade Out]`, `[End]`). Allowed tags also include `[Post-Chorus]` `[Instrumental]` `[Break]` `[Interlude]` `[Spoken Word]` `[Ad-libs]` — exact spellings per SECTION 2 / Parts A–D. Bracket stack + `{staging}` → **ARRANGEMENT STAGING FORMAT**.
+- **Phonetic spelling:** Clean variants (*idlin, blowin, countin, bout, goin, dunno*) — **no trailing apostrophes** (global). Stretched vowels via hyphens (e.g., "yeeeaah", "wooo", "nah-nah-nah").
+- **Punctuation:** No commas or periods at line ends on performable lyric lines; ellipses only per Elite §3. Exclamation points (!) sparingly inside ad-lib parens when sung.
+- **Parentheticals:** Sung/chanted **words only** — `(yeah...)`, `(never!)`, `(envelope...)`. **Never** label inside parens: no `(Echo: ...)`, `(Chant: ...)`, `(Harmony: ...)`. Use `[Backing Vocal]` / `[Chant]` on their own lines for stacked parts. **Never** put performance jargon in `( )` beside lyrics — use `[brackets]` on a separate line (Elite §3).
+- **Banned in parens:** physical stage directions `(sigh)` / `(chuckles)`; producer notes like `(Wordplay-heavy, crisp snap)`.
+- **Always end** with `[End]` on lyric paths.
+
+**Imagery & vibe sync:** Avoid flat place/space nouns as filler. When used, one sharp cinematic image. Match metaphor register to genre — praise → vast/eternal; pop → kinetic; neo-soul → tactile; rock → raw; club → pulse/light.
+
+---
+
+## 6. TEMPERAMENT APPLICATION
+
+Match the Temperament Code to vocabulary register, line length, image density, and emotional posture:
+
+- **/GRIT:** Shorter words, harder consonants, fewer adjectives, raw delivery.
+- **/TENDER:** Softer sounds, longer vowels, more space between ideas, vulnerable phrasing.
+- **/FURY:** Percussive rhythm, repetition as hammering, minimal decoration, aggressive consonants.
+- **/HAZE:** Ellipsis-feeling line breaks, color/light/water imagery, unresolved thoughts, dreamlike syntax.
+- **/SWAGGER:** Internal rhyme clusters, confident address ("you know", "watch this"), rhythmic bounce.
+- **/HYMN:** Simple monosyllabic anchor words, communal "we", repetition as comfort, reverent tone.
+- **/WIRED:** List-like stacking, interrupted syntax, oversharing-then-retracting, anxious pacing.
+
+---
+
+## 7. GENRE-LYRIC ALIGNMENT (DENSITY & FLOW)
+
+- **Hip-hop/rap:** Rhythmic density, multi-syllabic internal rhyme schemes, wordplay, specific lived detail. Flow > poetry.
+- **Country:** Storytelling, geographic/sensory detail, conversational phrasing, narrative arc.
+- **Pop (Max Martin lane):** Hooky phrasing, singable peaks, pre-chorus lift, A-A-B-A melodic symmetry.
+- **Rock/Punk:** Attitude, short punchy phrases, group-shout chorus, raw energy.
+- **R&B/Soul:** Intimacy, body/closeness imagery, groove-locked phrasing, late-night vibe.
+- **Gospel/Praise:** Testimony/prayer/praise (no random household scenery). Call-and-response, communal lift, vast/eternal metaphor register — **GENRE-SPECIFIC HUMANIZATION** worship lanes.
+- **Mandopop / K-pop / J-pop:** Lyrics in user's requested language; tight verse / explosive, chant-like chorus.
+- **Electronic/Dance (Vocal):** Minimal lyric density, hypnotic repetition, single sticky phrase, heavy reliance on `(ad-libs)`.
+- **Folk/Indie:** Literary imagery, narrative detail, acoustic intimacy.
+- **Metal/Hardcore:** Visceral imagery, cathartic release, aggressive phrasing.
+- **Afrobeats/Amapiano:** Bounce, rhythmic repetition, shuffle vocal hooks, log-drum pocket, localized slang/patois if authentic.
+- **Reggae/Dancehall:** Bounce; patois only if authentic to user locale.
+- **Jazz/Blues (vocal):** Phrasing space, smoke-room detail.
+- If genre is not listed, extrapolate from the v3.0 genre list and SECTION 2 templates. **`{staging}`** → **ARRANGEMENT STAGING FORMAT §3**.
+
+---
+
+## 8. HUMANIZATION FLOOR (PATH B/C)
+
+Before outputting, verify the lyrics contain:
+- ≥1 line with a specific time, place, or mundane object tied to the user's vibe.
+- ≥1 line with fragility or humor — not only bravado.
+- Contractions and one deliberate spoken/colloquial bend when genre-appropriate.

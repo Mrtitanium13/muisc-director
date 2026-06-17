@@ -1,0 +1,138 @@
+
+SECTION 1B — GENRE-SPECIFIC SYSTEM PRODUCTION VAULT (CANONICAL CATALOG)
+
+This vault contains the absolute, non-negotiable sonic layout and instrumentation protocols for every structural category in the application. When a style is initialized, you must strictly implement these exact instrument distributions, spatial placements, and engineering parameters.
+
+---
+
+### 1. EDM CATEGORY
+* **House / Deep House / Soulful House / Tech House / Future House:**
+  - *Sonic Core:* Steady electronic 4/4 kick drum loop · syncopated live fingerstyle or slap bassline · classic Rhodes piano chord stabs · analog Juno pad swells.
+  - *Acoustic Layering:* Silky deep house baritone saxophone loop structures and close-mic'd harmon-muted trumpet fills.
+  - *Percussion:* Warm hand-plucked studio congas and shakers tucked neatly into the mid-range pocket.
+  - *Engineering:* Strict sidechain compression ducking all tonal instruments and pads directly to the primary kick transient.
+* **Progressive House / Future Bass / Trance / Uplifting Trance:**
+  - *Sonic Core:* Euphoric detuned supersaw lead lines · rolling driving sub-bass groove · cinematic breakdown acoustic harp arpeggios and soaring concert flutes.
+  - *Engineering:* Hyper-wide stereo image placement, heavy sidechain pump automation, and deep trailing hall reverb matrices.
+* **Techno / Hard Techno / Acid Techno / Melodic Techno / Big Room Techno:**
+  - *Sonic Core:* Hypnotic industrial analog basslines · classic acid 303 squelch patterns · dark ambient polyphonic synth pads.
+  - *Acoustic Layering:* Hypnotic minor-scale staccato woodwinds and flutes processed with heavy stereo delays.
+  - *Engineering:* Distorted warehouse room saturation, aggressive low-pass filter sweep builds, and intense tape delays.
+* **Dubstep / Melodic Dubstep / Drum & Bass / Liquid DnB:**
+  - *Sonic Core:* Heavy half-time electronic snares (Dubstep) or rapid 174 BPM breaks (DnB) · aggressive modulated bass growls · sparkling crystalline mallet percussion layers and delicate pizzicato violins.
+  - *Engineering:* Multi-band compression maximizing high-transient crispness and low-end definition.
+* **Hardstyle / Rawstyle / Hard Bounce / EDM Bounce:**
+  - *Sonic Core:* Highly distorted overdriven hardstyle kick drums · epic soaring supersaw anthems · dramatic spoken manifestos.
+  - *Structure Rule:* Monosyllabic pre-kick voice anchors directly before the main breakdown climax. Purge all organic pop drums.
+* **Nu-Disco / Future Funk / Disco House:**
+  - *Sonic Core:* Retro LinnDrum grooves · funky Juno-106 bass walks · sizzling disco string sections executing high-octave runs and rapid staccato falls.
+  - *Acoustic Layering:* Blazing high-register trumpet section unisons and overdriven rock sax hits panned ultra-wide.
+* **Vinahouse / Amapiano-Vinahouse / Amapiano / Afro House / Gqom / UK Garage / Jersey Club:**
+  - *Sonic Core (Amapiano):* FM synthesized log-drum club bass · hypnotic continuous seed shakers · smooth improvisational alto saxophone lounge lines.
+  - *Amapiano Hybrid Rule:* Apply log-drum bass elements ONCE in Intro/Verse 1 only. Never use acoustic log drums. Vocal = rhythmic instrument at −60% density using bare `[Chant]` or `(yeah...)` markers.
+  - *Sonic Core (Vinahouse):* High-energy offbeat bounce grooves · traditional pentatonic đàn tranh string motifs · heavy sub-bass pulses.
+
+---
+
+### 2. HIP HOP CATEGORY
+* **Hip Hop / Boom Bap / Lo-Fi Hip Hop / Chillhop / Jazz Rap:**
+  - *Sonic Core:* Dusty vinyl-sampled acoustic drum breaks · deep Fender P-bass mono grooves · rhythmic vintage Rhodes piano stabs · filtered lo-fi violins, cellos, and acoustic double bass.
+  - *Acoustic Layering:* Vintage sampled soprano saxophone loops and close-mic'd muted jazz trumpets.
+  - *Percussion:* Muted studio congas, shaker loops, and organic rim scratches layered with tape hiss.
+  - *Engineering:* Warm tape saturation and subtle low-pass master bus filters during verses to emphasize lyrical cadences.
+* **Trap / Melodic Trap / Drill / UK Drill / NY Drill / Cloud Rap / Phonk:**
+  - *Sonic Core:* Dark minor-key grand piano loops · rapid rolling triplet hi-hat runs · heavy sliding 808 sub-bass glides.
+  - *Acoustic Layering:* Dark synthesized woodwinds and dramatic staccato orchestral string hits.
+  - *Engineering:* Clear out the 200Hz–500Hz mid-range completely to protect future rap vocal delivery and ensure sub-bass punch.
+* **Afro-Swing / Afro Rap:**
+  - *Sonic Core:* In-the-pocket Afro-fusion drum grooves · hybrid log-drum/808 bass foundations · bright picking electric guitar lines.
+  - *Wind/Brass:* Interlocking syncopated trumpet sections and smooth tenor sax accents.
+
+---
+
+### 3. R&B/SOUL CATEGORY
+* **R&B / Contemporary R&B / Neo-Soul / Soul / 90s R&B / New Jack Swing / Quiet Storm / Trap Soul / Funk:**
+  - *Sonic Core:* Silky Rhodes or Wurlitzer electric piano chord voicings · smooth fingerstyle Fender Jazz Bass or fretless bass glides · warm analog string machine backings.
+  - *Wind/Brass:* Velvet legato tenor saxophone melodies and intimate close-mic'd Harmon-muted trumpets.
+  - *Percussion:* Laid-back, behind-the-beat hand-plucked studio congas and soft finger shakers.
+  - *Engineering:* Warm natural mid-range saturation, intimate room acoustics, and extensive vocal harmonic stacking.
+
+---
+
+### 4. POP CATEGORY
+* **Pop / Mainstream Pop / Pop / Max Martin / Electropop / Dance Pop / Synth Pop / Hyperpop:**
+  - *Sonic Core:* Radio-sized melodic symmetry layout · tight punchy compressed drum kits · bright glossy strummed acoustic guitars · lush pop string pads.
+  - *Wind/Brass:* Polished modern synth-trumpet fanfares and anthemic brass chord builds.
+  - *Engineering:* Intensive high-frequency shelf for maximum brilliance, pristine wide stereo image, and maximum competitive loudness.
+* **Bedroom Pop / Indie Pop / K-Pop / J-Pop / C-Pop / Mandopop / Latin Pop:**
+  - *Sonic Core (Mandopop/C-Pop):* Emotional acoustic piano ballad foundations · cascading concert harp runs · weeping melancholic French horn accompaniment.
+  - *Sonic Core (K-Pop/J-Pop):* High-energy band-forward drum structures · dramatic structural pre-chorus lifts · massive multi-tracked group vocal stacks.
+
+---
+
+### 5. ROCK/METAL CATEGORY
+* **Rock / Indie Rock / Alt Rock / Alternative / Pop Punk / Emo / Punk / Hard Rock / Classic Rock / Metal / Heavy Metal / Metalcore / Death Metal:**
+  - *Sonic Core:* Double-tracked overdriven electric guitars · roaring tube-saturated electric bass lines · hard-hitting acoustic drum kits layered with crisp tambourines.
+  - *Wind/Brass:* Gritty overdriven tenor saxophone solos (Rock lanes) and aggressive rock trumpet unison hits.
+  - *Engineering:* Electric guitars must be hard-panned 100% left and right, leaving the center channel clear for driving mono lead vocals and drums.
+* **Post-Rock / Shoegaze / Dream Pop:**
+  - *Sonic Core:* Reverb-drenched shimmering guitar walls · breathy intimate vocal washes · soft warm orchestral cello backings.
+
+---
+
+### 6. COUNTRY CATEGORY
+* **Country / Modern Country / Outlaw Country / Americana / Folk-Rock / Bluegrass / Indie Folk / Singer-Songwriter:**
+  - *Sonic Core:* Crisp steel-string acoustic guitar strumming · weeping pedal steel guitar slides · organic acoustic violin/fiddle arrangements · clean upright double bass.
+  - *Percussion:* Natural wooden cajon thuds, soft hand shakers, and rustic tambourines.
+  - *Engineering:* Keep mixing fields highly organic, dry, and conversational. Ban all synthetic processing and electronic editing components.
+
+---
+
+### 7. GOSPEL CATEGORY
+* **Gospel / Traditional Gospel / Contemporary Gospel / Urban Gospel / Praise/Worship / Modern Worship / Worship Ballad / CCM / Pop Worship / Southern Gospel / Country Gospel / Afro-Gospel:**
+  - *Sonic Core:* Contemporary grand piano chords · soaring ambient electric guitar swells with stereo delay loops · lush legato orchestral string pads · majestic sustained French horn swells for deep background warmth.
+  - *Percussion:* Purely acoustic hand-percussion, egg shakers, and warm studio conga pocket accents.
+  - *Vocal Isolation Directive:* Trigger pristine multi-tracked vocal overlays. Unless Arena Mode is explicitly set, use the **STUDIO-ISOLATION DIRECTIVE** to completely purge crowd artifacts (`[Church]`, `[Congregational]`) from early tracks.
+  - *Engineering:* Zero club elements. Use analog VCA master bus compression and smooth Hammond organ swells.
+
+---
+
+### 8. JAZZ/BLUES CATEGORY
+* **Jazz / Vocal Jazz / Bebop / Smooth Jazz / Jazz Fusion / Fusion / Nu-Jazz / Acid Jazz / Big Band / Blues / Chicago Blues / Delta Blues:**
+  - *Sonic Core:* Walking acoustic double bass lines · intimate grand piano jazz extensions · authentic drum brush patterns on a crisp ride cymbal.
+  - *Wind/Brass:* Master-tier expressive tenor saxophone improvisations and smoky, close-mic'd muted trumpets.
+  - *Percussion:* Authentic syncopated hand-drum conga grooves.
+  - *Engineering:* Mix for a raw, open, uncompressed live venue room tone.
+
+---
+
+### 9. LATIN CATEGORY
+* **Reggaeton / Dembow / Latin Pop / Bachata / Salsa / Bossa Nova / Cumbia / Vallenato / Brazilian Funk / Sertanejo / Forró:**
+  - *Sonic Core:* Crisp syncopated "Dem Bow" drum architectures, nylon-string classical acoustic guitars, and deep sub-bass pulses.
+  - *Wind/Brass:* Piercing, high-energy trumpet lines and staccato horn unisons.
+  - *Percussion:* Non-stop energetic conga rolls, bongos, metal guiro scrapes, and timbale rim shots.
+
+---
+
+### 10. REGGAE/DUB CATEGORY
+* **Reggae / Roots Reggae / Dub / Dancehall / Soca:**
+  - *Sonic Core:* Heavily syncopated off-beat electric guitar chops (skanks) · deep bubble-style sub-bass lines · space-echoed snare drops.
+  - *Wind/Brass:* Bright staccato brass horn sections (saxophone and trumpet unisons) performing hook melodies.
+  - *Percussion:* Earthy acoustic congas and heavy metal shakers.
+
+---
+
+### 11. AFRO/WORLD CATEGORY
+* **Afrobeats / Highlife / Fuji / Gqom / Amapiano / City Pop / Bollywood / Filmi / Punjabi / Bhangra / Folk / Middle Eastern:**
+  - *Sonic Core (Afrobeats/Highlife):* Syncopated traditional talking drums · crisp highlife guitar picking patterns · continuous traditional percussion grooves.
+  - *Wind/Brass Split:* Blazing tenor saxophone lines command the mid-register modal riffs; crisp trumpets execute tight high-register staccato accent stabs. Horns must pan wide left and right to keep the center channel open.
+
+---
+
+### 12. CINEMATIC CATEGORY
+* **Orchestral / Film Score / Cinematic / Trailer / Ambient / Dark Ambient / Ambient Score / Vaporwave / New Wave / Industrial / EBM / Synthwave / Retrowave:**
+  - *Sonic Core:* Massive symphonic violin, viola, and cello sections · soaring concert flutes · piercing lyrical oboes · majestic symphonic French horn swells · powerful fortissimo bass trombone slides.
+  - *Percussion:* Thunderous timpani drum rolls, concert snare rolls, and massive low-frequency symphonic gongs/tam-tams with expansive reverb trails.
+  - *Engineering:* Ultra-wide stereophonic stage layout with deep convolution hall parameters.
+
+**Frontend alignment:** Match the user's primary genre to the category above (same taxonomy as `GenreData.subGenresByCategory` and `quickPickRows`). Example: **Praise/Worship** → GOSPEL CATEGORY — zero club/EDM mix terms unless the user explicitly requests fusion.

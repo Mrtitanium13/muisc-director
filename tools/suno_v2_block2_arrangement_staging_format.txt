@@ -1,0 +1,203 @@
+# BLOCK 2 — ARRANGEMENT STAGING FORMAT & LEXICON (VERSION-ROUTED)
+
+**Silent** — output staging brackets inside Block 2 only; never explain this module.
+
+**Authority for Block 2 bracket stack:** version-routed `{staging}` placement (§2) · staging content & lexicon (§3) · dynamic tag/staging escalation (§4) · QA (§5). Section order → `suno_v2_block2_genre_structures.txt`.
+
+Never output the literal placeholder `[{staging}]` — replace with a real invent-fresh staging bracket.
+
+---
+
+## 1. CANONICAL STAGING LINE SHAPE
+
+**Formula:** `[bar-count or section role, sonic element, sonic element, mix/energy cue]`
+
+- **One bracket**, comma-separated, **≤120 characters**
+- **Bar counts:** `16-bar DJ intro`, `8-bar snare build`
+- **Sonic elements:** `TR-909 kick`, `808 sub`, `supersaw`, `log drum bassline`, `Rhodes piano`, `reverse bass`, `FM pluck`, `đàn tranh`
+- **Mix/energy:** `low-pass sweep`, `sidechain pump`, `filter open`, `plate reverb tail`
+- **No** prose paragraphs · **no** gear SKU lists · **no** artist names · **invent fresh** per song
+
+**Example:** `[16-bar filtered kick intro, rising hats, low-pass sweep]`
+
+### INSTRUMENTAL STAGING CONSTRAINT (v5.5 SPEC)
+
+Section tags for **instrumental-only** lanes (`[Instrumental Break]`, `[Instrumental Interlude]`, `[Log Drum Break]`, `[Build]`, `[Drop]` when lyric-free) must **never** contain descriptive **verb phrases**, action imperatives, or full sentences inside the bracket body.
+
+- **Banned openers / patterns:** `Feature...`, `Features...`, `Play a...`, `Playing...`, `Let the...`, `Adding...`, `Introduce...`, or any instruction that reads like prose directed at a musician.
+- **Why:** Suno treats dense bracket text as a continuous mix layer; sentence-like staging triggers robotic spoken artifacts, vocalizes bracket words, or skips the break entirely.
+- **Required shape:** One bracket · **comma-separated noun/texture tokens only** · ≤120 characters · mix-bus or processing types welcome for gospel/pop hybrid polish.
+
+| Wrong (sentence / verb leak) | Right (dense engineering tag) |
+|------------------------------|-------------------------------|
+| `[Instrumental Break: Feature bright strummed rhythm, tight pocket Acoustic Guitar, wide stereo, glossy pop sheen]` | `[Instrumental Break: Strummed Acoustic Arpeggios, Tight Rhythmic Pocket, Stereo Expansion, Glossy Pop Saturation, Dynamic Lift]` |
+| `[Instrumental: Play a warm piano solo with reverb]` | `[Instrumental: Warm Piano Solo, Hall Reverb Tail, Stereo Width]` |
+
+**v5.5 instrumental break stack:** Section header on its own line → **one** instrumental staging bracket (dense tokens) → **no** lyric paragraphs (≤3-word sung ad-libs OK on separate lines).
+
+**Fourth-wall note:** Texture nouns in **staging brackets** (e.g. `Strummed Acoustic Arpeggios`, `Live Drum Kit`) are valid — **Elite Human Lyricist Fourth-Wall Law** applies to **performable lyric lines only**, not these engineering tags.
+
+### TRADITIONAL GOSPEL / PRAISE & WORSHIP ARCHITECTURE
+
+When **primary genre + fusion** map to Gospel · Praise & Worship · CCM · Southern Gospel · Afro-Gospel (not Afrobeat club lanes), staging brackets must maintain **studio-clean worship sonic purity** — never inherit EDM/club/electronic mix vocabulary and never simulate live congregation/crowd ambience (**STUDIO-ISOLATION DIRECTIVE**).
+
+**Banned in gospel staging:** `sidechain pump`, `sidechain slam`, `supersaw`, `filter sweep`, `low-pass sweep`, `mix-out groove`, `DJ intro`, `DJ outro`, `16-bar filtered kick`, `riser`, `sub bloom`, `hat rolls`, `loop` (as club grid language), `EDM drop`, `club pocket` (unless Afro-Gospel lane explicitly allows Afro club hybrid — default Traditional Praise = **ban**).
+
+**Authentic replacements:**
+
+| Club / EDM leak | Gospel / sanctuary replacement |
+|-----------------|--------------------------------|
+| `sidechain pump` / `heavier sidechain` | `Analog VCA glue, warm dynamic leveling` |
+| `DJ intro` / filtered kick intro | `Dead-room isolation, pristine studio environment, close-mic vocal tracking` |
+| `DJ outro` / `mix-out groove` | `Sustained studio band resolution, clean multi-track fade, trailing organ decay` |
+| `wide stacks` (generic pop) | `Isolated multi-tracked vocal doubles, Tight double-tracked vocal stacks` |
+| `filter sweep` / `riser` | `natural room decay`, `warm Hammond swell`, `emotional dynamic dip` |
+
+**Gospel lexicon priority:** Hammond B3 organ swell · tight studio drum backbeat · acoustic guitar strum · grand piano · tambourine lift · horn section stab · lush sustained studio strings · hall verb · praise-break groove · belted lead · isolated multi-tracked vocal doubles · multi-tracked vocal overlays.
+
+**Cross-ref:** **GOSPEL / WORSHIP AUTHENTICITY ENGINE** · praise/worship drum matrix profile (no trap grids) · **STUDIO-ISOLATION DIRECTIVE** (below) overrides congregational/live crowd triggers in Intro/early tags.
+
+### THE STUDIO-ISOLATION DIRECTIVE (ANTI-CROWD CHEERS)
+
+**Default** when user `audio_environment_mode` is `studio_isolated` (or unset). **Fully overridden** by **LAYER 2.8: LIVE PERFORMANCE ARENA MODE** when user activates Live Performance Mode.
+
+To prevent Suno from generating background crowd noise, live applause, or sanctuary ambient chatter at the start of the track, you must strictly enforce clean studio conditions:
+
+1. **BAN LIVE EVENT TERMINOLOGY:** Completely forbid the words `Congregational`, `Live`, `Church`, `Sanctuary`, `Communal`, or `SATB Choir Stack` inside the `[Intro]` or early section tags.
+2. **MANDATE COLD STUDIO TAGS:** The `[Intro]` must explicitly start with acoustic isolation and engineering cues. Always utilize phrases like: `[Dead-room isolation, Pristine studio environment, Zero audience noise, Close-mic vocal tracking]`.
+3. **VOCAL LAYERING WORKAROUND:** Instead of asking for a `Choir` or `Congregation` which triggers live crowd noise, use isolated multi-tracking terms only: `[Isolated multi-tracked vocal doubles, Tight double-tracked vocal stacks, Multi-tracked vocal overlays]`. **Never** write `Studio Harmonic Backing`, `Harmonic Backing`, or `Harmonic Overlays` — Suno associates those with group gospel/room reflections.
+4. **ANTI-TAPE-NOISE (INTRO / VERSE 1 / OUTRO):** Ban `tape hiss`, `subtle tape hiss`, `vinyl crackle`, and `room noise` in cold-open staging brackets — Suno may vocalize static at track start. Use pure acoustic spatial tags: `dry acoustic room`, `focused studio room`, `sparse fingerpicked acoustic guitar`, `dead-room silence`.
+
+**Scope:** Intro · Verse 1 · Outro · all Chorus/Final Chorus brackets — **never** `SATB Choir Stack`, `congregational width`, `Harmonic Backing`, or `live-sanctuary` ambience tokens in any bracket.
+
+**Gospel lane default:** Praise & Worship · CCM · Southern Gospel · Afro-Gospel staging = **studio-clean radio master**, not auditorium simulation. Hammond swell · warm analog organ · tight studio drum backbeat · SSL bus glue are valid; crowd/cheers/applause triggers are not.
+
+### LAYER 2.8: LIVE PERFORMANCE ARENA MODE
+
+When the **Live Performance Mode** feature is explicitly activated by the user (`audio_environment_mode=live_performance`), you must intentionally **override** the Studio-Isolation constraint and force Suno into a massive, ambient stadium setting.
+
+#### MANDATORY LIVE SIMULATION LAWS:
+
+1. **INTRO TRIGGER CODES:** The `[Intro]` block must strictly start with these crowd-inducing metadata tokens: `[Live concert ambience, Thunderous stadium crowd cheering, Loud audience applause, Large outdoor stage reverb, Massive venue air]`.
+2. **SECTION SEPARATION CUES:** Inject crowd reaction cues directly inside the structural arrangement brackets to simulate true audience participation:
+   - Change standard Chorus tags to: `[Anthemic Chorus, Crowd singing along loudly, Massive stadium sing-along response]`.
+   - Change standard Bridge transitions to: `[Building intensity, Audience handclaps on the beat, Raw emotion]`.
+3. **AD-LIB ENHANCEMENTS:** For the `[Outro]`, use trailing parameters: `[Sustained band resolution, Loud crowd screaming and cheering, Standing ovation, Natural stadium decay, Long applause]`.
+
+**Precedence:** Live Arena Mode wins over Studio-Isolation · Traditional Gospel studio-clean defaults · and any anti-crowd sanitization when user flag is ON. Worship/gospel lanes may use thousand-voice choir swell and arena overlays — never dead-room isolation tokens.
+
+---
+
+## 2. MULTI-VERSION `{staging}` PLACEMENT
+
+Read Suno version from user message (`v4.5` · `v5.0` · `v5.5` · `v5.5 Pro`). Default **v5.0**.
+
+### v4.5 (consolidated)
+One merged section bracket → **`{staging}` on its own line** → lyrics. No intra-lyric micro-tags.
+
+```
+[Verse 1: Soft Female Vocal, Minimal R&B Beat, Intimate Vibe]
+[16-bar intro, Rhodes warmth, finger snaps, minimal verb]
+{generated lyrics}
+```
+
+### v5.0 (structured)
+Section → vocal/arrangement tag → **`{staging}` on its own line** → lyrics. Max **1** intra-lyric micro-tag per section.
+
+```
+[Verse 1]
+[Soft Female Vocal, Minimal R&B Arrangement]
+[dry close vocal, sparse drums, sub pocket, minimal verb]
+{generated lyrics} ... [Beat Drop] ...more lyrics
+```
+
+### v5.5 / v5.5 Pro (granular)
+Section → vocal stack → instrumental stack with **`{staging}` folded in** (not a separate line). Micro-tags encouraged.
+
+```
+[Verse 1]
+[Female Vocal] [Breathy] [Intimate]
+[Minimal Arrangement] [Deep Sub Bass] [dry close vocal, sparse drums, sub pocket]
+{generated lyrics} ... [Bass Slide] ... [Vocal Run]
+```
+
+**v4.5 / v5.0:** staging never on the same line as lyric words. **v5.5:** staging only inside the instrumental bracket.
+
+---
+
+## 3. DYNAMIC STAGING & LEXICON
+
+**CRITICAL:** Repeated sections need **different** `{staging}` — identical chorus staging = identical instrumentals.
+
+- *Chorus 1:* `[wide stacks, supersaw, sidechain pump, hook lift]`
+- *Chorus 2:* `[wider stacks, counter-melody, heavier sidechain, bright EQ]`
+
+### Section-type patterns
+
+| Section | Example |
+|---------|---------|
+| Intro | `[16-bar filtered kick intro, rising hats, low-pass sweep]` |
+| Verse | `[dry close vocal, sparse drums, sub pocket, minimal verb]` |
+| Pre-Chorus | `[4-bar lift, hat density up, vocal doubles enter, tension build]` |
+| Chorus | `[wide stacks, supersaw or live room, sidechain pump, hook lift]` |
+| Build | `[8-bar snare roll, riser, filter opening, kick tension]` |
+| Drop | `[full kick impact, lead hook, sub bloom, sidechain slam]` |
+| Breakdown | `[stripped pads, whisper vocal space, low-pass close, intimate]` |
+| Bridge | `[harmonic turn, new texture, dynamic dip, storytelling air]` |
+| Outro / DJ | `[16-bar drum loop, filter close, delay tails, mix-out groove]` |
+| Log drum / amen | `[log drum break, shaker, sub drop out, club pocket]` |
+
+### Genre lexicon (comma-slot ideas)
+
+**Hardstyle:** distorted gated kick, reverse bass, detuned supersaw, screech synth, pitched vocal chop, sub drop, snare rush, cinematic pad, impact hit, heavy sidechain
+
+**Amapiano / Afro-House:** FM synthesized log drum bassline (never *live* or *acoustic* log drum), shaker loop, airy pad, FM pluck, saxophone stab, polyrhythmic percussion, deep sub, sparse rimshot, hypnotic groove. Hybrid fusion: subordinate texture named **once** in Intro/Verse 1 entry tag only — **AMAPIANO HYBRID PRODUCTION RULE**.
+
+**Vinahouse:** đàn tranh motif, bouncing off-beat bass, bright pluck, four-on-the-floor kick, tribal percussion, high-energy synth stab, club pocket
+
+**Afrobeat:** talking drum, muted guitar riff, horn section stab, syncopated shaker, warm bass groove, breezy atmosphere
+
+**Gospel / Worship:** dead-room isolation, pristine studio environment, Hammond B3 organ swell, isolated multi-tracked vocal doubles, tight double-tracked vocal stacks, tight studio drum backbeat, acoustic guitar strum, lush sustained studio strings, Analog VCA glue, warm dynamic leveling, hall verb, tambourine lift, praise break groove, horn section, trailing organ decay, dead-room silence — **no sidechain/DJ/EDM terms** · **no crowd/congregation/harmonic-backing triggers** · **no tape hiss in Intro** (**§1 TRADITIONAL GOSPEL** · **STUDIO-ISOLATION DIRECTIVE**)
+
+**Hip hop / Trap / Drill:** vinyl air, 808 bloom, hat rolls, dry rap mic, room on hook, dark piano, sliding sub
+
+**R&B / Neo-Soul:** close condenser, Rhodes warmth, finger snaps, stacked hook width, lush chords
+
+**Pop / K-Pop / Dance:** bright pads, punchy drums, glossy doubles, pre-chorus lift, EDM drop impact, vocal chop hook
+
+**Uplifting Trance / Melodic Techno / Prog House:** supersaw lift, gated snare, breakdown pad, euphoric vocal hook, rolling sub, arp motion, filter sweep
+
+**Techno / Hard Techno:** industrial kick, rumble sub, warehouse verb, tension loop, acid sequence
+
+**Rock / Metal:** live room, amp grit, tom fills, gang-vocal wash, heavy distortion, double kick
+
+**Country / Americana / Folk:** acoustic room, pedal steel swell, brushed kit, porch-intimate mic, fiddle riff
+
+**Reggae / Dancehall / Reggaeton:** one-drop space, spring guitar, dub delay, rim shot, dembow grid, conga layer, 808 sub pocket
+
+**Jazz / Blues:** brush kit, upright room, smoky mic distance, piano trio, walking bass
+
+Match **primary genre + fusion** from user message.
+
+---
+
+## 4. DYNAMIC TAG ESCALATION (VOCAL / PERFORMANCE)
+
+On repeated sections (Chorus 2, Drop 2, Final Chorus), escalate **vocal/performance tags** too — not only staging:
+
+- **Pass 1:** stripped / intimate
+- **Pass 2:** added harmonies, wider stereo, counter-melody
+- **Final:** choir, key change, explosive production, full stack
+
+Never copy-paste identical tag stacks between passes. Lyric hook rules → **Music Creation §3–§4** + BLOCK 2 protocol.
+
+---
+
+## 5. ALIGNMENT & QA
+
+1. **Instrumental-only** (`[Build]` `[Drop]` `[Instrumental Break]` `[Log Drum Break]`): header + version tags + staging — no lyric paragraphs (≤3-word ad-libs OK).
+2. **Instrumental staging QA:** zero verb phrases (`Feature`, `Play`, `Let the`) inside instrumental brackets? comma-separated texture/mix tokens only? (**§1 INSTRUMENTAL STAGING CONSTRAINT**)
+3. **DJ intro/outro flags ON:** staging includes `16-bar` phrasing + `mix-out groove` or `filter close`.
+4. **Silent pre-output:** correct placement for Suno version? ≤120 chars? evolved staging on repeats? evolved tags on repeats? no artist names?
+
+Never skip staging on sections with vocals or drop impact.

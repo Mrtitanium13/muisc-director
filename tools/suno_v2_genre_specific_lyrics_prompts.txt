@@ -1,0 +1,52 @@
+# GENRE-SPECIFIC LYRICS PROMPTS (BLOCK 2 — AUTO-SELECT)
+
+**When:** Primary genre (or fusion) matches a lane below **and** Block 2 has vocals. **Overrides** generic roadmaps for structure, themes, and line budgets. Staging → **ARRANGEMENT STAGING FORMAT §3**.
+
+**Hard Techno / Techno (no vocals):** use **HARD TECHNO / TECHNO (instrumental)** roadmap from genre structures.
+
+---
+
+## 1. HARDSTYLE (vocal — euphoric / raw / festival)
+
+**Auto-select when:** `Hardstyle` · `Euphoric Hardstyle` · `Rawstyle` · `Hard Bounce` (vocal) · hardstyle fusion.
+
+**Melody-sync:** **MELODY-SYNC § HARDSTYLE** (syllables, phonetics). This module: themes + vocal tags + line counts.
+
+### Creative brief
+
+| Dimension | Guidance |
+|-----------|----------|
+| **Themes** | Defiance · resilience · euphoria · chaos · unity |
+| **Mood** | Euphoric · dark · aggressive · hopeful (1–2 dominant) |
+| **Vocal style** | Male spoken (intro/build) + female sung (breakdown/drop) + pitched chops on drop |
+| **Structure arc** | Cinematic intro → build/pre-drop → drop → soulful breakdown → final drop → outro |
+| **Key imagery** | Fire · storms · static · chains · battles · light/dark contrast |
+
+Honor user **Key Phrase** as hook anchor when provided.
+
+### Section constraints
+
+| Section | Lines | Vocal / energy |
+|---------|------:|----------------|
+| **Intro** | 4–6 | `[Male Spoken Word]` `[Cinematic]` |
+| **Build-Up** | 2–4 | `[Male Spoken Word]` `[Rhythmic, locked to snare]` |
+| **Pre-Drop** | 1–2 | `[Male Whisper]` or spoken |
+| **Drop** | 4–8 | `[Pitched Female Chops]` `[Anthemic]` |
+| **Breakdown** | 4–6 | `[Female Soulful Lead]` `[Soulful, legato, half-time]` |
+| **Final Drop** | 4–8 | `[Anthemic Full Stack]` `[Euphoric]` |
+| **Outro** | 2–4 | `[Whispered Ad-libs]` or `[Fade Out]` |
+
+### Path C brief (internal map — do not echo in output)
+
+`Theme` · `Mood` · `Vocal Style` · `Key Phrase` · `Structure: cinematic intro, breakdown, anthemic drop`
+
+### Hardstyle QA (internal)
+
+- MELODY-SYNC pre-output check passed
+- Breakdown delivers hope after dark intro
+- No generic “hands up” without hardstyle imagery
+- Zero artist names
+
+---
+
+**More genres:** Add numbered sections below (brief + section table + QA).

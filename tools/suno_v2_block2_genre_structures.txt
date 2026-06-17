@@ -1,0 +1,116 @@
+
+---
+
+### BLOCK 2 — DEFAULT GENRE STRUCTURE TEMPLATES (MULTI-VERSION SUNO ROUTING)
+
+When the user gives **no pasted lyrics** and **no explicit section roadmap**, choose the roadmap that matches **primary genre + vocal intent**.
+
+Read **Suno version** from the user message (`Suno v4.5` · `v5.0` · `v5.5` · `v5.5 Pro`). Default **v5.0**. Bracket stack + `{staging}` → **ARRANGEMENT STAGING FORMAT** (§2–§5).
+
+**Overrides:** User roadmap wins (still use version syntax + dynamic escalation). **GENRE-SPECIFIC LYRICS PROMPTS** overrides section order/tags for matched lanes. **MELODY-SYNC § HARDSTYLE** owns Hardstyle syllable density.
+
+**Placeholders (never output literally):** `[{staging}]` · `{generated lyrics}`
+
+---
+
+## BASE GENRE STRUCTURE ROADMAPS
+
+Roadmaps = **section flow + escalation focus**. Invent version-appropriate tags and staging per section.
+
+#### HIP HOP / BOOM BAP / TRAP / DRILL (vocal)
+
+`[Intro]` → `[Verse 1]` → `[Chorus]` → `[Verse 2]` → `[Chorus]` → `[Bridge]` → `[Final Chorus]` → `[Outro]` → `[End]`
+
+*Escalate:* stripped beat → heavy 808s → explosive beat + vocal layers.
+
+#### R&B / NEO-SOUL / BEDROOM R&B / TRAP SOUL (vocal)
+
+`[Intro]` → `[Verse 1]` → `[Pre-Chorus]` → `[Chorus]` → `[Verse 2]` → `[Pre-Chorus]` → `[Chorus]` → `[Bridge]` → `[Final Chorus]` → `[Outro]` → `[End]`
+
+*Escalate:* minimal R&B → lush harmonies → explosive gospel-style stacks.
+
+#### GOSPEL / PRAISE AND WORSHIP (vocal)
+
+`[Intro]` → `[Verse 1]` → `[Pre-Chorus]` → `[Chorus]` → `[Verse 2]` → `[Chorus]` → `[Bridge]` → `[Praise Break / Vamp]` → `[Final Chorus]` → `[Outro]` → `[End]`
+
+*Escalate:* solo piano → full choir → maximum worship + horns.
+
+#### POP / ELECTROPOP / DANCE POP (vocal)
+
+`[Intro]` → `[Verse 1]` → `[Pre-Chorus]` → `[Chorus]` → `[Post-Chorus]` → `[Verse 2]` → `[Chorus]` → `[Bridge]` → `[Final Chorus]` → `[Outro]` → `[End]`
+
+*Escalate:* minimal synth → euphoric synths → massive pop anthem / key change.
+
+#### COUNTRY / AMERICANA / FOLK (vocal)
+
+`[Intro]` → `[Verse 1]` → `[Chorus]` → `[Verse 2]` → `[Chorus]` → `[Instrumental Solo]` → `[Bridge]` → `[Final Chorus]` → `[Outro]` → `[End]`
+
+*Escalate:* acoustic fingerpicking → full band → massive country anthem.
+
+#### UPLIFTING TRANCE / PROGRESSIVE TRANCE / MELODIC TECHNO (vocal + drop)
+
+`[Intro]` → `[Breakdown 1]` → `[Build-Up]` → `[Drop 1]` → `[Breakdown 2]` → `[Build-Up 2]` → `[Final Drop]` → `[Outro]` → `[End]`
+
+*Escalate:* atmospheric pads → euphoric trance lead → peak layered supersaws.
+
+#### HARDSTYLE (vocal — euphoric / raw / festival)
+
+**GENRE-SPECIFIC §1** + **MELODY-SYNC § HARDSTYLE** — vocal tags (`[Male Spoken Word]`, `[Pitched Vocal Chops]`, etc.).
+
+`[Intro]` → `[Build-Up 1]` → `[Pre-Drop]` → `[Drop 1]` → `[Breakdown]` → `[Build-Up 2]` → `[Pre-Drop 2]` → `[Final Drop]` → `[Outro]` → `[End]`
+
+*Escalate:* filtered kick → distorted kick impact → maximum-energy anthemic supersaws.
+
+#### HARD TECHNO / TECHNO (instrumental)
+
+`[Intro]` → `[Build]` → `[Drop]` → `[Breakdown]` → `[Build]` → `[Drop]` → `[Outro]` → `[End]`
+
+*Escalate:* rumble tension → industrial slam → peak warehouse impact.
+
+#### EDM WITH VOCALS / FUTURE BASS / PROGRESSIVE HOUSE / BIG ROOM (vocal + drop)
+
+`[Intro]` → `[Verse 1]` → `[Pre-Chorus]` → `[Chorus]` → `[Build]` → `[Drop]` → `[Breakdown]` → `[Verse 2]` → `[Chorus]` → `[Final Drop]` → `[Outro]` → `[End]`
+
+*Escalate:* soft verse pocket → festival lift → maximum sidechain drop.
+
+#### AMAPIANO / AFROBEAT / VINAHOUSE / AFRO-HOUSE (vocal)
+
+`[Intro]` → `[Verse 1]` → `[Pre-Chorus / Chant]` → `[Chorus / Hook]` → `[Log Drum Break]` → `[Verse 2]` → `[Final Chorus]` → `[Outro]` → `[End]`
+
+*Escalate:* subtle shakers → heavy log drum → massive choir stack + rattling shakers.
+
+#### ROCK / METAL / ALT-ROCK (vocal)
+
+`[Intro]` → `[Verse 1]` → `[Pre-Chorus]` → `[Chorus]` → `[Verse 2]` → `[Guitar Solo]` → `[Bridge / Breakdown]` → `[Final Chorus]` → `[Outro]` → `[End]`
+
+*Escalate:* palm-muted guitars → explosive distortion → maximum wall of sound.
+
+#### K-POP / J-POP / MANDOPOP (vocal)
+
+`[Intro]` → `[Verse 1]` → `[Pre-Chorus]` → `[Chorus]` → `[Rap Verse]` → `[Bridge]` → `[Dance Break]` → `[Final Chorus]` → `[Outro]` → `[End]`
+
+*Escalate:* bouncy bass → massive EDM-pop drop → key change + confetti-drop energy.
+
+#### REGGAETON / DEMBOW / DANCEHALL (vocal)
+
+`[Intro]` → `[Verse 1]` → `[Pre-Chorus]` → `[Chorus]` → `[Perreo Break]` → `[Chorus]` → `[Outro]` → `[End]`
+
+*Escalate:* muffled dembow → full reggaeton beat → heavy bass + synth brass.
+
+#### DRUM & BASS / DUBSTEP / MIDTEMPO (vocal + drop)
+
+`[Intro]` → `[Verse 1]` → `[Build-Up]` → `[Drop]` → `[Breakdown]` → `[Build-Up 2]` → `[Final Drop]` → `[Outro]` → `[End]`
+
+*Escalate:* eerie pads → heavy reese bass → peak chaotic heavy bass.
+
+#### JAZZ / BLUES (vocal)
+
+`[Intro]` → `[Verse 1]` → `[Instrumental Break]` → `[Verse 2]` → `[Instrumental Solo]` → `[Verse 3]` → `[Outro]` → `[End]`
+
+*Escalate:* smoky trio → solo spotlight → full ensemble swell.
+
+#### JAZZ / CINEMATIC / AMBIENT (instrumental)
+
+`[Intro]` → `[Instrumental Break]` → `[Instrumental Solo]` → `[Breakdown]` → `[Instrumental Solo]` → `[Outro]` → `[End]`
+
+*Escalate:* sparse motif → textural swell → cinematic peak.

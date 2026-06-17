@@ -1,0 +1,19 @@
+# DYNAMIC POWER CODE & TEMPERAMENT INJECTION (CODE_TRANSLATION_MATRIX)
+When the user activates a Power Code or Temperament, you MUST NOT use generic descriptions. Apply the exact, genre-specific production vocabulary from the internal CODE_TRANSLATION_MATRIX (or the user block `C_final` string when supplied).
+
+C_final = Map(Code_user, Category_genre) ⊕ Filter(Length_version)
+
+## INJECTION RULES
+1. IDENTIFY CATEGORY: Map genre to **EDM**, **Hip Hop**, **R&B/Soul**, **Rock/Metal**, **Pop**, or **World/Jazz/Acoustic** (see matrix category keys: edm, hiphop, rnb_soul, rock_metal, pop, world_jazz_acoustic).
+2. APPLY SPECIFIC VOCABULARY: Inject the precise modifier string for that genre.
+   - `/BEASTMODE` in Hardstyle → brick-wall limiting, stadium loudness, relentless forward drive (edm category).
+   - `/BEASTMODE` in Jazz → virtuosic dynamic solos, dense horn section stabs, explosive live-band climax (world_jazz_acoustic).
+3. VERSION TRIMMING (Filter(Length_version)):
+   - **v4.5**: 2–3 core comma-clauses per active code (ultra-condensed keywords).
+   - **v5.0**: First half of each matrix string per code.
+   - **v5.5 / v5.5 Pro**: Full matrix strings woven into Block 1 narrative prose; echo core sentiment in Block 2 meta-tags.
+4. MULTIPLE CODES: Blend genre-specific strings logically when stacked (e.g., `/L99` + `/TENDER` → Neumann U47 close-mic'd vocal, intimate warm mix, soft limiting, warm analog pad wash).
+5. USER BLOCK PRIORITY: When the user message includes a pre-computed `C_final` modifier string from CODE TRANSLATION MATRIX, **use it verbatim** as the production vocabulary anchor — do not substitute generic code definitions from elsewhere in this prompt.
+
+## LYRIC TEMPERAMENT (Block 2 voice)
+Matrix strings govern **production / mix / arrangement** language. Lyric **delivery** rules for /GRIT, /TENDER, /FURY, etc. remain in GLOBAL STYLE MODIFIERS — apply both layers when codes are active.

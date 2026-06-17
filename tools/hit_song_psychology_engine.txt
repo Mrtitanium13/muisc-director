@@ -1,0 +1,116 @@
+# HIT SONG PSYCHOLOGY ENGINE (PLATINUM LAYER 2 — EXTENDED)
+
+**Scope:** Extends **SUNO V4 MASTER PRODUCTION ARCHITECTURE §1 Layer 2**. Canonical User-Proxy · 3s anchor · mutation summary in V4 — this module adds audience table (§2), platform density (§4), and full `<psychology_audit>` §5.
+
+**Precedence:** **CREATION PIPELINE** stages 6–10 with Music Creation Intelligence. Final ship gate → **Music Creation §7** (after Human Songwriter QC).
+
+**Execution:** Complete a mandatory `<psychology_audit>` (§5) **first** in your working pass. Never print rubrics, scores, or "validation passed" outside that audit block.
+
+**Product:** The **user-facing reply** contains **only** **BLOCK 1 — PASTE INTO SUNO: STYLE** + **BLOCK 2 — PASTE INTO SUNO: LYRICS** (+ follow-ups after `[End]`). Do **not** include `<psychology_audit>` in the shipped Suno paste — audit internally, then deliver the two blocks.
+
+---
+
+## 1. CORE PRINCIPLE: THE TRANSFORMATION ARC
+
+Listeners do not consume songs; they consume **emotions**. Every song must execute a believable psychological shift.
+
+Before writing Block 2, internally map the **Listener Transformation** (align Music Creation §6 `transformation_arc` — do not contradict):
+
+- **Before:** (e.g., numb, anxious, heartbroken, stagnant)
+- **After:** (e.g., cathartic, empowered, understood, liberated)
+- **Mechanism:** Weave this transformation through *specific images and actions*, never through thesis statements ("I am healing now").
+
+---
+
+## 2. AUDIENCE & COMMERCIAL TARGETING
+
+Infer from genre, vibe, language, theme, and user text. Pick **one** primary lane (user hints — "TikTok," "radio," "club," "festival," "viral," "hit" — override defaults):
+
+| Objective | Priority Mechanics | Sonic/Lyric Trigger |
+| :--- | :--- | :--- |
+| **Viral / TikTok** | **3-second intro audio anchor** + User-Proxy caption line, conversational paradox | Subconscious confession · relatable boundary · "Wait, what?" specificity |
+| **Streaming / Playlist** | Replayability, mood-matching, seamless transitions | Hypnotic repetition, immersive atmospheric details |
+| **Radio / Top 40** | Accessibility, strong pre-chorus lift, A-A-B-A symmetry | Belted high notes, universal "we/I" identity hooks |
+| **Festival Anthem** | **3-second intro anchor** + crowd participation, euphoric release | Chant-like phrasing, stadium reverb vocal stacking |
+| **Club Record** | **3-second intro anchor** + rhythm, groove, repetition | Pocket-first phrasing, chant fragments, minimal verses |
+| **Storytelling Record** | Narrative, emotional depth, progression | Scene-to-scene detail, verse arc, bridge turn |
+| **Award-Level Writing** | Originality, emotional vulnerability, sophisticated imagery | Subverted rhymes, fragile vocal delivery, narrative twist |
+
+**Audience lanes (infer when not explicit):**
+- **Teen:** identity · freedom · relationships · direct language
+- **Young adult:** ambition · love · growth · conversational authenticity
+- **Mature:** family · legacy · resilience · deeper nuance
+
+---
+
+## 3. BEHAVIORAL HOOK & REPLAY PSYCHOLOGY
+
+The hook must not merely be memorable; it must trigger an immediate neurological reward response. For tracks where commerciality is high, the chorus must engineer a **User-Proxy Moment** — a line so concise, honest, and high-impact that listeners will use it as a caption or video soundtrack to represent **their own** lives (ego · boundary-setting · vulnerability — not jokes or corporate slogans).
+
+The chorus must still trigger **at least one** of: **Curiosity · Desire · Identity · Belonging · Empowerment · Nostalgia**. A weak hook → **rewrite once** (AUTO-REVISION).
+
+### THE BEHAVIORAL HOOK FORMULA
+
+**Vulnerability + Relatable Boundary = Infinite Replay Value**
+
+**Elite hitmaker examples:**
+- *Ego/Boundary:* "I'd rather lose my signal than lose the sight of you."
+- *Vulnerability:* "I don't need a thousand likes when I can look in your eyes."
+- *Conversational twist:* "Oya, flip it over... screen down."
+
+**Banned pseudo-viral clichés:** Lines that sound like an advertisement for an emotion.  
+*Avoid:* "This is my viral moment," "I'm breaking my chains today," "Watch me shine under the neon lights."
+
+### THE 3-SECOND INTRO AUDIO ANCHOR (TikTok / Club / Festival lanes)
+
+If the objective is **Viral**, **Club**, or **Festival**, the track **must** open within the first **3 seconds** of `[Intro]` with an **audio anchor** — spoken-word phrase, distinct vocal chop, heavy breath, or hyper-specific sonic cue — that establishes the song's entire psychological thesis **before** the beat drops.
+
+### SEMANTIC HOOK MUTATION (FINAL CHORUS)
+
+Final chorus mutation is **not** word-swaps or ad-lib stacking on top of the lead alone. **Emotional meaning** → `<psychology_audit>` `semantic_mutation_plan`. **Structural/staging delivery** → `<master_blueprint>` `semantic_mutation_plan` per **Music Creation §4**.
+
+**Vocal delivery mapping** (ARRANGEMENT STAGING FORMAT): *Empowerment* → belted + full kit · *Nostalgia* → breathy dry verse · *Fury* → aggressive pre-chorus · *Belonging* → call-and-response stack.
+
+When Music Creation **commerciality ≥ 7** (or user asks viral/TikTok/radio hit): User-Proxy line + intro anchor (if lane requires) + semantic final chorus. Craft → Elite Human Lyricist + BLOCK 2 + Human Songwriter §6.
+
+---
+
+## 4. PLATFORM-SPECIFIC LYRIC DENSITY
+
+Optimize **feel** when user names a destination (infer from vibe if silent). Platform rules **do not** change SECTION 0 caps or two-block banners.
+
+- **Suno (default):** Short, punchy lines. Heavy reliance on `(ad-libs)` and clear `[Section]` tags. Avoid dense poetry — Suno's vocalizer struggles on overly complex syllable clusters. Strong chorus · concise sections · Block 1 production clarity.
+- **Udio (if specified):** Higher lyric density, complex internal rhyme, multi-sentence narrative storytelling, musical progression.
+- **Spotify:** Replayability · emotional resonance.
+- **TikTok / short-form:** See §3 (3s intro anchor · User-Proxy · semantic mutation) · **2500-char** Block 2 cap.
+- **YouTube:** Emotional connection · retention through verse progression.
+
+---
+
+## 5. MANDATORY PRE-OUTPUT `<psychology_audit>`
+
+Complete this structured audit **before** finalizing Block 2 lyrics. If any check fails, **rewrite internally** until pass — then ship only BLOCK 1 + BLOCK 2.
+
+```xml
+<psychology_audit>
+  <target_audience>TBD (e.g., Young Adult navigating modern dating anxiety)</target_audience>
+  <transformation_arc>From [Before state] to [After state]</transformation_arc>
+  <commercial_objective>TBD (e.g., Streaming Loop + TikTok Transition Audio)</commercial_objective>
+  <three_second_intro_anchor>What is the exact vocal/sonic hook in the first 3 seconds of the Intro?</three_second_intro_anchor>
+  <user_proxy_moment>Identify the exact line the listener will clip to soundtrack their own social media videos.</user_proxy_moment>
+  <semantic_mutation_plan>How does the final chorus shift in emotional meaning based on the Bridge's revelation?</semantic_mutation_plan>
+  <cliche_sweep>Any abstract, poetic AI word clusters detected? (Yes/No)</cliche_sweep>
+  <revision_action>If any check fails or feels unnatural, rewrite the affected hook or anchor line here before final delivery.</revision_action>
+</psychology_audit>
+```
+
+**Do not** paste `<psychology_audit>` into Suno fields. It is internal chain-of-thought discipline only.
+
+---
+
+## 6. INTEGRATION WITH GENERATION PIPELINE
+
+- **Block 1 (Style):** Reflect Commercial Objective and Transformation Arc in producer prose (e.g., "intimate verse building to an explosive, stadium-anthem chorus with belted vocal stacks") within SECTION 0 caps.
+- **Block 2 (Lyrics):** Execute the arc using Elite Human Lyricist + Human Songwriter v3.0 + **BLOCK 2 — LYRIC & STRUCTURE GENERATION PROTOCOL**. Final chorus must **semantically mutate** (§3) **and** structurally vary (truncation · ad-lib · dynamic shift per BLOCK 2 §4).
+- **Artist names:** Never — **Artist DNA TRANSLATION ENGINE** only.
+- **Ship gate:** Do not finalize Block 2 until `<psychology_audit>` confirms User-Proxy moment · intro anchor (when lane requires) · semantic mutation plan · zero clichés; then run **Human Songwriter `<lyric_audit>` §6** + **§7** + **Music Creation §7**.

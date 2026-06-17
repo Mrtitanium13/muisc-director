@@ -1,0 +1,84 @@
+# CREATION PIPELINE — MANDATORY INTERNAL EXECUTION ORDER
+
+**Scope:** Every Path A / B / C generation. Defines **sequence only** — detailed rules live in the modules cited below.
+
+**Unified orchestrator:** **SUNO V4 MASTER PRODUCTION ARCHITECTURE** (Platinum v4.0 five-layer chain). Steps 1–17 below implement that architecture.
+
+**Silent:** Never print stage names, DNA JSON, blueprint labels, score tables, or “I revised because…” in the user-visible reply.
+
+**Product:** Still deliver only **BLOCK 1 — PASTE INTO SUNO: STYLE** + **BLOCK 2 — PASTE INTO SUNO: LYRICS** (+ follow-ups after `[End]`) per SECTION 0.
+
+---
+
+Run these stages **in order** before shipping the Suno two-block reply:
+
+| Step | Stage | Apply rules from |
+|-----:|-------|------------------|
+| 1 | **USER INPUT** | User message (genre, mood, theme, references, BPM, analyser, path flags) |
+| 2 | **Artist DNA analysis** | ARTIST DNA TRANSLATION ENGINE — traits only; **no** artist/song/album names in output |
+| 3 | **Genre engine** | Genre vault, SECTION 1A–1F, genre templates, GENRE REFERENCE APPENDIX (translation lexicon only) |
+| 4 | **Songwriting mode engine** | Human Songwriter Engine v3.0 — §3 Mode A/B/C (intensity + commerciality synthesis) |
+| 5 | **Master blueprint engine** | Music Creation Intelligence — mandatory `<master_blueprint>` §6; align `commercial_score` with Human Songwriter `songwriting_mode` |
+| 6 | **Audience engine** | HIT SONG PSYCHOLOGY ENGINE — AUDIENCE ENGINE |
+| 7 | **Emotional target engine** | Music Creation `transformation_arc` + Human Songwriter §2 Show Don't Tell (after §1 syllable pocket) |
+| 8 | **Listener transformation engine** | Music Creation §6 `<master_blueprint>` + Hit Song — LISTENER TRANSFORMATION ENGINE |
+| 9 | **Rhythmic quantization & narrative** | Music Creation §2 SPB routing · §3 Verse 2 escalation · `rhythmic_quantization` in `<master_blueprint>` |
+| 10 | **Hook psychology engine** | Hit Song Psychology §3 · Music Creation §4 semantic/staging mutation (`<psychology_audit>` §5) |
+| 11 | **Lyrics generation** | Human Songwriter v3.0 (`<lyric_audit>` §6) + SECTION 2 / genre Block 2 templates + MELODY-SYNC + BLOCK 2 protocol |
+| 12 | **Humanization pass** | **HUMAN AUTHENTICITY ENGINE** → **§12 NIGERIA CULTURAL REALISM** (when Nigerian context) → **GENRE-SPECIFIC HUMANIZATION & AUTHENTICITY ENGINE** (mandatory) + Music Creation §5 |
+| 13 | **AI-cliché detection** | Elite Human Lyricist §1–§7 (Flexible Anchor Rule · Hook Dominance · phonetic/pocket mechanics · Vocal Cadence Sweep) + BLOCK 2 supplementary bans + Human Songwriter §6 `<lyric_audit>` |
+| 14 | **Quality scoring** | Human Songwriter §6–§7 (`show_dont_tell_check` + FINAL RELEASE TEST) + Music Creation §6 `qa_pass` + §7 |
+| 15 | **Auto revision** | If any gate fails → rewrite silently; honor SECTION 2 + user text on conflict |
+| 16 | **Final lyrics** | Performable Block 2 lines locked inside bracket skeleton |
+| 17 | **Suno/Udio optimized prompt** | SECTION 0 Block 1 prose + SUNO SIGNAL + path checklists + mastering blueprints |
+
+**Precedence:** SECTION 0 (caps, Block 2 opt-out) → **this pipeline order** → Artist DNA (no names) → SECTION 2 skeleton wins on output shape conflicts.
+
+**Module authority** (when two modules say different things):
+
+| Topic | Authority |
+|-------|-----------|
+| Two-block product shape · caps | SECTION 0 + SECTION 2 unified |
+| Execution order | **This pipeline** (steps 1–17) |
+| Block 2 brackets + `{staging}` syntax | **ARRANGEMENT STAGING FORMAT** |
+| Section flow / roadmaps | Genre structures → **GENRE-SPECIFIC** overrides |
+| Syllables / BPM line density | **MELODY-SYNC** (+ genre § e.g. Hardstyle) |
+| Staging + tag escalation on repeats | **ARRANGEMENT STAGING FORMAT** §3–§4 |
+| Hook / chorus anti-copy-paste | **Music Creation §3–§4** + BLOCK 2 protocol |
+| Cross-song scene variety | **Music Creation §3–§4** + **Advanced Creative Layers** |
+| Blueprint · commerciality · ship QA | **Music Creation §6 `<master_blueprint>` · §7 FINAL RELEASE TEST** |
+| Hook psychology · audience | **Hit Song Psychology** |
+| Lyric line craft · anti-AI | Elite Lyricist → Human Songwriter → BLOCK 2 protocol |
+| Genre humanization lanes | **Human Authenticity** → **§12 Nigeria Cultural Realism** (when applicable) → **Genre-Specific Humanization** |
+
+Other modules: **extend** these authorities — do not restate them.
+
+---
+
+## RUNTIME POST-PROCESSING (after generation, before user sees output)
+
+### OpenRouter pipeline (default)
+
+| Step | Model | Pass | Role |
+|-----:|-------|------|------|
+| 0 | **Qwen 3.7** | Generate | Genre · structure · arrangement · hooks · theme |
+| 1 | **Qwen 3.7** | Theme consistency | Block 2 — one emotional world, no drift |
+| 2 | **Mistral Large** | Humanization | Block 2 — natural phrasing, anti-AI, authenticity |
+| 3 | **Qwen 3.7** | Suno compression (Stage 5) | Full output — Block 1/2 caps, paste-ready |
+
+**Not in this chain:** optional **hybrid draft+polish** (`PROMPT_PIPELINE=hybrid`) — separate pre-pass, off by default. Creation-pipeline step 12 humanization is **in-prompt** during generate, not a duplicate API call.
+
+**LaoZhang:** GPT-5.5 (`gpt-5.5`) multilingual prompt draft → Claude (`claude-sonnet-4-5`) lyrics polish → theme + humanization post-process (same prompts as OpenRouter humanization pass).
+
+| LaoZhang step | Model | Handles |
+|---------------|-------|---------|
+| Prompt draft | GPT-5.5 | Multilingual understanding (African languages, Nigerian Pidgin), full Suno prompt generation |
+| Lyrics polish | Claude Sonnet 4.5 | Lyrics, hooks, storytelling, vocal personality, artistic expression |
+| Theme pass | Claude Sonnet 4.5 | Block 2 editorial consistency |
+| Humanization | Claude (English) · GPT-5.5 (multilingual / Pidgin / African) | Same `humanization_pass.txt` as OpenRouter — natural phrasing, anti-AI, dialect rules |
+
+**Token hygiene:** continuation prior output is head+tail truncated (`CONTINUATION_PRIOR_MAX_CHARS`, default 6000). Post-process passes use compact `G:|F:|V:` context headers.
+
+Opt out: `OPENROUTER_POST_PROCESS=false` · `THEME_CONSISTENCY_PASS=false` · `HUMANIZATION_PASS=false` · `SUNO_COMPRESSION_PASS=false`.
+
+---

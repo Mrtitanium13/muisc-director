@@ -1,0 +1,90 @@
+# POST-PROCESSING STAGE: THEME CONSISTENCY PASS (RUNTIME — BLOCK 2 ONLY)
+
+**Model tier (runtime):** LaoZhang **Claude Sonnet 4.5** (`claude-sonnet-4-5`) lyrics + artistic expression / theme (after GPT-5.5 multilingual prompt draft); OpenRouter **Qwen 3.7** (`qwen/qwen3.7-max`). Fallback: Gemini Pro (LaoZhang). Override: `THEME_CONSISTENCY_MODEL` / `OPENROUTER_THEME_MODEL`.
+
+**When:** After lyrics are generated, before output is shown to the user. **Silent** — never print scores, theme labels, or audit notes.
+
+**Scope:** Revise **BLOCK 2 — LYRICS** only. Do **not** change Block 1. Preserve all section headers, arrangement staging lines, performance tags, and `[End]`.
+
+---
+
+## OBJECTIVE
+
+Ensure every section supports the same emotional identity, narrative direction, and thematic message. Fix songs that feel like unrelated ideas stitched together.
+
+---
+
+## STEP 1 — IDENTIFY THE CORE THEME
+
+Analyze the lyrics and determine the dominant theme.
+
+Possible themes: Confidence · Swagger · Self-belief · Romance · Longing · Heartbreak · Healing · Celebration · Nightlife · Freedom · Nostalgia · Friendship · Spirituality · Motivation · Success · Reflection · Adventure · Seduction · Empowerment.
+
+Choose the **strongest primary theme**. If multiple exist, name PRIMARY + SECONDARY — primary must dominate.
+
+Honor user **lyric theme notes** and **vibe** when present.
+
+---
+
+## STEP 2 — AUDIT EVERY SECTION
+
+Review Intro · Verse · Build · Pre-Chorus · Chorus · Drop · Breakdown · Bridge · Outro.
+
+For each: *Does this reinforce the primary theme?* Flag sections that do not.
+
+---
+
+## STEP 3 — DETECT THEME DRIFT
+
+Remove lines that shift into another emotional world (e.g. loneliness in a confidence song; money flex in a romance song).
+
+---
+
+## STEP 4 — REWRITE INCONSISTENT LINES
+
+Preserve: syllable count · groove · rhyme feel · cadence · arrangement structure (headers + staging + tags).
+
+Change **only** thematic content.
+
+Examples:
+- Confidence: `Phone's on silent, screen is black` → `Phone's on silent, I'm cool with that`
+- Nightlife: → `Phone's on silent, I'm in the back`
+- Romance: → `Phone's on silent, waiting for that`
+
+---
+
+## STEP 5 — MAINTAIN GENRE FIT
+
+Do not rewrite into another genre. Match lane expectations (Amapiano conversational/groove · Afrobeats relationship/lifestyle · Trance emotional hooks · Hip-hop attitude/story · Country place-based narrative).
+
+---
+
+## STEP 6 — PROTECT STRONG HOOKS
+
+Do **not** rewrite strong hooks unless they conflict with the theme. Protect title hooks, repeated chorus anchors, memorable phrases.
+
+---
+
+## STEP 7 — HUMAN LANGUAGE CHECK
+
+Remove production notes, motivational posters, social captions, marketing slogans, AI philosophy.
+
+Weak → Better:
+- `Same four counts, different intention` → `Same old road, different feeling`
+- `This ain't a headline, it's the mood` → `No big talk, I let it move`
+
+---
+
+## STEP 8 — FINAL SCORING (INTERNAL ONLY)
+
+Score internally: Theme Consistency · Human Authenticity · Hook Strength · Genre Suitability (each /10).
+
+If Theme Consistency **< 9/10**, revise again (max one extra internal pass).
+
+---
+
+## OUTPUT RULES
+
+Return **only** the revised Block 2 lyrics body: section headers → staging lines → performance tags → lyric lines → `[End]`.
+
+**No** Block 1. **No** commentary. **No** score table. **No** theme labels.

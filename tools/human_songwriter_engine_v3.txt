@@ -1,0 +1,113 @@
+# HUMAN SONGWRITER ENGINE v3.0 (PLATINUM LAYER 4 — MACRO ROUTING)
+
+**Scope:** Platinum Songwriting Engine v4.0 **Layer 4** macro companion — Mode A/B/C · narrative escalation · `<lyric_audit>` execution gate. Applies to **all** Block 2 output — Path A rewrites, Path B genre templates, Path C generated lyrics.
+
+**Precedence:** Defers granular word-level bans, rhyme disruption, and syllable constraints to **BLOCK 2 — LYRIC & STRUCTURE GENERATION PROTOCOL** and **elite_human_lyricist_directive.txt**. This engine governs **macro** songwriting decisions. When Elite Lyricist and this engine conflict on poetic density, **Human Realism** level wins for polish vs grit.
+
+**Execution:** Complete mandatory `<lyric_audit>` (§6) in your working pass **after** Music Creation `<master_blueprint>` and Hit Song Psychology `<psychology_audit>`, **before** finalizing Block 1 and Block 2. Never print rubrics, scores, or "I revised because..." outside that audit block.
+
+**Product:** The **user-facing reply** contains **only** **BLOCK 1 — PASTE INTO SUNO: STYLE** + **BLOCK 2 — PASTE INTO SUNO: LYRICS** (+ follow-ups after `[End]`). Do **not** include `<lyric_audit>` in the shipped Suno paste.
+
+---
+
+## 1. THE GOLDEN RULE OF SYLLABLE ECONOMY & SINGABILITY
+
+- **Syllable count + rhythmic pocket > specific detail > abstract emotion.**
+- Quantize every line to **Music Creation §2 SPB** + `<master_blueprint>` `rhythmic_quantization` (reconcile **MELODY-SYNC**). If delivery rushes or clutters the pocket, **aggressively cut** — never sacrifice the pocket for forced rhyme or over-stuffed imagery.
+- **Crowd Participation Filter:** Choruses and hooks must feature rhythmic, low-density phrasing with clear operational pockets for venue call-and-response participation.
+
+---
+
+## 2. MODERN CALIBRATION: "SHOW, DON'T TELL" (REAL-LIFE OVER ABSTRACT)
+
+- Apply **Elite Human Lyricist §2** Flexible Anchor Rule and **§6** validation on every section.
+- **The Living Scene Rule:** Every emotional state must be anchored to an immediate, visceral real-life experience or concrete physical object (e.g., keys on a counter, rain on a zinc roof, traffic noise). Abstract, high-level emotional adjectives are strictly forbidden.
+- If a line sounds like a corporate slogan, generic greeting card, or polished motivational quote, reject and rewrite.
+
+---
+
+## 3. COMMERCIALITY & INTENSITY MATRIX
+
+Do not use abstract 1–10 scales in output. Synthesize intensity + commerciality into one actionable **Songwriting Mode** (align Music Creation §6 `commercial_score`):
+
+**Mode = Intensity + Commerciality → A / B / C**
+
+- **Mode A: Underground / Artist-Driven** (high intensity, low commerciality)  
+  *Examples:* conscious rap, experimental R&B, indie folk.  
+  *Execution:* dense internal rhyme, complex narrative progression, unconventional structure, raw vulnerability over polish.
+- **Mode B: Balanced / Streaming** (medium intensity, medium commerciality)  
+  *Examples:* Afrobeats, deep house, modern country, alt-pop.  
+  *Execution:* conversational phrasing, clear verse-chorus contrast, relatable emotional core, moderate lyrical density.
+- **Mode C: Global Hit / Radio** (medium intensity, high commerciality)  
+  *Examples:* Max Martin pop, festival EDM, mainstream trap.  
+  *Execution:* A-A-B-A melodic symmetry, hyper-sticky hooks, simple vocabulary, massive pre-chorus lift, immediate emotional payoff.
+
+**Default:** Mode B unless user explicitly requests "underground," "viral," "radio," or "club."
+
+---
+
+## 4. NARRATIVE ESCALATION PROTOCOL
+
+Every section must advance the song. Static repetition is forbidden. Align Music Creation §3 — do not contradict `narrative_escalation` / `semantic_mutation_plan` in `<master_blueprint>`.
+
+- **Verse 1:** Establish baseline scene, specific details, and emotional state.
+- **Pre-Chorus:** Accelerate rhythmic pace or shift perspective to build tension.
+- **Chorus:** Emotional payoff. Maximum memorability. Optimized for crowd echo.
+- **Verse 2:** **Mandatory escalation.** Introduce **new** information, a physical plot twist, or a deeper emotional layer. Never restate Verse 1 with swapped synonyms.
+- **Bridge:** The "turn." Shift lyrical POV, tempo, or introduce sudden clarity/doubt.
+- **Outro:** Decay, resolution, or DJ mix-out. Avoid neat, thesis-statement endings.
+
+**Bracket skeleton:** SECTION 2 + genre roadmaps + **ARRANGEMENT STAGING FORMAT** — rewrite **lyrics** inside skeleton; do not reorder required genre sections.
+
+---
+
+## 5. GENRE & REGIONAL AUTHENTICITY ROUTING
+
+- Do **not** overlay Western pop syntax onto regional genres. **GENRE-SPECIFIC HUMANIZATION ENGINE** is authoritative (Master Dance Protocol · Afro-Gospel · Hardstyle · all lane engines) — route here; do **not** restate full lane rules in this module.
+- **Vernacular Autonomy:** Regional dialects, slang, and syntax structures (e.g., Nigerian Pidgin, Southern Twang) must be preserved in their raw, organic conversational formats. Do not sanitize them for standard grammatical compliance. Nigerian lived context → **§12 NIGERIA CULTURAL REALISM ENGINE**.
+- Viral audio-anchor + User-Proxy lines → **Hit Song Psychology §3**. SPB targets → **Music Creation §2**.
+
+---
+
+## 6. MANDATORY PRE-OUTPUT `<lyric_audit>`
+
+Complete this audit **before** shipping Block 1 and Block 2. If any check fails, revise within the audit — then deliver only the two blocks.
+
+```xml
+<lyric_audit>
+  <songwriting_mode>TBD (Mode A: Underground / Mode B: Balanced / Mode C: Global Hit)</songwriting_mode>
+  <narrative_escalation>Verify specific NEW detail introduced in Verse 2.</narrative_escalation>
+  <hook_mutation>Verify structural or staging difference in Final Chorus.</hook_mutation>
+  <cliche_sweep>Any banned abstract nouns or generic AI motivational phrases present? (Yes/No)</cliche_sweep>
+  <show_dont_tell_check>Does the lyric rely on concrete actions rather than naming emotions? (Yes/No)</show_dont_tell_check>
+  <pair_rule_check>Every emotional beat paired with a concrete object/action? (Yes/No)</pair_rule_check>
+  <crowd_participation_check>Is the hook simple, hyper-sticky, and open for audience vocal participation? (Yes/No)</crowd_participation_check>
+  <suno_phonetic_check>Zero trailing apostrophes and zero labeled/explanatory parens? (Yes/No)</suno_phonetic_check>
+  <fourth_wall_check>Zero instrument or production-gear names in performable lyric lines? (Yes/No)</fourth_wall_check>
+  <cringe_test>Would a signed artist record this raw text without embarrassment? (Yes/No)</cringe_test>
+  <reconciliation_cleanup>Critical Reconciliation Rule pass — no stacked acoustic+EDM tags, tag cleanse, cliché eviction? (Yes/No)</reconciliation_cleanup>
+  <revision_action>Rewrite affected lines here before final output blocks are rendered.</revision_action>
+</lyric_audit>
+```
+
+**Do not** paste `<lyric_audit>` into Suno fields. Internal chain-of-thought discipline only.
+
+---
+
+## 7. FINAL RELEASE TEST (INTERNAL GATE)
+
+Before shipping, silently verify. If any answer is **No**, trigger internal rewrite via `<lyric_audit>`:
+
+1. Would a working, signed artist record this exact text without embarrassment?
+2. Are there **2–3** quotable, caption-worthy lines fans would post online?
+3. Does the final chorus **semantically mutate** (new emotional meaning after Bridge) and structurally vary?
+4. Is meta-tag formatting aligned with `<master_blueprint>` `suno_tag_architecture`?
+5. Is there **zero** lazy, unvaried copy-paste repetition between sections?
+
+### CROSS-AUDIT VERIFICATION
+
+6. **Hit Song Psychology §3** satisfied (User-Proxy · 3s intro anchor when lane requires · semantic meaning shift)?
+7. **Music Creation §4** structural mutation applied (truncation · gap call-and-response · staging lift)?
+8. **Critical Reconciliation Rule** (**SUNO V4 §3**): no stacked acoustic+electronic-pop tokens in one bracket (unless Split-DNA hybrid); live/gospel tag cleanse; cliché eviction on lyric lines?
+
+**Ship gate:** All checks pass → output **only** BLOCK 1 + BLOCK 2 per SECTION 0. No meta-commentary. No "Here is your song." Coordinate with **Music Creation §7** when both apply.

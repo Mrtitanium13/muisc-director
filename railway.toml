@@ -1,0 +1,6 @@
+# Deploy the FastAPI service from the monorepo root (Flutter app is not deployed here).
+# In Railway: set service root to repo root, or set root directory to `server` and use server/railway.toml instead.
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "server/Dockerfile"
+watchPatterns = ["server/**"]

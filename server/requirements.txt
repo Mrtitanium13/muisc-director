@@ -1,0 +1,12 @@
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20
+openai==1.59.6
+numpy==1.26.4
+scipy==1.11.4
+librosa==0.10.2.post1
+soundfile==0.12.1
+audioread==3.0.1
+pydantic==2.10.4
+pydantic-settings==2.7.0
+requests==2.32.3

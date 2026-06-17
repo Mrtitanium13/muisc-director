@@ -1,0 +1,76 @@
+
+SECTION 1D — EDM PRODUCTION ENGINE (CONDITIONAL)
+
+**Activation:** Apply **only** when **Primary genre** and/or **Fusion / sub-genre** explicitly indicates **EDM** or an **EDM sub-genre** (house, techno, trance, progressive, big room, festival, hardstyle, bass music, dubstep, drum & bass, future bass, UK garage, electro, breaks). If **not** EDM-oriented, **omit** this module — **zero** EDM tail in Block 1.
+
+**Scope:** **Block 1 — STYLE only.** **Never** Block 2; **never** lyrics. **Silent** — no “EDM module” labels in output.
+
+**Word budget & placement (SECTION 0 caps):**
+  • Block 1 **total:** **≤150 words** and **≤1000 characters** (main prose + EDM tail **combined**).
+  • **EDM tail:** **35–45 words** inclusive (all eight conceptual slots in that budget).
+  • **Main prose:** leave room for the tail — typically **~105–115 words** when the tail is **~35–40**; **always** enforce **main + tail ≤150** (e.g. tail **45** → main **≤105**; tail **35** → main **≤115**). Same **1000-character** ceiling for the **whole** paragraph.
+  • **Placement:** append the **EDM** tail after main prose. If **SECTION 1F** (DJ Intro/Outro Mode) is also active, **1F** is the **absolute end** of Block 1 — place **this** tail **before** the **1F** clause; **compress** the **DJ transition** slot here so it **does not** repeat **1F**’s sixteen-bar intro/outro rules.
+
+**Tail construction:**
+  • **One** continuous comma-linked clause sequence; end the tail with **one** final **period**.
+  • **No** bullets, **no** brackets, **no** section headers in the pasted text. Prefer **comma-only** chaining between slots — **avoid** filler conjunctions **and / with / using** as glue between the eight conceptual beats (dense engineer shorthand).
+  • **Anti-duplication:** If main prose already states **LUFS + dBTP**, **do not** repeat the same numbers in the tail — use a short clause such as **mastered to club spec** (or equivalent) and **spend** freed words on **stereo, kick/bass, drop, FX, DJ** detail so the tail still hits **35–45 words**.
+  • **Conceptual order (strict):** Gear → Mastering & stereo → Kick–bass → Kick transient → Drop timing → FX choreography → Energy pacing → DJ transition.
+
+**Component selection (pick exactly one per category — paraphrase; fresh wording every run; do not copy examples verbatim):**
+
+**GEAR** (target **4–6 words** in this slot, within the overall tail budget):
+  • Festival / Big Room / Progressive → e.g. C800G into Neve 1073, SSL bus glue, light tape
+  • Techno / House → e.g. SM7B into Neve 1073, tight compression, minimal tape
+  • Hardstyle → e.g. dynamic chain, driven 1176, heavy saturation, SSL glue
+  • Trance → e.g. U47 into Neve 1073, Pultec clarity, wide bus glue
+  • Bass / Dubstep → e.g. SM7B into Neve 1073, fast compression, Pultec low-end, SSL punch
+
+**MASTERING + STEREO** (target **5–7 words** for this slot unless deduped per above):
+  • e.g. −6 to −8 LUFS, −1.0 dBTP, mono sub, ultra-wide tops
+  • e.g. −7 to −9 LUFS, −1.0 dBTP, tight low-end, expansive stereo field
+  • e.g. −5 to −7 LUFS, −1.0 dBTP, centered bass, wide synth layers
+
+**KICK–BASS** (target **3–4 words**):
+  • kick-dominant, minimal bass overlap
+  • bass-dominant, supporting kick
+  • sidechained bass, punchy kick
+  • tight kick, controlled bass
+
+**KICK TRANSIENT** (target **2–3 words**):
+  • clicky transient kick
+  • punchy kick
+  • soft round kick
+  • distorted kick
+
+**DROP TIMING** (target **3–4 words**):
+  • short pre-drop cut
+  • one-bar pre-drop silence
+  • extended pre-drop tension
+  • fake drop then impact
+
+**FX CHOREOGRAPHY** (target **4–5 words**):
+  • noise riser, uplifter, clean impact
+  • layered risers, snare roll, heavy impact
+  • soft riser, filtered lift, light impact
+  • stutter riser, glitch fills, sharp impact
+
+**ENERGY PACING** (target **3–4 words**):
+  • wave energy flow
+  • linear energy rise
+  • peak valley dynamics
+  • double drop structure
+  • steady hypnotic groove
+
+**DJ TRANSITION** (target **4–5 words**):
+  • drum-led intro, drum outro, sixteen-bar phrasing
+  • filtered intro, full-band outro, thirty-two-bar phrasing
+  • percussion intro, bass outro, eight-bar phrasing
+
+**Output shape (conceptual slots only — no bracket labels in user-facing text):** Gear, Mastering/Stereo, Kick–Bass, Kick transient, Drop timing, FX, Energy, DJ — **one** comma-dense flow, **35–45 words**, **one** closing **period**.
+
+**Silent pre-output validation:** Block 1 = **one** paragraph; tail **35–45** words; total **≤150** words / **≤1000** chars; all **eight** beats present **in order**; no labels/brackets/explanations; no duplicate LUFS/dBTP if already in main prose; if over budget, **trim** main prose filler or **compress** gear/mastering phrasing **before** finalizing — **never** exceed SECTION 0.
+
+**Reference (pattern only — do not copy):**
+
+C800G into Neve 1073, tight compression, Pultec clarity, SSL glue, light tape, −6 to −8 LUFS, −1.0 dBTP, mono sub, ultra-wide leads, punchy kick, sidechained bass, clicky transient kick, one-bar pre-drop silence, layered risers, snare roll, heavy impact, double drop structure, drum intro, drum outro, sixteen-bar phrasing.

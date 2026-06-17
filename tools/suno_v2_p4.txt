@@ -1,0 +1,206 @@
+GENRE REFERENCE APPENDIX (internal library — mine for tags only; never paste this whole appendix into Suno fields)
+
+GENRE & SUB-GENRE ANCHORS
+
+EDM: house · deep house · tech house · progressive house · tropical house · techno · minimal techno · hard techno · acid techno · big room techno · melodic techno · big room EDM · hardstyle · euphoric hardstyle · rawstyle · industrial hardstyle · hard bounce · EDM bounce · Melbourne bounce · vinahouse · Vietnam house bounce · drum and bass · liquid DnB · neurofunk · dubstep · riddim dubstep · brostep · future bass · wave · bubblegum bass · trance · psytrance · uplifting trance · electro · festival EDM · afro house
+
+Hip Hop: boom bap · lo-fi hip hop · East Coast hip hop · West Coast hip hop · trap · dark trap · melodic trap · drill · UK drill · Chicago drill · NY drill · conscious hip hop · jazz rap · cloud rap · phonk · Memphis rap · Southern hip hop · crunk · gangsta rap
+
+R&B / Soul: neo-soul · contemporary R&B · quiet storm · new jack swing · alternative R&B · funk · psychedelic soul · Motown soul · gospel soul · blues soul · bedroom R&B
+
+Gospel / Christian: gospel · praise and worship · contemporary Christian music · gospel soul · Southern gospel
+
+Pop: synth-pop · dream pop · indie pop · electropop · power pop · hyperpop · K-Pop · J-Pop · Mandopop · Afropop · Latin pop · art pop · baroque pop · chamber pop · bubblegum pop
+
+Rock: indie rock · alternative rock · post-rock · shoegaze · grunge · hard rock · heavy metal · thrash metal · death metal · black metal · prog rock · psychedelic rock · math rock · emo · post-hardcore · punk rock · surf rock · stoner rock · noise rock
+
+World / Other: reggae · dancehall · dub · reggaeton · Afrobeats · Afrofusion · amapiano · organic amapiano · piano amapiano · bossa nova · samba · flamenco · highlife · jazz · bebop · smooth jazz · ambient jazz · free jazz · blues · Delta blues · Chicago blues · country · bluegrass · folk · Americana · outlaw country · classical · neo-classical · cinematic · orchestral · ambient
+
+BPM-GENRE ALIGNMENT REFERENCE
+
+40–60 BPM → ambient · downtempo · dark ambient · slow ballad · slow praise and worship ballad
+60–75 BPM → lo-fi hip hop · chill hop · slow soul · dub
+75–95 BPM → boom bap · reggae · slow trap · mid-tempo R&B
+85–135 BPM → Mandopop · J-Pop · K-Pop
+95–115 BPM → hip hop · neo-soul · Afrobeats · mid-tempo pop
+100–116 BPM → amapiano · slow jam · lo-fi house · deep dub
+65–130 BPM → praise and worship (ballad 65–80 · mid-tempo 90–110 · upbeat 110–130)
+115–128 BPM → pop · deep house · tech house · nu-disco · progressive house
+128–135 BPM → progressive house (peak sweet spot) · trance
+128–138 BPM → festival EDM · EDM bounce · melodic techno · vinahouse · Vietnam house bounce
+128–145 BPM → hard bounce · Melbourne bounce
+134–145 BPM → techno · big room techno · melodic techno (peak range)
+138–152 BPM → hard techno · hard house · big room EDM · big room techno
+150–162 BPM → hardstyle · hard bounce
+160–175 BPM → drum and bass · jungle · liquid DnB · neurofunk
+170–200 BPM → metal · hardcore · punk · speedcore
+
+INSTRUMENT COMMAND VOCABULARY — KEYS, DRUMS, BASS, GUITAR, ELECTRONIC LANES
+
+KEYS & SYNTHS: Rhodes electric piano · Wurlitzer · Hammond B3 organ · grand piano · upright piano · honky-tonk piano · Moog Minimoog · Prophet-5 · Roland Juno-106 · DX7 FM synthesizer · Mellotron · clavinet · harpsichord · kalimba · celesta · vibraphone · supersaw lead synth · wavetable synth lead · analog pad · FM bell synth · Juno chorus pad · string machine · arp synth · sub-bass drop synth · wobble bass synth · reese bass · pluck synth · chiptune lead · hardstyle reverse-bass synth · distorted hardstyle lead · euphoric trance supersaw · TB-303 acid synth · modular acid sequence · industrial noise synth · melodic techno pad wash · hypnotic minimal synth sequence
+
+DRUMS & PERCUSSION: TR-808 kick · TR-909 four-on-the-floor kick · LinnDrum · MPC-chopped breaks · boom bap drum kit · swung boom bap · brushed jazz kit · rod jazz kit · live acoustic kit · tight room kit · open room kit · hardstyle distorted reverse-bass kick · hard bounce offbeat kick accent · industrial hard techno kick · amapiano log drum pattern · shuffling amapiano hi-hat groove · tablas · djembe · congas · bongos · shaker · tambourine · shekere · taiko drums · orchestral timpani · snare roll · marching snare · trap hi-hat rolls · swung 16th hi-hats · triplet hi-hat pattern · fast rolling 16th hi-hats · white noise sweep fill · cymbal rush
+
+BASS: Fender P-Bass · Fender Jazz Bass · upright double bass · fretless bass · 808 sub-bass · synth bass · Moog bass · slap bass · walking bass line · reggae bass · dub bass · funk bass · sub-drop bass · Melbourne bounce offbeat bass stab · hardstyle distorted sub kick bass · hard techno acid TB-303 bassline · amapiano warm round sub bass · progressive house rolling melodic bass · melodic techno sub movement
+
+GUITAR: Fender Stratocaster clean tone · Les Paul overdriven rhythm · acoustic fingerpicking · nylon-string classical guitar · steel-string acoustic strumming · electric rhythm guitar · palm-muted chugging · wah guitar · slide guitar · lap steel · banjo · resonator guitar · 12-string acoustic
+
+INSTRUMENT COMMAND VOCABULARY — ORCHESTRAL & WORLD
+
+ORCHESTRAL & WORLD: orchestral strings · string quartet · solo violin · pizzicato cello · tremolo strings · legato strings · staccato strings · French horn swells · brass section stabs · jazz horn section · trumpet · muted trumpet · flugelhorn · trombone · flute · piccolo · clarinet · oboe · bassoon · English horn · bamboo flute · shakuhachi · pan flute · duduk · sáo trúc Vietnamese bamboo flute · đàn tranh Vietnamese zither · đàn bầu Vietnamese monochord · erhu Chinese fiddle · guzheng Chinese zither · pipa Chinese lute · dizi Chinese transverse flute · yangqin Chinese hammered dulcimer · sitar · oud · kora · mbira · steel drum · marimba
+
+PRAISE & WORSHIP SPECIFIC: electric guitar (clean chorus tone) · acoustic rhythm guitar · piano (contemporary worship voicing) · Hammond B3 organ (warm drawbar setting) · synth pad wash · orchestral string swells · worship choir harmonies · SATB choir · lead vocal with warm reverb · ambient reverb guitar textures
+
+PRODUCTION & MIX VOCABULARY
+
+DYNAMICS: sidechain compression · pumping sidechain · gated reverb · brick-wall limiting · parallel compression · dynamic mix · wide stereo field · mono bass · hard limiting · bus compression · SSL-style compression · Neve preamp warmth
+
+REVERB & SPACE: heavy room reverb · cathedral reverb · spring reverb · plate reverb · dry intimate mix · cavernous reverb wash · tight snare room · ambient reverb tail · short pre-delay reverb · infinite reverb · shimmer reverb
+
+DELAY: ping-pong stereo delay · tape delay · slapback delay · rhythmic 16th delay · dotted eighth delay · reverse delay · infinite feedback loop
+
+DISTORTION & SATURATION: tape saturation · tube amp warmth · amp crunch · fuzz pedal · overdrive · lo-fi distortion · bitcrusher · vinyl crackle · tape hiss · wow and flutter · analog warmth · cassette texture · harmonic saturation · hardstyle kick distortion · industrial clipping · noise floor texture
+
+TEXTURE & SAMPLING: vinyl crackle · tape hiss · room noise · SP-1200 grit · MPC3000 swing · 12-bit sampling texture · dusty sample chop · pitch-shifted vocal chop · chopped and screwed · time-stretched pads · granular texture · white noise sweep · riser FX · DJ siren sweep · air horn build
+
+ERA PHRASE UNLOCKS (examples — weave into Block 1 prose, never as a labeled dump)
+
+“90s East Coast hip hop production” → boom bap aesthetic · “808s & Heartbreak era” → auto-tuned trap-soul palette · “late 70s Motown” → vintage soul system · “tape-saturated analog warmth” → warmth + harmonic drive · “SP-1200 grit and MPC3000 swing” → lo-fi sampled hip hop texture · “SSL-compressed punk-era rock” → raw punchy rock · “Afterlife label aesthetic” → melodic techno emotional depth · “Golden Era hardstyle 2008–2012” → euphoric reverse-bass hardstyle · “amapiano Soweto sound 2019–2022” → log drum + jazz piano palette · “Vietnam house bounce” / vinahouse wave → pentatonic bounce + traditional samples
+
+ERA & PRODUCTION AESTHETIC TAGS
+
+HIP HOP ERA → 90s East Coast · Golden Age hip hop · J Dilla era · early 2000s trap · 808s & Heartbreak era · SoundCloud rap era · Drill era production · phonk revival
+
+R&B / SOUL ERA → 70s Motown soul · 80s quiet storm · 90s new jack swing · early 2000s neo-soul · contemporary ATL R&B
+
+ROCK ERA → 60s psychedelic · 70s arena rock · 80s hair metal · 90s grunge · Britpop era · 2000s indie rock
+
+ELECTRONIC ERA → classic Chicago house · acid house era · late 90s big beat · 2000s electro · 2010s EDM boom · post-EDM underground · Y2K hyperpop · new rave · Golden Era hardstyle 2008–2012 · rawstyle era 2013–2016 · Afterlife label aesthetic · melodic techno wave 2018–present · Melbourne bounce era 2012–2016 · amapiano Soweto sound 2019–2022 · vinahouse Vietnamese EDM wave 2016–present
+
+WORSHIP ERA → 90s Vineyard worship movement · early 2000s Hillsong era · 2010s Bethel/Jesus Culture wave · 2020s Maverick City era · contemporary worship production aesthetic
+
+MANDOPOP ERA → 90s golden era Mandopop (Teresa Teng influence) · early 2000s Jay Chou hip-hop fusion era · 2010s contemporary Mandopop production · modern C-Pop crossover aesthetic
+
+GENRE DNA MATRIX (internal library — **ordered for this app’s genre picker**: Hip Hop → R&B → core EDM → Pop → Rock/Metal → Gospel → Jazz → Reggae/World → Cinematic → specialty. Each cell is **prompt fuel**: fold into Block 1 as flowing prose, never paste the table.)
+
+| Boom Bap / East Coast | MPC-chopped breaks; swung 16th hi-hats; sharp snare on 2&4; punchy kick pocket | Deep sub-focused 808 or Fender P-Bass shadowing the kick | Sampled soul/jazz chops; Rhodes fragments; staccato strings; minor-key piano loops | Vinyl crackle; SP-1200 grit; warm punchy mono bass |
+| Trap | TR-808 kick; triplet hi-hat rolls; crisp snap/clap snare; sub-heavy grid | Heavy 808 with sliding pitch tails; dominant low end | Sparse minor keys; dark pads; string swells; vocal chops | Loud master; 808-forward; bright crashing highs |
+| UK Drill | Hard kick-snare grid; fast rolling hi-hats; dark off-beat 808 patterns | Deep sliding 808 with portamento; sinister sub | Dark piano loops; drill string stabs; minor orchestral hits | Dark; hard-compressed; aggressive presence |
+| Lo-Fi Hip Hop | Soft dusty kick; loose snare; subtle swing; brushed ghost notes | Mellow synth bass or rounded P-Bass; gentle sidechain | Rhodes; warped tape chords; music-box or nostalgic melodic samples | Crackle; tape hiss; intimate narrow mix; soft limiting |
+| Phonk | Gritty loop-driven drums; cowbell/perc accents; Memphis-adjacent swing | Muddy warm sub or 808; saturated low mids | Chopped soul; eerie pads; choral samples; smoked-out textures | Lo-fi distortion; pumping; hypnotic driving energy |
+| Cloud Rap | Sparse kit; roomy snare; floaty off-grid hats | Wide sub; minimal harmonic movement | Ethereal pads; shimmer keys; distant melodic samples | Hazy washes; long verbs; wide stereo drift |
+| Jazz Rap | Swing ride-led kit; crisp snare; live-feel hats | Electric or upright pocket bass; walking fills where genre calls for it | Live keys; horn stabs; vibraphone or double-bass samples | Dry-to-medium room; dynamic; “live session” closeness |
+| R&B / Neo-Soul | Live-feel programmed drums; open snare; shimmering hats; ghost notes | Neo-soul Fender or synth bass; deep pocket | Rhodes; Wurlitzer; lush pads; clean guitar comps; string swells | Intimate warm mix; smooth low end; vocal-forward spatial reverb |
+| Deep House / Tech House | TR-909 four-on-the-floor; rim clap 2&4; swung hats | Warm sub locked to kick; melodic funky bassline | Jazzy chord stabs; filtered vocal chops; Rhodes licks; guitar plucks | Warm analog; sidechain pumping synths to kick |
+| House | Four-on-the-floor kick; clap; shuffled 16ths; classic club lift | Bouncy bassline or rolling sub under chords | Piano stabs; organ; disco strings; hook vocal chops | Punchy club balance; clear mids; controlled sub |
+| Progressive House | Rounded kick; rim on 2&4; hats that gain density over 8–16 bars | Warm rolling melodic bass; smooth sub glued to kick | Evolving chord cycles; lush breakdown pads; delicate arpeggios; string accents | Long emotional builds; wide mix; breakdown intimacy vs peak euphoria |
+| Techno | Precise four-on-the-floor; rim or snare 2&4; layered hypnotic hats | Deep rolling sub; slowly evolving bass motifs | Dark pads; acid loops; sparse evolving sequences; noise texture | Hypnotic; wide field; DJ-longform momentum |
+| Melodic Techno | Driving kick; clean snare; rolling hats; restrained percussion | Warm sub locked to kick; slow harmonic bass movement | Emotional leads with long tails; lush pads; minor progressions; arpeggios | Cinematic tension-release; immersive width; deep sub foundation |
+| Big Room Techno | Festival-scale kick; industrial snare; impact fills pre-drop | Heavy sub on the one; midrange industrial bass motifs | Dark leads swelling to front; tension pads; arpeggiated climbs | Stadium loudness; darkness with euphoric drop release |
+| Hard Techno | Relentless industrial kick; distorted snare cracks; dense 16th hats; metal percussion | Distorted mid-heavy bassline; driven sub; TB-303 growl between kicks | Noise textures; raw acid; minimal melody; machine FX | Maximum RMS aggression; claustrophobic; nonstop forward drive |
+| Hardstyle | Reverse-bass distorted kick as grid anchor; offbeat stabs; layered snare-clap; noise builds | Reverse-bass tied to kick; hard sub; mid distortion in kick body | Euphoric supersaws; emotional harmony; orchestral stabs; uplifting arps | Brick-wall loud; kick-dominant; bright anthemic peak |
+| Hard Bounce | Punchy kick; tight offbeat bounce accent; snappy snare-clap; aggressive open hats | Staccato offbeat bass stabs; heavy sub drops locked to bounce | Festival lead hooks; chord stab walls; build vocal chops; DJ FX | Festival-bright; punchy highs; aggressive low-end impact |
+| EDM Bounce | Hard kick; offbeat bounce accent; crisp clap-snare; rising hats; noise-drop | Sub-heavy drops; Melbourne-style offbeat stabs | Massive stabs; air-horn/siren builds; melodic riffs; chops | Brick-wall EDM master; huge drop; scooped mids optional for impact |
+| Future Bass | Punchy hybrid kick; trap-influenced hats; snappy snare; riser-driven builds | Heavy sub drops; aggressive sidechain bass | Supersaw chords; wavetable leads; vocal chops; lush pads | Ultra-wide; supersaturated drops; emotional peak choruses |
+| Drum & Bass | Break-driven or rolling DnB; fast 16ths; amen DNA optional; tight snare | Reese or rolling bass; sub stacks; neuro tension optional | Stabs; atmospheres; arpeggios; lead hooks per sub-style | Punchy transient clarity (neuro) or liquid warmth and space |
+| Dubstep | Half-time snare on 3; massive sub drops; tear or melodic leads | Wobble or modern clean sub design; LFO movement | Growls; supersaw hooks; minimal verses vs maximal drops | Heavy sub discipline; stereo bass care; pre-drop silence tricks |
+| Trance | Driving kick; classic offbeat or four-on-the-floor energy; rolling hats | Rolling offbeat bassline or pumping sub per era | Supersaw pads; plucks; acid; euphoric lead themes | Bright; wide; long plate/shimmer on leads |
+| K-Pop | Hybrid acoustic-electronic kit; tight 808; crisp programmed hats | Tight sub following chord rhythm; clean low mid | Synth hook leads; trap hats; orchestral drop hits; stacked harmonies | Hyper-polished; transparent highs; competitive loudness |
+| Synth Pop / Latin Pop | Modern tight pop kit; grid-locked snare; shimmering hats | Synth bass or melodic electric supporting changes | Synth topline hooks; keys; guitar layers as era demands | Glossy; mid-forward vocal; controlled sub |
+| Mandopop | Polished kit; precise snare; smooth hats; occasional woodblock/gong accents | Clean melodic bass; mid-warm supportive movement | Piano anchor; strings + pentatonic phrases; erhu/guzheng/pipa/dizi colors | Bright commercial clarity; cinematic strings; authentic traditional sprinkles |
+| Reggaeton / Latin Trap | Dembow kick/snare grid; rolling hats; rim textures | Heavy 808 in dembow pocket; melodic bass accents | Piano stabs; brass; synth melody; trap FX touches | Warm Latin loudness; heavy sub; bright percussion air |
+| Afrobeats | Layered percussion; shekere; talking drum; skip-feel kicks | Melodic bass dancing around the one | Highlife-tinged guitar; keys; staccato horns; pitched percussion | Warm tropical punch; bright mids; spacious club depth |
+| Reggae | One-drop kick (beat 3); echoed snare; bubbling offbeat hats | Round deep dub/reggae bass under harmony | Rhythm guitar skank; organ bubbles; melodica or horn fills | Spring/dub echoes; bass-weighted; spring reverb color |
+| Dancehall | Bouncy dembow-leaning drums; rim shots; clap layers | Mobile rhythmic sub; percussive bass accents | Synth brass; chord stabs; pluck hooks | Club-ready; punchy; forward vocal presence |
+| Dub | Steppers or one-drop; heavy spring/snare throws; sparse kicks | Sub-heavy dub bass; filter rides | Sparse skank; melodica; FX dub sirens | Echo feedback; spring reverb; sound-system bass |
+| Rock / Alternative | Live kit; driving hats; crash energy | Root-note or driven bass guitar under riffs | Rhythm + lead guitar; doubles; occasional keys | Amp room; punchy midrange; live band glue |
+| Metal | Double kick where genre demands; fast hats; cracking snare | Distorted bass doubling guitar riffs | Down-tuned guitars; lead shred; harmonic layers | Dense; aggressive mids; saturated drum bus |
+| Punk | D-beat or fast four-on-the-floor; room snare; urgency | Aggressive picked bass | Power chords; minimal leads; shout energy | Raw; fast; limited polish — performance first |
+| Praise and Worship | Live-feel kit; rim verses to crash choruses; gentle hat swing; swell rolls | Warm round bass serving changes — never fighting vocals | Clean chorus guitar; piano/pads; SATB stacks building to declaration | Congregational width; long musical verbs; intimate verse → anthem chorus |
+| Gospel (Contemporary) | R&B-crossover drums; big claps; fills; tempo lifts | Warm synth or electric bass; walking motion | Hammond; piano; choir stacks; call-and-response BGVs | Church-to-arena dynamics; polished but spirit-forward |
+| Jazz (Acoustic) | Brushed or rod kit; ride-led swing; sparse kick | Walking upright bass; arco swells optional | Piano extensions (maj7/min9); horn solo real estate | Dry intimate room; natural dynamics; minimal FX |
+| Jazz Fusion | Tight live/electric hybrid kit; crisp snare; syncopated kicks | Electric bass with growl; slap or finger runs | Rhodes/keys; horn section hits; guitar fusion leads | Polished stage depth; dynamic solos; hi-fi but human |
+| Big Band | Swing ride; ensemble kicks; shout hits; tom fills | Upright walking; section doubles | Brass sections; sax soli; call-response horn lines | Concert hall width; natural section balance |
+| Smooth Jazz | Soft programmed or light live kit; breezy hats | Warm round electric bass; minimal intrusion | Sax lead; electric piano pads; tasteful guitar | Radio-polish; gentle compression; nighttime intimacy |
+| Orchestral / Trailer | Taikos; snare rolls; timpani swells; impacts | Pizz cello/contrabass lines or sub drones | Legato/tremolo strings; brass swells; solo motif | Wide stage; cathedral verb; pp-to-ff dynamics |
+| Ambient Score | Pulses or frame drums sparse; no clutter | Sub drones; slow LFO bass | Textures; granular pads; evolving oscillators | Near-silent lows to vast width; mix as “picture frame” |
+| Middle Eastern (fusion) | Hybrid kit + frame/shaker layers; dramatic tom fills | Sub under oud-adjacent lows or cello doubles | Oud; duduk; quarter-tone melody; string ostinato | Hall verb; cinematic width; leave space for vocal narrative |
+| Latin (non-reggaeton pop/urban) | Percussion-forward kit; clave-aware; timbale or conga touches | Groove bass; rhythmic stabs | Acoustic guitar or cuatro colors; brass punches; piano montunos | Warm mids; dancefloor clarity without dembow lock-in |
+| Vinahouse | Bouncy four-on-the-floor; sharp offbeat accent; snappy snare-clap; fast 16th hats; cymbal rushes | Punchy sub on bounce; offbeat stabs; bass follows pentatonic hook | Pentatonic hooks; bright leads; đàn tranh · sáo trúc · đàn bầu samples; V-pop chops + English ad-libs | Bright festival mix; bounce-forward; traditional color over club impact |
+| Amapiano | Log drum as signature layer; shuffling hats; warm kick; African percussion bed | Round sub locked to log groove; gentle melodic bass motion | Jazz piano runs; soft pads; gospel-leaning stacks; sax/flute; marimba sparkle | Deep warm space; communal groove; breathing arrangement dynamics |
+
+ARTIST REFERENCE BANK (INTERNAL TRANSLATION LEXICON ONLY — **ARTIST DNA TRANSLATION ENGINE**: use to extract traits; **never** emit these names in Block 1, Block 2, or follow-ups)
+
+Vinahouse: Hoaprox · Masew · DJ Trang Moon · Andiez · Mr. Siro (EDM edits) · Lou Hoàng · DJ Tuấn Hoài · Hằng BingBoong (vocal features) · Kai Đinh
+
+Praise & Worship: Hillsong Worship · Bethel Music · Elevation Worship · Chris Tomlin · Kari Jobe · Phil Wickham · Maverick City Music · Cody Carnes · Brooke Ligertwood · Jesus Culture · Brian Johnson · Pat Barrett
+
+Mandopop: Jay Chou · Teresa Teng · Faye Wong · JJ Lin · Stefanie Sun · Wang Leehom · A-mei · G.E.M. (Gloria Tang) · Eason Chan · Sandy Lam · Eric Chou · Mayday (五月天) · Fish Leong · Stanley Huang
+
+Boom Bap / East Coast: J Dilla · Pete Rock · DJ Premier · Nas · Gang Starr · Mobb Deep · Wu-Tang · Showbiz & A.G. · Large Professor
+
+Trap / Dark Trap: Metro Boomin · Southside · Mike Will Made-It · Future · Travis Scott · Playboi Carti · Young Thug
+
+UK Drill: Central Cee · Pop Smoke · Digga D · Steel Bangaz · ArrDee · Dave (UK)
+
+Deep House / Tech House: Daft Punk · Disclosure · Jamie xx · Four Tet · Bicep · Kaytranada · Larry Heard
+
+Future Bass / Festival EDM: Flume · Porter Robinson · ODESZA · Cashmere Cat · Rustie · What So Not
+
+K-Pop / J-Pop: BTS · aespa · NewJeans · G-Dragon · TWICE · BLACKPINK · IVE · LE SSERAFIM
+
+Neo-Soul / R&B: D'Angelo · Erykah Badu · Frank Ocean · SZA · H.E.R. · Jhené Aiko · Daniel Caesar · Syd
+
+Gospel / praise and worship: Kirk Franklin · Fred Hammond · Tye Tribbett · Hezekiah Walker · CeCe Winans — **Nigerian / African contemporary gospel (draw production + vocal lift from when genre, user context, or vibe fits):** Sinach · Frank Edwards · Nathaniel Bassey · Mercy Chinwo · Moses Bliss · Ada Ehi
+
+Jazz: Miles Davis · John Coltrane · Herbie Hancock · Kamasi Washington · Robert Glasper · Thundercat
+
+Afrobeats / Afrofusion: Burna Boy · Wizkid · Davido · Fela Kuti · Adekunle Gold · Fireboy DML · Rema · Tems
+
+Reggae / Dub: Bob Marley · Lee Scratch Perry · Buju Banton · Damian Marley · Augustus Pablo · King Tubby
+
+Rock / Shoegaze: Arctic Monkeys · Radiohead · My Bloody Valentine · Pixies · Nirvana · Queens of the Stone Age
+
+Metal: Metallica · Tool · Gojira · Mastodon · Pantera
+
+Cinematic / Orchestral: Hans Zimmer · Ennio Morricone · Max Richter · Ludovico Einaudi · Jóhann Jóhannsson · Nils Frahm
+
+Hardstyle: Headhunterz · Brennan Heart · Wildstylez · Da Tweekaz · Radical Redemption · Angerfist · Noisecontrollers · Showtek (early era) · Coone · D-Block & S-te-Fan
+
+Hard Bounce: Timmy Trumpet · VINAI · W&W · Blasterjaxx · Bassjackers · Will Sparks · Joel Fletcher · Hardwell (2012–2015 era)
+
+Hard Techno: Sara Landry · SPFDJ · Alignment · Layton Giordani · Paula Temple · DJ Rush · Rebekah · Oscar Mulero
+
+Techno: Richie Hawtin · Jeff Mills · Amelie Lens · Charlotte de Witte · Adam Beyer · Sven Väth · Nina Kraviz · Chris Liebing · Ben Klock · Blawan
+
+EDM Bounce: Timmy Trumpet · VINAI · Blasterjaxx · Bassjackers · Showtek · Will Sparks · Joel Fletcher · Carnage
+
+Melodic Techno: Tale of Us · Massano · ARTBAT · Innellea · Anyma · Agents of Time · Adriatique · Enrico Sangiuliano · Recondite
+
+Big Room Techno: UMEK · Alan Fitzpatrick · Jon Rundell · Alignment · Reset Robot · Dense & Pika
+
+Progressive House: Eric Prydz · deadmau5 · Sasha · John Digweed · Faithless · Chicane · Lane 8 · Tube & Berger · Yotto · Patrice Bäumel
+
+Vietnam House Bounce: Hoaprox · Masew · DJ Trang Moon · Mr. Siro (EDM edits) · Lou Hoàng · DJ Tuấn Hoài
+
+Amapiano: DJ Maphorisa · Kabza De Small · Focalistic · Young Stunna · Sha Sha · Daliwonga · MaWhoo · Busta 929 · Tyler ICU · Vigro Deep · Uncle Waffles
+
+BEASTMODE — GENRE-SPECIFIC ESCALATIONS (when /BEASTMODE active, layer these on top of global BEASTMODE rules)
+
+| Vinahouse | Most authentic and precise traditional Vietnamese instrument sampling, sharpest pentatonic hook delivery, most energetic offbeat bounce dynamics with crisp four-on-the-floor foundation, peak Vietnamese club festival energy |
+| Praise and Worship | Most spiritually immersive congregational atmosphere, widest most enveloping reverb on vocals and guitars, choir harmonies at full SATB transparency, lead vocal at its most emotionally raw and vulnerable — intimate depth, never arena loudness |
+| Mandopop | Most emotionally precise vocal delivery with maximum melodic phrasing control, densest traditional Chinese instrument integration woven into Western pop production, most cinematic string arrangement, deepest cultural authenticity |
+
+Quick Reference — All Codes
+Code  Type  What It Does
+/UDA  Power Code  Music-theory detail in arrangement notes and style tags
+/L99  Power Code  Boutique gear names replace generic production language
+/BEASTMODE  Power Code  Max energy, high-impact descriptors everywhere
+/WRITEIT  Trigger  Activates Path C — original lyric generation
+/GRIT  Temperament  Street-smart, blunt, lived-in
+/TENDER  Temperament  Vulnerable, quiet, aching
+/FURY  Temperament  Confrontational, cathartic, raw nerve
+/HAZE  Temperament  Dreamlike, fragmented, impressionistic
+/SWAGGER  Temperament  Confident, rhythmic, wordplay-heavy
+/HYMN  Temperament  Reverent, communal, timeless simplicity
+/WIRED  Temperament  Anxious, overstimulated, fast-cut
