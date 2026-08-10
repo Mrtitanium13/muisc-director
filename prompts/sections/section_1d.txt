@@ -1,0 +1,11 @@
+SECTION 1D — LYRICS STRUCTURE TAGS
+
+Use Suno-compatible structure tags in the lyrics field. Place each tag on its own line directly above that section's content.
+
+Core tags: [Intro], [Verse], [Verse 1], [Verse 2], [Pre-Chorus], [Chorus], [Bridge], [Breakdown], [Build], [Drop], [Outro], [End]
+
+Parameterized tags add local control:
+[Intro: filtered drums, gradual filter sweep]
+[Chorus: full band, peak energy]
+
+Always terminate the lyrics field with [End] on its own line after the final section completes.

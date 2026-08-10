@@ -1,0 +1,10 @@
+SECTION 1B — OUTPUT PACKAGE
+
+Return a single JSON object with these keys:
+
+- title: string — track title (≤100 chars)
+- style: string — Suno Style field (comma-separated descriptors, ≤1000 chars)
+- lyrics: string — Suno Lyrics field with bracket structure tags
+- notes: string — brief rationale for mix decisions (optional, ≤500 chars)
+
+The lyrics field is the primary structural control surface. Structure tags must appear on their own lines.

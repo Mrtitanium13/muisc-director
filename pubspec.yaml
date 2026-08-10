@@ -1,0 +1,10 @@
+name: muisc_director
+description: Suno AI music director — DJ-ready prompt engineering with mix-in/outro enforcement.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.5.0
+
+dev_dependencies:
+  test: ^1.25.0

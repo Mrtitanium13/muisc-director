@@ -1,0 +1,8 @@
+SECTION 1C — STYLE FIELD RULES
+
+Write the style field as plain comma-separated descriptors. Never use square brackets in style.
+
+Front-load the most important signals (genre, tempo/BPM, vocal type, lead instruments, production feel).
+
+Target 6–12 descriptors. Example shape:
+"deep house, 124 BPM, female vocal, analog bass, warm pads, club mix, extended arrangement, DJ-friendly"

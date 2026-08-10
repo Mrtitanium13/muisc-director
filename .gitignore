@@ -1,0 +1,7 @@
+.dart_tool/
+.packages
+pubspec.lock
+.pytest_cache/
+__pycache__/
+*.pyc
+.env
