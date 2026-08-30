@@ -1,29 +1,149 @@
+SECTION 1F — DJ INTRO / OUTRO GENERATION MODULE (CONDITIONAL)
 
-SECTION 1F — DJ INTRO / OUTRO GENERATION MODULE (SUNO-OPTIMIZED, CONDITIONAL)
+Activation tokens (one or both must be injected by runtime):
+  `[DJ INTRO: ON]`   and/or   `[DJ OUTRO: ON]`
 
-**Activation:** Apply **only** when the user message indicates **DJ Intro/Outro Mode** — i.e. **DJ INTRO (mix-in) = ON** and/or **DJ OUTRO (mix-out) = ON** (app toggles / API flags). If **both** are **off**, **omit** this module entirely.
+When these tokens are present, this module is MANDATORY and must be
+reflected in BOTH Block 1 (Style) and Block 2 (Lyrics). Suno gives
+highest weight to the Style field, so the DJ framing must appear EARLY
+in Block 1, not buried at the end.
 
-**Core objective (when active):** The generated track must support **beatmatch-friendly**, **low-complexity**, **loopable** DJ blending using **sixteen-bar** phrasing:
-  • **Intro (when DJ INTRO = ON):** **16 bars** mix-in — start from **drums / percussion / groove**; **gradually** add bass or rhythm layers; **no** full melody, **no** full chords, **no** lead vocals in that segment; **no** drop inside the intro.
-  • **Outro (when DJ OUTRO = ON):** **16 bars** mix-out — **gradually** strip melody and leads; **end** on **drums or groove loop**; **no** abrupt full stop; **no** drop inside the outro.
-  • **Arrangement:** Keep **16-bar phrase alignment** through the track where practical; intro and outro **rhythmically consistent** and **clean** for crossfades.
+### CORE PRINCIPLE: SUNO RENDERS WHAT YOU DESCRIBE
 
-**Behavior tags (internal — paraphrase in prose; do not print labels):**
-  • Intro: *16-bar drum intro, minimal elements, no lead, gradual layer build.*
-  • Outro: *16-bar drum outro, energy reduction, loopable ending.*
-  • Global: *DJ-friendly structure, 16-bar phrasing.*
+Suno does not count bars and does not obey "no vocals" instructions —
+negation phrasing ("no melody", "no chords") only primes the very
+things you are trying to avoid. What Suno reliably renders is POSITIVE
+sonic content: name the instruments that ARE playing, and give the
+intro/outro enough described musical events to fill real time.
 
-**Hard constraints:**
-  • **Do not** open the track with **lead vocals** when DJ INTRO is ON.
-  • **Do not** place **drops** inside the **16-bar** intro or **16-bar** outro regions.
-  • **Do not** use **abrupt** endings when DJ OUTRO is ON.
-  • **Do not** treat intro/outro as **8-bar** or **32-bar** unless the user explicitly overrides — default **16 bars** each when the respective flag is ON.
+Golden rules:
+- Name what plays: kick loop, closed hats, shaker groove, filtered
+  pad, white-noise riser, percussion layers entering one by one.
+- Say "wordless", "instrumental", "percussion-only", "rhythm section
+  only" — NEVER write the words "vocal", "melody", or "chords" inside
+  the intro/outro regions, not even negated.
+- An empty section tag collapses to seconds. Every DJ bookend tag
+  carries its own sonic description PLUS 1–2 follow-up instrumental
+  staging brackets inside the same region — that described content is
+  what forces real section length.
+- Duration language is "extended club mix-in", "slow layer-by-layer
+  build", "long loopable fade" — not bar counts.
 
-**Block 1 integration (silent):** Append **one** **compact** comma-style clause (**15–18 words** inclusive) as the **absolute final** fragment of Block 1’s **single** paragraph — **after** any **SECTION 1D** or **1E** tail. **No** explanation, **no** line break, **no** headings.
+### BLOCK 1 — STYLE: MANDATORY DJ FRAMING
 
-**Clause patterns (invent fresh wording; match ON flags):**
-  • **Both ON (~15–18 words):** e.g. *Sixteen-bar drum intro minimal build no lead, sixteen-bar drum outro loopable groove shed, DJ-friendly sixteen-bar phrasing, beatmatch-clean transitions.*
-  • **Intro ON only:** e.g. *Sixteen-bar drum-perc intro gradual bass-in, no lead vocal bar zero, DJ sixteen-bar phrasing, mix-in loopable groove tail.*
-  • **Outro ON only:** e.g. *Sixteen-bar drum-led outro strips melody to groove loop, no hard cut, DJ sixteen-bar phrasing, mix-out ready tail.*
+Place the DJ intent in the **first 40 words** of Block 1 if either
+flag is ON, in positive renderable terms. Do not hide it at the end.
 
-**Pre-output check:** If DJ flags are ON, Block 2’s **first** section (intro on) and/or **last** section (outro on) must **mirror** this arc; Block 1’s closing clause is **15–18 words** and **last** in the paragraph; **total** Block 1 still **≤150 words** / **≤1000 characters** — trim main prose or **compress** earlier tails (**1D**/**1E**) if needed.
+Algorithm Anchor with DJ framing:
+
+  "A [genre] DJ tool at [X] BPM in [key], built for club mix-[in/out]
+   blending: opens with an extended wordless percussion intro — kick
+   loop, closed hats, shaker groove, layers building one by one into
+   the first verse; closes on a long loopable kick-and-hats fade.
+   The body features..."
+
+This must appear before the main body description.
+
+### BLOCK 1 — CLOSING CLAUSE (still required)
+
+After the main body, append a compact reinforcement clause as the
+final sentence/fragment (12–18 words):
+
+Both ON:
+  "Intro opens wordless percussion-only and builds; outro rides kick
+   and hats into a long loopable fade."
+
+Intro only:
+  "Intro opens wordless percussion-only, building groove layers into
+   the first verse."
+
+Outro only:
+  "Outro strips to kick and hats with a long loopable fade tail."
+
+Total Block 1 still ≤150 words / ≤1,000 characters. If the DJ framing
+pushes the word count high, trim secondary instrumentation detail,
+never the DJ bookends or the Algorithm Anchor.
+
+### BLOCK 2 — LYRICS: CONTENT-RICH INSTRUMENTAL BOOKENDS
+
+Every DJ bookend is an `[Instrumental …]` tag that DESCRIBES ITS OWN
+MUSIC, followed by 1–2 extra instrumental staging brackets inside the
+same region (this is what forces real section length in Suno). Zero
+lyric lines and zero vocal cues inside the region.
+
+DJ INTRO ON (template):
+
+  [Instrumental Intro: four-on-the-floor kick loop, closed hi-hats,
+   shaker groove, extended wordless club mix-in]
+  [Percussion Build: open hats and filtered synth swell join the
+   groove]
+  [Riser: white noise sweep climbs into the first verse]
+
+Adapt the named instruments to the genre — log-drum tease for
+amapiano, breakbeat loop for drum & bass, reverse-bass pump for
+hardstyle, dembow percussion for reggaeton — always positive, always
+wordless.
+
+DJ OUTRO ON (template):
+
+  [Instrumental Outro: kick and hats groove, synth layers fading one
+   by one, long loopable mix-out]
+  [Fade Out: percussion slowly dissolves to a lone kick, loop-ready
+   tail]
+  [End]
+
+### LYRIC-FREE REGION RULES
+
+- If DJ INTRO is ON, the first lyric section must be `[Verse 1]` or
+  `[Verse]`, and it must come AFTER the intro region. No words, hums,
+  "(ooh)", or vocal cues inside the intro region.
+- If DJ OUTRO is ON, the outro region must be the last structural
+  content before `[End]`. No lyric lines, no ad-libs, no trailing
+  vocals.
+- Avoid bare `[Intro]` when DJ INTRO is ON — a bare `[Intro]` triggers
+  Suno's default early-vocal behavior. Use `[Instrumental Intro]`.
+
+### ANTI-OVERRIDE LANGUAGE
+
+Suno skips instructions it cannot render. Strong framing means STRONG
+POSITIVE INSTRUMENTAL FRAMING:
+
+  - "the track opens with drums and percussion"
+  - "the intro is a wordless DJ mix-in tool"
+  - "the outro is a loop-ready percussion fade"
+  - "Verse 1 is the first sung section"
+
+Never write "NO vocals / NO melody / NO chords" — those phrases raise
+the salience of the avoided elements and are routinely ignored or inverted.
+
+### STRUCTURAL PLACEMENT RULES
+
+- Keep the DJ intro/outro as the **outermost bookends**. Do not add a
+  second `[Intro]` or `[Outro]` elsewhere.
+- If both DJ INTRO and DJ OUTRO are ON, the structure is:
+    intro region → `[Verse 1]` → ... → `[Final Chorus]` → outro region
+    → `[End]`
+- If only DJ OUTRO is ON, you may keep a normal `[Intro]` but the
+  ending must be the instrumental outro region → `[End]`.
+
+### VERSION CONSIDERATIONS
+
+- v4.5: Weakest structural control — the content-rich bookend template
+  matters most here; keep follow-up staging brackets short.
+- v5.0: Better; repeat the "wordless percussion" framing in Block 1.
+- v5.5 / v5.5 Pro: Honors rich director's-note brackets — use the full
+  layer-by-layer templates with genre-specific instrument names.
+
+### PRE-OUTPUT QA (DJ MODE)
+
+Before shipping, verify:
+1. Block 1 mentions DJ intro/outro intent in the first 40 words, in
+   positive renderable terms.
+2. Every DJ bookend tag describes playing instruments and is followed
+   by 1–2 instrumental staging brackets in the same region.
+3. The words "vocal", "melody", "chords" never appear inside the
+   intro/outro regions — even negated.
+4. The intro/outro regions contain ZERO lyric lines, ad-libs, or
+   parenthetical vocal cues.
+5. No contradictory language elsewhere (e.g. "opens with vocal hook"
+   or "ends cold").

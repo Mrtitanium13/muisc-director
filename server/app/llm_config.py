@@ -23,11 +23,11 @@ LAOZHANG_LYRICS_PRIMARY_MODEL = LAOZHANG_CLAUDE_SONNET_45
 LAOZHANG_LYRICS_SECONDARY_MODEL = LAOZHANG_GEMINI_PRO
 
 # OpenRouter pipeline (see tools/pipeline_architecture.txt — RUNTIME POST-PROCESSING)
-# Qwen 3.7 Max → generate · theme · polish · compression | Mistral Large → humanization
-OPENROUTER_GENERATE_MODEL = "qwen/qwen3.7-max"
-OPENROUTER_THEME_CONSISTENCY_MODEL = "qwen/qwen3.7-max"
+# Qwen 3.7 Plus → generate · theme · polish · compression | Mistral Large → humanization
+OPENROUTER_GENERATE_MODEL = "qwen/qwen3.7-plus"
+OPENROUTER_THEME_CONSISTENCY_MODEL = "qwen/qwen3.7-plus"
 OPENROUTER_HUMANIZATION_MODEL = "mistralai/mistral-large"
-OPENROUTER_COMPRESSION_MODEL = "qwen/qwen3.7-max"
+OPENROUTER_COMPRESSION_MODEL = "qwen/qwen3.7-plus"
 OPENROUTER_POLISH_MODEL = OPENROUTER_GENERATE_MODEL
 OPENROUTER_PRIMARY_MODEL = OPENROUTER_GENERATE_MODEL
 OPENROUTER_MULTILINGUAL_MODEL = OPENROUTER_GENERATE_MODEL
@@ -64,7 +64,7 @@ def _env_for_openrouter(*keys: str) -> str:
 
 
 def _is_openrouter_vendor_slug(model: str) -> bool:
-    """OpenRouter ids use vendor/model (e.g. qwen/qwen3.7-max); LaoZhang uses bare ids."""
+    """OpenRouter ids use vendor/model (e.g. qwen/qwen3.7-plus); LaoZhang uses bare ids."""
     return "/" in model
 
 
@@ -158,6 +158,27 @@ def analysis_semantic_enabled() -> bool:
     return analysis_gemini_enabled()
 
 
+def prompt_pipeline_mode() -> str:
+    """Normalized PROMPT_PIPELINE: single | hybrid | two_pass | auto."""
+    mode = os.getenv("PROMPT_PIPELINE", "").strip().lower()
+    if mode in ("single", "hybrid", "two_pass", "architect", "2pass"):
+        if mode in ("architect", "2pass"):
+            return "two_pass"
+        return mode
+    return "auto"
+
+
+def two_pass_prompt_enabled(
+    *,
+    lightweight: bool = False,
+    lyrics_task: bool = True,
+) -> bool:
+    """Architect JSON → Lyricist Block 1/2 when PROMPT_PIPELINE=two_pass (or architect)."""
+    if lightweight or not lyrics_task:
+        return False
+    return prompt_pipeline_mode() == "two_pass"
+
+
 def hybrid_prompt_enabled(
     *,
     lightweight: bool = False,
@@ -167,11 +188,12 @@ def hybrid_prompt_enabled(
     """LaoZhang lyrics: GPT-5.5 multilingual prompt draft → Claude lyrics polish (default). OpenRouter: opt-in."""
     if lightweight:
         return _truthy("PROMPT_HYBRID_LIGHTWEIGHT")
-    mode = os.getenv("PROMPT_PIPELINE", "").strip().lower()
-    if mode == "single":
+    mode = prompt_pipeline_mode()
+    if mode in ("single", "two_pass"):
         return False
     if mode == "hybrid":
         return True
+    # auto
     prov = llm_provider(provider)
     if prov == "laozhang" and lyrics_task:
         return True
@@ -295,7 +317,7 @@ def resolve_theme_consistency_model(
     """
     Block 2 theme-consistency pass.
 
-    LaoZhang: Claude Sonnet 4.5. OpenRouter: Qwen 3.7 Max.
+    LaoZhang: Claude Sonnet 4.5. OpenRouter: Qwen 3.7 Plus.
     OpenRouter overrides: OPENROUTER_THEME_MODEL / THEME_CONSISTENCY_MODEL (ignored on LaoZhang).
     """
     if llm_provider(provider) == "openrouter":
@@ -350,7 +372,7 @@ def resolve_humanization_model(
 
 
 def resolve_compression_model(*, provider: str | None = None) -> str:
-    """OpenRouter: Qwen 3.7 Max. LaoZhang: Claude Sonnet 4.5 (SUNO_COMPRESSION_MODEL ignored on LaoZhang)."""
+    """OpenRouter: Qwen 3.7 Plus. LaoZhang: Claude Sonnet 4.5 (SUNO_COMPRESSION_MODEL ignored on LaoZhang)."""
     if llm_provider(provider) == "openrouter":
         or_model = _env_for_openrouter(
             "OPENROUTER_COMPRESSION_MODEL",
@@ -508,6 +530,26 @@ def prompt_llm_timeout_seconds() -> float:
         return float(max(60.0, min(float(raw), 540.0)))
     except ValueError:
         return 300.0
+
+
+def completion_token_kwargs(model: str, max_tokens: int) -> dict[str, int]:
+    """Return the correct max-token field for the model.
+
+    gpt-5.x / o-series reject ``max_tokens`` and require ``max_completion_tokens``.
+    Sending both causes a 400 and wasted fallback calls (credits burn, no lyrics).
+    """
+    model_l = (model or "").strip().lower()
+    # Models that reject max_tokens when max_completion_tokens is required.
+    if (
+        model_l.startswith("gpt-5")
+        or model_l.startswith("o1")
+        or model_l.startswith("o3")
+        or model_l.startswith("o4")
+        or "/gpt-5" in model_l
+        or "gemini" in model_l
+    ):
+        return {"max_completion_tokens": int(max_tokens)}
+    return {"max_tokens": int(max_tokens)}
 
 
 def build_openai_client_kwargs() -> dict[str, Any]:

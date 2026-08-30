@@ -1,7 +1,7 @@
 {
   "house": {
-    "kit": "TR-909 four-on-the-floor kick, rim clap on 2&4",
-    "pattern": "swung 16th hi-hats, classic club lift",
+    "kit": "TR-909 four-on-the-floor kick, clap on 2&4",
+    "pattern": "swung offbeat open hats, classic club lift",
     "mix": "warm analog sidechain pumping to kick",
     "negative": "no trap hats, no acoustic live kits"
   },
@@ -9,17 +9,17 @@
     "kit": "rounded punchy kick, soft rimshots",
     "pattern": "shuffling 16th hats, hypnotic groove",
     "mix": "warm sub locked to kick, funky bassline",
-    "negative": "no aggressive festival drops, no swing"
+    "negative": "no aggressive festival drops, no hard distorted kicks"
   },
   "tech house": {
-    "kit": "tight room kit, crisp percussive clicks",
-    "pattern": "minimalist kick pocket, rolling groove",
+    "kit": "punchy tight kick, crisp claps and perc clicks",
+    "pattern": "rolling bass-locked groove, offbeat open hats",
     "mix": "dry intimate punch, controlled low-end",
     "negative": "no massive reverbs, no complex fills"
   },
   "progressive house": {
-    "kit": "rounded kick, snare on 2&4",
-    "pattern": "hats gain density over 8-16 bars",
+    "kit": "punchy rounded kick, clap on 2&4",
+    "pattern": "layered hats build over 8-16 bars, euphoric lift",
     "mix": "long emotional builds, wide mix, breakdown intimacy",
     "negative": "no chaotic noise, no aggressive distortion"
   },
@@ -66,8 +66,8 @@
     "negative": "no organic instrumentation, no slow grooves"
   },
   "trance": {
-    "kit": "driving kick, rolling hats",
-    "pattern": "classic offbeat or four-on-the-floor energy",
+    "kit": "punchy driving kick, offbeat open hats",
+    "pattern": "rolling bass groove, euphoric snare-roll builds",
     "mix": "bright, wide, long plate/shimmer on leads",
     "negative": "no boom-bap swing, no loose live feels"
   },
@@ -78,8 +78,8 @@
     "negative": "no straight rock beats, no acoustic kits"
   },
   "drum and bass": {
-    "kit": "break-driven kit, fast 16ths, tight snare",
-    "pattern": "amen DNA optional, rapid rolling rhythm",
+    "kit": "chopped breakbeat kit, tight punchy snare",
+    "pattern": "rapid rolling breaks at 170+ BPM, amen DNA optional",
     "mix": "punchy transient clarity, reese or rolling bass sync",
     "negative": "no four-on-the-floor kicks, no slow tempos"
   },
@@ -113,15 +113,21 @@
     "mix": "intimate narrow mix, soft limiting, tape hiss",
     "negative": "no punchy transient clarity, no aggressive master"
   },
+  "hip hop": {
+    "kit": "punchy 808 kick under cracking snare",
+    "pattern": "hard-knock backbeat, double-time hat rolls",
+    "mix": "knock-forward low end, vocal-forward polish",
+    "negative": "no four-on-the-floor kicks, no jazz brushes"
+  },
   "trap": {
     "kit": "TR-808 kit, crisp snap/clap snare",
-    "pattern": "rapid triplet hi-hat rolls, sparse minor grid",
+    "pattern": "half-time snare on beat 3, rapid triplet hat rolls",
     "mix": "heavy sliding 808 sub, dominant low end, loud master",
     "negative": "no live acoustic drums, no swung boom-bap"
   },
   "uk drill": {
-    "kit": "hard kick-snare grid, dark off-beat patterns",
-    "pattern": "fast rolling 16th hi-hats, sliding 808s",
+    "kit": "hard punchy kick, sliding 808 sub",
+    "pattern": "counter-rhythm snare, triplet hat rolls",
     "mix": "dark, hard-compressed, aggressive presence",
     "negative": "no upbeat major rhythms, no swung jazz pockets"
   },
@@ -174,10 +180,16 @@
     "negative": "no loose live drum feels, no muddy low-end"
   },
   "synth-pop": {
-    "kit": "modern tight pop kit, grid-locked snare",
-    "pattern": "shimmering hats, driving upbeat rhythm",
-    "mix": "glossy, mid-forward vocal, controlled sub",
+    "kit": "LinnDrum-style machine kit, gated-reverb snare",
+    "pattern": "shimmering machine hats, driving upbeat rhythm",
+    "mix": "glossy retro sheen, punchy electronic low-end",
     "negative": "no loose live drum feels, no muddy low-end"
+  },
+  "synthwave": {
+    "kit": "LinnDrum/TR-707 drum machine, huge gated-reverb snare",
+    "pattern": "driving machine hats, electronic tom-fill throws",
+    "mix": "wide retro analog punch, neon night-drive energy",
+    "negative": "no live acoustic kits, no trap hat rolls"
   },
   "k-pop": {
     "kit": "hybrid acoustic-electronic kit, tight 808",
@@ -204,16 +216,28 @@
     "negative": "no programmed electronic drums, no rigid quantization"
   },
   "punk": {
-    "kit": "D-beat or fast four-on-the-floor, room snare",
+    "kit": "D-beat or driving 8th-note backbeat, room snare",
     "pattern": "urgency, fast tempo, minimal fills",
     "mix": "raw, fast, limited polish, performance first",
     "negative": "no polished pop production, no triggered samples"
   },
   "heavy metal": {
-    "kit": "double kick, fast hats, cracking snare",
+    "kit": "double-kick pedal, cracking snare, crashing ride",
     "pattern": "relentless driving rhythm, blast beats optional",
     "mix": "dense, aggressive mids, saturated drum bus",
     "negative": "no swing rhythms, no sparse minimalist drumming"
+  },
+  "rock": {
+    "kit": "live acoustic kit, punchy kick, fat cracking snare",
+    "pattern": "driving backbeat on 2&4, crash accents, tom fills",
+    "mix": "roomy live glue, punchy mids, natural dynamics",
+    "negative": "no programmed 808s, no trap hats"
+  },
+  "folk": {
+    "kit": "brushed kit or cajon, hand percussion",
+    "pattern": "gentle shuffle locked to strum, tambourine accents",
+    "mix": "dry intimate room, organic warmth",
+    "negative": "no 808s, no aggressive electronic kits"
   },
   "shoegaze": {
     "kit": "washed-out live kit, heavy cymbal sustain",
@@ -228,10 +252,22 @@
     "negative": "no rigid Western pop grids, no heavy distortion"
   },
   "reggaeton": {
-    "kit": "dembow kick/snare grid, rolling hats",
+    "kit": "dembow 3+3+2 kick/snare grid, steady hats",
     "pattern": "rim textures, clap layers, heavy pocket",
     "mix": "warm Latin loudness, heavy sub, bright percussion air",
     "negative": "no rock drum kits, no swung jazz rhythms"
+  },
+  "latin": {
+    "kit": "congas, timbales, bongos locked to clave",
+    "pattern": "syncopated salsa groove, guiro and cowbell accents",
+    "mix": "bright live percussion energy, warm room",
+    "negative": "no 4/4 EDM kick grids, no drum machines"
+  },
+  "world": {
+    "kit": "tabla, dhol, darbuka, frame drums",
+    "pattern": "syncopated hand-drum cycles, festive percussion layers",
+    "mix": "warm organic punch, wide percussive spread",
+    "negative": "no trap hat rolls, no 4/4 EDM kicks"
   },
   "reggae": {
     "kit": "one-drop kick on beat 3, echoed snare",
@@ -265,9 +301,9 @@
   },
   "modern country": {
     "kit": "punchy studio kick, tight snare, brushed verse textures",
-    "pattern": "train-beat backbeat, shaker and tambourine pocket",
+    "pattern": "big 2&4 backbeat, shaker/tambourine pocket, arena lift",
     "mix": "organic dry room, crisp Nashville polish, vocal-forward",
-    "negative": "no trap 808 grids, no EDM sidechain pump"
+    "negative": "no drill hat rolls, no EDM sidechain pump"
   },
   "trailer": {
     "kit": "orchestral timpani, taikos, concert snare rolls",

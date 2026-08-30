@@ -1,5 +1,6 @@
-/// Post-process Suno output — phonetic apostrophes + instrumental staging leaks.
+// Post-process Suno output — phonetic apostrophes + instrumental staging leaks.
 
+import 'anti_scream_filter.dart';
 import '../constants/audio_environment_data.dart';
 import 'suno_lyrics_audio_normalizer.dart';
 
@@ -88,7 +89,7 @@ final _gospelStagingReplacements = <(RegExp, String)>[
       'Dead-room isolation, close-mic vocal tracking'),
   (RegExp(r'\bfilter\s+sweep\b', caseSensitive: false), 'natural room decay'),
   (RegExp(r'\blow-pass\s+sweep\b', caseSensitive: false), 'warm dynamic dip'),
-  (RegExp(r'\bsupersaw\b', caseSensitive: false), 'lush sustained live strings'),
+  (RegExp(r'\bsupersaw\b', caseSensitive: false), 'lush sustained string section'),
 ];
 
 bool _isGospelLane(String primary, String fusion) {
@@ -122,7 +123,7 @@ final _studioVocalReplacements = <(RegExp, String)>[
       'Isolated multi-tracked vocal doubles'),
 ];
 
-final _introCrowdBans = <(RegExp, String)>[
+final _studioCrowdBans = <(RegExp, String)>[
   (RegExp(r'\bcongregational\b', caseSensitive: false),
       'Isolated multi-tracked vocal doubles'),
   (RegExp(r'\bsanctuary\b', caseSensitive: false), 'Pristine studio environment'),
@@ -133,6 +134,27 @@ final _introCrowdBans = <(RegExp, String)>[
       'Tight double-tracked vocal stacks'),
   (RegExp(r'\bsatb\b', caseSensitive: false), 'Isolated multi-tracked vocal doubles'),
   (RegExp(r'\blive\b', caseSensitive: false), 'Studio'),
+  (RegExp(r'\bcrowd\s+singing\s+along\b', caseSensitive: false),
+      'Multi-tracked vocal overlays'),
+  (RegExp(r'\bcrowd\s+cheering\b', caseSensitive: false), 'Warm dynamic lift'),
+  (RegExp(r'\bcrowd\s+noise\b', caseSensitive: false), 'Dead-room silence'),
+  (RegExp(r'\bstadium\s+crowd\b', caseSensitive: false), 'Pristine studio environment'),
+  (RegExp(r'\bstadium\s+reverb\b', caseSensitive: false), 'Focused studio room'),
+  (RegExp(r'\baudience\s+applause\b', caseSensitive: false), 'Close-mic vocal tracking'),
+  (RegExp(r'\baudience\s+noise\b', caseSensitive: false), 'Dead-room silence'),
+  (RegExp(r'\baudience\s+chatter\b', caseSensitive: false), 'Dry acoustic room'),
+  (RegExp(r'\bstanding\s+ovation\b', caseSensitive: false), 'Clean multi-track fade'),
+  (RegExp(r'\bthunderous\s+stadium\b', caseSensitive: false), 'Focused studio room'),
+  (RegExp(r'\bzero\s+audience\s+noise\b', caseSensitive: false),
+      'Close-mic vocal tracking'),
+  (RegExp(r'\bno\s+crowd\s+sounds?\b', caseSensitive: false), 'Dead-room isolation'),
+  (RegExp(r'\bno\s+live\s+applause\b', caseSensitive: false), 'Pristine studio environment'),
+  (RegExp(r'\bapplause\b', caseSensitive: false), 'Trailing plate reverb'),
+  (RegExp(r'\bcheering\b', caseSensitive: false), 'Warm dynamic lift'),
+  (RegExp(r'\bovation\b', caseSensitive: false), 'Clean multi-track fade'),
+  (RegExp(r'\bstadium\b', caseSensitive: false), 'Focused studio room'),
+  (RegExp(r'\baudience\b', caseSensitive: false), 'Close-mic vocal tracking'),
+  (RegExp(r'\bcrowd\b', caseSensitive: false), 'Dead-room isolation'),
 ];
 
 final _tapeNoiseBans = <(RegExp, String)>[
@@ -154,22 +176,34 @@ bool _isStagingBracket(String header) {
   return header.contains(',');
 }
 
+String _applyStudioCrowdReplacements(String text) {
+  var out = text;
+  for (final (pattern, replacement) in _studioCrowdBans) {
+    out = out.replaceAll(pattern, replacement);
+  }
+  return out;
+}
+
+String _scrubStudioBlock1Prose(String text) {
+  final marker = RegExp(r'BLOCK\s*2\b', caseSensitive: false);
+  final match = marker.firstMatch(text);
+  if (match == null) return _applyStudioCrowdReplacements(text);
+  final block1 = text.substring(0, match.start);
+  final block2 = text.substring(match.start);
+  return '${_applyStudioCrowdReplacements(block1)}$block2';
+}
+
 String _sanitizeStudioBracketInner(
   String inner, {
   required bool gospel,
-  required bool early,
   required bool outro,
 }) {
   var out = gospel ? _sanitizeGospelBracketInner(inner) : inner;
   for (final (pattern, replacement) in _studioVocalReplacements) {
     out = out.replaceAll(pattern, replacement);
   }
-  if (early) {
-    for (final (pattern, replacement) in _introCrowdBans) {
-      out = out.replaceAll(pattern, replacement);
-    }
-  }
-  if (early || outro) {
+  out = _applyStudioCrowdReplacements(out);
+  if (outro) {
     for (final (pattern, replacement) in _tapeNoiseBans) {
       out = out.replaceAll(pattern, replacement);
     }
@@ -203,20 +237,28 @@ String sanitizeStudioIsolationTags(
     if (stripped.startsWith('[') && _sectionHeader.hasMatch(stripped)) {
       final header = stripped.substring(1, stripped.lastIndexOf(']'));
       if (_isStagingBracket(header)) {
-        final early = RegExp(r'^(Intro|Verse\s*1)\s*$', caseSensitive: false)
-            .hasMatch(currentSection);
         final outro =
             RegExp(r'^Outro\s*$', caseSensitive: false).hasMatch(currentSection);
-        outLines.add(
-          '[${_sanitizeStudioBracketInner(header, gospel: gospel, early: early, outro: outro)}]',
+        final early = RegExp(r'^(Intro|Verse\s*1)\s*$', caseSensitive: false)
+            .hasMatch(currentSection);
+        var cleaned = _sanitizeStudioBracketInner(
+          header,
+          gospel: gospel,
+          outro: outro,
         );
+        if (early || outro) {
+          for (final (pattern, replacement) in _tapeNoiseBans) {
+            cleaned = cleaned.replaceAll(pattern, replacement);
+          }
+        }
+        outLines.add('[$cleaned]');
         continue;
       }
     }
     outLines.add(line);
   }
 
-  return outLines.join('\n');
+  return _scrubStudioBlock1Prose(outLines.join('\n'));
 }
 
 final _electronicDominant = RegExp(
@@ -354,7 +396,12 @@ String sanitizeSunoPostOutput(
     primaryGenre: primaryGenre,
     subGenreFusion: subGenreFusion,
   );
-  return applyAudioEngineNormalizationToSunoOutput(reconciled);
+  final screamFiltered = applyAntiScreamFilter(
+    reconciled,
+    primaryGenre: primaryGenre,
+    subGenreFusion: subGenreFusion,
+  );
+  return applyAudioEngineNormalizationToSunoOutput(screamFiltered);
 }
 
 /// Strip trailing apostrophes that glitch Suno TTS.

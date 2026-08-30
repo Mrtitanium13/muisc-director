@@ -1,0 +1,15 @@
+{
+  "id": "amapiano",
+  "version": "1.0.0",
+  "vocabulary_profile": ["log drum space", "soft flex", "piano-log intimacy"],
+  "line_length_guidance": "leave air; groove carries silence",
+  "imagery_guidance": ["piano keys", "late drive", "soft flex", "dance without cheer SFX"],
+  "energy_profile": "groovy restraint then lift",
+  "hook_style": "hypnotic refrain; piano-aware",
+  "rhyme_density": "low",
+  "rhythmic_guidance": ["phrase around log drum", "never crowd the groove"],
+  "common_structures": ["Intro-V-C-V-C-Outro"],
+  "vocal_phrasing": ["breathy", "conversational"],
+  "avoid_patterns": ["EDM big-room shouting", "dense metal imagery"],
+  "cultural_notes": ["South African house lineage; space is part of the lyric"]
+}

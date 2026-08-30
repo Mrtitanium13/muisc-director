@@ -1,0 +1,15 @@
+# RHYME ENGINE RULES
+
+Supported techniques:
+- Perfect rhyme
+- Slant / near rhyme
+- Internal rhyme
+- Multisyllabic rhyme
+- Assonance / consonance
+
+Rules:
+- Never sacrifice meaning or natural speech for a rhyme.
+- Match rhyme density to genre (trap denser than folk; pop moderate; EDM hooks often simpler).
+- Avoid identical end-words across consecutive lines unless intentional mantra.
+- Prefer musical stress alignment over dictionary stress when they conflict for singing.
+- If a line only exists to rhyme, delete it and rewrite.

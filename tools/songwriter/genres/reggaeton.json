@@ -1,0 +1,15 @@
+{
+  "id": "reggaeton",
+  "version": "1.0.0",
+  "vocabulary_profile": ["dembow talk", "desire", "party confidence"],
+  "line_length_guidance": "short; perreo-aware",
+  "imagery_guidance": ["club", "body", "night"],
+  "energy_profile": "dembow drive",
+  "hook_style": "catchy Spanish/English per brief",
+  "rhyme_density": "medium",
+  "rhythmic_guidance": ["dembow pocket"],
+  "common_structures": ["Intro-V-C-V-C-B-C"],
+  "vocal_phrasing": ["rhythmic talk-sing", "melodic chorus"],
+  "avoid_patterns": ["rock ballad density"],
+  "cultural_notes": []
+}

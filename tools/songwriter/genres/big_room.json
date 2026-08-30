@@ -1,0 +1,15 @@
+{
+  "id": "big_room",
+  "version": "1.0.0",
+  "vocabulary_profile": ["huge simple words", "sky/horizon", "together carefully"],
+  "line_length_guidance": "ultra-short chorus; verses set one image",
+  "imagery_guidance": ["skyline", "hands-up feeling without cheer SFX", "sunrise"],
+  "energy_profile": "maximal release on chorus",
+  "hook_style": "stadium chant; title punch",
+  "rhyme_density": "low",
+  "rhythmic_guidance": ["hook lands on drop", "count-in silence before title"],
+  "common_structures": ["Intro-Build-Drop-Break-Build-Drop"],
+  "vocal_phrasing": ["big open vowels", "minimal consonants in chorus"],
+  "avoid_patterns": ["dense rap verses", "abstract philosophy"],
+  "cultural_notes": []
+}

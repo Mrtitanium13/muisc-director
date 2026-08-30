@@ -1,0 +1,15 @@
+{
+  "id": "country",
+  "version": "1.0.0",
+  "vocabulary_profile": ["place names", "work", "specific people"],
+  "line_length_guidance": "storytelling verses; chorus plainspoken thesis",
+  "imagery_guidance": ["kitchen table", "highway mile markers", "weather that means something"],
+  "energy_profile": "narrative first",
+  "hook_style": "title line that could be said out loud to a friend",
+  "rhyme_density": "medium",
+  "rhythmic_guidance": ["natural talk-sing", "chorus lift"],
+  "common_structures": ["V-C-V-C-B-C"],
+  "vocal_phrasing": ["conversational", "twang only if accent brief asks"],
+  "avoid_patterns": ["urban EDM slang", "generic cowboy costume lyrics"],
+  "cultural_notes": ["Specificity beats stereotype"]
+}

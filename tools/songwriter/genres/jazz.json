@@ -1,0 +1,15 @@
+{
+  "id": "jazz",
+  "version": "1.0.0",
+  "vocabulary_profile": ["sophisticated but sung", "night imagery", "wit"],
+  "line_length_guidance": "swinging phrases; leave space for solos",
+  "imagery_guidance": ["modern club", "city lights", "conversation"],
+  "energy_profile": "cool to burning",
+  "hook_style": "motif more than pop chant",
+  "rhyme_density": "low",
+  "rhythmic_guidance": ["behind beat", "syncopation"],
+  "common_structures": ["AABA", "V-C-solo-C"],
+  "vocal_phrasing": ["scat optional", "legato"],
+  "avoid_patterns": ["bro-country stereotypes", "EDM drops"],
+  "cultural_notes": []
+}

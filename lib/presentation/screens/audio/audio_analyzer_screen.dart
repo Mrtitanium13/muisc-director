@@ -21,10 +21,14 @@ import '../../../core/utils/dio_error_message.dart';
 import '../../../core/utils/duration_format.dart';
 import '../../../core/utils/haptic_utils.dart';
 import '../../../data/models/audio_session.dart';
+import '../../../services/composition_pipeline_service.dart';
 import '../../providers/app_providers.dart';
+import '../../utils/show_user_notices.dart';
 import '../../widgets/common/glass_card.dart';
 import '../../widgets/shell/main_shell.dart';
 import '../../widgets/common/gradient_button.dart';
+import '../../../features/prompt_generator/providers/prompt_form_providers.dart';
+import '../../../features/prompt_generator/widgets/sections/analyzer_integration_section.dart';
 
 class AudioAnalyzerScreen extends ConsumerStatefulWidget {
   const AudioAnalyzerScreen({super.key});
@@ -280,25 +284,36 @@ class _AudioAnalyzerScreenState extends ConsumerState<AudioAnalyzerScreen> {
     try {
       final d = ref.read(audioDurationProvider);
       ref.read(promptFormProvider.notifier).applyRemixFromAnalysis(
-            analysis: analysis,
-            targetGenre: _remixTargetGenre,
-            trackDurationLabel: (d != null && d > Duration.zero)
-                ? formatTrackDuration(d)
-                : null,
-            djIntroMixIn: _remixDjIntro,
-            djOutroMixOut: _remixDjOutro,
-          );
+          analysis: analysis,
+          targetGenre: _remixTargetGenre,
+          trackDurationLabel: (d != null && d > Duration.zero)
+              ? formatTrackDuration(d)
+              : null,
+          djIntroMixIn: _remixDjIntro,
+          djOutroMixOut: _remixDjOutro,
+        );
+      // Clear interpolation controllers (mutual exclusion with analyzer flip).
+      ref.read(remixSongTitleControllerProvider).clear();
+      ref.read(remixArtistControllerProvider).clear();
       final form = ref.read(promptFormProvider);
-      final text = await ref.read(aiRepositoryProvider).generatePrompt(form);
+      final composition = CompositionPipelineService.run(userInput: form);
+      ref.read(promptFormProvider.notifier)
+        ..setOptionalLyrics(composition.composedInput.optionalLyrics)
+        ..setVibe(composition.composedInput.vibe);
+      if (mounted) showUserNotices(context, composition.userNotices);
+      final text = await ref
+          .read(aiRepositoryProvider)
+          .generatePrompt(composition.composedInput);
       if (!mounted) return;
       Navigator.of(context, rootNavigator: true).pop();
-      ref.read(lastOutputGenerationInputProvider.notifier).state = form;
+      ref.read(lastOutputGenerationInputProvider.notifier).state =
+          composition.composedInput;
       context.push(
         '/output',
         extra: {
           'prompt': text,
-          'version': form.sunoVersion,
-          'field_mode': form.sunoFieldOutputMode.name,
+        'version': composition.composedInput.sunoVersion,
+        'field_mode': composition.composedInput.sunoFieldOutputMode.name,
           'trusted_generation_input': true,
         },
       );
@@ -578,6 +593,10 @@ class _AudioAnalyzerScreenState extends ConsumerState<AudioAnalyzerScreen> {
                 ],
               ),
             ),
+          ],
+          const SizedBox(height: 16),
+          const AnalyzerIntegrationSection(),
+          if (analysis != null) ...[
             const SizedBox(height: 20),
             Text(
               'Remix to another genre',

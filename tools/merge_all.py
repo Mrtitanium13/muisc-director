@@ -4,8 +4,9 @@ Canonical rebuild after editing tools/*.txt prompt sources or tools/*.json matri
 
     python tools/merge_all.py
 
-Runs merge_suno_v2_prompt.py plus every matrix Dart generator. Server matrix modules
-read JSON from tools/ directly; only Flutter needs the generated Dart data files.
+Runs DSE merge, merge_suno_v2_prompt.py, matrix Dart generators, human realism,
+and genre lyric engines. Server matrix modules read JSON from tools/ directly;
+Flutter needs the generated Dart data files.
 """
 
 from __future__ import annotations
@@ -17,12 +18,16 @@ from pathlib import Path
 root = Path(__file__).resolve().parents[1]
 
 GENERATORS = (
+    "tools/merge_dynamic_structural_engine.py",
     "tools/merge_suno_v2_prompt.py",
+    "tools/merge_songwriter_prompts.py",
     "tools/gen_drum_matrix_dart.py",
     "tools/gen_live_instrument_matrix_dart.py",
     "tools/gen_code_translation_matrix_dart.py",
     "tools/gen_genre_hardware_modules.py",
     "tools/gen_genre_fx_matrix_dart.py",
+    "tools/gen_human_realism_config.py",
+    "tools/gen_genre_lyric_engines_dart.py",
 )
 
 

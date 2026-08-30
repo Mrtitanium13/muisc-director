@@ -1,0 +1,13 @@
+{{include:modules/01_role.txt}}
+{{include:modules/06_output_format.txt}}
+
+# STAGE 8 — TRANSITIONS
+
+Assemble full song. Smooth pre→chorus lifts, verse→pre seams, bridge→final chorus landing.
+
+Output JSON FullDraft:
+{
+  "lyrics": "",
+  "structure": [],
+  "transition_notes": []
+}

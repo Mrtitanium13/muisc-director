@@ -2,9 +2,11 @@ import '../../data/models/audio_analysis_model.dart';
 
 /// Industry-standard vocal production shorthand Suno maps well in bracket tags.
 const String kThickVocalCoreModifiers =
-    'Thick multi-tracked vocal doubles, warm vocal saturation, crispy upfront '
-    'presence, forward in the mix, compressed lead, pristine studio vocal '
-    'tracking, zero distant room reverb, high-frequency air sheen';
+    'Thick multi-tracked vocal doubles, warm vocal saturation, ultra-close-mic '
+    'intimateness, high-compression proximity effect, detailed chest resonance, '
+    'crispy upfront presence, dedicated low-mid vocal warmth pocket, forward in '
+    'the mix, compressed lead, pristine high-end air boost, zero distant karaoke '
+    'room reverb, never thin distant or buried';
 
 /// Injects thick vocal presence + structural layout tags for Suno STYLE fields.
 String generateThickVocalPrompt({
@@ -21,8 +23,7 @@ String generateThickVocalPrompt({
 
   final coreVocalModifiers = forceThickPresence ? kThickVocalCoreModifiers : '';
 
-  final buffer = StringBuffer()
-    ..writeln('[Master Style: $style]');
+  final buffer = StringBuffer()..writeln('[Master Style: $style]');
 
   if (coreVocalModifiers.isNotEmpty) {
     buffer.writeln(

@@ -1,4 +1,4 @@
-/// Lyric dialect / language mode for Block 2 (Stage 3 humanization + Stage 5 compression).
+// Lyric dialect / language mode for Block 2 (Stage 3 humanization + Stage 5 compression).
 
 class DialectStyleData {
 

@@ -1,0 +1,17 @@
+{{include:modules/01_role.txt}}
+
+# STAGE 3 — SELECT STRONGEST CONCEPT
+
+Given ConceptBatch + SongBrief, pick ONE concept.
+
+Output JSON SelectedConcept:
+{
+  "selected_id": "",
+  "title_working": "",
+  "logline": "",
+  "hook_seed": "",
+  "rationale": "",
+  "rejected_ids": []
+}
+
+Prefer: emotional clarity + hook potential + genre fit over novelty for novelty's sake.

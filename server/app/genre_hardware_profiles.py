@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import json
+import re
+import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
 
 _JSON_PATH = (
     Path(__file__).resolve().parents[2] / "tools" / "genre_hardware_profiles_v2_1.json"
@@ -15,6 +16,8 @@ _JSON_PATH = (
 @dataclass(frozen=True)
 class HardwareProfile:
     id: str
+    genre: str
+    cluster_id: str
     keywords: tuple[str, ...]
     style_descriptors: str
     lead_vocal: str
@@ -28,6 +31,14 @@ class HardwareProfile:
     vibe: str
 
 
+def _normalize_genre(genre: str) -> str:
+    s = str(genre or "").replace("&amp;", "&").lower().strip()
+    s = unicodedata.normalize("NFD", s)
+    s = "".join(c for c in s if unicodedata.category(c) != "Mn")
+    s = re.sub(r"[^\w\s&]+", " ", s, flags=re.UNICODE)
+    return re.sub(r"\s+", " ", s).strip()
+
+
 def _load_profiles() -> list[HardwareProfile]:
     raw = json.loads(_JSON_PATH.read_text(encoding="utf-8"))
     out: list[HardwareProfile] = []
@@ -35,6 +46,8 @@ def _load_profiles() -> list[HardwareProfile]:
         out.append(
             HardwareProfile(
                 id=str(row["id"]),
+                genre=str(row.get("genre", "")),
+                cluster_id=str(row.get("cluster_id", "")),
                 keywords=tuple(str(k).lower() for k in row.get("keywords", [])),
                 style_descriptors=str(row.get("style_descriptors", "")),
                 lead_vocal=str(row.get("lead_vocal", "")),
@@ -52,6 +65,8 @@ def _load_profiles() -> list[HardwareProfile]:
 
 
 _PROFILES: list[HardwareProfile] | None = None
+_BY_GENRE: dict[str, HardwareProfile] | None = None
+_KEYWORD_INDEX: list[tuple[str, HardwareProfile]] | None = None
 
 
 def all_profiles() -> list[HardwareProfile]:
@@ -61,23 +76,39 @@ def all_profiles() -> list[HardwareProfile]:
     return _PROFILES
 
 
+def _profile_by_genre() -> dict[str, HardwareProfile]:
+    global _BY_GENRE  # noqa: PLW0603
+    if _BY_GENRE is None:
+        _BY_GENRE = {
+            _normalize_genre(p.genre): p for p in all_profiles() if p.genre.strip()
+        }
+    return _BY_GENRE
+
+
+def _keyword_index() -> list[tuple[str, HardwareProfile]]:
+    """Longest-keyword-first index; built once for fusion fallback."""
+    global _KEYWORD_INDEX  # noqa: PLW0603
+    if _KEYWORD_INDEX is None:
+        entries: list[tuple[str, HardwareProfile]] = []
+        for profile in all_profiles():
+            for kw in profile.keywords:
+                key = str(kw).lower().strip()
+                if key:
+                    entries.append((key, profile))
+        entries.sort(key=lambda item: (-len(item[0]), item[0]))
+        _KEYWORD_INDEX = entries
+    return _KEYWORD_INDEX
+
+
 def _genre_blob(primary: str, fusion: str) -> str:
-    return f"{primary} {fusion}".lower()
+    return f"{primary.strip()} {fusion.strip()}".lower()
 
 
-def resolve_hardware_profile(primary: str, fusion: str = "") -> HardwareProfile:
-    blob = _genre_blob(primary, fusion)
-    best: HardwareProfile | None = None
-    best_len = 0
-    for profile in all_profiles():
-        for kw in profile.keywords:
-            if kw and kw in blob and len(kw) > best_len:
-                best = profile
-                best_len = len(kw)
-    if best is not None:
-        return best
+def _default_profile() -> HardwareProfile:
     return HardwareProfile(
         id="DEFAULT",
+        genre="",
+        cluster_id="",
         keywords=(),
         style_descriptors=(
             "polished producer mix, genre-appropriate integrated loudness, "
@@ -93,6 +124,27 @@ def resolve_hardware_profile(primary: str, fusion: str = "") -> HardwareProfile:
         room="controlled studio with optional live room on drums",
         vibe="release-ready, −9 to −11 LUFS depending on genre",
     )
+
+
+def resolve_hardware_profile(primary: str, fusion: str = "") -> HardwareProfile:
+    direct = _profile_by_genre().get(_normalize_genre(primary))
+    if direct is not None:
+        return direct
+
+    blob = _genre_blob(primary, fusion)
+    for kw, profile in _keyword_index():
+        if kw in blob:
+            return profile
+    return _default_profile()
+
+
+def resolve_profile_id(primary: str, fusion: str = "") -> str:
+    return resolve_hardware_profile(primary, fusion).id
+
+
+def has_profile(primary: str, fusion: str = "") -> bool:
+    """True when a non-DEFAULT profile resolved (direct genre or keyword hit)."""
+    return resolve_hardware_profile(primary, fusion).id != "DEFAULT"
 
 
 def hardware_profile_user_block(

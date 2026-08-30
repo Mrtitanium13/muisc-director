@@ -2,117 +2,60 @@
 
 from __future__ import annotations
 
+import json
+from functools import lru_cache
+from pathlib import Path
+
 from app.elite_human_lyricist_directive import elite_human_lyricist_user_block
 
-DEFAULT_LEVEL = 75
-MIN_LEVEL = 0
-MAX_LEVEL = 100
+_JSON_PATH = Path(__file__).resolve().parents[2] / "tools" / "human_realism_config.json"
+
+
+@lru_cache(maxsize=1)
+def _load() -> dict:
+    return json.loads(_JSON_PATH.read_text(encoding="utf-8"))
+
+
+def _schema() -> dict:
+    return _load()["_schema"]
+
+
+DEFAULT_LEVEL = int(_schema().get("default_level", 75))
+MIN_LEVEL = int(_schema().get("min_level", 0))
+MAX_LEVEL = int(_schema().get("max_level", 100))
 
 
 def clamp_level(value: int) -> int:
     return max(MIN_LEVEL, min(MAX_LEVEL, int(value)))
 
 
+def _band_for(level: int) -> dict:
+    v = clamp_level(level)
+    for band in _load()["bands"]:
+        if band["min"] <= v <= band["max"]:
+            return band
+    return _load()["bands"][2]
+
+
 def band_label(value: int) -> str:
-    v = clamp_level(value)
-    if v <= 20:
-        return "Highly poetic and stylized"
-    if v <= 40:
-        return "Professional songwriter"
-    if v <= 60:
-        return "Balanced"
-    if v <= 80:
-        return "Authentic artist"
-    return "Raw human realism"
+    return str(_band_for(clamp_level(value)).get("label", "Balanced"))
 
 
 def _band_instructions(level: int) -> str:
-    if level <= 20:
-        return """Generate highly lyrical and artistic lyrics.
-
-Use:
-* Dense rhyme schemes
-* Metaphors
-* Symbolism
-* Strong imagery
-* Technical writing
-* Polished songwriting
-
-Minimize:
-* Everyday details
-* Imperfections
-* Conversational language"""
-    if level <= 40:
-        return """Generate professional commercial songwriting.
-
-Use:
-* Strong hooks
-* Good imagery
-* Clean structure
-* Controlled storytelling
-
-Allow some realism but maintain polished writing."""
-    if level <= 60:
-        return """Balance artistry and realism.
-
-Use:
-* Personal observations
-* Memorable hooks
-* Occasional imperfections
-* Natural speech
-
-Avoid excessive poetic language."""
-    if level <= 80:
-        return """Prioritize authenticity.
-
-Use:
-* Real-life situations
-* Personal details
-* Specific observations
-* Natural conversations
-* Human contradictions
-
-Reduce:
-* Excessive metaphors
-* Forced rhymes
-* Abstract imagery
-
-Allow some rough edges."""
-    return """Maximum human realism.
-
-Write as if a real artist drafted the lyrics in a notebook.
-
-Requirements:
-* Use specific details.
-* Use realistic situations.
-* Include flaws.
-* Include uncertainty.
-* Include opinions.
-* Include unique observations.
-* Include occasional incomplete thoughts.
-* Allow imperfect rhyme schemes.
-* Allow conversational language.
-* Allow surprising topic shifts.
-
-Avoid:
-* AI-style motivational language
-* Generic inspiration
-* Excessive imagery
-* Every line sounding profound
-* Constant metaphors
-* Overly polished writing
-
-Lyrics should feel lived-in rather than written.
-The listener should believe a real person experienced these events."""
+    return str(_band_for(level).get("instructions", "")).strip()
 
 
-def human_realism_user_block(value: int) -> str:
+def human_realism_user_block(
+    value: int,
+    dialect_style_id: str | None = None,
+) -> str:
+    cfg = _load()
     level = clamp_level(value)
     band = _band_instructions(level)
     lines = [
-        elite_human_lyricist_user_block(),
+        elite_human_lyricist_user_block(dialect_style_id),
         "",
-        "HUMAN REALISM (scales poetic polish vs authentic grit on top of Elite Human Lyricist; Block 2 only):",
+        str(cfg.get("user_block_header", "")).strip(),
         band,
         "",
         f"Human Realism Level: {level}/100",
@@ -123,9 +66,5 @@ def human_realism_user_block(value: int) -> str:
         "Maintain genre conventions while applying the realism level.",
     ]
     if level <= 40:
-        lines.append(
-            "At this Human Realism level you MAY increase poetic density, metaphors, and rhyme craft "
-            "per the band instructions above, but you MUST still obey the Elite Human Lyricist core bans "
-            "(no motivational clichés, no AI-favored vocabulary spam, no making every line profound)."
-        )
+        lines.append(str(cfg.get("low_poetic_guardrail", "")).strip())
     return "\n".join(lines)

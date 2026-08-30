@@ -1,0 +1,24 @@
+{
+  "id": "mixed-zh-en",
+  "version": "1.0.0",
+  "scripts": ["Hans", "Hant", "Latn"],
+  "native_syntax": "Primary language carries the story; English lands on emotional peaks or hook pivots.",
+  "register": "Bilingual pop naturalism — not random word salad",
+  "prosody": "Switch languages on strong beats / phrase boundaries",
+  "rhyme": "Rhyme within each language island; cross-language rhyme only if phonetic",
+  "punctuation": "Keep switches clean; no parenthetical translation of every line",
+  "idioms": "Do not explain the English phrase in Chinese in the next line",
+  "code_switching": {
+    "enabled": true,
+    "placement_default": "hook",
+    "rules": [
+      "English ratio follows brief.codeSwitching.englishRatio when set",
+      "Prefer title/hook for English unless verses placement requested"
+    ]
+  },
+  "avoid_patterns": [
+    "alternating every other word",
+    "subtitle-style translations",
+    "English filler that adds no rhythmic punch"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "blues",
+  "version": "1.0.0",
+  "vocabulary_profile": ["complaint with wit", "work", "love trouble", "weather"],
+  "line_length_guidance": "AAB friendly; conversational",
+  "imagery_guidance": ["train", "door", "hands", "bottle only if earned"],
+  "energy_profile": "swing or shuffle feel in words",
+  "hook_style": "refrain that answers the verse complaint",
+  "rhyme_density": "medium",
+  "rhythmic_guidance": ["call line / response line"],
+  "common_structures": ["V-V-V-Turnaround"],
+  "vocal_phrasing": ["talk-sing", "growl sparingly"],
+  "avoid_patterns": ["pop EDM hooks", "overly pretty abstraction"],
+  "cultural_notes": []
+}

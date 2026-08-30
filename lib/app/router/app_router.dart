@@ -7,7 +7,7 @@ import '../../presentation/screens/auth/login_screen.dart';
 import '../../presentation/screens/history/history_screen.dart';
 import '../../presentation/screens/onboarding/onboarding_screen.dart';
 import '../../presentation/screens/output/output_screen.dart';
-import '../../presentation/screens/prompt/prompt_generator_screen.dart';
+import '../../features/prompt_generator/screens/prompt_generator_screen.dart';
 import '../../presentation/screens/settings/settings_screen.dart';
 import '../../presentation/screens/splash/splash_screen.dart';
 import '../../presentation/screens/tools/ab_compare_screen.dart';
@@ -15,6 +15,10 @@ import '../../presentation/screens/tools/batch_generate_screen.dart';
 import '../../presentation/screens/tools/batch_output_screen.dart';
 import '../../presentation/screens/tools/quick_describe_screen.dart';
 import '../../presentation/screens/tools/templates_screen.dart';
+import '../../features/anti_artifact/screens/create_screen.dart';
+import '../../features/anti_artifact/screens/fix_it_screen.dart';
+import '../../features/anti_artifact/screens/verified_screen.dart';
+import '../../features/anti_artifact/shell/artifact_shell.dart';
 import '../../presentation/widgets/shell/main_shell.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -86,6 +90,49 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             ],
           ),
         ],
+      ),
+      StatefulShellRoute.indexedStack(
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state, navigationShell) {
+          return ArtifactShell(navigationShell: navigationShell);
+        },
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/artifact/create',
+                pageBuilder: (context, state) => const NoTransitionPage(
+                  child: CreateScreen(),
+                ),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/artifact/fix-it',
+                pageBuilder: (context, state) => const NoTransitionPage(
+                  child: FixItScreen(),
+                ),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/artifact/verified',
+                pageBuilder: (context, state) => const NoTransitionPage(
+                  child: VerifiedScreen(),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/artifact',
+        parentNavigatorKey: _rootNavigatorKey,
+        redirect: (context, state) => '/artifact/create',
       ),
       GoRoute(
         path: '/templates',

@@ -1,0 +1,25 @@
+{{include:modules/01_role.txt}}
+{{include:modules/02_principles.txt}}
+{{include:modules/03_hook_engine.txt}}
+
+# STAGE 2 — CONCEPTS
+
+Given SongBrief, invent at least 5 distinct song concepts.
+
+Output JSON ConceptBatch:
+{
+  "concepts": [
+    {
+      "id": "c1",
+      "title_ideas": ["", ""],
+      "logline": "",
+      "hook_seed": "",
+      "why_it_works": "",
+      "risk": "",
+      "commercial_fit": 0,
+      "originality": 0
+    }
+  ]
+}
+
+Each concept must differ in angle (setting, conflict, or perspective) — not just title synonyms.

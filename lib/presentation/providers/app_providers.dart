@@ -2,10 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/constants/api_constants.dart';
 import '../../core/network/dio_client.dart';
-import '../../core/utils/prompt_generator.dart';
 import '../../data/models/audio_analysis_model.dart';
 import '../../data/models/audio_session.dart';
-import '../../data/models/melody_variation_mode.dart';
+import '../../data/models/melody_evolution.dart';
 import '../../data/models/song_generation_type.dart';
 import '../../data/models/suno_field_output_mode.dart';
 import '../../data/models/track_duration_config.dart';
@@ -152,6 +151,11 @@ class PromptFormNotifier extends Notifier<UserInputModel> {
     state = state.copyWith(referenceArtists: s);
   }
 
+  void setSonicTags(List<String> tags) {
+    if (_listEquals(state.sonicTags, tags)) return;
+    state = state.copyWith(sonicTags: List<String>.from(tags));
+  }
+
   void setAvoid(String s) {
     if (state.avoid == s) return;
     state = state.copyWith(avoid: s);
@@ -209,12 +213,19 @@ class PromptFormNotifier extends Notifier<UserInputModel> {
 
   void setRemixOriginalSongTitle(String s) {
     if (state.remixOriginalSongTitle == s) return;
-    state = state.copyWith(remixOriginalSongTitle: s);
+    // Editing interpolation source clears analyzer genre-flip (mutual exclusion).
+    state = state.copyWith(
+      remixOriginalSongTitle: s,
+      remixFromAnalyzer: false,
+    );
   }
 
   void setRemixOriginalArtist(String s) {
     if (state.remixOriginalArtist == s) return;
-    state = state.copyWith(remixOriginalArtist: s);
+    state = state.copyWith(
+      remixOriginalArtist: s,
+      remixFromAnalyzer: false,
+    );
   }
 
   void setSongGenerationType(SongGenerationType t) {
@@ -237,9 +248,9 @@ class PromptFormNotifier extends Notifier<UserInputModel> {
     state = state.copyWith(melodyCustomNotes: s);
   }
 
-  void setMelodyVariationMode(MelodyVariationMode mode) {
-    if (state.melodyVariationMode == mode) return;
-    state = state.copyWith(melodyVariationMode: mode);
+  void setMelodyEvolution(MelodyEvolution mode) {
+    if (state.melodyEvolution == mode) return;
+    state = state.copyWith(melodyEvolution: mode);
   }
 
   void setChordProgression(String s) {
@@ -252,14 +263,22 @@ class PromptFormNotifier extends Notifier<UserInputModel> {
     state = state.copyWith(generateLyrics: v);
   }
 
+  void setUseVibeAsLyricSource(bool value) {
+    if (state.useVibeAsLyricSource == value) return;
+    state = state.copyWith(
+      useVibeAsLyricSource: value,
+      generateLyrics: value ? true : state.generateLyrics,
+    );
+  }
+
   void setLyricThemeNotes(String s) {
     if (state.lyricThemeNotes == s) return;
     state = state.copyWith(lyricThemeNotes: s);
   }
 
-  void setLyricTemperamentCodes(String s) {
-    if (state.lyricTemperamentCodes == s) return;
-    state = state.copyWith(lyricTemperamentCodes: s);
+  void setActiveModifierCodes(String s) {
+    if (state.activeModifierCodes == s) return;
+    state = state.copyWith(activeModifierCodes: s);
   }
 
   void setHumanRealism(int level) {
@@ -284,7 +303,7 @@ class PromptFormNotifier extends Notifier<UserInputModel> {
 
   void applyAnalysis(AudioAnalysisModel m, {String? trackDurationLabel}) {
     state = state.copyWith(
-      analyzerSummary: buildAnalyzerPromptWithThickVocals(m),
+      analyzerSummary: m.toPromptSummary(),
       bpm: m.bpm?.toStringAsFixed(0),
       includeAnalyzerData: true,
       trackDurationLabel: trackDurationLabel ?? state.trackDurationLabel,
@@ -317,13 +336,23 @@ Source estimate: $source → destination: $targetGenre. In SUNO STYLE, briefly d
       bpm: analysis.bpm?.toStringAsFixed(0),
       includeAnalyzerData: true,
       analyzerSummary:
-          '${buildAnalyzerPromptWithThickVocals(analysis)}\n\n[Remix target: $targetGenre]',
+          '${analysis.toPromptSummary()}\n\n[Remix target: $targetGenre]',
       trackDurationLabel: trackDurationLabel ?? state.trackDurationLabel,
       djIntroMixIn: djIntroMixIn,
       djOutroMixOut: djOutroMixOut,
       generateLyrics: false,
       remixFromAnalyzer: true,
+      remixOriginalSongTitle: '',
+      remixOriginalArtist: '',
       sunoFieldOutputMode: SunoFieldOutputMode.custom,
     );
   }
+}
+
+bool _listEquals(List<String> a, List<String> b) {
+  if (a.length != b.length) return false;
+  for (var i = 0; i < a.length; i++) {
+    if (a[i] != b[i]) return false;
+  }
+  return true;
 }

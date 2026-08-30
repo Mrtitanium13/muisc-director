@@ -1,0 +1,32 @@
+{
+  "version": "1.0.0",
+  "default": "balanced",
+  "modes": {
+    "fast": {
+      "description": "Fewer stages; best for chorus/ideas smoke tests",
+      "stage_skip": ["select", "arc", "bridge", "transitions", "rhyme"],
+      "min_hook_candidates": 5,
+      "min_concepts": 3
+    },
+    "balanced": {
+      "description": "Default production path",
+      "stage_skip": [],
+      "min_hook_candidates": 10,
+      "min_concepts": 5
+    },
+    "premium": {
+      "description": "Full stages + richer candidate guidance in context",
+      "stage_skip": [],
+      "min_hook_candidates": 14,
+      "min_concepts": 8,
+      "deeper_revision": true
+    },
+    "debug": {
+      "description": "Same as balanced; response includes stage artifacts",
+      "stage_skip": [],
+      "min_hook_candidates": 10,
+      "min_concepts": 5,
+      "include_stage_artifacts": true
+    }
+  }
+}

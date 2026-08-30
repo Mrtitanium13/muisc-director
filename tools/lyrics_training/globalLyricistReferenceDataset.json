@@ -1,0 +1,22 @@
+[
+  {"id": 1, "title": "Water", "artist": "Tyla", "genreLane": "amapiano", "theme": "Global R&B-infused Amapiano, slow-burning sensual English pop over log drum pulse", "cadenceNote": "Short hook lines, question-led phrasing, spacious pre-drop"},
+  {"id": 2, "title": "Tested, Approved & Trusted", "artist": "Burna Boy", "genreLane": "afro_house", "theme": "Rhythmic English storytelling over deep rolling house baseline", "cadenceNote": "Declarative bars, percussive pocket, chant-ready hook"},
+  {"id": 3, "title": "Frames (Who's Gonna Know)", "artist": "Wizkid ft. Amaria BB", "genreLane": "private_school_amapiano", "theme": "Deep atmospheric Private School vibe, sultry continuous English R&B", "cadenceNote": "Low-register sustained lines, minimal syllable bursts"},
+  {"id": 4, "title": "Unavailable", "artist": "Davido ft. Musa Keys", "genreLane": "amapiano", "theme": "English-led defiant detachment hook, heavy log drum bounce", "cadenceNote": "Repetitive mantra hook, call-and-response space"},
+  {"id": 5, "title": "Twist & Turn", "artist": "Popcaan ft. Drake", "genreLane": "dancehall", "theme": "Smooth melodic dancehall, rolling syncopated riddim", "cadenceNote": "Continuous melodic flow, riddim-locked syllables"},
+  {"id": 6, "title": "Temperature", "artist": "Sean Paul", "genreLane": "dancehall", "theme": "Fast staccato delivery on classic riddim bounce", "cadenceNote": "Rapid syllable clusters, percussive consonants"},
+  {"id": 7, "title": "Nobody Has To Know", "artist": "Kranium", "genreLane": "dancehall", "theme": "Late-night sultry melodic storytelling", "cadenceNote": "Spacious phrases, intimate narrative"},
+  {"id": 8, "title": "Blessed", "artist": "Shenseea ft. Tyga", "genreLane": "dancehall_pop", "theme": "Confident boast bars on Caribbean pop drum loop", "cadenceNote": "Fast-flow pockets, stacked ad-lib room"},
+  {"id": 9, "title": "MIA", "artist": "Bad Bunny ft. Drake", "genreLane": "reggaeton", "theme": "English/Spanish crossover on driving dembow riddim", "cadenceNote": "Repetitive vocal structures, 100 BPM pocket"},
+  {"id": 10, "title": "Mi Gente (Remix)", "artist": "J Balvin ft. Willy William & Beyoncé", "genreLane": "reggaeton", "theme": "High-energy rhythmic chant over hard percussive loop", "cadenceNote": "Chant-led hooks, crowd-response phrasing"},
+  {"id": 11, "title": "Nostálgico", "artist": "Rauw Alejandro ft. Chris Brown", "genreLane": "reggaeton_rnb", "theme": "Melancholic vocal on crisp electronic reggaeton rhythm", "cadenceNote": "Smooth legato over dembow grid"},
+  {"id": 12, "title": "Hotline Bling", "artist": "Drake", "genreLane": "hip_hop", "theme": "Minimalist layout-driven cadence, spatial loneliness", "cadenceNote": "Sparse lines, drum-machine snap alignment"},
+  {"id": 13, "title": "Kill Bill", "artist": "SZA", "genreLane": "rnb_pop", "theme": "Conversational narrative, catchy mid-tempo pop-R&B rhythm", "cadenceNote": "Internal rhyme, story-forward verses"},
+  {"id": 14, "title": "SICKO MODE", "artist": "Travis Scott", "genreLane": "trap", "theme": "Multi-section progressive structure, tempo/beat shifts", "cadenceNote": "Section breaks, adaptive flow density"},
+  {"id": 15, "title": "Blinding Lights", "artist": "The Weeknd", "genreLane": "synth_pop", "theme": "Driving rapid 80s synth-pop delivery, massive hooks", "cadenceNote": "High syllable rate chorus, wide melodic intervals"},
+  {"id": 16, "title": "Heartbreak Anniversary", "artist": "Giveon", "genreLane": "rnb", "theme": "Slow-burn baritone over cinematic isolated piano", "cadenceNote": "Long vowels, minimal percussion in vocal lanes"},
+  {"id": 17, "title": "Levitating", "artist": "Dua Lipa", "genreLane": "disco_pop", "theme": "Upbeat disco-pop, rapid structured syllable timing", "cadenceNote": "Tight verse grids, singalong chorus"},
+  {"id": 18, "title": "Calm Down (Remix)", "artist": "Rema ft. Selena Gomez", "genreLane": "afro_pop", "theme": "Afro-pop global crossover, sweet melodic repetition", "cadenceNote": "Clear verse-chorus boundaries, repeatable hook"},
+  {"id": 19, "title": "10%", "artist": "Kaytranada ft. Kali Uchis", "genreLane": "house_rnb", "theme": "Groovy house baseline, silky rhythmic R&B vocal placement", "cadenceNote": "Continuous groove, vocal sits behind kick"},
+  {"id": 20, "title": "Bad Guy", "artist": "Billie Eilish", "genreLane": "electronic_pop", "theme": "Whisper close-mic on minimalist bass and finger snaps", "cadenceNote": "Staccato whisper, asymmetric phrasing"}
+]

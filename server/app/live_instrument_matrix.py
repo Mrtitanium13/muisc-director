@@ -13,10 +13,9 @@ from app.payload_optimization import (
     vocal_option_from_audio_environment,
 )
 
-from app.genre_key_resolver import resolve_genre_key
-
 _JSON_PATH = Path(__file__).resolve().parents[2] / "tools" / "live_instrument_matrix.json"
-_DEFAULT_KEY = "pop"
+_DEFAULT_KEY = "default"
+_LEGACY_ALIASES: dict[str, str] = {}
 
 
 @dataclass(frozen=True)
@@ -26,32 +25,107 @@ class LiveInstrument:
     category: str
     default_articulation: str
     mix_role: str
+    prompt_text: str = ""
+    alias_hints: tuple[str, ...] = ()
+
+    @property
+    def prompt_label(self) -> str:
+        p = (self.prompt_text or "").strip()
+        return p if p else self.name
+
+
+_LIVE_AMBIENCE_STUDIO = (
+    "dead-room isolation",
+    "close-mic studio capture",
+    "dry acoustic room",
+)
 
 
 _MATRIX: dict[str, list[LiveInstrument]] | None = None
+_SCHEMA: dict[str, Any] | None = None
+
+
+def _parse_json() -> dict[str, Any]:
+    raw = json.loads(_JSON_PATH.read_text(encoding="utf-8"))
+    if "genres" in raw:
+        return {
+            "schema_version": str(raw.get("schemaVersion", "1.1.0")),
+            "category_taxonomy": dict(raw.get("categoryTaxonomy", {})),
+            "category_classification_rules": list(
+                raw.get("categoryClassificationRules", [])
+            ),
+            "genre_preset_alias": dict(raw.get("genrePresetAlias", {})),
+            "genres": dict(raw["genres"]),
+        }
+    return {
+        "schema_version": "1.0.0",
+        "category_taxonomy": {},
+        "category_classification_rules": [],
+        "genre_preset_alias": {},
+        "genres": raw,
+    }
 
 
 def _raw_json() -> dict[str, Any]:
-    return json.loads(_JSON_PATH.read_text(encoding="utf-8"))
+    global _SCHEMA  # noqa: PLW0603
+    if _SCHEMA is None:
+        _SCHEMA = _parse_json()
+    return _SCHEMA
 
 
 def _row_to_instrument(row: dict[str, Any]) -> LiveInstrument:
+    alias_raw = row.get("aliases") or row.get("aliasHints") or []
+    if isinstance(alias_raw, str):
+        aliases = tuple(a.strip() for a in alias_raw.split("|") if a.strip())
+    else:
+        aliases = tuple(str(a).strip() for a in alias_raw if str(a).strip())
     return LiveInstrument(
         id=str(row["id"]),
         name=str(row["name"]),
         category=str(row.get("category", "")),
         default_articulation=str(row.get("defaultArticulation", "")),
         mix_role=str(row.get("mixRole", "")),
+        prompt_text=str(row.get("promptText") or ""),
+        alias_hints=aliases,
     )
+
+
+def selection_implies_live_ambience(real_instrumentals: str) -> bool:
+    return "live" in str(real_instrumentals or "").lower()
+
+
+def augment_avoid_clause(*, avoid: str, real_instrumentals: str) -> str:
+    if not selection_implies_live_ambience(real_instrumentals):
+        return str(avoid or "").strip()
+    seen: set[str] = set()
+    out: list[str] = []
+    for clause in [*( [avoid.strip()] if avoid and avoid.strip() else []), *_LIVE_AMBIENCE_STUDIO]:
+        key = clause.lower()
+        if key not in seen:
+            seen.add(key)
+            out.append(clause)
+    return ", ".join(out)
+
+
+def _all_instruments_union() -> list[LiveInstrument]:
+    seen: set[str] = set()
+    out: list[LiveInstrument] = []
+    for rows in _raw_json()["genres"].values():
+        for row in rows:
+            inst = _row_to_instrument(dict(row))
+            if inst.id not in seen:
+                seen.add(inst.id)
+                out.append(inst)
+    return out
 
 
 def _load() -> dict[str, list[LiveInstrument]]:
     global _MATRIX  # noqa: PLW0603
     if _MATRIX is not None:
         return _MATRIX
-    raw = _raw_json()
+    schema = _raw_json()
     out: dict[str, list[LiveInstrument]] = {}
-    for genre, rows in raw.items():
+    for genre, rows in schema["genres"].items():
         out[genre] = [_row_to_instrument(dict(row)) for row in rows]
     _MATRIX = out
     return out
@@ -59,18 +133,82 @@ def _load() -> dict[str, list[LiveInstrument]]:
 
 def invalidate_matrix_cache() -> None:
     """Clear cached matrix after JSON regeneration."""
-    global _MATRIX  # noqa: PLW0603
+    global _MATRIX, _SCHEMA  # noqa: PLW0603
     _MATRIX = None
+    _SCHEMA = None
+
+
+def bundle_key_for_genre(genre: str | None) -> str | None:
+    """Exact alias match (case-insensitive), then longest substring match."""
+    trimmed = (genre or "").strip()
+    if not trimmed:
+        return None
+    aliases = _raw_json().get("genre_preset_alias", {})
+    keys = set(_load().keys())
+    for alias, target in aliases.items():
+        if alias.lower() == trimmed.lower() and target in keys:
+            return str(target)
+    best = ""
+    lower = trimmed.lower()
+    for alias, target in aliases.items():
+        alias_lower = alias.lower()
+        if alias_lower in lower and target in keys and len(alias_lower) > len(best):
+            best = str(target)
+    return best or None
+
+
+def voices_for_genre(genre: str | None) -> list[dict[str, Any]]:
+    key = bundle_key_for_genre(genre)
+    if not key:
+        return []
+    return [dict(row) for row in _raw_json()["genres"].get(key, [])]
+
+
+def _bundle_for_label(label: str) -> str | None:
+    return bundle_key_for_genre(label)
+
+
+def _legacy_hit(text: str, keys: set[str]) -> str | None:
+    lower = text.lower()
+    for alias, target in _LEGACY_ALIASES.items():
+        if alias in lower and target in keys:
+            return target
+    return None
 
 
 def resolve_genre_instrument_key(primary: str, fusion: str = "") -> str:
     matrix = _load()
-    return resolve_genre_key(
-        matrix.keys(),
-        primary,
-        fusion,
-        default=_DEFAULT_KEY,
-    )
+    keys = set(matrix.keys())
+    blob = f"{primary} {fusion}".lower().strip()
+
+    if fusion.strip():
+        primary_hit = _bundle_for_label(primary) or _legacy_hit(primary, keys)
+        if primary_hit and primary_hit in keys:
+            return primary_hit
+
+    for label in (primary, fusion):
+        hit = _bundle_for_label(label)
+        if hit and hit in keys:
+            return hit
+
+    legacy = _legacy_hit(blob, keys)
+    if legacy and legacy in keys:
+        return legacy
+
+    partial = bundle_key_for_genre(blob)
+    if partial and partial in keys:
+        return partial
+
+    return _best_genre_key_from_blob(blob, keys) or _DEFAULT_KEY
+
+
+def _best_genre_key_from_blob(blob: str, keys: set[str]) -> str:
+    best = ""
+    for key in keys:
+        phrase = key.replace("_", " ")
+        if phrase in blob and len(phrase) > len(best):
+            best = key
+    return best
 
 
 def instruments_for_genre(
@@ -80,7 +218,8 @@ def instruments_for_genre(
     vocal_option_ui: str = "close-mic",
 ) -> list[LiveInstrument]:
     key = resolve_genre_instrument_key(primary, fusion)
-    raw_rows = [dict(r) for r in _raw_json().get(key, _raw_json()[_DEFAULT_KEY])]
+    genres = _raw_json()["genres"]
+    raw_rows = [dict(r) for r in genres.get(key, genres[_DEFAULT_KEY])]
     patched = process_dynamic_vocal_and_instrument_payload(raw_rows, vocal_option_ui)
     return [_row_to_instrument(row) for row in patched]
 
@@ -100,31 +239,48 @@ def _gear_modifier(inst: LiveInstrument, l99: bool) -> str:
         return " (vintage Fender amp, tube warmth)"
     if inst.category == "keys":
         return " (Neve 1073 preamp, analog warmth)"
-    if inst.category in ("horns", "strings"):
+    if inst.category in ("horns", "strings", "saxophones", "trumpets", "winds"):
         return " (Neumann U47 close-mic'd, dry room)"
+    if inst.category in ("bass", "melodic_bass"):
+        return " (Ampeg SVT warmth, tight DI blend)"
     return ""
 
 
+def _token_matches_instrument(token: str, inst: LiveInstrument) -> bool:
+    t = re.sub(r"\s+", " ", token.lower().strip())
+    if not t:
+        return False
+    if inst.id.lower() == t or inst.name.lower() == t:
+        return True
+    label = inst.prompt_label.lower()
+    if label == t or t in label or label in t:
+        return True
+    for alias in inst.alias_hints:
+        a = alias.lower()
+        if a == t or t in a or a in t:
+            return True
+    return False
+
+
 def _match_selected(
-    available: list[LiveInstrument], tokens: list[str]
+    available: list[LiveInstrument],
+    tokens: list[str],
+    *,
+    fallback_catalog: list[LiveInstrument] | None = None,
 ) -> list[LiveInstrument]:
     out: list[LiveInstrument] = []
     seen: set[str] = set()
-
-    def norm(s: str) -> str:
-        return re.sub(r"\s+", " ", s.lower().strip())
+    catalog = fallback_catalog if fallback_catalog is not None else available
 
     for token in tokens:
-        t = norm(token)
         hit: LiveInstrument | None = None
         for inst in available:
-            if norm(inst.id) == t or norm(inst.name) == t:
+            if _token_matches_instrument(token, inst):
                 hit = inst
                 break
         if hit is None:
-            for inst in available:
-                n = norm(inst.name)
-                if t in n or n in t:
+            for inst in catalog:
+                if _token_matches_instrument(token, inst):
                     hit = inst
                     break
         if hit and hit.id not in seen:
@@ -158,7 +314,8 @@ def generate_live_instrument_prompt(
 
     key = resolve_genre_instrument_key(genre, fusion)
     available = instruments_for_genre(genre, fusion, vocal_option_ui=vocal_option_ui)
-    selected = _match_selected(available, tokens)
+    catalog = _all_instruments_union()
+    selected = _match_selected(available, tokens, fallback_catalog=catalog)
     if not selected:
         return "", ""
 
@@ -167,39 +324,54 @@ def generate_live_instrument_prompt(
 
     descriptions: list[str] = []
     for inst in selected:
+        label = inst.prompt_label
         mod = _gear_modifier(inst, l99)
+        use_prompt_only = bool((inst.prompt_text or "").strip())
         if v == "v4.5":
-            descriptions.append(
-                f"{inst.name}, {inst.default_articulation}, {inst.mix_role}{mod}"
-            )
+            if use_prompt_only:
+                descriptions.append(f"{label}, {inst.mix_role}{mod}")
+            else:
+                descriptions.append(
+                    f"{label}, {inst.default_articulation}, {inst.mix_role}{mod}"
+                )
         elif v == "v5":
-            descriptions.append(
-                f"featuring {inst.default_articulation} {inst.name} "
-                f"sitting in the {inst.mix_role}{mod}"
-            )
+            if use_prompt_only:
+                descriptions.append(
+                    f"featuring {label} sitting in the {inst.mix_role}{mod}"
+                )
+            else:
+                descriptions.append(
+                    f"featuring {inst.default_articulation} {label} "
+                    f"sitting in the {inst.mix_role}{mod}"
+                )
         else:
-            descriptions.append(
-                f"driven by a {inst.default_articulation} {inst.name}{mod}, "
-                f"perfectly seated in the {inst.mix_role}"
-            )
+            if use_prompt_only:
+                descriptions.append(
+                    f"driven by {label}{mod}, perfectly seated in the {inst.mix_role}"
+                )
+            else:
+                descriptions.append(
+                    f"driven by a {inst.default_articulation} {label}{mod}, "
+                    f"perfectly seated in the {inst.mix_role}"
+                )
 
     if v == "v4.5":
         style = f", {', '.join(descriptions)}"
-        meta = f"[{selected[0].name} Feature]"
+        meta = f"[{selected[0].prompt_label} Feature]"
     elif v == "v5":
         style = f". {', '.join(descriptions)}."
-        meta = f"[Instrumental: {' and '.join(s.name for s in selected)} interplay]"
+        meta = f"[Instrumental: {' and '.join(s.prompt_label for s in selected)} interplay]"
     else:
         style = f". The arrangement is elevated by {', and '.join(descriptions)}."
         primary = selected[0]
         meta = (
             f"[Instrumental Break: Feature {primary.default_articulation} "
-            f"{primary.name}, {primary.mix_role}, dynamic lift, subtle tape saturation]"
+            f"{primary.prompt_label}, {primary.mix_role}, dynamic lift, subtle tape saturation]"
         )
         if len(selected) > 1:
             secondary = selected[1]
             meta += (
-                f"\n[Bridge: Intimate interplay between {secondary.name} "
+                f"\n[Bridge: Intimate interplay between {secondary.prompt_label} "
                 f"and vocals, {secondary.mix_role}]"
             )
 
@@ -236,10 +408,11 @@ def live_instrument_user_block(
             vocal_option_ui=vocal_option,
         ),
         parse_instrument_selection(raw),
+        fallback_catalog=_all_instruments_union(),
     )
 
     lines = [
-        "LIVE INSTRUMENT ACCOMPANIMENT (LIVE INSTRUMENT PROTOCOL — Block 1 prose + Block 2 meta-tags):",
+        f"Matrix schema: {_raw_json().get('schema_version', '1.0.0')}",
         f"Matched genre profile: [{key}]",
         f"Vocal backing patch: [{vocal_option}] (from audio_environment_mode={audio_environment_mode or 'studio_isolated'})",
         f"User selection: {raw}",
@@ -247,7 +420,7 @@ def live_instrument_user_block(
     if matched:
         for inst in matched:
             lines.append(
-                f"• {inst.name}: {inst.default_articulation} | mix: {inst.mix_role}"
+                f"• {inst.prompt_label} ({inst.name}): {inst.default_articulation} | mix: {inst.mix_role}"
             )
     else:
         lines.append(
@@ -259,6 +432,12 @@ def live_instrument_user_block(
     if meta_inj:
         lines.append(f"Block 2 metaTagInjection (place in timeline): {meta_inj}")
     lines.append(
-        "Never list bare instrument names. No artist names. Honor version-aware injection from LIVE INSTRUMENT PROTOCOL."
+        "Never list bare instrument names. No artist names. Honor version-aware injection from REAL INSTRUMENT PROTOCOL."
     )
-    return "\n".join(lines)
+    body = "\n".join(lines)
+    return (
+        "[REAL INSTRUMENT ACCOMPANIMENT] (MANDATORY: Feature the following "
+        "instruments prominently. Emphasize their natural, acoustic character and "
+        "the specified articulations. This is a production requirement, not a "
+        f"suggestion.):\n{body}"
+    )

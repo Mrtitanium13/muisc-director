@@ -1,0 +1,37 @@
+{
+  "version": "1.1.0",
+  "ship_threshold": 90,
+  "degraded_floor": 70,
+  "max_regenerate_attempts": 2,
+  "mode_weight_overrides": {
+    "chorus_only": { "hook_strength": 1.8, "narrative": 0.6 },
+    "hook_ideas": { "hook_strength": 2.0, "narrative": 0.4 },
+    "full_song": { "narrative": 1.2, "hook_strength": 1.4 }
+  },
+  "dimensions": [
+    { "id": "emotion", "weight": 1.2, "description": "Felt emotion; specific, not abstract" },
+    { "id": "originality", "weight": 1.1, "description": "Fresh images; avoids stock metaphors" },
+    { "id": "commercial_appeal", "weight": 1.0, "description": "Radio/playlist potential for genre" },
+    { "id": "hook_strength", "weight": 1.4, "description": "Memorable, repeatable, sticky hook" },
+    { "id": "narrative", "weight": 1.0, "description": "Clear story or emotional progression" },
+    { "id": "singability", "weight": 1.3, "description": "Open vowels, natural stress, breathable lines" },
+    { "id": "vocabulary", "weight": 0.9, "description": "Lived-in words; genre-native diction" },
+    { "id": "rhyme", "weight": 1.0, "description": "Musical rhyme without meaning sacrifice" },
+    { "id": "naturalness", "weight": 1.4, "description": "Sounds like a human said it" },
+    { "id": "replay_value", "weight": 1.0, "description": "Lines worth hearing twice" },
+    { "id": "ai_detectability", "weight": 1.5, "description": "Inverse: lower AI smell = higher score", "invert": false }
+  ],
+  "judge_output_schema": {
+    "scores": "object of dimension_id → 0-100",
+    "weighted_total": "number 0-100",
+    "violations": "string[]",
+    "rewrite_directives": "string[]",
+    "ship": "boolean"
+  },
+  "hard_fail_rules": [
+    "forbidden_phrase_hit_without_user_override",
+    "chorus_missing_or_empty",
+    "identical_verse_lines_gt_2",
+    "language_mismatch"
+  ]
+}

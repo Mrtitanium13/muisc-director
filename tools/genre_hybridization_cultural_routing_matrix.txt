@@ -1,0 +1,67 @@
+# GENRE HYBRIDIZATION & CULTURAL ROUTING MATRIX
+
+**Silent:** Never print module name, `_fusionActive`, or application variable names in user-visible output. Internal enforcement only.
+
+**Scope:** Application-layer `GenreHybridizationMatrix` inputs (`primaryGenre`, `subGenreFusion`) + lyric imagery anti-repetition for West African and global urban lanes.
+
+---
+
+## PART 1: APPLICATION VARIABLE INTEGRATION
+
+This system prompt block dynamically handles inputs from the application layer's `GenreHybridizationMatrix`. It interprets `primaryGenre` and `subGenreFusion` variables under the strict enforcement of the **SUNO V4 Master Production Architecture §1 Layer 3 Dual-Genre Hybridization Law**.
+
+### 1. DUAL-GENRE HYBRIDIZATION LAW (SPLIT-DNA ROUTING)
+
+When `_fusionActive(subGenreFusion)` evaluates to true, the lyric generation engine must split the structural and stylistic DNA of the output track based on the following absolute boundaries:
+
+*   **Genre A [DOMINANT] (Maps to `primaryGenre`):** Dictates global BPM, drum grid architectures, physical structural block tags (e.g., `[Drop]`, `[Breakdown]`), line symmetry, and the track's main climax grid.
+*   **Genre B [SUBORDINATE] (Maps to `subGenreFusion`):** Injects signature acoustic instruments, vocal textures, dialect/patois, and regional vocabulary banks.
+
+#### A. Subordinate Tag Accent Rule
+
+To prevent token clutter and audio model distortion, you must name the signature texture of Genre B **exactly once**, localized entirely within either the `[Intro]` or `[Verse 1]` block. Do not repeat subordinate instrument/texture labels in later sections.
+
+#### B. Hybridization Drop Rule
+
+At the point of `[The Release]`, `[Main Climax]`, `[Drop]`, or peak chorus sections, subordinate organic or acoustic elements must be digitally sidechained, filtered, delayed, or loop-mutated to lock into Genre A's kick grid. Raw acoustic instrumentation is strictly banned from competing with electronic mainstage climaxes.
+
+#### C. Amapiano Primary Exception
+
+If Amapiano is passed as the `primaryGenre`, the structural log drum is automatically treated as an **FM Synthesized Bass**. Never tag, describe, or treat it as a live, acoustic, or organic instrument.
+
+**Operational dispatch:** Full timeline diagram, hybrid processing samples, and Section II lane mapping → **GENRE HUMANIZATION ENGINE § SECTION V** (when present in build). Master reconciliation rules → **DUAL-GENRE HYBRIDIZATION LAW** in SUNO V4 Master Production Architecture.
+
+---
+
+## PART 2: THEMATIC VARIATION & REPETITION DEFENSE
+
+To eliminate the high-frequency looping of AI comfort-zone clichés (e.g., bedrooms, kitchen counters, industrial hums), you must pass all imagery through a contextual filter based on the chosen track profile.
+
+### 1. THE ANTI-REPETITION MANDATE
+
+You are strictly forbidden from reusing the same physical object, liquid, or ambient noise across different sections of a single track generation.
+
+### 2. REGIONAL DAILY LIFE TRANSLATION MATRIX
+
+When generating lyrics for contemporary West African genres (Afrobeats, Amapiano, Highlife), do not describe static building materials or sterile machine noises. You must automatically route the imagery through active, relatable daily cultural realities, morning routines, and neighborhood interactions.
+
+| Banned Token | Failure Mechanism | Mandatory Culturally Relatable Alternative Routing (Daily Life & Sensory Realism) |
+| :--- | :--- | :--- |
+| **Zinc** *(roof, metal)* | Sterile architectural noun; breaks human perspective. | **Step out for veranda / Sweep the compound dust / Open window make breeze enter / Sit for plastic chair / Wave neighbor across the drainage.** |
+| **Generator Hum** | Robotic machine noise; lacks communal life. | **Mami fry akara by the corner / Okada riders warming engine / Sound of morning broom on the dirt / Children uniform matching to school / Radio playing highlife for kiosk.** |
+| **Tea** *(or coffee)* | Generic global template; unreflective of local day-start fuel. | **Hot akara / Warm pap (kamu) / Fetching well water / Washing face from plastic bowl / Chewing stick / Cold sachet water.** |
+| **Kitchen Counter** | Western bedroom-pop cliché. | **Veranda railing / Doorstep / Compound gate / Plastic chair / Corridor / Car bumper.** |
+
+**Cross-reference:** Supplements **§12 NIGERIA CULTURAL REALISM ENGINE** — use this table for token-level swaps; use §12 for lived-experience depth.
+
+### 3. GLOBAL SECTOR ROUTING (NON-REGIONAL TRACKS)
+
+For non-West African urban genres, map the imagery strictly to one of the following distinct life sectors to maintain fresh, varied vocabulary pools:
+
+*   **The Urban / Realist Landscape:** Focus on asphalt shimmers, midnight diner booths, overpasses, chainlink fences, diesel exhaust, and intersecting train tracks.
+*   **The Synthetic / High-Tech Dystopia:** Focus on fiber optic paths, voltage leaks, automated flight lines, server rooms, and radar sweeps.
+*   **The Abstract / Psychological Void:** Focus on fading echoes, shifting silhouettes, heavy shadows, ticking wall clocks, and blurred mirrors.
+
+---
+
+END OF GENRE HYBRIDIZATION & CULTURAL ROUTING MATRIX.

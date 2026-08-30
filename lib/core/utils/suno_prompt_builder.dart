@@ -1,9 +1,14 @@
+import 'package:flutter/foundation.dart';
+
 import 'genre_fx_matrix_data.dart';
 import 'genre_key_resolver.dart';
 import '../constants/genres_config.dart';
+import '../suno_prompt_router.dart';
+import '../constants/song_structure_data.dart';
 
 /// Result of [SunoPromptBuilder.buildSunoPrompt].
-class SunoPromptBuildResult {
+@immutable
+final class SunoPromptBuildResult {
   const SunoPromptBuildResult({
     required this.prompt,
     required this.lyrics,
@@ -15,15 +20,21 @@ class SunoPromptBuildResult {
   final String lyrics;
   final String matchedGenreKey;
   final int intensity;
+
+  @override
+  String toString() =>
+      'SunoPromptBuildResult($matchedGenreKey@$intensity, ${prompt.length} chars)';
 }
 
 /// Suno AI Prompt & Arrangement Builder — genre-specific production FX by intensity.
-class SunoPromptBuilder {
+abstract final class SunoPromptBuilder {
   SunoPromptBuilder._();
 
-  static const _defaultKey = 'pop';
+  static const String _defaultKey = 'pop';
 
-  static const _genreAliases = <String, String>{
+  /// Map of free-form user genre labels → canonical [GenreFxMatrixData] lane key.
+  static const Map<String, String> _genreAliases = {
+    // EDM / electronic
     'big room': 'edm',
     'festival edm': 'edm',
     'future bass': 'edm',
@@ -41,76 +52,232 @@ class SunoPromptBuilder {
     'uplifting trance': 'edm',
     'electro': 'edm',
     'edm bounce': 'edm',
+    'nu-disco': 'edm',
+    'future funk': 'edm',
+    'disco house': 'edm',
+    'uk garage': 'edm',
+    'soulful house': 'edm',
     'hard techno': 'techno',
     'melodic techno': 'techno',
     'acid techno': 'techno',
     'minimal techno': 'techno',
     'big room techno': 'techno',
+    'techno': 'techno',
     'drum and bass': 'dnb',
+    'drum & bass': 'dnb',
     'liquid dnb': 'dnb',
     'neurofunk': 'dnb',
     'jungle': 'dnb',
+    'dnb': 'dnb',
     'synthwave': 'synthwave',
     'retrowave': 'synthwave',
     'vaporwave': 'synthwave',
+    'new wave': 'synthwave',
     'melodic dubstep': 'dubstep',
     'riddim': 'dubstep',
     'brostep': 'dubstep',
+    'dubstep': 'dubstep',
     'dark ambient': 'ambient',
     'ambient score': 'ambient',
+    'ambient': 'ambient',
+    'hyperpop': 'pop',
+    'digicore': 'pop',
+    'idm': 'ambient',
+    'glitch': 'ambient',
+    'industrial': 'techno',
+    'industrial metal': 'metal',
+    'industrial rock': 'rock',
+    'ebm': 'techno',
+    'breakcore': 'dnb',
+    'witch house': 'ambient',
+    'experimental': 'ambient',
+    'modular': 'ambient',
+    'electronic_experimental': 'ambient',
+    // Hip-hop
     'hip hop': 'hiphop',
-    'boom bap': 'hiphop',
+    'hip-hop': 'hiphop',
+    'boom bap': 'boom_bap',
     'lo-fi hip hop': 'hiphop',
     'conscious hip hop': 'hiphop',
+    'underground hip hop': 'hiphop',
+    'jazz rap': 'boom_bap',
+    'chillhop': 'hiphop',
+    'cloud rap': 'hiphop',
+    'afro rap': 'hiphop',
     'drill': 'trap',
     'uk drill': 'trap',
+    'ny drill': 'trap',
     'melodic trap': 'trap',
     'phonk': 'trap',
+    'trap': 'trap',
+    'rage': 'hiphop',
+    'jersey club': 'hiphop',
+    'memphis rap': 'boom_bap',
+    // Pop
     'mainstream pop': 'pop',
     'electropop': 'pop',
     'dance pop': 'pop',
+    'pop / max martin': 'pop',
     'k-pop': 'pop',
     'j-pop': 'pop',
+    'c-pop': 'mandopop',
+    'mandopop': 'mandopop',
+    'indie pop': 'indie',
+    'bedroom pop': 'indie',
+    'dream pop': 'indie',
+    'post-rock': 'indie',
+    'synth pop': 'pop',
+    // R&B / soul / funk
     'contemporary r&b': 'rnb',
+    'contemporary rnb': 'rnb',
+    'contemporary r and b': 'rnb',
+    '90s r&b': 'rnb',
+    '90s rnb': 'rnb',
+    '90s r and b': 'rnb',
+    'r&b': 'rnb',
+    'rnb': 'rnb',
+    'r and b': 'rnb',
     'neo-soul': 'rnb',
+    'neo soul': 'rnb',
     'soul': 'rnb',
     'trap soul': 'rnb',
-    'dembow': 'reggaeton',
+    'quiet storm': 'rnb',
+    'new jack swing': 'rnb',
+    'funk': 'rnb',
+    'p-funk': 'rnb',
+    'gogo': 'rnb',
+    'motown': 'rnb',
+    // Rock / metal
     'indie rock': 'rock',
     'alt rock': 'rock',
     'alternative rock': 'rock',
+    'alternative': 'rock',
+    'classic rock': 'rock',
     'hard rock': 'rock',
     'punk': 'rock',
-    'heavy metal': 'metal',
-    'metalcore': 'metal',
-    'indie pop': 'indie',
-    'bedroom pop': 'indie',
+    'pop punk': 'rock',
+    'emo': 'rock',
+    'grunge': 'rock',
     'shoegaze': 'indie',
-    'dream pop': 'indie',
-    'post-rock': 'indie',
+    'britpop': 'rock',
+    'heavy metal': 'metal',
+    'death metal': 'metal',
+    'metalcore': 'metal',
+    'metal': 'metal',
+    // Country / folk
     'modern country': 'country',
+    'outlaw country': 'country',
     'americana': 'country',
     'bluegrass': 'country',
+    'sertanejo': 'country',
+    'country': 'country',
     'singer-songwriter': 'folk',
     'indie folk': 'folk',
-    'amapiano': 'afrobeats',
-    'afro house': 'afrobeats',
+    'folk-rock': 'folk',
+    'folk rock': 'folk',
+    'folk': 'folk',
+    // Afro / global
+    'amapiano': 'amapiano',
+    'amapiano-vinahouse': 'amapiano',
+    'afro house': 'amapiano',
+    'vinahouse': 'amapiano',
+    'gqom': 'amapiano',
     'highlife': 'afrobeats',
-    'vinahouse': 'afrobeats',
+    'afrobeats': 'afrobeats',
+    'afro-swing': 'afrobeats',
+    'fuji': 'afrobeats',
+    'bongo flava': 'afrobeats',
+    'gengetone': 'afrobeats',
+    'azonto': 'afrobeats',
+    // South Asian / MENA → world lane
+    'bollywood': 'world',
+    'filmi': 'world',
+    'punjabi': 'world',
+    'bhangra': 'world',
+    'middle eastern': 'world',
+    'city pop': 'pop',
+    // Worship / gospel
+    'praise and worship': 'worship',
+    'praise/worship': 'worship',
+    'contemporary gospel': 'worship',
+    'traditional gospel': 'worship',
+    'urban gospel': 'worship',
+    'gospel': 'worship',
+    'modern worship': 'worship',
+    'worship ballad': 'worship',
+    'pop worship': 'worship',
+    'afro-gospel': 'worship',
+    'southern gospel': 'worship',
+    'country gospel': 'worship',
+    'ccm': 'worship',
+    // Latin / Caribbean
     'latin pop': 'latin',
     'salsa': 'latin',
     'bachata': 'latin',
     'bossa nova': 'latin',
     'cumbia': 'latin',
+    'dembow': 'reggaeton',
+    'reggaeton': 'reggaeton',
+    'latin trap': 'reggaeton',
+    'baile funk': 'latin',
+    'brazilian funk': 'latin',
+    'forró': 'latin',
+    'forro': 'latin',
+    'perreo': 'latin',
+    'guaracha': 'latin',
+    'champeta': 'latin',
+    'moombahton': 'latin',
+    'soca': 'latin',
+    'calypso': 'latin',
+    'merengue': 'latin',
+    'vallenato': 'latin',
+    'tango': 'latin',
+    'reggae': 'reggae',
+    'roots reggae': 'reggae',
+    'dub': 'reggae',
+    'ska': 'reggae',
+    'rocksteady': 'reggae',
+    'dancehall': 'reggaeton',
+    // Cinematic / jazz / experimental electronic
     'film score': 'cinematic',
     'orchestral': 'cinematic',
     'trailer': 'cinematic',
+    'cinematic': 'cinematic',
     'smooth jazz': 'jazz',
     'bebop': 'jazz',
     'vocal jazz': 'jazz',
-    'jazz rap': 'hiphop',
+    'jazz fusion': 'jazz',
+    'fusion': 'jazz',
+    'nu-jazz': 'jazz',
+    'acid jazz': 'jazz',
+    'big band': 'jazz',
+    'jazz': 'jazz',
+    'latin jazz': 'jazz',
+    // Blues → jazz lane (no dedicated blues matrix family)
+    'blues': 'jazz',
+    'delta blues': 'jazz',
+    'chicago blues': 'jazz',
+    'electric blues': 'jazz',
   };
 
+  static final Set<String> _fxLyricsLines = _precomputeFxLyricsLines();
+
+  static Set<String> _precomputeFxLyricsLines() {
+    final out = <String>{};
+    for (final profile in GenreFxMatrixData.profiles.values) {
+      for (final level in const ['1', '2', '3']) {
+        final fx = (profile[level]?['lyrics'] ?? '').toString().trim();
+        if (fx.isEmpty) continue;
+        for (final line in fx.split('\n')) {
+          final trimmed = line.trim();
+          if (trimmed.isNotEmpty) out.add(trimmed);
+        }
+      }
+    }
+    return out;
+  }
+
+  /// Resolves a primary + fusion genre pair to a canonical FX lane key.
   static String resolveGenreKey(String primary, String fusion) {
     final extra = _genreAliases.entries
         .map((e) => (e.key, e.value))
@@ -121,7 +288,6 @@ class SunoPromptBuilder {
       fusion,
       defaultKey: _defaultKey,
       extraReplacements: extra,
-      applyDefaultAliases: false,
     );
   }
 
@@ -131,24 +297,96 @@ class SunoPromptBuilder {
     return t.toLowerCase() == '[instrumental]';
   }
 
+  static bool _isFxOnlyHeadLine(String trimmed) {
+    if (!_fxLyricsLines.contains(trimmed)) return false;
+    if (trimmed.startsWith('[') &&
+        trimmed.endsWith(']') &&
+        !trimmed.contains(':')) {
+      final inner = trimmed.substring(1, trimmed.length - 1).trim().toLowerCase();
+      const bareStructural = {
+        'chorus',
+        'hook',
+        'verse',
+        'drop',
+        'bridge',
+        'intro',
+        'outro',
+        'monologue',
+        'solo',
+        'breakdown',
+        'build',
+        'build-up',
+        'build up',
+        'climax',
+        'coda',
+        'pre-chorus',
+        'pre chorus',
+        'end',
+      };
+      if (bareStructural.contains(inner)) return false;
+    }
+    return true;
+  }
+
   /// Removes genre-FX arrangement prefixes so re-applying intensity/lane is idempotent.
   static String stripFxLayout(String lyrics) {
-    var out = lyrics;
-    var changed = true;
-    while (changed) {
-      changed = false;
-      for (final profile in GenreFxMatrixData.profiles.values) {
-        for (final level in const ['1', '2', '3']) {
-          final fx = (profile[level]?['lyrics'] ?? '').trim();
-          if (fx.isNotEmpty && out.startsWith(fx)) {
-            out = out.substring(fx.length).trimLeft();
-            changed = true;
-          }
-        }
+    if (lyrics.isEmpty) return lyrics;
+    final lines = lyrics.split('\n');
+    final out = <String>[];
+    var strippingHead = true;
+    for (final line in lines) {
+      if (strippingHead) {
+        final t = line.trim();
+        if (t.isEmpty) continue;
+        if (_isFxOnlyHeadLine(t)) continue;
+        strippingHead = false;
       }
+      out.add(line);
     }
-    return out;
+    return out.join('\n');
   }
+
+  /// FX arrangement head only (everything [stripFxLayout] would remove).
+  static String extractFxLayout(String lyrics) {
+    if (lyrics.isEmpty) return '';
+    final lines = lyrics.split('\n');
+    final fx = <String>[];
+    for (final line in lines) {
+      final t = line.trim();
+      if (t.isEmpty) {
+        if (fx.isNotEmpty) fx.add(line);
+        continue;
+      }
+      if (_isFxOnlyHeadLine(t)) {
+        fx.add(line);
+        continue;
+      }
+      break;
+    }
+    return fx.join('\n').trimRight();
+  }
+
+  /// Preview of lane+intensity FX tags (no user lyric body).
+  static String fxLayoutPreview({
+    required String primaryGenre,
+    String fusionGenre = '',
+    int intensity = 2,
+    String sunoVersion = 'v4.5',
+  }) {
+    final lane = resolveGenreKey(primaryGenre, fusionGenre);
+    final built = buildSunoPrompt(
+      baseStyle: '',
+      baseLyrics: GenresConfig.fxLyricsAnchor(lane),
+      primaryGenre: lane,
+      fusionGenre: fusionGenre,
+      intensity: intensity,
+      sunoVersion: sunoVersion,
+    );
+    return extractFxLayout(built.lyrics);
+  }
+
+  static List<String> _anchorsForFamily(String family) =>
+      GenresConfig.canonicalAnchorsForFamily(family);
 
   /// Compiles FX into vibe + optional lyrics (server / on-device generation).
   static ({String vibe, String optionalLyrics}) applyGenreFxToInputs({
@@ -188,6 +426,7 @@ class SunoPromptBuilder {
     required String primaryGenre,
     String fusionGenre = '',
     int intensity = 2,
+    String sunoVersion = 'v4.5',
   }) {
     var finalStyle = baseStyle.trim();
     var finalLyrics = baseLyrics.trim();
@@ -195,53 +434,72 @@ class SunoPromptBuilder {
     final targetIntensity = intensity.clamp(1, 3);
     final genreKey = resolveGenreKey(primaryGenre, fusionGenre);
     final profile = GenreFxMatrixData.profiles[genreKey];
+
+    String fallbackLyrics() =>
+        instrumental ? '[Instrumental]' : _stripVocalSpecBracketLines(finalLyrics);
+
     if (profile == null) {
       return SunoPromptBuildResult(
         prompt: finalStyle,
-        lyrics: instrumental ? '[Instrumental]' : finalLyrics,
+        lyrics: fallbackLyrics(),
         matchedGenreKey: genreKey,
         intensity: targetIntensity,
       );
     }
+
     final levelKey = '$targetIntensity';
     final fx = profile[levelKey];
     if (fx == null) {
       return SunoPromptBuildResult(
         prompt: finalStyle,
-        lyrics: instrumental ? '[Instrumental]' : finalLyrics,
+        lyrics: fallbackLyrics(),
         matchedGenreKey: genreKey,
         intensity: targetIntensity,
       );
     }
-    final fxStyle = (fx['style'] ?? '').trim();
+
+    final fxStyle = (fx['style'] ?? '').toString().trim();
     final fxLyrics = fx['lyrics'] ?? '';
+    final refinementTags = SunoPromptRouterV2.styleTagsFor(
+      primaryGenre: primaryGenre,
+      subGenreFusion: fusionGenre,
+      sunoVersion: sunoVersion,
+    );
+
     if (fxStyle.isNotEmpty) {
       finalStyle = finalStyle.isEmpty ? fxStyle : '$finalStyle, $fxStyle';
     }
-    if (fxLyrics.trim().isNotEmpty) {
+    if (refinementTags.isNotEmpty) {
+      finalStyle =
+          finalStyle.isEmpty ? refinementTags : '$finalStyle, $refinementTags';
+    }
+
+    if (fxLyrics.toString().trim().isNotEmpty) {
+      final fxTrimmed = fxLyrics.toString().trim();
       if (instrumental) {
-        finalLyrics = '${fxLyrics.trim()}\n[Instrumental]';
-      } else if (finalLyrics.contains('[Drop]')) {
-        finalLyrics = finalLyrics.replaceFirst(
-          '[Drop]',
-          '${fxLyrics.trim()}\n[Drop]',
-        );
-      } else if (finalLyrics.contains('[Monologue]')) {
-        finalLyrics = finalLyrics.replaceFirst(
-          '[Monologue]',
-          '${fxLyrics.trim()}\n[Monologue]',
-        );
-      } else if (finalLyrics.contains('[Chorus]')) {
-        finalLyrics = finalLyrics.replaceFirst(
-          '[Chorus]',
-          '${fxLyrics.trim()}\n[Chorus]',
-        );
+        finalLyrics = '$fxTrimmed\n[Instrumental]';
       } else {
-        finalLyrics = '${fxLyrics.trim()}$finalLyrics';
+        final anchors = _anchorsForFamily(genreKey);
+        var injected = false;
+        for (final anchor in anchors) {
+          if (finalLyrics.contains(anchor)) {
+            finalLyrics = finalLyrics.replaceFirst(
+              anchor,
+              '$fxTrimmed\n$anchor',
+            );
+            injected = true;
+            break;
+          }
+        }
+        if (!injected) {
+          finalLyrics = '$fxTrimmed\n$finalLyrics';
+        }
       }
     } else if (instrumental) {
       finalLyrics = '[Instrumental]';
     }
+
+    finalLyrics = _stripVocalSpecBracketLines(finalLyrics);
     return SunoPromptBuildResult(
       prompt: finalStyle,
       lyrics: finalLyrics,
@@ -292,7 +550,7 @@ class SunoPromptBuilder {
       );
     }
     lines.add(
-      'Do not paste this matrix header into user-visible output — apply silently inside BLOCK 1 + BLOCK 2.',
+      'Apply these FX silently inside BLOCK 1 producer prose + BLOCK 2 arrangement scaffolding. Never surface matrix labels in user-visible output.',
     );
     return lines.join('\n');
   }
@@ -311,5 +569,43 @@ class SunoPromptBuilder {
     return 'GENRE FX: lane [$lane] at intensity $clamped — production clauses in VIBE '
         'and arrangement tags in USER LYRICS are pre-compiled. Preserve bracket scaffolding, '
         'evolve staging per ARRANGEMENT STAGING FORMAT, and do not duplicate FX blocks.';
+  }
+
+  /// Vocal-spec selections (e.g. "Intimate Male Vocal") belong in Block 1
+  /// producer prose — never as standalone bracket section lines in Block 2.
+  static String _stripVocalSpecBracketLines(String lyrics) {
+    if (lyrics.isEmpty) return lyrics;
+    final lines = lyrics.split('\n');
+    final out = <String>[];
+    for (final line in lines) {
+      final t = line.trim();
+      if (t.startsWith('[') && t.endsWith(']') && !t.contains(':')) {
+        final inner = t.substring(1, t.length - 1).trim();
+        if (_looksLikeVocalSpecBracket(inner) &&
+            !SongStructureData.isCanonicalSection(inner)) {
+          continue;
+        }
+      }
+      out.add(line);
+    }
+    return out.join('\n');
+  }
+
+  static bool _looksLikeVocalSpecBracket(String inner) {
+    final lower = inner.toLowerCase();
+    const markers = [
+      'intimate male vocal',
+      'whispered male vocal',
+      'building intensity',
+      'male vocal',
+      'female vocal',
+      'male lead',
+      'female lead',
+      'rap vocal',
+      'vocal chants',
+      'unison stacks',
+      'instrumental only',
+    ];
+    return markers.any(lower.contains);
   }
 }

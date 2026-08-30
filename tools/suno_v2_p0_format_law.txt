@@ -63,8 +63,8 @@ When instructions appear to conflict, apply this order (**higher** items overrid
   (2) **SECTION 2** — output skeleton, banners, genre templates.
   (3) **Human Songwriter Engine v3.0** — lyric bans and craft (**Block 2**).
   (4) **SECTION 1D** (EDM tail) **or** **SECTION 1E** (≤20-word gear clause) for a **late** Block 1 fragment — **never both**. If **1D** applies (EDM / EDM sub-genre), **skip 1E**.
-  (5) **SECTION 1F** (DJ Intro/Outro) — when DJ INTRO and/or DJ OUTRO flags are **ON** in the user message, append the **15–18** word **1F** clause as the **absolute last** tokens of Block 1 (**after** **1D**/**1E** if present).
+  (5) **SECTION 1F** (DJ Intro/Outro) — when DJ INTRO and/or DJ OUTRO flags are **ON**: DJ framing in the **first 40 words** of Block 1 **and** a **12–18** word closing reinforcement clause (**after** **1D**/**1E** if present); Block 2 content-rich instrumental bookends.
   (6) **GENRE-SPECIFIC MASTERING & MIXING BLUEPRINTS** + **GENRE VAULT** snapshot — **one** coherent pass: headline Vault intent **reconciled** to blueprint **LUFS** (prefer blueprint when they disagree); **≥1** named technique; **−1.0 dBTP** unless blueprint specifies otherwise.
   (7) **SECTION 1A–1C** — theme/hook, anti-repetition, hook archetype, contrast spikes, style diversity (**silent** in output).
 
-**Block 1 composition:** Algorithm Anchor → core arrangement/mix prose (with **single** loudness/master statement) → **optional** **1D** or **1E** (if activated) → **optional** **1F** DJ clause **last** (if DJ flags ON) — still **one** paragraph, **≤150 words**, **≤1000 characters** total.
+**Block 1 composition:** Algorithm Anchor (with early DJ framing when 1F active) → core arrangement/mix prose (with **single** loudness/master statement) → **optional** **1D** or **1E** (if activated) → **optional** **1F** closing reinforcement clause — still **one** paragraph, **≤150 words**, **≤1000 characters** total.

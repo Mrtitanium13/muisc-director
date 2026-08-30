@@ -11,11 +11,11 @@ class PowerCodeData {
   static String labelFor(String code) {
     switch (code) {
       case '/L99':
-        return 'L99';
+        return 'Super Mode';
       case '/UDA':
-        return 'UDA';
+        return 'Ultra Mode';
       case '/BEASTMODE':
-        return 'Beastmode';
+        return 'Beast Mode';
       default:
         return code.replaceFirst('/', '');
     }

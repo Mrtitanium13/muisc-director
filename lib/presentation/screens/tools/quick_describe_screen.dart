@@ -323,7 +323,7 @@ class _QuickDescribeScreenState extends ConsumerState<QuickDescribeScreen> {
               'bpm=${_mapped!.merged.bpm ?? '—'}, '
               'mode=${_mapped!.merged.sunoFieldOutputMode.name}, '
               'generateLyrics=${_mapped!.merged.generateLyrics}, '
-              'temperaments=${_mapped!.merged.lyricTemperamentCodes.isEmpty ? '—' : _mapped!.merged.lyricTemperamentCodes}',
+              'modifiers=${_mapped!.merged.activeModifierCodes.isEmpty ? '—' : _mapped!.merged.activeModifierCodes}',
               style: GoogleFonts.jetBrainsMono(fontSize: 11),
             ),
           ],

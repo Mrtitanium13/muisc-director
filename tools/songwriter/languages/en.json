@@ -1,0 +1,17 @@
+{
+  "id": "en",
+  "version": "1.0.0",
+  "scripts": ["Latn"],
+  "native_syntax": "Prefer spoken contemporary English; contractions OK when natural.",
+  "register": "conversational commercial; avoid academic or greeting-card tone",
+  "prosody": "Stress natural speech rhythm; chorus lines shorter than verses",
+  "rhyme": "Perfect, slant, and internal rhyme; meaning over forced end-rhyme",
+  "punctuation": "Minimal; no emojis; section labels in [Brackets] only",
+  "idioms": "Earn slang; never stack meme phrases",
+  "code_switching": "Off unless brief requests mixed language",
+  "avoid_patterns": [
+    "translationese word order",
+    "over-formal thee/thou",
+    "explaining the emotion in the same line that shows it"
+  ]
+}

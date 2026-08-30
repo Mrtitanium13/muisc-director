@@ -11,7 +11,7 @@ const String kSunoCompressionSystemPrompt = '''
 
 # POST-PROCESSING: SUNO COMPRESSION PASS (RUNTIME — FULL TWO-BLOCK OUTPUT)
 
-**Model:** OpenRouter Qwen 3.7 Max · LaoZhang Claude Sonnet 4.5 — structure, syntax sanitization, cap compliance.
+**Model:** OpenRouter Qwen 3.7 Plus · LaoZhang Claude Sonnet 4.5 — structure, syntax sanitization, cap compliance.
 
 **When:** Final pass (Stage 5) before user sees output. **Silent.**
 
@@ -29,7 +29,7 @@ You are the final gatekeeper before the prompt is delivered to Suno. You must ru
 
 1. **NO MULTI-BRACKET STACKING:** Never allow consecutive brackets like `[Tag 1] [Tag 2] [Tag 3]`. Collapse them into a **single**, cohesive, comma-separated unit: `[Tag 1, Tag 2, Tag 3]`.
 2. **NO VERB PHRASES:** Completely strip any action sentences or conversational transitions from inside the brackets. Convert phrases like `Feature bright strummed rhythm` into dense noun textures: `Bright Strummed Acoustic Rhythm`.
-3. **APOSTROPHE SANITIZATION:** Remove all trailing apostrophes from rhythm words to prevent audio syllable clipping (e.g. change `breathin'` back to standard phonetic typography: `breathing`).
+3. **APOSTROPHE SANITIZATION:** Remove trailing apostrophes from casual spellings unless user LYRIC DIALECT is Nigerian Pidgin (preserve Pidgin grammar). Standard lanes: change `breathin'` → `breathing` for clean phoneme mapping in vocal synthesis.
 
 Apply this sweep to **every** staging bracket in Block 2 **before** character-cap trimming.
 
@@ -111,6 +111,8 @@ String buildSunoCompressionUserMessage({
   return '''
 $ctx
 FIELD:${fieldMode.trim().isEmpty ? 'custom' : fieldMode.trim()}
+
+Apply Stage 5 Syntax Compression Law (system prompt).
 
 FULL OUTPUT (Stage 5 compress; preserve intent):
 ---

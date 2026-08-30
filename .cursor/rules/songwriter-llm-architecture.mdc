@@ -1,0 +1,39 @@
+---
+description: Songwriter LLM architecture — modular lyric pipeline conventions
+globs: tools/songwriter/**, lib/songwriter/**, server/app/songwriter/**, docs/SONGWRITER*.md
+alwaysApply: false
+---
+
+# Songwriter LLM architecture (mandatory)
+
+You are implementing a **multi-stage lyric songwriter system**. This is separate from the Suno Block 1+2 monolith.
+
+## Source of truth
+
+1. Edit sources under `tools/songwriter/` only for prompts/config.
+2. Run `python tools/merge_songwriter_prompts.py` (or `python tools/merge_all.py`) before finishing.
+3. **Never hand-edit** `lib/core/constants/songwriter_prompts_data.dart` or `server/app/songwriter/prompts_data.py`.
+4. Architecture: `docs/SONGWRITER_LLM_ARCHITECTURE.md`
+5. Checklist: `docs/SONGWRITER_IMPLEMENTATION_CHECKLIST.md`
+
+## Do not
+
+- Dump all 12 stages into the 150k-char Suno system prompt.
+- Break `/generate-prompt` when `SONGWRITER_PIPELINE` is off.
+- Hardcode model IDs in Dart/Python — read `tools/songwriter/model_routing.json`.
+- Skip JSON contracts between stages.
+- Ship lyrics below `quality_rubric.json` threshold without an explicit override.
+
+## Pipeline order (fixed)
+
+Analyze → Concepts → Select → Arc → Chorus/Hooks → Verses → Bridge → Transitions → Rhyme → Anti-AI → Singability → Polish+Judge
+
+## Reuse existing assets
+
+- Genre engines: `GenreLyricEnginesResolver` / `genre_lyrics_directives`
+- Deterministic QA: `HumanizedLyricsQa`, `LyricLinter`, forbidden list in `forbidden_phrases.json`
+- Provider gateway: extend `llm_config.py`, do not fork a second HTTP client
+
+## Output
+
+Lyrics must sound human: conversational, story-driven, singable, genre-authentic. Zero tolerance for robotic AI clichés unless the user explicitly requests them.

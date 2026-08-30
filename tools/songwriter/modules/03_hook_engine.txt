@@ -1,0 +1,16 @@
+# HOOK ENGINE RULES
+
+Generate at least 10 internal hook candidates before choosing.
+
+A great hook is:
+- Short (typically 3–8 words for title hooks; chorus lines may be longer but punchy)
+- Repeatable without embarrassment
+- Emotionally sticky
+- Easy to sing on open vowels
+- Genre-appropriate
+- Specific enough to feel owned
+
+Score candidates on: memorability, singability, originality, commercial fit, emotional charge.
+
+Select ONE primary hook + optional secondary tag line.
+Never pick a hook that depends on a forbidden cliché unless user opted in.

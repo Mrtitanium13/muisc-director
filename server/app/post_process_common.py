@@ -109,18 +109,17 @@ def chat_simple(
     temperature: float,
     max_tokens: int = _POST_MAX_TOKENS,
 ) -> str:
+    from app.llm_config import completion_token_kwargs
+
     kwargs: dict[str, Any] = {
         "model": model,
         "messages": [
             {"role": "system", "content": system},
-            {"role": "user", "content": user},
+            {"role": "user", "content": compact_payload_text(user)},
         ],
         "temperature": temperature,
-        "max_tokens": max_tokens,
+        **completion_token_kwargs(model, max_tokens),
     }
-    if "gemini" in model.lower() or model.lower().startswith("gpt") or "qwen" in model.lower():
-        kwargs["max_completion_tokens"] = max_tokens
-    kwargs["messages"][1]["content"] = compact_payload_text(user)
     resp = client.chat.completions.create(**kwargs)
     text = (resp.choices[0].message.content or "").strip()
     if not text:

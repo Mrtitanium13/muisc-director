@@ -1,0 +1,111 @@
+/// Definitive master — "Don't Call Me Lonely" / "Call Me Outside".
+/// Commercial Private School Amapiano · West African (Nigeria) delivery.
+const String kDontCallMeLonelyMaster = '''
+DEFINITIVE MASTER — "Don't Call Me Lonely" / "Call Me Outside" (commercial Amapiano structure reference):
+
+[Intro]
+[Intimate Male Vocal]
+She left at midnight
+Blue bag in hand
+Gate light blinking
+No one called back
+(yeah...)
+
+[Verse 1]
+[Male Lead, West African (Nigeria) Delivery, intimate close-mic, dry booth, warm subdued kick, shuffling hi-hat groove, light FM log drum tease, deep warm space]
+Rain on the pavement
+Too proud to beg
+Receipt on the counter
+Makeup half done
+Her auntie kept asking
+Why she looked thin
+She smiled for dinner
+Then cried in the sink
+He said come over
+Then changed his mind
+She read it twice
+And locked the screen
+
+[Chorus]
+[Male Lead with isolated multi-tracked vocal doubles, West African (Nigeria) Delivery, bright call-response stacks, heavy syncopated FM log drum drops, round sub locked to groove, sidechain compression pumping]
+Don't call me lonely
+Call me outside
+I dance with water
+Still in my eyes
+Don't call me broken
+I'm not that kind
+She left him standing
+She kept her pride
+
+[Verse 2]
+[Male Lead, West African (Nigeria) Delivery, intimate close-mic, deeper FM log drum pocket, shuffling hats, piano stabs, modern lounge space]
+Next week in Lekki
+Rain hit the roof
+Her friends wore perfume
+She wore the bruise
+Not on her body
+More in her walk
+She laughed too early
+Cut off the talk
+Phone in her purse
+Face turned down
+His name kept buzzing
+She let it drown
+
+[Chorus]
+[Male Lead with wider isolated vocal doubles, West African (Nigeria) Delivery, close-mic hook, brighter call-response stack, M1-style stabs, heavier log drum-vocal interplay]
+Don't call me lonely
+Call me outside
+I dance with water
+Still in my eyes
+Don't call me broken
+I'm not that kind
+She left him standing
+She kept her pride
+
+[Bridge]
+[Male Lead, West African (Nigeria) Delivery, close-mic whisper-to-belt, jazzy bridge isolation, Rhodes warmth, filtered FM log drum pulse, dynamic dip]
+She said I miss him
+Then changed the cup
+Poured out the Chapman
+Didn't look up
+Maybe tomorrow
+Maybe not now
+She fixed her lashes
+And walked back out
+
+[Percussion Breakdown]
+[High FX intensity, shaker surge, African percussion bed, rapid rim textures, no crowd, no trap hats]
+*bass drop*
+
+[Drop: Heavy Rolling FM Log Drum]
+[FM synthesized log drum bassline, warm subdued kick, round sub pressure, tight sidechain, dark lounge impact]
+
+[Final Chorus]
+[Final Chorus, Male Lead belted with full isolated multi-tracked vocal doubles, West African (Nigeria) Delivery, maximum FM log drum grid, sidechained delayed texture, 1-bar vacuum before final line]
+Don't call me lonely
+Call me outside
+I dance with water
+Still in my eyes
+Don't call me broken
+I'm not that kind
+She left him standing
+She kept her—
+
+[Break]
+[1-bar vacuum, dead-room silence, zero audience noise]
+She kept her pride
+(yeah... yeah...)
+
+[Outro]
+[Male Lead, West African (Nigeria) Delivery, close-mic fading doubles, pristine studio environment, Zero audience noise, FM log drum decays, shaker thinning, trailing plate reverb]
+Gate light blinking
+Blue bag gone
+She won't answer
+Not tonight
+Don't call me lonely
+Call me outside
+
+[End]
+
+When revising: preserve section order and production tags; lyrics may be rewritten but must stay 100% original and mature (no age-number tropes).''';

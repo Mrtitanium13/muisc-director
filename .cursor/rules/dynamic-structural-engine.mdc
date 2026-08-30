@@ -1,0 +1,75 @@
+---
+description: Dynamic Structural Engine — typed Block 2 assembly, version-routed bracket syntax, genre pruning, merge discipline
+globs: tools/dynamic_structural_engine.txt,tools/merge_dynamic_structural_engine.py,tools/merge_all.py,server/app/dynamic_structural_engine.py,server/app/suno_system_prompt_v2.py,lib/core/utils/dynamic_structural_engine.dart,lib/core/utils/structural_family_resolver.dart,lib/core/utils/final_chorus_mutation_rule.dart,lib/core/utils/structure_assembler.dart,lib/core/utils/suno_syntax_renderer.dart,lib/core/constants/song_structure_data.dart,tools/suno_v2_block2_*.txt,test/core/utils/dynamic_structural_engine_test.dart
+alwaysApply: false
+---
+
+# Dynamic Structural Engine (Suno-Optimized Template Router)
+
+**Scope:** Block 2 section layout & staging only.
+
+**Rule:** NEVER output a static one-size-fits-all template. Assemble and prune structure from genre, commercial objective, and Suno version.
+
+## Architecture (typed pipeline)
+
+| Layer | Dart | Python |
+|-------|------|--------|
+| Family routing | `StructuralFamilyResolver` | `resolve_structural_family()` |
+| Section assembly | `StructureAssembler` | `assemble_sections()` |
+| Version brackets | `SunoSyntaxRenderer` | `render_sections()` |
+| Final Chorus mutation | `FinalChorusMutationRule` | `mutation_for()` / `directive_for()` |
+| Density budget (30%) | `DensityBudgetEnforcer` | `enforce_density_budget()` |
+| Prompt facade | `DynamicStructuralEngine.userBlockDirective()` | `user_block_directive()` / `dynamic_structural_user_block()` |
+
+## Suno syntax law — version-routed
+
+### v4.5 (minimalist)
+- `[Brackets]` = section names only (1–2 words)
+- `(Parentheses)` = vocal delivery 1–3 words
+- NO production cues in brackets — Block 1 only
+
+### v5 (standard)
+- `[Brackets]` = section + ONE staging descriptor
+- `(Parentheses)` = vocal cues + phonetics + brief ad-libs
+
+### v5.5 PRO (preferred for new projects)
+- `[Brackets]` = full cinematic director's notes (multi-descriptor)
+- `(Parentheses)` = granular performance cues: `(sigh)`, `(chuckles)`, `(trailing off...)`, phonetics
+
+### Cross-version rules
+1. Never nest brackets
+2. Never DAW jargon in brackets
+3. Never production cues in parentheses
+4. Always `[End]`
+5. Canonical section names only (`SongStructureData.isCanonicalSection`)
+
+## Mandatory rules
+
+- **Verse 2:** escalation in staging + narrative (v5.5 allows deeper twists)
+- **Final Chorus:** mandatory mutation — typed per `StructuralFamily`
+- **v5.5_max_arc:** full ~4-min single-pass when user targets v5.5
+- **Amapiano:** V2 before second Chorus; Breakdown after second Chorus (bridge only when `SongIntent.complex`)
+
+## Pipeline integration
+
+| Module | Field / flag |
+|--------|----------------|
+| Music Creation | `<suno_version_routing>` in `<master_blueprint>` |
+| Block 2 Protocol | §9 `v5.5_max_arc` |
+| App default | `SunoVersion.preferredValue` = `v5.5` |
+| UI paste examples | `SunoStructureExamples` (preview only — not generation) |
+
+Runtime: `dynamic_structural_user_block()` / `DynamicStructuralEngine.userBlockDirective()`
+
+## Merge discipline
+
+After editing `tools/dynamic_structural_engine.txt`:
+
+1. Run `python tools/merge_dynamic_structural_engine.py` (or `python tools/merge_all.py`)
+2. Update **both** runtimes in the same task if assembly logic changes:
+   - `server/app/dynamic_structural_engine.py`
+   - `lib/core/utils/*.dart` (assembler + resolver + renderer + mutation + facade)
+3. Run `flutter test test/core/utils/dynamic_structural_engine_test.dart`
+4. Run `pytest server/test_features.py -k dynamic_structural`
+
+Spec merges into `suno_system_prompt_v2.py`, `suno_system_prompt_v2_candidate.dart`, and `tools/suno_v2_block2_*.txt` via marker blocks (`BEGIN_DYNAMIC_STRUCTURAL_ENGINE` / `END_DYNAMIC_STRUCTURAL_ENGINE`).

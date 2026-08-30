@@ -360,7 +360,7 @@ class SunoPromptLimits {
 
     final sr = structureWordRangeFor(sunoVersion);
 
-    final v = sunoVersion.trim().isEmpty ? 'v5.0' : sunoVersion.trim();
+    final v = sunoVersion.trim().isEmpty ? 'v5.5' : sunoVersion.trim();
 
     if (!hasUserLyrics) {
 
@@ -400,7 +400,7 @@ class SunoPromptLimits {
 
   static String remixFromAnalyzerUserBlockSupplementV2(String sunoVersion) {
 
-    final v = sunoVersion.trim().isEmpty ? 'v5.0' : sunoVersion.trim();
+    final v = sunoVersion.trim().isEmpty ? 'v5.5' : sunoVersion.trim();
 
     final w = block1StyleWordRangeFor(sunoVersion);
 
@@ -422,7 +422,7 @@ class SunoPromptLimits {
 
     final sr = structureWordRangeFor(sunoVersion);
 
-    final v = sunoVersion.trim().isEmpty ? 'v5.0' : sunoVersion.trim();
+    final v = sunoVersion.trim().isEmpty ? 'v5.5' : sunoVersion.trim();
 
     return 'REMIX / GENRE-FLIP (from audio analysis): Describe how the source becomes the target '
 

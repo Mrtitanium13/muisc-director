@@ -1,0 +1,15 @@
+{
+  "id": "latin",
+  "version": "1.0.0",
+  "vocabulary_profile": ["romance", "dance", "Spanish/Portuguese only if language brief allows"],
+  "line_length_guidance": "dance phrase lengths",
+  "imagery_guidance": ["night", "skin", "city", "heat"],
+  "energy_profile": "body-forward",
+  "hook_style": "earworm with clave awareness",
+  "rhyme_density": "medium",
+  "rhythmic_guidance": ["clave / groove first"],
+  "common_structures": ["Intro-V-C-V-C-B-C"],
+  "vocal_phrasing": ["passionate", "harmonies"],
+  "avoid_patterns": ["fake Spanish garnish on English-only brief"],
+  "cultural_notes": ["Language brief governs Spanish/Portuguese use"]
+}

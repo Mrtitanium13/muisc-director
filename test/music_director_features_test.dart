@@ -6,61 +6,121 @@ import 'package:music_director/core/utils/openai_key_validation.dart';
 import 'package:music_director/core/constants/genre_data.dart';
 import 'package:music_director/core/constants/block1_mix_master_directive.dart';
 import 'package:music_director/core/utils/drum_matrix.dart';
+import 'package:music_director/core/utils/advanced_thematic_variator.dart';
+import 'package:music_director/core/utils/anti_scream_filter.dart';
+import 'package:music_director/core/constants/genre_lyrics_directives.dart';
+import 'package:music_director/core/utils/dynamic_structural_engine.dart';
 import 'package:music_director/core/utils/suno_prompt_builder.dart';
 import 'package:music_director/core/utils/genre_hybridization_matrix.dart';
 import 'package:music_director/core/utils/suno_lyric_phonetic_sanitize.dart';
 import 'package:music_director/core/utils/suno_lyrics_audio_normalizer.dart';
 import 'package:music_director/core/utils/live_instrument_matrix.dart';
+import 'package:music_director/core/utils/live_instrument_matrix_data.dart';
 import 'package:music_director/core/utils/code_translation_matrix.dart';
 import 'package:music_director/core/constants/audio_environment_data.dart';
 import 'package:music_director/core/utils/chat_completion_helpers.dart';
 import 'package:music_director/core/utils/suno_output_qa.dart';
 import 'package:music_director/core/utils/payload_optimization.dart';
 import 'package:music_director/core/utils/remix_payload_compiler.dart';
+import 'package:music_director/features/remix/application/remix_telemetry.dart';
+import 'package:music_director/features/remix/application/source_leak_guard.dart';
 import 'package:music_director/data/models/song_generation_type.dart';
 import 'package:music_director/data/models/user_input_model.dart';
 import 'package:music_director/core/constants/human_authenticity_config.dart';
 import 'package:music_director/core/constants/suno_system_prompt_v2_candidate.dart';
 import 'package:music_director/core/constants/human_realism_config.dart';
+import 'package:music_director/core/constants/elite_human_lyricist_directive.dart';
+import 'package:music_director/prompts/elite_human_lyricist.dart';
 import 'package:music_director/core/constants/power_code_data.dart';
 import 'package:music_director/core/constants/hitmaker_max_martin_directives.dart';
+import 'package:music_director/core/constants/big_room_fusion_progressive_preset.dart';
+import 'package:music_director/core/constants/big_room_hardstyle_cinematic_hybrid_preset.dart';
+import 'package:music_director/core/constants/hardstyle_euro_dance_bootleg_preset.dart';
 import 'package:music_director/core/constants/prompt_templates.dart';
 import 'package:music_director/core/constants/suno_dj_mix_directives.dart';
 import 'package:music_director/core/constants/real_instruments_data.dart';
 import 'package:music_director/core/constants/chord_progression_data.dart';
-import 'package:music_director/core/constants/melody_style_data.dart';
+import 'package:music_director/config/melody_config.dart';
+import 'package:music_director/data/models/melody_evolution.dart';
 import 'package:music_director/core/constants/song_structure_data.dart';
 import 'package:music_director/core/constants/suno_compression_pass.dart';
+import 'package:music_director/core/constants/humanization_pass.dart';
 import 'package:music_director/core/constants/dialect_style_data.dart';
 import 'package:music_director/core/constants/vocal_accent_data.dart';
-import 'package:music_director/core/constants/suno_structure_bracket_example.dart';
+import 'package:music_director/core/constants/suno_structure_examples.dart';
 import 'package:music_director/core/utils/duration_format.dart';
 import 'package:music_director/core/utils/suno_lyrics_merge.dart';
 import 'package:music_director/core/utils/suno_block2_opt_out.dart';
 import 'package:music_director/core/utils/suno_output_split.dart'
     show enforceUnifiedBlock1CharLimit, parseSunoDualOutput, parseSunoOutput;
-import 'package:music_director/data/models/melody_variation_mode.dart';
+import 'package:music_director/services/melody_composer_service.dart';
 import 'package:music_director/data/models/suno_field_output_mode.dart';
 import 'package:music_director/data/models/track_duration_config.dart';
-import 'package:music_director/data/models/user_input_model.dart';
 
 void main() {
-  group('formatTrackDuration', () {
-    test('zero or negative yields em dash', () {
-      expect(formatTrackDuration(Duration.zero), '—');
-      expect(formatTrackDuration(const Duration(milliseconds: -1)), '—');
-    });
-
-    test('formats under one hour as M:SS', () {
-      expect(formatTrackDuration(const Duration(minutes: 3, seconds: 45)), '3:45');
-      expect(formatTrackDuration(const Duration(seconds: 5)), '0:05');
-    });
-
-    test('formats one hour or more as H:MM:SS', () {
+  group('TrackDurationUtils', () {
+    test('format zero/negative durations', () {
+      expect(TrackDurationUtils.format(Duration.zero), '—');
       expect(
-        formatTrackDuration(const Duration(hours: 1, minutes: 2, seconds: 3)),
+        TrackDurationUtils.format(const Duration(milliseconds: -500)),
+        '—',
+      );
+    });
+
+    test('format short durations', () {
+      expect(TrackDurationUtils.format(const Duration(seconds: 5)), '0:05');
+      expect(TrackDurationUtils.format(const Duration(seconds: 65)), '1:05');
+      expect(
+        TrackDurationUtils.format(const Duration(minutes: 3, seconds: 45)),
+        '3:45',
+      );
+    });
+
+    test('format hour durations', () {
+      expect(
+        TrackDurationUtils.format(
+          const Duration(hours: 1, minutes: 2, seconds: 3),
+        ),
         '1:02:03',
       );
+    });
+
+    test('formatMinutes handles decimals', () {
+      expect(TrackDurationUtils.formatMinutes(3.5), '3:30');
+      expect(TrackDurationUtils.formatMinutes(0.0), '0:00');
+      expect(TrackDurationUtils.formatMinutes(double.nan), '0:00');
+    });
+
+    test('parseMinutes colon formats', () {
+      expect(TrackDurationUtils.parseMinutes('3:30'), 3.5);
+      expect(TrackDurationUtils.parseMinutes('1:02:03'), 62.05);
+      expect(TrackDurationUtils.parseMinutes('3:75'), isNull);
+    });
+
+    test('parseMinutes suffix and plain', () {
+      expect(TrackDurationUtils.parseMinutes('3min'), 3.0);
+      expect(TrackDurationUtils.parseMinutes('3.5 minutes'), 3.5);
+      expect(TrackDurationUtils.parseMinutes('4 min'), 4.0);
+      expect(TrackDurationUtils.parseMinutes('180'), 3.0);
+      expect(TrackDurationUtils.parseMinutes('3'), 3.0);
+      expect(TrackDurationUtils.parseMinutes('10'), 10.0);
+      expect(TrackDurationUtils.parseMinutes('3.5'), 3.5);
+    });
+
+    test('parseMinutes rejects invalid', () {
+      expect(TrackDurationUtils.parseMinutes(''), isNull);
+      expect(TrackDurationUtils.parseMinutes('abc'), isNull);
+      expect(TrackDurationUtils.parseMinutes('-3'), isNull);
+    });
+
+    test('extension works', () {
+      expect(const Duration(minutes: 4, seconds: 20).trackDisplay, '4:20');
+    });
+
+    test('back-compat aliases still work', () {
+      expect(formatTrackDuration(Duration.zero), '—');
+      expect(formatMinutesToMmSs(3.75), '3:45');
+      expect(parseFlexibleDurationMinutes('3:45'), closeTo(3.75, 1e-9));
     });
   });
 
@@ -91,6 +151,7 @@ void main() {
         djIntro: false,
         djOutro: false,
         bpmRaw: '120',
+        family: StructuralFamily.popStandard,
       );
       expect(c.displayLabel, '3:10');
       expect(c.tier, DurationTier.standard);
@@ -142,23 +203,29 @@ void main() {
   });
 
   group('SongStructureData.userBlockDirective', () {
-    test('flexible explains self-consistent arc', () {
+    test('flexible assembles deterministic arc', () {
       final s = SongStructureData.userBlockDirective(
         presetId: SongStructureData.flexibleId,
         customNotes: '',
+        primaryGenre: 'Amapiano',
+        sunoVersion: 'v5.5',
       );
-      expect(s, contains('Choose ONE coherent'));
-      expect(s, contains('no contradictions'));
+      expect(s, contains('STRUCTURE_LOCK (MANDATORY — assembled arc)'));
+      expect(s, contains('Verse 2'));
+      expect(s, contains('Breakdown'));
+      expect(s, contains('[End]'));
     });
 
-    test('empty preset id matches flexible', () {
+    test('empty preset id matches flexible assembly', () {
       final a = SongStructureData.userBlockDirective(
         presetId: '',
         customNotes: '',
+        primaryGenre: 'Pop',
       );
       final b = SongStructureData.userBlockDirective(
         presetId: SongStructureData.flexibleId,
         customNotes: '',
+        primaryGenre: 'Pop',
       );
       expect(a, b);
     });
@@ -168,18 +235,20 @@ void main() {
         presetId: 'standard_pop',
         customNotes: '',
       );
-      expect(s, contains('REQUIRED'));
+      expect(s, contains('STRUCTURE_LOCK (MANDATORY'));
+      expect(s, contains('Standard pop'));
       expect(s, contains('Intro'));
       expect(s, contains('Outro'));
     });
 
-    test('custom empty falls back to verse-chorus guidance', () {
+    test('custom empty assembles flexible arc', () {
       final s = SongStructureData.userBlockDirective(
         presetId: SongStructureData.customId,
         customNotes: '   ',
+        primaryGenre: 'Pop',
       );
-      expect(s, contains('CUSTOM'));
-      expect(s, contains('Verse'));
+      expect(s, contains('STRUCTURE_LOCK (MANDATORY — assembled arc)'));
+      expect(s, contains('Intro'));
     });
 
     test('custom with notes passes through outline', () {
@@ -189,18 +258,164 @@ void main() {
         customNotes: outline,
       );
       expect(s, contains(outline));
-      expect(s, contains('REQUIRED'));
+      expect(s, contains('STRUCTURE_LOCK (MANDATORY'));
     });
 
-    test('custom with bracket headers asks for bracket SUNO STRUCTURE', () {
+    test('custom with bracket headers asks for bracket layout', () {
       const outline = '[Intro]\n(piano)\n[Drop]\n(kick)';
       final s = SongStructureData.userBlockDirective(
         presetId: SongStructureData.customId,
         customNotes: outline,
       );
       expect(s, contains('bracketed'));
-      expect(s, contains('SUNO STRUCTURE'));
+      expect(s, contains('[Section: staging]'));
       expect(s, contains(outline));
+    });
+
+    test('DJ mix flags prepend structure note linking intro/outro tags', () {
+      final s = SongStructureData.userBlockDirective(
+        presetId: SongStructureData.flexibleId,
+        customNotes: '',
+        primaryGenre: 'Progressive House',
+        includeDjIntro: true,
+        includeDjOutro: true,
+      );
+      expect(s, contains('Production Requirement block'));
+      expect(s, contains('NOT standard musical intros/outros'));
+    });
+  });
+
+  group('StructureAssembler', () {
+    test('every family produces sections ending in End', () {
+      for (final family in StructuralFamily.values) {
+        final sections = StructureAssembler.assemble(
+          sunoVersion: 'v5.5',
+          commercialLane: StructuralFamilyResolver.laneHintFor(family),
+        )!;
+        expect(sections.last.label, 'End');
+        expect(sections.length, greaterThanOrEqualTo(4));
+      }
+    });
+
+    test('amapiano bridge only after verse 2 when complex intent', () {
+      final standard = StructureAssembler.assemble(
+        sunoVersion: 'v5.5',
+        primaryGenre: 'Amapiano',
+        intent: SongIntent.standard,
+      )!;
+      final complex = StructureAssembler.assemble(
+        sunoVersion: 'v5.5',
+        primaryGenre: 'Amapiano',
+        intent: SongIntent.complex,
+      )!;
+      expect(standard.any((s) => s.kind == SectionKind.bridge), isFalse);
+      expect(complex.any((s) => s.kind == SectionKind.bridge), isTrue);
+      final v2Index = complex.indexWhere((s) => s.label == 'Verse 2');
+      final bridgeIndex = complex.indexWhere((s) => s.kind == SectionKind.bridge);
+      expect(bridgeIndex, greaterThan(v2Index));
+    });
+
+    test('v5.5 brackets have no nested brackets or BPM tokens', () {
+      for (final family in StructuralFamily.values) {
+        final sections = StructureAssembler.assemble(
+          sunoVersion: 'v5.5',
+          commercialLane: StructuralFamilyResolver.laneHintFor(family),
+        )!;
+        for (final line in StructureAssembler.toSunoBrackets(
+          sections,
+          sunoVersion: 'v5.5',
+        )) {
+          expect(line, matches(r'^\[[^\[\]]+\]$'));
+          expect(line.toLowerCase(), isNot(contains('bpm')));
+        }
+      }
+    });
+
+    test('worship defaults to congregational vamp', () {
+      final sections = StructureAssembler.assemble(
+        sunoVersion: 'v5.5',
+        primaryGenre: 'Modern Worship',
+      )!;
+      expect(sections.any((s) => s.kind == SectionKind.vamp), isTrue);
+      expect(
+        sections.any((s) => s.kind == SectionKind.spontaneousFlow),
+        isTrue,
+      );
+    });
+
+    test('final chorus mutation staging on v5.5 via renderer', () {
+      // Generic "EDM" maps to progressive Drop A/B scaffold (no Final Drop).
+      // Use Trance so Final Drop mutation staging injects beat-switch.
+      final sections = StructureAssembler.assemble(
+        sunoVersion: 'v5.5',
+        primaryGenre: 'Trance',
+      )!;
+      final family = StructuralFamilyResolver.resolve(primaryGenre: 'Trance');
+      final rendered = SunoSyntaxRenderer.renderSections(
+        sections,
+        'v5.5',
+        family: family,
+      );
+      expect(rendered, contains('Final Drop'));
+      expect(rendered, contains('beat-switch'));
+    });
+  });
+
+  group('SongStructureData v2 presets', () {
+    test('standard_pop typed sections and Suno brackets', () {
+      final preset = SongStructureData.presetById('standard_pop');
+      expect(preset, isNotNull);
+      expect(preset!.hasBridge, isTrue);
+      expect(preset.sectionCount, 8);
+      expect(preset.toSunoBrackets(), contains('[Intro]'));
+      expect(preset.toSunoBrackets(), contains('[Final Chorus]'));
+    });
+
+    test('presetsForGenre matches amapiano affinity', () {
+      final hits = SongStructureData.presetsForGenre('Amapiano');
+      expect(hits.map((p) => p.id), contains('amapiano'));
+    });
+
+    test('worship preset includes vamp', () {
+      final preset = SongStructureData.presetById('worship');
+      expect(preset!.hasVamp, isTrue);
+    });
+
+    test('presets are unique by id', () {
+      final ids = SongStructureData.presets.map((p) => p.id).toList();
+      expect(ids.toSet().length, ids.length);
+    });
+
+    test('arrangement dropdown lists Custom after Flexible', () {
+      final dropdown = SongStructureData.arrangementDropdownPresets;
+      expect(dropdown.length, SongStructureData.presets.length);
+      expect(dropdown.first.id, SongStructureData.flexibleId);
+      expect(dropdown[1].id, SongStructureData.customId);
+    });
+
+    test('HTML entities removed from labels', () {
+      final worship = SongStructureData.presetById('worship');
+      expect(worship?.label, 'Praise & Worship');
+      expect(worship?.label, isNot(contains('&amp;')));
+    });
+
+    test('genre index finds presets', () {
+      final edm = SongStructureData.presetsForGenre('EDM');
+      expect(edm.map((p) => p.id), contains('edm_drop'));
+    });
+
+    test('new presets exist', () {
+      expect(SongStructureData.presetById('dnb_roller'), isNotNull);
+      expect(SongStructureData.presetById('hardstyle_anthem'), isNotNull);
+      expect(SongStructureData.presetById('country_story'), isNotNull);
+      expect(SongStructureData.presetById('rock_alt'), isNotNull);
+      expect(SongStructureData.presetById('reggae'), isNotNull);
+    });
+
+    test('isKnownPresetId works', () {
+      expect(SongStructureData.isKnownPresetId('flexible'), isTrue);
+      expect(SongStructureData.isKnownPresetId('custom'), isTrue);
+      expect(SongStructureData.isKnownPresetId('missing'), isFalse);
     });
   });
 
@@ -228,61 +443,70 @@ void main() {
   });
 
   group('Block1MixMasterDirective', () {
-    test('Part E v2.1 profile includes hardware, LUFS, and DJ phrasing', () {
+    test('Part E v2.1 profile includes hardware, LUFS, no DJ phrasing', () {
       final techno = Block1MixMasterDirective.userBlockDirective(
         primaryGenre: 'Techno',
-        djIntro: true,
-        djOutro: true,
+        sunoVersion: 'v5.5',
       );
-      expect(techno, contains('GENRE HARDWARE DEFAULTS (Part E v2.1'));
-      expect(techno, contains('[EDM.5]'));
+      expect(techno, contains('[HW.008.techno]'));
       expect(techno, contains('LUFS'));
       expect(techno, contains('−1.0 dBTP'));
-      expect(techno, contains('sixteen-bar filtered drum intro'));
+      expect(techno.toLowerCase().contains('dj intro'), isFalse);
+      expect(techno.toLowerCase().contains('beatmatch'), isFalse);
 
       final prog = Block1MixMasterDirective.userBlockDirective(
         primaryGenre: 'Progressive House',
+        sunoVersion: 'v5.5',
       );
-      expect(prog, contains('[EDM.3]'));
+      expect(prog, contains('[HW.005.progressive_house]'));
       expect(prog.toLowerCase(), contains('sidechain'));
 
       final amapiano = Block1MixMasterDirective.userBlockDirective(
         primaryGenre: 'Amapiano-Vinahouse',
+        sunoVersion: 'v5.5',
       );
-      expect(amapiano, contains('[EDM.12]'));
-      expect(amapiano.toLowerCase(), contains('log drum'));
+      expect(amapiano, contains('[HW.030.amapiano_vinahouse]'));
+      expect(amapiano.toLowerCase(), contains('log-drum'));
 
       final chill = Block1MixMasterDirective.userBlockDirective(
         primaryGenre: 'Chillhop',
+        sunoVersion: 'v5.5',
       );
-      expect(chill, contains('[HH.6]'));
+      expect(chill, contains('[HW.041.chillhop]'));
 
       final synth = Block1MixMasterDirective.userBlockDirective(
         primaryGenre: 'Synthwave',
+        sunoVersion: 'v5.5',
       );
-      expect(synth, contains('[FX.8]'));
+      expect(synth, contains('[HW.156.synthwave]'));
 
       final ukg = Block1MixMasterDirective.userBlockDirective(
         primaryGenre: 'UK Garage',
+        sunoVersion: 'v5.5',
       );
-      expect(ukg, contains('[EDM.14]'));
+      expect(ukg, contains('[HW.031.uk_garage]'));
 
       final trapSoul = Block1MixMasterDirective.userBlockDirective(
         primaryGenre: 'Trap Soul',
+        sunoVersion: 'v5.5',
       );
-      expect(trapSoul, contains('[R&B.5]'));
+      expect(trapSoul, contains('[HW.054.trap_soul]'));
     });
   });
 
   group('remixPayloadCompiler', () {
-    test('remixPostProcessCompactLine includes melodic lock token', () {
+    test('remixPostProcessCompactLine is leak-safe (no source names)', () {
       final line = remixPostProcessCompactLine(
         originalSongTitle: 'Mercy',
         originalArtist: 'Band',
         generationType: SongGenerationType.fullSong,
       );
       expect(line, contains('lock:melody+rhythm+chords'));
-      expect(line, contains('RMX:src=Mercy'));
+      expect(line, contains('v=1.3'));
+      expect(line, contains('fp='));
+      expect(line, isNot(contains('Mercy')));
+      expect(line, isNot(contains('Band')));
+      expect(line, isNot(contains('RMX:src=')));
     });
 
     test('remixEngineActive when title and artist set', () {
@@ -292,6 +516,24 @@ void main() {
       );
       expect(remixEngineActive(on), isTrue);
       expect(remixEngineActive(const UserInputModel()), isFalse);
+    });
+
+    test('analyzer flag wins over title/artist (mutual exclusion)', () {
+      const both = UserInputModel(
+        remixOriginalSongTitle: 'Mercy',
+        remixOriginalArtist: 'Band',
+        remixFromAnalyzer: true,
+      );
+      expect(remixEngineActive(both), isFalse);
+      expect(remixResolutionFor(both).mode, RemixMode.analyzerGenreFlip);
+    });
+
+    test('near-activation when only title filled', () {
+      const partial = UserInputModel(remixOriginalSongTitle: 'Mercy');
+      final r = remixResolutionFor(partial);
+      expect(r.mode, RemixMode.none);
+      expect(r.nearActivation, isTrue);
+      expect(remixEngineActive(partial), isFalse);
     });
 
     test('applyInstrumentalRemixOutput strips lyric lines', () {
@@ -310,6 +552,88 @@ So I am saying thank You.''';
       expect(out, isNot(contains('Left the porch')));
       expect(out, isNot(contains('thank You')));
       expect(out, contains('Intimate close-mic delivery'));
+    });
+
+    test('sourceLeakGuard redacts feat variants', () {
+      final r = sourceLeakGuard(
+        output: 'Style about Someone and Test Song vibes',
+        title: 'Test Song',
+        artist: 'Test Artist feat. Someone',
+      );
+      expect(r.leaked, isTrue);
+      expect(r.text, isNot(contains('Test Song')));
+      expect(r.text, contains('[redacted]'));
+    });
+
+    test('descriptor-only user block excludes catalog names', () {
+      final block = remixStyleFlipUserBlockSupplement(
+        originalSongTitle: 'Test Song',
+        originalArtist: 'Test Artist feat. Someone',
+        targetGenre: 'synthwave',
+        generationType: SongGenerationType.fullSong,
+        bpm: '118',
+        keyRoot: 'A',
+        scale: 'Minor',
+      );
+      expect(block, contains('DESCRIPTOR-ONLY'));
+      expect(block, contains('REFERENCE DNA'));
+      expect(block, contains('synthwave'));
+      expect(block, contains('118'));
+      expect(block, isNot(contains('Test Song')));
+      expect(block, isNot(contains('Test Artist')));
+      expect(block, isNot(contains('Someone')));
+    });
+
+    test('idempotent style-flip block when marker already present', () {
+      final again = remixStyleFlipUserBlockSupplement(
+        originalSongTitle: 'Mercy',
+        originalArtist: 'Band',
+        targetGenre: 'Jazz',
+        generationType: SongGenerationType.fullSong,
+        existingUserBlock: '… $remixBlockMarker already …',
+      );
+      expect(again, isEmpty);
+    });
+
+    test('telemetry fields never include raw title/artist', () {
+      const title = 'Secret Song Title XYZ';
+      const artist = 'Secret Artist Name ABC';
+      final act = RemixTelemetry.activationFields(
+        mode: RemixMode.interpolation,
+        nearActivation: false,
+        genre: 'House',
+        songGenerationType: 'full_song',
+        title: title,
+        artist: artist,
+        blockInjected: true,
+      );
+      final post = RemixTelemetry.postProcessFields(
+        mode: RemixMode.interpolation,
+        songGenerationType: 'instrumental',
+        strippedLyricLines: 2,
+        stagingInjected: 1,
+        leakHit: true,
+        title: title,
+        artist: artist,
+      );
+      final joined = '${act.values.join(' ')} ${post.values.join(' ')}';
+      expect(joined, isNot(contains(title)));
+      expect(joined, isNot(contains(artist)));
+      expect(act['fp'], isNot('none'));
+      expect(post['strip_n'], 2);
+      expect(post['leak'], isTrue);
+    });
+
+    test('applyInstrumentalRemixOutputDetailed reports strip counts', () {
+      const raw = '''
+BLOCK 2 — PASTE INTO SUNO: LYRICS
+[Verse 1]
+Lyric line one.
+Lyric line two.''';
+      final detail = applyInstrumentalRemixOutputDetailed(raw);
+      expect(detail.strippedLyricLines, 2);
+      expect(detail.stagingInjected, greaterThanOrEqualTo(1));
+      expect(detail.text, isNot(contains('Lyric line')));
     });
   });
 
@@ -442,6 +766,35 @@ Hook line.''';
       expect(out, isNot(contains('Harmonic Backing')));
     });
 
+    test('studio isolation strips crowd triggers from chorus brackets', () {
+      const raw = '''
+[Chorus]
+[Thunderous stadium crowd cheering, crowd singing along loudly]
+Hook line.''';
+      final out = sanitizeStudioIsolationTags(
+        raw,
+        primaryGenre: 'Afrobeats',
+      );
+      expect(out.toLowerCase(), isNot(contains('crowd')));
+      expect(out.toLowerCase(), isNot(contains('stadium')));
+      expect(out, contains('Multi-tracked vocal overlays'));
+    });
+
+    test('studio isolation scrubs crowd tokens from block 1 prose', () {
+      const raw = '''
+BLOCK 1 — PASTE INTO SUNO: STYLE
+Afrobeats, zero audience noise, no crowd sounds, pristine mix.
+
+BLOCK 2 — PASTE INTO SUNO: LYRICS
+[Intro]
+[Dead-room isolation, close-mic vocal]
+Line one.''';
+      final out = sanitizeStudioIsolationTags(raw, primaryGenre: 'Afrobeats');
+      final block1 = out.split('BLOCK 2').first;
+      expect(block1.toLowerCase(), isNot(contains('audience')));
+      expect(block1.toLowerCase(), isNot(contains('crowd')));
+    });
+
     test('audio engine normalizer strips DJ intro jargon in block 2', () {
       const raw = '''
 BLOCK 1 — PASTE INTO SUNO: STYLE
@@ -499,10 +852,12 @@ Tonight''';
         primaryGenre: 'Melodic Techno',
         subGenreFusion: 'Indie Acoustic',
       );
-      expect(block, contains('DUAL-GENRE HYBRIDIZATION'));
-      expect(block, contains('Genre A DOMINANT (Melodic Techno)'));
-      expect(block, contains('Genre B SUBORDINATE (Indie Acoustic)'));
-      expect(block, contains('sidechained'));
+      expect(block, contains('GENRE HYBRIDIZATION & CULTURAL ROUTING MATRIX'));
+      expect(block, contains('PART 1'));
+      expect(block, contains('Split-DNA'));
+      expect(block, contains('primaryGenre=Melodic Techno'));
+      expect(block, contains('subGenreFusion=Indie Acoustic'));
+      expect(block, contains('sidechain'));
       expect(block, contains('Subordinate tag accent rule'));
     });
 
@@ -601,6 +956,190 @@ Tonight''';
       );
     });
 
+    test('resolveGenreKey maps aliases correctly', () {
+      expect(
+        SunoPromptBuilder.resolveGenreKey('Hardstyle', ''),
+        'hardstyle',
+      );
+      expect(
+        SunoPromptBuilder.resolveGenreKey('Vinahouse', ''),
+        'amapiano',
+      );
+      expect(
+        SunoPromptBuilder.resolveGenreKey('Neo-Soul', ''),
+        'rnb',
+      );
+      expect(
+        SunoPromptBuilder.resolveGenreKey('R&B', ''),
+        'rnb',
+      );
+      expect(
+        SunoPromptBuilder.resolveGenreKey('90s R&B', ''),
+        'rnb',
+      );
+      expect(
+        SunoPromptBuilder.resolveGenreKey('Bollywood', ''),
+        'world',
+      );
+      expect(
+        SunoPromptBuilder.resolveGenreKey('UK Garage', ''),
+        'edm',
+      );
+      expect(
+        SunoPromptBuilder.resolveGenreKey('Boom Bap', ''),
+        'boom_bap',
+      );
+    });
+
+    test('stripFxLayout is idempotent on built lyrics', () {
+      final built = SunoPromptBuilder.buildSunoPrompt(
+        baseStyle: '',
+        baseLyrics: '[Chorus]\nLyrics here',
+        primaryGenre: 'metal',
+        intensity: 3,
+      );
+      final once = SunoPromptBuilder.stripFxLayout(built.lyrics);
+      final twice = SunoPromptBuilder.stripFxLayout(once);
+      expect(once, twice);
+      expect(once, contains('[Chorus]'));
+    });
+
+    test('buildSunoPrompt clamps intensity', () {
+      final r = SunoPromptBuilder.buildSunoPrompt(
+        baseStyle: 'sad pop',
+        baseLyrics: '[Verse]\nhello',
+        primaryGenre: 'Pop',
+        intensity: 5,
+      );
+      expect(r.intensity, 3);
+    });
+
+    test('vocal spec brackets are stripped', () {
+      final cleaned = SunoPromptBuilder.buildSunoPrompt(
+        baseStyle: '',
+        baseLyrics: '[Intimate Male Vocal]\n[Verse]\nline',
+        primaryGenre: 'Pop',
+        intensity: 1,
+      );
+      expect(cleaned.lyrics, isNot(contains('[Intimate Male Vocal]')));
+      expect(cleaned.lyrics, contains('[Verse]'));
+    });
+
+    test('userBlockDirective contains no HTML entities', () {
+      final d = SunoPromptBuilder.userBlockDirective(
+        primaryGenre: 'Pop',
+        intensity: 2,
+      );
+      expect(d, isNot(contains('&amp;')));
+      expect(d, isNot(contains('&lt;')));
+      expect(d, isNot(contains('&gt;')));
+    });
+
+    test('amapiano genre lyrics includes master EDM amapiano profile', () {
+      final block = GenreLyricsDirectives.userBlockDirective(
+        primaryGenre: 'Amapiano',
+        subGenreFusion: 'Private School',
+      );
+      expect(block, contains('GLOBAL LYRICIST GUARDRAIL'));
+      expect(block, contains('CROSS-ARCHITECTURE NON-NEGOTIABLES'));
+      expect(block, contains('AMAPIANO / VINAHOUSE'));
+      expect(block.toLowerCase(), contains('log-drum'));
+    });
+
+    test('amapiano thematic variator block', () {
+      final block = advancedThematicVariatorBlock(
+        primary: 'Amapiano',
+        fusion: 'Private School',
+        vibe: 'log drum lounge',
+      );
+      expect(block, contains('AMAPIANO'));
+      expect(block, contains('LOG DRUM IS KING'));
+    });
+
+    test('secret inside chest injects template', () {
+      final block = GenreLyricsDirectives.userBlockDirective(
+        primaryGenre: 'Amapiano',
+        vibe: 'Secret Inside Your Chest',
+        lyricThemeNotes: 'affair at midnight',
+      );
+      expect(block, contains('Secret Inside Your Chest'));
+      expect(block, contains('[Drop: Destructive 32nd-Note Log Drum]'));
+    });
+
+    test('dont call me lonely injects master', () {
+      final block = GenreLyricsDirectives.userBlockDirective(
+        primaryGenre: 'Amapiano',
+        vibe: "Don't call me lonely",
+        lyricThemeNotes: 'call me outside',
+      );
+      expect(block, contains("Don't Call Me Lonely"));
+      expect(block, contains('Rain on the pavement'));
+      expect(block, contains('[Verse 2]'));
+      expect(block, contains('COMMERCIAL ARRANGEMENT ORDER'));
+    });
+
+    test('amapiano bans age cliche in directive', () {
+      final block = GenreLyricsDirectives.userBlockDirective(
+        primaryGenre: 'Amapiano',
+      );
+      expect(block.toLowerCase(), contains('she was nineteen'));
+      expect(block, contains('Verse 2'));
+    });
+
+    test('dynamic structural engine amapiano breakdown', () {
+      final block = DynamicStructuralEngine.userBlockDirective(
+        primaryGenre: 'Amapiano',
+        subGenreFusion: 'Private School',
+        sunoVersion: 'v5.5',
+      );
+      expect(block, contains('DYNAMIC STRUCTURAL ENGINE'));
+      expect(block, contains('Breakdown'));
+      expect(block, contains('v5.5 PRO syntax'));
+      expect(block, contains('v5.5_max_arc=true'));
+      expect(block, contains('[End]'));
+      expect(block, contains('RENDERED BRACKET LAYOUT'));
+    });
+
+    test('dynamic structural engine folk no drop', () {
+      final block = DynamicStructuralEngine.userBlockDirective(
+        primaryGenre: 'Folk',
+        subGenreFusion: 'Acoustic',
+      );
+      expect(block, contains('NO [Drop]'));
+      expect(block, contains('Instrumental Interlude'));
+    });
+
+    test('future house thematic variator block', () {
+      final block = advancedThematicVariatorBlock(
+        primary: 'Future House',
+        vibe: 'chrome lobby',
+      );
+      expect(block, contains('FUTURE HOUSE'));
+      expect(block, contains('BLACKLIST'));
+      expect(block, contains('neon'));
+    });
+
+    test('anti-scream scrubs exclamations', () {
+      const raw = '[Chorus]\nWake up now!\n[Maximum Aggression]\n[Drop]\nGo!';
+      final out = applyAntiScreamToLyrics(
+        raw,
+        primaryGenre: 'hardstyle',
+      );
+      expect(out.contains('!'), isFalse);
+      expect(out, contains('[Heavy Produced Mix]'));
+    });
+
+    test('genre lyrics directive includes variator for hardstyle', () {
+      final block = GenreLyricsDirectives.userBlockDirective(
+        primaryGenre: 'Hardstyle',
+        vibe: 'festival',
+      );
+      expect(block, contains('ADVANCED THEMATIC GUARDRAILS'));
+      expect(block, contains('CROSS-ARCHITECTURE NON-NEGOTIABLES'));
+      expect(block, contains('DYNAMIC SHIFT'));
+      expect(block, contains('EUPHORIC HARDSTYLE'));
+    });
+
     test('hardstyle resolves and injects monologue at intensity 3', () {
       expect(
         SunoPromptBuilder.resolveGenreKey('Hardstyle', ''),
@@ -671,14 +1210,57 @@ Tonight''';
       expect(block, contains('HUMAN REALISM'));
       expect(block, contains('ELITE HUMAN LYRICIST'));
       expect(block, contains('ANCHOR ROTATION FILTER'));
-      expect(block, contains('The Suno syntax test'));
-      expect(block, contains('LYRIC FOURTH-WALL LAW'));
+      expect(block, contains('FLEXIBLE ANCHOR RULE'));
+      expect(block, contains('MANDATORY PRE-OUTPUT VALIDATION'));
     });
 
     test('low realism adds poetic allowance without dropping elite bans', () {
       final block = HumanRealismConfig.userBlockDirective(25);
       expect(block, contains('Human Realism Level: 25/100'));
       expect(block, contains('Elite Human Lyricist core bans'));
+    });
+
+    test('user block injects pidgin phonetic rule when dialect set', () {
+      final block = HumanRealismConfig.userBlockDirective(
+        75,
+        dialectStyleId: DialectStyleData.nigerianPidginId,
+      );
+      expect(block, contains('PHONETIC INTEGRITY'));
+      expect(block, contains('Nigerian Pidgin'));
+      expect(block, contains('dey'));
+    });
+  });
+
+  group('EliteHumanLyricistStage1', () {
+    test('directive includes audit-hardened Stage 1 sections', () {
+      expect(kEliteHumanLyricist, contains('§0.3A'));
+      expect(kEliteHumanLyricist, contains('Genre Overlap Rule'));
+      expect(kEliteHumanLyricist, contains('Repetition vs. cliché'));
+      expect(kEliteHumanLyricist, contains('Sensory anchoring'));
+      expect(kEliteHumanLyricist, contains('FIELD:simple'));
+      expect(
+        kEliteHumanLyricist,
+        isNot(contains('k_genre_cliche_blacklist.dart')),
+      );
+    });
+
+    test('buildPhoneticIntegrityRule respects dialect', () {
+      final std = EliteHumanLyricistDirective.buildPhoneticIntegrityRule();
+      final pidgin = EliteHumanLyricistDirective.buildPhoneticIntegrityRule(
+        dialectStyleId: DialectStyleData.nigerianPidginId,
+      );
+      expect(std, contains('PHONETIC INTEGRITY'));
+      expect(std, contains('breathing'));
+      expect(pidgin, contains('Nigerian Pidgin'));
+      expect(pidgin, contains('wahala'));
+    });
+
+    test('userBlockPrefix injects runtime phonetic rule', () {
+      final block = EliteHumanLyricistDirective.userBlockPrefix(
+        dialectStyleId: DialectStyleData.standardEnglishId,
+      );
+      expect(block, contains('ELITE HUMAN LYRICIST'));
+      expect(block, contains('PHONETIC INTEGRITY'));
     });
   });
 
@@ -698,6 +1280,46 @@ Tonight''';
       );
       expect(
         HumanAuthenticityConfig.isFestivalVocalLane('Bluegrass', ''),
+        isFalse,
+      );
+    });
+
+    test('word boundaries prevent false positives', () {
+      expect(HumanAuthenticityConfig.isElectronicLane('warehouse', ''), isFalse);
+      expect(HumanAuthenticityConfig.isElectronicLane('Future Bass', ''), isTrue);
+      expect(
+        HumanAuthenticityConfig.isSituationFirstStoryLane(
+          'singer-songwriter',
+          '',
+        ),
+        isTrue,
+      );
+      expect(HumanAuthenticityConfig.isFestivalVocalLane('k-pop', ''), isTrue);
+    });
+
+    test('festival vocal includes electronic lanes', () {
+      expect(HumanAuthenticityConfig.isFestivalVocalLane('big room', ''), isTrue);
+      expect(HumanAuthenticityConfig.isFestivalVocalLane('k-pop', ''), isTrue);
+    });
+
+    test('r&b resolves as story lane', () {
+      expect(
+        HumanAuthenticityConfig.isSituationFirstStoryLane('r&b', ''),
+        isTrue,
+      );
+      expect(
+        HumanAuthenticityConfig.isSituationFirstStoryLane('rnb', ''),
+        isTrue,
+      );
+    });
+
+    test('gospel is story lane but not partial', () {
+      expect(
+        HumanAuthenticityConfig.isSituationFirstStoryLane('gospel', ''),
+        isTrue,
+      );
+      expect(
+        HumanAuthenticityConfig.isPartialSituationStoryLane('gospel', ''),
         isFalse,
       );
     });
@@ -747,6 +1369,7 @@ Tonight''';
       expect(block, contains('concrete images'));
       expect(block, contains('NEVER output artist'));
       expect(block, contains('Festival/melodic electronic'));
+      expect(block, contains('Electronic: breakdown intimacy'));
       expect(block, contains('DJ-friendly'));
     });
 
@@ -758,6 +1381,19 @@ Tonight''';
       expect(block, contains('Traditional Gospel Architecture'));
       expect(block, contains('SATB Choir Stack'));
       expect(block, isNot(contains('DJ-friendly')));
+    });
+
+    test('gospel output includes live/studio branch', () {
+      final studio = HumanAuthenticityConfig.userBlockDirective(
+        primaryGenre: 'gospel',
+        audioEnvironmentModeId: AudioEnvironmentData.studioIsolatedId,
+      );
+      final live = HumanAuthenticityConfig.userBlockDirective(
+        primaryGenre: 'gospel',
+        audioEnvironmentModeId: AudioEnvironmentData.livePerformanceId,
+      );
+      expect(studio, contains('Studio-Isolation Directive'));
+      expect(live, contains('Live Performance Arena Mode'));
     });
   });
 
@@ -796,37 +1432,189 @@ Tonight''';
   });
 
   group('VocalAccentData', () {
-    test('user block mandates accent in staging with standard English lyrics', () {
+    test('user block mandates Layer 1 descriptors with standard English lyrics', () {
       final block = VocalAccentData.userBlockDirective(
-        accent: 'British (England)',
+        accent: 'british',
         vocalSpec: 'Female Lead',
         language: 'English',
       );
       expect(block, contains('NON-NEGOTIABLE'));
-      expect(block, contains('British (England)'));
-      expect(block, contains('Block 2 staging'));
-      expect(block, contains('standard English'));
+      expect(block, contains('user_selected_accent: british'));
+      expect(block, contains('Layer 1 descriptor set'));
+      expect(block, contains('dry room close-mic'));
+      expect(block, contains('STAGING AND ACCENT RULES'));
+      expect(block, contains('English only'));
+    });
+
+    test('coerces legacy accent labels to canonical keys', () {
+      expect(
+        VocalAccentData.coerceStored('British (England)'),
+        'british',
+      );
+      expect(
+        VocalAccentData.coerceStored('West African (Nigeria)'),
+        'nigerian',
+      );
+      expect(
+        VocalAccentData.layer1DescriptorFor('nigerian_ibibio'),
+        contains('triplet-feel vocal pocket'),
+      );
     });
 
     test('accent vs dialect constraint applies when accent only', () {
       expect(
-        VocalAccentData.accentVsDialectConstraintLine('British (England)'),
+        VocalAccentData.accentVsDialectConstraintLine('british'),
         contains('wahala'),
       );
       expect(
         VocalAccentData.accentVsDialectConstraintLine(
-          'West African (Nigeria)',
+          'nigerian',
           dialectStyleId: DialectStyleData.nigerianPidginId,
         ),
         isEmpty,
       );
     });
 
-    test('post-process context preserves accent', () {
+    test('post-process context preserves accent key', () {
       expect(
-        VocalAccentData.postProcessContextLine('Scottish'),
-        contains('Scottish'),
+        VocalAccentData.postProcessContextLine('irish'),
+        contains('irish'),
       );
+    });
+
+    test('splitForUi maps Nigerian sub-keys to hierarchical UI', () {
+      expect(
+        VocalAccentData.splitForUi('nigerian'),
+        (topLevel: 'nigerian', nigerianSub: null),
+      );
+      expect(
+        VocalAccentData.splitForUi('nigerian_ibibio'),
+        (topLevel: 'nigerian', nigerianSub: 'nigerian_ibibio'),
+      );
+      expect(
+        VocalAccentData.splitForUi('british'),
+        (topLevel: 'british', nigerianSub: null),
+      );
+    });
+
+    test('resolveEffectiveAccent uses sub-region only when pidgin active', () {
+      expect(
+        VocalAccentData.resolveEffectiveAccent(
+          topLevel: 'nigerian',
+          nigerianSub: 'nigerian_rivers_state',
+          useNigerianSubRegion: true,
+        ),
+        'nigerian_rivers_state',
+      );
+      expect(
+        VocalAccentData.resolveEffectiveAccent(
+          topLevel: 'nigerian',
+          nigerianSub: 'nigerian_rivers_state',
+        ),
+        'nigerian',
+      );
+      expect(
+        VocalAccentData.resolveEffectiveAccent(
+          topLevel: 'nigerian',
+          nigerianSub: null,
+          useNigerianSubRegion: true,
+        ),
+        VocalAccentData.defaultNigerianSubAccent,
+      );
+      expect(
+        VocalAccentData.resolveEffectiveAccent(
+          topLevel: 'british',
+          nigerianSub: 'nigerian_ibibio',
+        ),
+        'british',
+      );
+    });
+
+    test('ibibio Layer 1 uses Akwa Ibom / Cross-river tokens not Calabar', () {
+      final d = VocalAccentData.layer1DescriptorFor('nigerian_ibibio');
+      expect(d.toLowerCase(), isNot(contains('calabar')));
+      expect(d, contains('Cross-river coastal cadence'));
+      expect(d, contains('Akwa Ibom vocal warmth'));
+    });
+  });
+
+  group('VocalAccentData genre smoke', () {
+    void expectAccentRoutes(String genre, String accent, String token) {
+      test('$genre + $accent injects Layer 1 without raw nationality labels', () {
+        final block = VocalAccentData.userBlockDirective(
+          accent: accent,
+          vocalSpec: 'Male Lead',
+          language: 'English',
+        );
+        expect(block, contains('user_selected_accent: $accent'));
+        final layer1 = RegExp(
+          r'Layer 1 descriptor set: (.+)',
+          caseSensitive: false,
+        ).firstMatch(block)?.group(1);
+        expect(layer1, isNotNull);
+        expect(layer1!, contains(token));
+        expect(layer1.toLowerCase(), isNot(contains('british accent')));
+        expect(layer1.toLowerCase(), isNot(contains('nigerian accent')));
+      });
+    }
+
+    expectAccentRoutes('Gospel', 'nigerian_ibibio', 'Cross-river coastal cadence');
+    expectAccentRoutes('Afrobeats', 'nigerian', 'Afrobeats vocal pocket');
+    expectAccentRoutes('Reggaeton', 'latin_american', 'Spanish consonant treatment');
+    expectAccentRoutes('Jazz', 'american', 'polished vocal');
+    expectAccentRoutes('Metal', 'british', 'dry room close-mic');
+  });
+
+  group('HumanizationPassConfig', () {
+    test('user message contains Block 2 marker and is trimmed', () {
+      final msg = HumanizationPassConfig.buildUserMessage(
+        block2Body: '[Verse 1]\nLine one',
+        primaryGenre: 'pop',
+        subGenreFusion: '',
+        vibe: 'warm',
+        lyricThemeNotes: 'love',
+        language: 'English',
+      );
+
+      expect(msg, startsWith('G:'));
+      expect(msg, contains('BLOCK 2 (humanize; keep structure):'));
+      expect(msg, contains('[Verse 1]'));
+      expect(msg, contains('Return ONLY revised Block 2 through [End]'));
+      expect(msg, isNot(endsWith('\n')));
+    });
+
+    test('empty compact lines are filtered out', () {
+      final msg = HumanizationPassConfig.buildUserMessage(
+        block2Body: '[Verse 1]\nLine',
+        primaryGenre: 'pop',
+        subGenreFusion: '',
+        vibe: 'warm',
+        lyricThemeNotes: 'love',
+        language: 'English',
+      );
+
+      expect(msg, isNot(contains('\n\n\n')));
+    });
+
+    test('top-level wrappers stay compatible', () {
+      expect(kHumanizationSystemPrompt, HumanizationPassConfig.systemPrompt);
+      final viaWrapper = buildHumanizationUserMessage(
+        block2Body: '[Verse 1]\nLine',
+        primaryGenre: 'pop',
+        subGenreFusion: '',
+        vibe: 'warm',
+        lyricThemeNotes: 'love',
+        language: 'English',
+      );
+      final viaClass = HumanizationPassConfig.buildUserMessage(
+        block2Body: '[Verse 1]\nLine',
+        primaryGenre: 'pop',
+        subGenreFusion: '',
+        vibe: 'warm',
+        lyricThemeNotes: 'love',
+        language: 'English',
+      );
+      expect(viaWrapper, viaClass);
     });
   });
 
@@ -836,6 +1624,11 @@ Tonight''';
       expect(kSunoCompressionSystemPrompt, contains('NO MULTI-BRACKET STACKING'));
       expect(kSunoCompressionSystemPrompt, contains('NO VERB PHRASES'));
       expect(kSunoCompressionSystemPrompt, contains('APOSTROPHE SANITIZATION'));
+      expect(kSunoCompressionSystemPrompt, contains('phoneme mapping'));
+      expect(
+        kSunoCompressionSystemPrompt,
+        isNot(contains('syllable clipping')),
+      );
     });
 
     test('user message references Stage 5 law', () {
@@ -859,7 +1652,7 @@ Tonight''';
           language: 'English',
           lightweight: false,
         ),
-        'qwen/qwen3.7-max',
+        'qwen/qwen3.7-plus',
       );
       expect(
         ApiConstants.themeConsistencyModelForPromptWithProvider(
@@ -913,26 +1706,34 @@ Tonight''';
   group('SunoSystemPromptV2', () {
     test('mandates Block 2 arrangement staging format', () {
       const prompt = kSunoDirectorSystemPromptV2Candidate;
-      expect(prompt, contains('BLOCK 2 — ARRANGEMENT STAGING FORMAT'));
+      expect(prompt, startsWith(
+        'Before emitting any staging bracket, scan it against SECTION D — '
+        'AI-GENERIC WORD BLACKLIST',
+      ));
+      expect(prompt, contains('SECTION D — AI-GENERIC WORD BLACKLIST'));
+      expect(prompt, contains('STAGING COHERENCE + ACCENT ROUTING + GENRE HYGIENE'));
+      expect(prompt, contains('BLOCK 2 — LYRIC & STRUCTURE GENERATION PROTOCOL'));
       expect(
         prompt,
-        contains('[16-bar filtered kick intro, rising hats, low-pass sweep]'),
+        contains('ARRANGEMENT STAGING FORMAT & LEXICON (SOLE AUTHORITY)'),
       );
-      expect(prompt, contains('UPLIFTING TRANCE / PROGRESSIVE TRANCE / MELODIC TECHNO'));
+      expect(prompt, contains('SECTION 1F — DJ INTRO / OUTRO GENERATION MODULE'));
+      expect(prompt, contains('SUNO RENDERS WHAT YOU DESCRIBE'));
+      expect(prompt, contains('wordless percussion intro'));
+      expect(prompt, contains('[Instrumental Intro: four-on-the-floor kick loop'));
+      expect(prompt, contains('EDM Breakdown Vocal (Techno'));
       expect(prompt, contains('[{staging}]'));
       expect(prompt, contains('GENRE-SPECIFIC LYRICS PROMPTS'));
-      expect(prompt, contains('HARDSTYLE (vocal'));
-      expect(prompt, contains('[Male Spoken Word]'));
-      expect(prompt, contains('[Pitched Female Chops]'));
-      expect(prompt, contains('HARDSTYLE LYRIC & MELODY-SYNC'));
-      expect(prompt, contains('Anti-Talking-Rap'));
-      expect(prompt, contains('LYRIC FOURTH-WALL LAW'));
-      expect(prompt, contains('fourth_wall_check'));
-      expect(prompt, contains('AMAPIANO HYBRID PRODUCTION RULE'));
-      expect(prompt, contains('INSTRUMENTAL STAGING CONSTRAINT'));
-      expect(prompt, contains('TRADITIONAL GOSPEL / PRAISE & WORSHIP ARCHITECTURE'));
-      expect(prompt, contains('CRITICAL RECONCILIATION RULE'));
-      expect(prompt, contains('reconciliation_cleanup'));
+      expect(prompt, contains('GENRE-SPECIFIC HUMANIZATION & AUTHENTICITY ENGINE'));
+      expect(prompt, contains('MELODY-SYNCED LYRIC ENGINE'));
+      expect(prompt, contains('ELECTRONIC LOOP GRIDS'));
+      expect(prompt, contains('GENRE HYBRIDIZATION & CULTURAL ROUTING MATRIX'));
+      expect(prompt, contains('NIGERIA CULTURAL REALISM ENGINE'));
+      expect(prompt, contains('Instrumental-Staging Constraint'));
+      expect(prompt, contains('§10. QA Checklist'));
+      expect(prompt, contains('Traditional Gospel / Praise & Worship Architecture'));
+      expect(prompt, contains('fourth_wall_clean'));
+      expect(prompt, contains('critical_reconciliation'));
     });
   });
 
@@ -943,13 +1744,13 @@ Tonight''';
       expect(m.songStructureCustom, '');
       expect(m.remixFromAnalyzer, isFalse);
       expect(m.realInstrumentals, '');
-      expect(m.melodyStyleId, MelodyStyleData.autoId);
+      expect(m.melodyStyleId, MelodyConfig.autoId);
       expect(m.melodyCustomNotes, '');
-      expect(m.melodyVariationMode, MelodyVariationMode.none);
+      expect(m.melodyEvolution, MelodyEvolution.strict);
       expect(m.chordProgression, '');
       expect(m.generateLyrics, isFalse);
       expect(m.lyricThemeNotes, '');
-      expect(m.lyricTemperamentCodes, '');
+      expect(m.activeModifierCodes, '');
       expect(m.humanRealism, 75);
     });
 
@@ -958,12 +1759,12 @@ Tonight''';
       final n = m.copyWith(
         melodyStyleId: 'hook_led',
         melodyCustomNotes: 'test',
-        melodyVariationMode: MelodyVariationMode.rotate,
+        melodyEvolution: MelodyEvolution.progressive,
         chordProgression: 'I–V–vi–IV',
       );
       expect(n.melodyStyleId, 'hook_led');
       expect(n.melodyCustomNotes, 'test');
-      expect(n.melodyVariationMode, MelodyVariationMode.rotate);
+      expect(n.melodyEvolution, MelodyEvolution.progressive);
       expect(n.chordProgression, 'I–V–vi–IV');
     });
 
@@ -1256,7 +2057,7 @@ Tonight''';
       expect(m.bpm, 124.0);
       expect(m.hasLyrics, isTrue);
       expect(m.compactProfile, profile);
-      expect(m.toPromptSummary(), contains('TARGET AUDIO PROFILE'));
+      expect(m.toPromptSummary(), contains('SOURCE AUDIO ANALYSIS'));
       expect(m.toPromptSummary(), contains(profile));
       expect(m.toPromptSummary(), contains('Structure:'));
       expect(m.toPromptSummary(), contains('Lyrics transcription:'));
@@ -1518,6 +2319,25 @@ Line one
       expect(p.unifiedBlock2Missing, isFalse);
     });
 
+    test('strips ---BLOCK_1_END--- separator from style body', () {
+      const raw = '''
+BLOCK 1 — PASTE INTO SUNO: STYLE
+
+Neo-soul groove at 90 BPM in Eb minor.
+---BLOCK_1_END---
+BLOCK 2 — PASTE INTO SUNO: LYRICS
+
+[Verse 1]
+Line one
+
+[End]
+''';
+      final p = parseSunoOutput(raw);
+      expect(p.styleBody, contains('Neo-soul'));
+      expect(p.styleBody, isNot(contains('BLOCK_1_END')));
+      expect(p.lyricsBody, contains('[Verse 1]'));
+    });
+
     test('legacy Producer Brief banner merges into Block 1 style body', () {
       const raw = '''
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1648,42 +2468,145 @@ y''';
     });
   });
 
+  group('SunoStructureExamples', () {
+    test('every example ends with [End]', () {
+      for (final entry in SunoStructureExamples.allExamplesByVersion.entries) {
+        for (final example in entry.value) {
+          expect(
+            example.trim().endsWith('[End]'),
+            isTrue,
+            reason: 'Example for ${entry.key} must end with [End]',
+          );
+        }
+      }
+    });
+
+    test('no bracket contains slash or stacked brackets on one line', () {
+      final slashInBracket = RegExp(r'\[[^\]]*\/[^\]]*\]');
+      final stackedOnLine = RegExp(r'\]\s*\[');
+      for (final examples in SunoStructureExamples.allExamplesByVersion.values) {
+        for (final example in examples) {
+          expect(slashInBracket.hasMatch(example), isFalse);
+          for (final line in example.split('\n')) {
+            expect(stackedOnLine.hasMatch(line), isFalse);
+          }
+        }
+      }
+    });
+
+    test('no bracket contains BPM token', () {
+      final bpmInBracket = RegExp(r'\[[^\]]*\d+\s*BPM', caseSensitive: false);
+      for (final examples in SunoStructureExamples.allExamplesByVersion.values) {
+        for (final example in examples) {
+          expect(bpmInBracket.hasMatch(example), isFalse);
+        }
+      }
+    });
+
+    test('familyForGenre routes worship correctly', () {
+      expect(SunoStructureExamples.familyForGenre('Praise/Worship'), 'worship');
+      expect(SunoStructureExamples.familyForGenre('Modern Worship'), 'worship');
+      expect(SunoStructureExamples.familyForGenre('Afro-Gospel'), 'worship');
+    });
+
+    test('familyForGenre routes EDM family correctly', () {
+      expect(SunoStructureExamples.familyForGenre('Melodic Techno'), 'edm');
+      expect(SunoStructureExamples.familyForGenre('Future Bass'), 'edm');
+      expect(SunoStructureExamples.familyForGenre('Hardstyle'), 'edm');
+    });
+
+    test('unknown genre falls back to generic family', () {
+      expect(SunoStructureExamples.familyForGenre(null), 'generic');
+      expect(SunoStructureExamples.familyForGenre(''), 'generic');
+      expect(SunoStructureExamples.familyForGenre('RandomGarbage'), 'generic');
+    });
+
+    test('v5.5 routing prefers matching family', () {
+      final edm = SunoStructureExamples.exampleForVersion(
+        version: 'v5.5',
+        familyKey: 'edm',
+      );
+      expect(edm, contains('[Drop:'));
+      expect(edm, contains('[Build-up:'));
+    });
+
+    test('v4.5 has no staging notes in brackets', () {
+      expect(SunoStructureExamples.v45_generic.contains(':'), isFalse);
+      expect(SunoStructureExamples.v45_edm.contains(':'), isFalse);
+    });
+
+    test('buildStructurePreamble includes example and directive', () {
+      final block = SunoStructureExamples.buildStructurePreamble(
+        sunoVersion: 'v5.5',
+        selectedGenre: 'Trap',
+      );
+      expect(block, contains('Canonical bracket layout example'));
+      expect(block, contains('[Hook:'));
+      expect(block, contains('Always terminate with [End]'));
+    });
+  });
+
   group('PromptTemplates', () {
     test('defines multiple presets', () {
       expect(PromptTemplates.all.length, greaterThanOrEqualTo(6));
       expect(PromptTemplates.byId('melodic_club'), isNotNull);
+      expect(
+        PromptTemplates.byId(BigRoomHardstyleCinematicHybridPreset.id),
+        isNotNull,
+      );
+      expect(
+        PromptTemplates.byId(HardstyleEuroDanceBootlegPreset.id),
+        isNotNull,
+      );
+      expect(
+        PromptTemplates.byId(BigRoomFusionProgressivePreset.id),
+        isNotNull,
+      );
       final bracket = PromptTemplates.byId('bracket_edm_structure');
       expect(bracket, isNotNull);
       expect(
         bracket!.model.songStructureCustom,
-        kSunoBracketStructureExampleFull,
+        SunoStructureExamples.v55_edm,
       );
     });
   });
 
   group('buildDjMixUserBlock', () {
-    test('off state is compact', () {
-      final s = buildDjMixUserBlock(djIntroMixIn: false, djOutroMixOut: false);
-      expect(s, contains('false'));
-      expect(s, isNot(contains('NON-NEGOTIABLE')));
+    test('off state returns empty', () {
+      final s = buildDjMixUserBlock(
+        djIntroMixIn: false,
+        djOutroMixOut: false,
+        sunoVersion: 'v5.5',
+        family: StructuralFamily.edmProgressiveHouse,
+      );
+      expect(s, isEmpty);
     });
 
-    test('intro on includes mandatory DJ copy', () {
-      final s = buildDjMixUserBlock(djIntroMixIn: true, djOutroMixOut: false);
-      expect(s, contains('NON-NEGOTIABLE'));
-      expect(s, contains('DJ INTRO'));
+    test('intro on includes production brief for v5.5 EDM', () {
+      final s = buildDjMixUserBlock(
+        djIntroMixIn: true,
+        djOutroMixOut: false,
+        sunoVersion: 'v5.5',
+        family: StructuralFamily.edmProgressiveHouse,
+      );
+      expect(s, contains('[PRODUCTION REQUIREMENT'));
+      expect(s, contains('[DJ INTRO: ON]'));
+      expect(s, contains('~32 bars'));
     });
 
     test('V2 wording references Block 1 prose limits and Block 2', () {
       final s = buildDjMixUserBlock(
         djIntroMixIn: true,
         djOutroMixOut: true,
+        sunoVersion: 'v5.5',
+        family: StructuralFamily.edmProgressiveHouse,
         v2UnifiedOutput: true,
       );
       expect(s, contains('Block 1'));
-      expect(s, contains('130'));
       expect(s, contains('Block 2'));
-      expect(s, isNot(contains('SUNO STRUCTURE as the FIRST')));
+      expect(s, contains('[Instrumental Intro:'));
+      expect(s, contains('[Instrumental Outro:'));
+      expect(s, isNot(contains('verbatim')));
     });
   });
 
@@ -1718,7 +2641,9 @@ y''';
       expect(PowerCodeData.codes, contains('/L99'));
       expect(PowerCodeData.codes, contains('/UDA'));
       expect(PowerCodeData.codes, contains('/BEASTMODE'));
-      expect(PowerCodeData.labelFor('/BEASTMODE'), 'Beastmode');
+      expect(PowerCodeData.labelFor('/BEASTMODE'), 'Beast Mode');
+      expect(PowerCodeData.labelFor('/L99'), 'Super Mode');
+      expect(PowerCodeData.labelFor('/UDA'), 'Ultra Mode');
       expect(PowerCodeData.hintFor('/L99'), isNotEmpty);
     });
   });
@@ -1744,13 +2669,26 @@ y''';
         codesBlob: '/TENDER /L99',
         sunoVersion: 'v5.5',
       );
-      expect(block, contains('CODE TRANSLATION MATRIX'));
-      expect(block, contains('C_final modifier string'));
-      expect(block, contains('rnb_soul'));
+      expect(block, contains('[CODE TRANSLATION: /TENDER for rnb_soul]'));
+      expect(block, contains('[CODE TRANSLATION: /L99 for rnb_soul]'));
+      expect(block, contains('Apply these specific sonic characteristics'));
     });
   });
 
   group('LiveInstrumentMatrix', () {
+    test('LiveInstrumentMatrixData schema and bundle helpers', () {
+      expect(LiveInstrumentMatrixData.schemaVersion, '1.4.2');
+      expect(LiveInstrumentMatrixData.categoryTaxonomy, isNotEmpty);
+      expect(LiveInstrumentMatrixData.categoryClassificationRules, isNotEmpty);
+      expect(LiveInstrumentMatrixData.bundleKeyForGenre('Neo-Soul'), 'neo_soul');
+      expect(LiveInstrumentMatrixData.bundleKeyForGenre('Tech House'), 'deep_house');
+      expect(LiveInstrumentMatrixData.bundleKeyForGenre('Kizomba'), 'afrobeats');
+      expect(LiveInstrumentMatrixData.bundleKeyForGenre('Rage'), 'trap');
+      expect(LiveInstrumentMatrixData.bundleKeyForGenre('Memphis Rap'), 'trap');
+      expect(LiveInstrumentMatrixData.bundleKeyForGenre('Worship'), 'praise_and_worship');
+      expect(LiveInstrumentMatrixData.voicesForGenre('Trap').length, 10);
+    });
+
     test('resolves genre and generates v5.5 prompt with /L99 gear', () {
       final neo = LiveInstrumentMatrix.instrumentsForGenre('Neo-Soul', '');
       expect(neo.map((i) => i.name), contains('Wurlitzer Electric Piano'));
@@ -1770,37 +2708,116 @@ y''';
     test('user block includes protocol fields', () {
       final block = LiveInstrumentMatrix.userBlockDirective(
         primaryGenre: 'Hardstyle',
-        selectionRaw: 'Pedal steel guitar',
+        selectionRaw: 'Prepared Bowed Zither Fusion 9000',
         sunoVersion: 'v5.0',
       );
-      expect(block, contains('LIVE INSTRUMENT ACCOMPANIMENT'));
+      expect(block, contains('REAL INSTRUMENT ACCOMPANIMENT'));
+      expect(block, contains('Matrix schema: 1.4.2'));
+      expect(block, contains('MANDATORY: Feature the following'));
       expect(block, contains('Free-text instruments'));
+    });
+
+    test('prompt_text overrides Live label in style injection', () {
+      final prompt = LiveInstrumentMatrix.generatePrompt(
+        genre: 'Pop',
+        selectionRaw: 'Live Drum Kit & Congas',
+        sunoVersion: 'v5.5',
+      );
+      expect(prompt.styleInjection.toLowerCase(), isNot(contains('stadium')));
+      expect(
+        prompt.styleInjection,
+        contains('Acoustic studio drum kit'),
+      );
+    });
+
+    test('augmentAvoidClause adds studio safeguards for Live instruments', () {
+      final out = LiveInstrumentMatrix.augmentAvoidClause(
+        avoid: 'harsh clipping',
+        realInstrumentals: 'Live Drum Kit & Congas',
+      );
+      expect(out, contains('harsh clipping'));
+      expect(out, contains('dead-room isolation'));
+      expect(out, isNot(contains('crowd noise')));
     });
 
     test('harmonized aliases and primary-first resolution', () {
       expect(
         LiveInstrumentMatrix.resolveGenreKey('Praise/Worship', ''),
-        'praise and worship',
+        'praise_and_worship',
       );
-      expect(LiveInstrumentMatrix.resolveGenreKey('Vinahouse', ''), 'amapiano');
+      expect(LiveInstrumentMatrix.resolveGenreKey('Vinahouse', ''), 'vinahouse');
       expect(
         LiveInstrumentMatrix.resolveGenreKey('Amapiano', 'Soulful House'),
         'amapiano',
+      );
+      expect(
+        LiveInstrumentMatrix.resolveGenreKey('Tech House', ''),
+        'deep_house',
       );
     });
   });
 
   group('RealInstrumentsData', () {
-    test('matrix-backed genre picks and deduped quick picks', () {
+    test('matrix-backed genre picks and curated essentials', () {
       expect(RealInstrumentsData.quickPicks.length, greaterThanOrEqualTo(10));
+      expect(RealInstrumentsData.quickPicks.length, lessThanOrEqualTo(30));
       expect(RealInstrumentsData.quickPicks, contains('Wurlitzer Electric Piano'));
       expect(RealInstrumentsData.quickPicks, contains('Fender Jazz Bass'));
+      expect(RealInstrumentsData.quickPicks, contains('Grand Piano'));
       final neo = RealInstrumentsData.instrumentsForGenre('Neo-Soul');
       expect(neo, contains('Wurlitzer Electric Piano'));
       expect(
         RealInstrumentsData.instrumentsForGenreFilter(null),
         RealInstrumentsData.quickPicks,
       );
+    });
+
+    test('quickPicks are unique curated essentials', () {
+      final picks = RealInstrumentsData.quickPicks;
+      expect(picks, isA<List<String>>());
+      expect(picks, isNotEmpty);
+      expect(picks.toSet().length, picks.length);
+    });
+
+    test('decongestGenrePicks caps chip count', () {
+      final fat = List<String>.generate(40, (i) => 'Inst $i');
+      final slim = RealInstrumentsData.decongestGenrePicks(fat);
+      expect(slim.length, lessThanOrEqualTo(RealInstrumentsData.genreChipCap));
+    });
+
+    test('instrumentsForGenreFilter falls back to quickPicks', () {
+      final all = RealInstrumentsData.quickPicks;
+      expect(RealInstrumentsData.instrumentsForGenreFilter(null), all);
+      expect(RealInstrumentsData.instrumentsForGenreFilter(''), all);
+    });
+
+    test('rich instruments can be grouped by family', () {
+      final grouped = RealInstrumentsData.instrumentsByFamily('Jazz');
+      expect(grouped, isA<Map<String, List<InstrumentModel>>>());
+      expect(grouped, isNotEmpty);
+      for (final list in grouped.values) {
+        expect(list, isNotEmpty);
+      }
+    });
+
+    test('search filters by name and tag', () {
+      final all = RealInstrumentsData.allInstruments;
+      expect(all, isNotEmpty);
+      final query = all.first.name.substring(0, 3).toLowerCase();
+      final results = RealInstrumentsData.search(query);
+      expect(results, isNotEmpty);
+      expect(
+        results.any((i) => i.name.toLowerCase().contains(query)),
+        isTrue,
+      );
+    });
+
+    test('InstrumentModel equality uses signature', () {
+      final a = const InstrumentModel(name: 'Violin', family: 'Strings');
+      final b = const InstrumentModel(name: 'Violin', family: 'Strings');
+      final c = const InstrumentModel(name: 'Violin', family: 'Orchestral');
+      expect(a, equals(b));
+      expect(a, isNot(equals(c)));
     });
   });
 
@@ -1811,46 +2828,53 @@ y''';
     });
   });
 
-  group('MelodyStyleData', () {
-    test('composeUserBlock includes hook preset and session variation', () {
-      final b = MelodyStyleData.composeUserBlock(
-        melodyStyleId: 'hook_led',
-        melodyCustomNotes: '',
-        sessionVariationDirective: 'Test variation line.',
+  group('MelodyComposerService integration', () {
+    test('hook_led adds style tokens for direct vibe injection', () {
+      final result = MelodyComposerService.compose(
+        melodyDirectiveId: 'hook_led',
+        evolution: MelodyEvolution.progressive,
+        originalLyrics: '',
+        primaryGenre: 'Pop',
       );
-      expect(b, contains('MELODY DIRECTION:'));
-      expect(b, contains('hook'));
-      expect(b, contains('MELODY SESSION VARIATION'));
-      expect(b, contains('Test variation line'));
-    });
-
-    test('auto and empty custom yield only session line when variation set', () {
-      final b = MelodyStyleData.composeUserBlock(
-        melodyStyleId: MelodyStyleData.autoId,
-        melodyCustomNotes: '',
-        sessionVariationDirective: 'Rotate hint.',
-      );
-      expect(b, isNot(contains('MELODY DIRECTION')));
-      expect(b, contains('MELODY SESSION VARIATION'));
-    });
-
-    test('variation directives list is non-empty', () {
-      expect(kMelodySessionVariationDirectives, isNotEmpty);
-      expect(kMelodySessionVariationDirectives.length, 9);
       expect(
-        kMelodySessionVariationDirectives.last,
-        contains('Electronic Hybrid Modifier'),
+        result.stylePromptTokens,
+        contains('built around a memorable, repetitive vocal chorus melody'),
       );
     });
 
-    test('hybrid_split_dna preset encodes Split-DNA routing', () {
-      final b = MelodyStyleData.composeUserBlock(
-        melodyStyleId: 'hybrid_split_dna',
-        melodyCustomNotes: '',
+    test('auto with strict selects genre-informed tokens', () {
+      final result = MelodyComposerService.compose(
+        melodyDirectiveId: MelodyConfig.autoId,
+        evolution: MelodyEvolution.strict,
+        originalLyrics: '',
+        primaryGenre: 'Melodic Techno',
       );
-      expect(b, contains('Split-DNA'));
-      expect(b, contains('Genre B (subordinate)'));
-      expect(b, contains('Genre A (dominant)'));
+      // Fine-grained family resolution reaches the techno-specific token.
+      expect(
+        result.stylePromptTokens,
+        contains('hypnotic sequenced techno arpeggio under the kick'),
+      );
+      expect(result.userNotices.first, contains('Auto-selected'));
+    });
+
+    test('anthemic_soaring preset includes genre-aware default token', () {
+      final d = MelodyConfig.getDirectiveById('anthemic_soaring');
+      expect(
+        d.getTokenForGenre('default'),
+        contains('big, anthemic, and soaring melody'),
+      );
+    });
+
+    test('legacy hybrid_split_dna normalizes to hook_led tokens', () {
+      final result = MelodyComposerService.compose(
+        melodyDirectiveId: 'hybrid_split_dna',
+        evolution: MelodyEvolution.strict,
+        originalLyrics: '',
+      );
+      expect(
+        result.stylePromptTokens,
+        contains('melodically driven by a repetitive, catchy hook'),
+      );
     });
   });
 

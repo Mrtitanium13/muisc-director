@@ -1,0 +1,15 @@
+{
+  "id": "near_activation_title_only",
+  "input": {
+    "title": "Mercy",
+    "artist": "",
+    "remix_from_analyzer": false,
+    "primary_genre": "Pop",
+    "song_type": "full"
+  },
+  "expect": {
+    "mode": "none",
+    "near_activation": true,
+    "engine_active": false
+  }
+}

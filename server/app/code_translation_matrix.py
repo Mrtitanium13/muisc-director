@@ -127,24 +127,21 @@ def code_translation_user_block(
         return ""
 
     category = get_genre_category(primary_genre, sub_genre_fusion)
-    c_final = apply_genre_specific_codes(
-        primary_genre,
-        codes_blob,
-        version=suno_version,
-        fusion=sub_genre_fusion,
-        vibe=vibe,
-    )
-    if not c_final:
-        return ""
-
     v = _normalize_version(suno_version)
-    return "\n".join(
-        [
-            "CODE TRANSLATION MATRIX (DYNAMIC POWER CODE & TEMPERAMENT INJECTION):",
-            f"Genre category: [{category}]",
-            f"Active codes: {', '.join('/' + c for c in codes)}",
-            f"C_final modifier string ({v}): {c_final}",
-            "Weave into Block 1 producer prose per version trimming; echo core sentiment in Block 2 meta-tags on v5.5. "
-            "Blend multiple codes logically — never substitute generic code definitions.",
-        ]
-    )
+    matrix = _load()
+    lines: list[str] = []
+    for code in codes:
+        row = matrix.get(code)
+        if not row:
+            continue
+        phrase = row.get(category)
+        if not phrase or not str(phrase).strip():
+            continue
+        prose = _trim_modifier(str(phrase), v)
+        if not prose:
+            continue
+        lines.append(
+            f"[CODE TRANSLATION: /{code} for {category}] "
+            f"(Apply these specific sonic characteristics): {prose}"
+        )
+    return "\n".join(lines)

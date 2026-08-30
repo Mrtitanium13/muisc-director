@@ -7,6 +7,8 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/dio_error_message.dart';
 import '../../../core/utils/haptic_utils.dart';
+import '../../../presentation/utils/show_user_notices.dart';
+import '../../../services/composition_pipeline_service.dart';
 import '../../providers/app_providers.dart';
 import '../../widgets/common/gradient_button.dart';
 
@@ -39,14 +41,16 @@ class _BatchGenerateScreenState extends ConsumerState<BatchGenerateScreen> {
     setState(() => _running = true);
     final repo = ref.read(aiRepositoryProvider);
     final items = <Map<String, String>>[];
+    final composition = CompositionPipelineService.run(userInput: base);
+    showUserNotices(context, composition.userNotices);
 
     try {
       for (var i = 0; i < _count; i++) {
         final take = i + 1;
         final vibe = _suffixTakes && _count > 1
-            ? '${base.vibe.trim()} — take $take'
-            : base.vibe.trim();
-        final input = base.copyWith(vibe: vibe);
+            ? '${composition.composedInput.vibe.trim()} — take $take'
+            : composition.composedInput.vibe.trim();
+        final input = composition.composedInput.copyWith(vibe: vibe);
         final text = await repo.generatePrompt(input);
         items.add({
           'label': 'Variation $take',

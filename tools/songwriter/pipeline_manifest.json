@@ -1,0 +1,95 @@
+{
+  "version": "1.0.0",
+  "ab_default_bucket": "control",
+  "feature_flag_env": "SONGWRITER_PIPELINE",
+  "min_hook_candidates": 10,
+  "stages": [
+    {
+      "id": "analyze",
+      "order": 1,
+      "prompt": "stages/stage_01_analyze.txt",
+      "output_schema": "SongBrief",
+      "temperature": 0.3
+    },
+    {
+      "id": "concepts",
+      "order": 2,
+      "prompt": "stages/stage_02_concepts.txt",
+      "output_schema": "ConceptBatch",
+      "temperature": 0.9,
+      "min_concepts": 5
+    },
+    {
+      "id": "select",
+      "order": 3,
+      "prompt": "stages/stage_03_select.txt",
+      "output_schema": "SelectedConcept",
+      "temperature": 0.2
+    },
+    {
+      "id": "arc",
+      "order": 4,
+      "prompt": "stages/stage_04_arc.txt",
+      "output_schema": "EmotionalArc",
+      "temperature": 0.5
+    },
+    {
+      "id": "chorus",
+      "order": 5,
+      "prompt": "stages/stage_05_chorus_hooks.txt",
+      "output_schema": "ChorusDraft",
+      "temperature": 0.85,
+      "min_hook_candidates": 10
+    },
+    {
+      "id": "verses",
+      "order": 6,
+      "prompt": "stages/stage_06_verses.txt",
+      "output_schema": "VersesDraft",
+      "temperature": 0.75
+    },
+    {
+      "id": "bridge",
+      "order": 7,
+      "prompt": "stages/stage_07_bridge.txt",
+      "output_schema": "BridgeDraft",
+      "temperature": 0.7
+    },
+    {
+      "id": "transitions",
+      "order": 8,
+      "prompt": "stages/stage_08_transitions.txt",
+      "output_schema": "FullDraft",
+      "temperature": 0.5
+    },
+    {
+      "id": "rhyme",
+      "order": 9,
+      "prompt": "stages/stage_09_rhyme.txt",
+      "output_schema": "FullDraft",
+      "temperature": 0.4
+    },
+    {
+      "id": "anti_ai",
+      "order": 10,
+      "prompt": "stages/stage_10_anti_ai.txt",
+      "output_schema": "FullDraft",
+      "temperature": 0.55
+    },
+    {
+      "id": "singability",
+      "order": 11,
+      "prompt": "stages/stage_11_singability.txt",
+      "output_schema": "FullDraft",
+      "temperature": 0.4
+    },
+    {
+      "id": "polish",
+      "order": 12,
+      "prompt": "stages/stage_12_polish_judge.txt",
+      "output_schema": "JudgedLyric",
+      "temperature": 0.35,
+      "requires_score_gate": true
+    }
+  ]
+}

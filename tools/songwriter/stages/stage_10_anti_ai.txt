@@ -1,0 +1,12 @@
+{{include:modules/01_role.txt}}
+{{include:modules/05_forbidden_anti_ai.txt}}
+{{include:modules/06_output_format.txt}}
+
+# STAGE 10 — REMOVE AI PATTERNS
+
+Scrub clichés, robotic transitions, hollow abstractions, stiff grammar.
+Replace with concrete, human lines.
+
+Output JSON FullDraft plus:
+"removed_patterns": [],
+"replacements_summary": ""

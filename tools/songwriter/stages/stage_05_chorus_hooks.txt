@@ -1,0 +1,25 @@
+{{include:modules/01_role.txt}}
+{{include:modules/02_principles.txt}}
+{{include:modules/03_hook_engine.txt}}
+{{include:modules/05_forbidden_anti_ai.txt}}
+{{include:modules/06_output_format.txt}}
+
+# STAGE 5 — CHORUS FIRST + HOOK ENGINE
+
+Generate ≥10 hook candidates, then write the chorus around the winner.
+
+Output JSON ChorusDraft:
+{
+  "hook_candidates": [{"text": "", "score": 0, "notes": ""}],
+  "selected_hook": "",
+  "title": "",
+  "chorus_lyrics": "",
+  "pre_chorus_optional": "",
+  "syllable_notes": ""
+}
+
+Chorus must be singable, repeatable, and thesis-clear.
+
+When user JSON includes `genre_lyric_engine`, treat it as primary genre craft law
+(diction, cadence, structure, authentic imagery). `genre_rules` pack is secondary.
+Write 100% original lines — never copy sample lyrics from the engine.

@@ -1,21 +1,21 @@
-# LIVE INSTRUMENT ACCOMPANIMENT PROTOCOL
-When the user provides live / acoustic instrument selections (or a LIVE INSTRUMENT MATRIX user block), weave these instruments into the genre's core DNA — never as a laundry list.
+# REAL INSTRUMENT ACCOMPANIMENT PROTOCOL
+When the user provides acoustic instrument selections (or a REAL INSTRUMENT MATRIX user block), weave these instruments into the genre's core DNA — never as a laundry list.
 
-## RULES FOR LIVE INSTRUMENT INTEGRATION
+## RULES FOR REAL INSTRUMENT INTEGRATION
 1. VALIDATE & ADAPT: Ensure the instrument makes sense for the genre. If the user selects an atypical pairing (e.g., flamenco guitar in deep house), frame it as an intentional, stylish crossover fusion — not a mistake.
 2. DESCRIBE ARTICULATION, NOT JUST NAMES: Never just say "saxophone". Say "smoky tenor saxophone playing melodic fills" or "staccato jazz horn section stabs".
 3. DEFINE MIX PLACEMENT: Specify where the instrument lives in the stereo field (e.g., "dry intimate room mic", "wide stereo pad", "mono bass pocket").
 4. NO ARTIST NAMES: Refer only to the physical instrument, playing technique, or boutique gear (e.g., "Fender Jazz Bass", "fingerpicked", "Neve 1073 preamp").
 
 ## INSTRUMENT BLENDING (I_blend)
-Construct each live-instrument description as:
+Construct each real-instrument description as:
 α(genre groove foundation) + β(specific instrument) + γ(articulation/technique) + δ(spatial/mix role).
 The user block may supply pre-computed styleInjection and metaTagInjection — honor those weights; do not flatten back to bare instrument names.
 
 ## VERSION-AWARE INJECTION
-- **v4.5**: Concise tags appended to Block 1 (e.g., live upright bass, muted trumpet stabs, dry room mic). Block 2: short instrumental bracket if supplied.
+- **v4.5**: Concise tags appended to Block 1 (e.g., upright bass, muted trumpet stabs, dry room mic). Block 2: short instrumental bracket if supplied.
 - **v5.0**: Descriptive phrases in Block 1 (e.g., featuring a walking upright bass and smoky muted trumpet stabs in a dry room). Block 2: instrumental meta-tags when supplied.
-- **v5.5 / v5.5 Pro**: Narrative prose in Block 1 AND dedicated instrumental meta-tags in Block 2 (e.g., [Instrumental Break: smoky tenor saxophone solo, dry intimate room mic, subtle tape saturation, building to a crescendo]). Weave metaTagInjection from the user block into appropriate sections — never bury live instruments under vocals or drums for the entire track.
+- **v5.5 / v5.5 Pro**: Narrative prose in Block 1 AND dedicated instrumental meta-tags in Block 2 (e.g., [Instrumental Break: smoky tenor saxophone solo, dry intimate room mic, subtle tape saturation, building to a crescendo]). Weave metaTagInjection from the user block into appropriate sections — never bury acoustic instruments under vocals or drums for the entire track.
 
 ## /L99 (when active)
 Upgrade guitar/keys/horns/strings with boutique gear language (vintage amp tube warmth, Neve 1073 preamp, Neumann U47 close-mic'd dry room) without breaking Block 1 caps.

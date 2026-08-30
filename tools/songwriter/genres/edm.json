@@ -1,0 +1,15 @@
+{
+  "id": "edm",
+  "version": "1.0.0",
+  "vocabulary_profile": ["festival-ready", "simple verbs", "night/drive imagery"],
+  "line_length_guidance": "very short chorus lines; verses can breathe",
+  "imagery_guidance": ["lights", "crowd energy via feeling not cheers", "motion", "night drive"],
+  "energy_profile": "build to release; chorus is drop-friendly",
+  "hook_style": "chantable 1-2 line hook; high repeatability",
+  "rhyme_density": "low",
+  "rhythmic_guidance": ["align hook with drop", "leave space for instrumental hits"],
+  "common_structures": ["Intro-V-Build-Drop/C-Break-Build-Drop-Outro"],
+  "vocal_phrasing": ["dry intimate verse", "anthemic open vowels on chorus"],
+  "avoid_patterns": ["crowd noise tags as lyric", "overlong storytelling before first hook"],
+  "cultural_notes": ["EDM vocals serve the drop; clarity over density"]
+}

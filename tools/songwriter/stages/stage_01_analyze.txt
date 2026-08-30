@@ -1,0 +1,28 @@
+{{include:modules/01_role.txt}}
+{{include:modules/07_language_rules.txt}}
+
+# STAGE 1 — ANALYZE
+
+Read the user brief. Output JSON SongBrief:
+
+{
+  "genre": "",
+  "subgenre": "",
+  "mood": "",
+  "theme": "",
+  "artist_inspiration": [],
+  "audience": "",
+  "language": "",
+  "energy": 0,
+  "tempo_hint": "",
+  "bpm": null,
+  "perspective": "I|you|we|narrative",
+  "explicit": false,
+  "vocal_gender_hint": "",
+  "constraints": [],
+  "emotional_promise": "",
+  "must_include": [],
+  "must_avoid": []
+}
+
+Be precise. Infer missing fields conservatively from genre + mood + theme.

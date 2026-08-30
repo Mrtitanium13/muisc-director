@@ -57,11 +57,17 @@ from app.llm_config import (
     resolve_compression_model,
     resolve_humanization_model,
     resolve_theme_consistency_model,
+    two_pass_prompt_enabled,
+)
+from app.architect_pass import (
+    inject_blueprint_into_user,
+    parse_architect_blueprint,
 )
 from app.block1_mix_master_directive import block1_mix_master_user_block
 from app.drum_matrix import build_drum_staging_line, drum_matrix_user_block, resolve_drum_profile
 from app.genre_hybridization import genre_hybridization_user_block
 from app.live_instrument_matrix import (
+    augment_avoid_clause,
     generate_live_instrument_prompt,
     live_instrument_user_block,
     resolve_genre_instrument_key,
@@ -91,6 +97,7 @@ from app.suno_prompt_builder import (
 )
 from app.human_authenticity import (
     human_authenticity_user_block,
+    is_electronic_lane,
     is_festival_vocal_lane,
     is_gospel_lane,
     is_mantra_dominant_lane,
@@ -98,6 +105,10 @@ from app.human_authenticity import (
     is_situation_first_story_lane,
 )
 from app.human_realism import band_label, clamp_level, human_realism_user_block
+from app.elite_human_lyricist_directive import (
+    ELITE_HUMAN_LYRICIST_DIRECTIVE,
+    build_phonetic_integrity_rule,
+)
 from app.audio_environment import (
     LIVE_PERFORMANCE_ID,
     audio_environment_user_block,
@@ -111,8 +122,13 @@ from app.dialect_style import (
 from app.vocal_accent import (
     ACCENT_VS_DIALECT_CONSTRAINT,
     accent_vs_dialect_constraint_line,
+    layer1_descriptor_for,
     regional_tag_deduplication_line,
     vocal_accent_user_block,
+)
+from app.vocal_spec_tone import (
+    user_block_directive as vocal_spec_tone_user_block,
+    user_block_line as vocal_spec_tone_user_block_line,
 )
 from app.payload_optimization import (
     append_laozhang_system_prompt_boundary,
@@ -200,6 +216,22 @@ class TestLlmConfig(unittest.TestCase):
             os.environ.pop("PROMPT_PIPELINE", None)
             self.assertFalse(hybrid_prompt_enabled(lightweight=True, provider="laozhang"))
 
+    def test_two_pass_mode_disables_hybrid(self):
+        with patch.dict(os.environ, {"PROMPT_PIPELINE": "two_pass"}, clear=False):
+            self.assertTrue(
+                two_pass_prompt_enabled(lightweight=False, lyrics_task=True),
+            )
+            self.assertFalse(
+                hybrid_prompt_enabled(
+                    lightweight=False, provider="laozhang", lyrics_task=True
+                ),
+            )
+            self.assertFalse(
+                two_pass_prompt_enabled(lightweight=False, lyrics_task=False),
+            )
+        with patch.dict(os.environ, {"PROMPT_PIPELINE": "architect"}, clear=False):
+            self.assertTrue(two_pass_prompt_enabled(lyrics_task=True))
+
     def test_draft_and_polish_models(self):
         with patch.dict(os.environ, {}, clear=False):
             os.environ.pop("PROMPT_DRAFT_MODEL", None)
@@ -262,11 +294,11 @@ class TestLlmConfig(unittest.TestCase):
         with patch.dict(
             os.environ,
             {
-                "OPENROUTER_GENERATE_MODEL": "qwen/qwen3.7-max",
-                "THEME_CONSISTENCY_MODEL": "qwen/qwen3.7-max",
+                "OPENROUTER_GENERATE_MODEL": "qwen/qwen3.7-plus",
+                "THEME_CONSISTENCY_MODEL": "qwen/qwen3.7-plus",
                 "HUMANIZATION_MODEL": "mistralai/mistral-large",
-                "SUNO_COMPRESSION_MODEL": "qwen/qwen3.7-max",
-                "PROMPT_POLISH_MODEL": "qwen/qwen3.7-max",
+                "SUNO_COMPRESSION_MODEL": "qwen/qwen3.7-plus",
+                "PROMPT_POLISH_MODEL": "qwen/qwen3.7-plus",
             },
             clear=False,
         ):
@@ -308,7 +340,7 @@ class TestLlmConfig(unittest.TestCase):
                 resolve_theme_consistency_model(
                     language="English", provider="openrouter"
                 ),
-                "qwen/qwen3.7-max",
+                "qwen/qwen3.7-plus",
             )
             self.assertEqual(
                 resolve_humanization_model(provider="openrouter"),
@@ -316,7 +348,7 @@ class TestLlmConfig(unittest.TestCase):
             )
             self.assertEqual(
                 resolve_polish_model(provider="openrouter", lyrics_task=True),
-                "qwen/qwen3.7-max",
+                "qwen/qwen3.7-plus",
             )
 
 
@@ -399,7 +431,7 @@ class TestPromptPipeline(unittest.TestCase):
             {"OPENAI_API_KEY": "k", "PROMPT_PIPELINE": "single"},
             clear=False,
         ):
-            text, pipeline = generate_suno_prompt(
+            result = generate_suno_prompt(
                 client,
                 system_prompt="sys",
                 user_content="user",
@@ -407,8 +439,133 @@ class TestPromptPipeline(unittest.TestCase):
                 lightweight=False,
                 max_tokens=400,
             )
-        self.assertEqual(text, "only one")
+        self.assertEqual(result.text, "only one")
         self.assertEqual(client.chat.completions.create.call_count, 1)
+        self.assertIsNone(result.architect_blueprint)
+
+    def test_two_pass_architect_then_lyricist(self):
+        b1 = " ".join(["producer"] * 140)
+        lyric_out = (
+            "BLOCK 1 — PASTE INTO SUNO: STYLE\n\n"
+            f"{b1}\n\n"
+            "BLOCK 2 — PASTE INTO SUNO: LYRICS\n\n"
+            "[Intro]\n(line)\n[Chorus]\nhook\n[End]"
+        )
+        architect_json = """{
+  "genre_primary": "Techno",
+  "genre_fusion": "",
+  "songwriting_mode": "B",
+  "bpm_intent": 140,
+  "key_intent": "A minor",
+  "emotion_before": "tense",
+  "emotion_after": "released",
+  "transformation_arc": "tension to release",
+  "audience": "club",
+  "commercial_objective": "Festival Anthem",
+  "hook_concept": "we don't stop",
+  "three_second_intro_anchor": "breath chop",
+  "user_proxy_moment": "we don't stop",
+  "section_roadmap": ["Intro", "Verse 1", "Chorus", "Drop", "Outro"],
+  "syllable_density": "short punchy",
+  "artist_dna_traits": ["driving", "dark"],
+  "vocal_character": "processed male",
+  "production_keywords": ["sidechain", "riser"],
+  "conflict_resolution_notes": "aligned"
+}"""
+        client = MagicMock()
+        arch_resp = MagicMock()
+        arch_resp.choices = [
+            MagicMock(message=MagicMock(content=architect_json), finish_reason="stop")
+        ]
+        lyric_resp = MagicMock()
+        lyric_resp.choices = [
+            MagicMock(message=MagicMock(content=lyric_out), finish_reason="stop")
+        ]
+        client.chat.completions.create.side_effect = [arch_resp, lyric_resp]
+
+        with patch.dict(
+            os.environ,
+            {"OPENAI_API_KEY": "k", "PROMPT_PIPELINE": "two_pass"},
+            clear=False,
+        ):
+            result = generate_suno_prompt(
+                client,
+                system_prompt="sys",
+                user_content="genre: Techno",
+                language="English",
+                lightweight=False,
+                max_tokens=800,
+                provider="laozhang",
+                lyrics_task=True,
+            )
+        self.assertEqual(result.text, lyric_out)
+        self.assertTrue(result.pipeline.startswith("two-pass:"))
+        self.assertIsNotNone(result.architect_blueprint)
+        self.assertIn("Techno", result.architect_blueprint or "")
+        self.assertEqual(client.chat.completions.create.call_count, 2)
+        # Pass 2 user must include blueprint
+        pass2_user = client.chat.completions.create.call_args_list[1].kwargs[
+            "messages"
+        ][-1]["content"]
+        self.assertIn("MASTER BLUEPRINT", pass2_user)
+        self.assertIn("we don't stop", pass2_user)
+
+    def test_two_pass_reuses_cached_blueprint(self):
+        b1 = " ".join(["producer"] * 140)
+        lyric_out = (
+            "BLOCK 1 — PASTE INTO SUNO: STYLE\n\n"
+            f"{b1}\n\n"
+            "BLOCK 2 — PASTE INTO SUNO: LYRICS\n\n"
+            "[Intro]\nx\n[End]"
+        )
+        cached = '{"genre_primary":"House","songwriting_mode":"A","hook_concept":"stay",'
+        cached += '"section_roadmap":["Intro","Chorus"],"artist_dna_traits":["warm"]}'
+        client = MagicMock()
+        lyric_resp = MagicMock()
+        lyric_resp.choices = [
+            MagicMock(message=MagicMock(content=lyric_out), finish_reason="stop")
+        ]
+        client.chat.completions.create.return_value = lyric_resp
+
+        with patch.dict(
+            os.environ,
+            {"OPENAI_API_KEY": "k", "PROMPT_PIPELINE": "two_pass"},
+            clear=False,
+        ):
+            result = generate_suno_prompt(
+                client,
+                system_prompt="sys",
+                user_content="genre: House",
+                language="English",
+                lightweight=False,
+                max_tokens=800,
+                provider="laozhang",
+                lyrics_task=True,
+                architect_blueprint=cached,
+            )
+        self.assertEqual(client.chat.completions.create.call_count, 1)
+        self.assertEqual(result.architect_blueprint, cached)
+
+
+class TestArchitectPass(unittest.TestCase):
+    def test_parse_fenced_json(self):
+        raw = """```json
+{"genre_primary": "Afrobeats", "songwriting_mode": "B",
+ "hook_concept": "small small", "section_roadmap": ["Intro", "Chorus"],
+ "artist_dna_traits": ["groovy"]}
+```"""
+        bp = parse_architect_blueprint(raw)
+        self.assertEqual(bp["genre_primary"], "Afrobeats")
+        self.assertEqual(bp["songwriting_mode"], "B")
+
+    def test_inject_blueprint_appends_rules(self):
+        out = inject_blueprint_into_user("USER", {"genre_primary": "Pop", "songwriting_mode": "C",
+                                                   "hook_concept": "x", "section_roadmap": ["Chorus"],
+                                                   "artist_dna_traits": []})
+        self.assertIn("USER", out)
+        self.assertIn("MASTER BLUEPRINT", out)
+        self.assertIn("PASS 2 RULES", out)
+        self.assertIn("[End]", out)
 
 
 class TestSunoOutputQa(unittest.TestCase):
@@ -699,6 +856,21 @@ class TestHttpMiddleware(unittest.TestCase):
             self.assertEqual(request_timeout_seconds(), 360.0)
 
 
+class TestCompletionTokenKwargs(unittest.TestCase):
+    def test_gpt55_uses_max_completion_tokens_only(self):
+        from app.llm_config import completion_token_kwargs
+
+        kw = completion_token_kwargs("gpt-5.5", 4096)
+        self.assertEqual(kw, {"max_completion_tokens": 4096})
+        self.assertNotIn("max_tokens", kw)
+
+    def test_claude_keeps_max_tokens(self):
+        from app.llm_config import completion_token_kwargs
+
+        kw = completion_token_kwargs("claude-sonnet-4-5", 2048)
+        self.assertEqual(kw, {"max_tokens": 2048})
+
+
 class TestApiRoutes(unittest.TestCase):
     def setUp(self):
         self.client = TestClient(create_app())
@@ -867,6 +1039,61 @@ class TestApiRoutes(unittest.TestCase):
     @patch("app.laozhang_post_process.suno_compression_pass_enabled", return_value=False)
     @patch("app.laozhang_post_process.humanization_pass_enabled", return_value=False)
     @patch("app.laozhang_post_process.theme_consistency_enabled", return_value=False)
+    def test_generate_prompt_two_pass_with_mocked_llm(
+        self, _theme_off, _humanize_off, _compress_off
+    ):
+        b1 = " ".join(["producer"] * 140)
+        lyric_out = (
+            "BLOCK 1 — PASTE INTO SUNO: STYLE\n\n"
+            f"{b1}\n\n"
+            "BLOCK 2 — PASTE INTO SUNO: LYRICS\n\n"
+            "[Intro]\n(line)\n[Chorus]\nhook\n[End]"
+        )
+        architect_json = (
+            '{"genre_primary":"House","songwriting_mode":"B","hook_concept":"stay",'
+            '"section_roadmap":["Intro","Chorus","Outro"],'
+            '"artist_dna_traits":["groovy"],"conflict_resolution_notes":"ok"}'
+        )
+        client = MagicMock()
+        arch_resp = MagicMock()
+        arch_resp.choices = [
+            MagicMock(message=MagicMock(content=architect_json), finish_reason="stop")
+        ]
+        lyric_resp = MagicMock()
+        lyric_resp.choices = [
+            MagicMock(message=MagicMock(content=lyric_out), finish_reason="stop")
+        ]
+        client.chat.completions.create.side_effect = [arch_resp, lyric_resp]
+
+        with patch.dict(
+            os.environ,
+            {"OPENAI_API_KEY": "test-key", "PROMPT_PIPELINE": "two_pass"},
+            clear=False,
+        ):
+            with patch("app.main.OpenAI", return_value=client):
+                r = self.client.post(
+                    "/generate-prompt",
+                    json={
+                        "suno_version": "v5.5",
+                        "primary_genre": "House",
+                        "vibe": "warm groove",
+                        "prefer_lightweight_model": False,
+                        "llm_provider": "laozhang",
+                    },
+                )
+        self.assertEqual(r.status_code, 200)
+        body = r.json()
+        self.assertIn("BLOCK 2", body["prompt"])
+        self.assertTrue(body.get("pipeline", "").startswith("two-pass:"))
+        self.assertEqual(client.chat.completions.create.call_count, 2)
+        pass2_user = client.chat.completions.create.call_args_list[1].kwargs[
+            "messages"
+        ][-1]["content"]
+        self.assertIn("MASTER BLUEPRINT", pass2_user)
+
+    @patch("app.laozhang_post_process.suno_compression_pass_enabled", return_value=False)
+    @patch("app.laozhang_post_process.humanization_pass_enabled", return_value=False)
+    @patch("app.laozhang_post_process.theme_consistency_enabled", return_value=False)
     def test_format_retry_on_incomplete_output(
         self, _theme_off, _humanize_off, _compress_off
     ):
@@ -930,6 +1157,8 @@ class TestApiRoutes(unittest.TestCase):
 
 class TestBlock1MixMaster(unittest.TestCase):
     def test_part_e_profile_includes_hardware_lufs_and_dj_phrasing(self):
+        from app.genre_hardware_profiles import resolve_hardware_profile
+
         techno = block1_mix_master_user_block(
             primary_genre="Techno",
             sub_genre_fusion="",
@@ -937,19 +1166,26 @@ class TestBlock1MixMaster(unittest.TestCase):
             dj_outro=True,
         )
         self.assertIn("GENRE HARDWARE DEFAULTS (Part E v2.1", techno)
-        self.assertIn("[EDM.5]", techno)
+        self.assertIn("[HW.", techno)
+        self.assertEqual(resolve_hardware_profile("Techno").cluster_id, "EDM.5")
         self.assertIn("LUFS", techno)
         self.assertIn("−1.0 dBTP", techno)
         self.assertIn("sixteen-bar filtered drum intro", techno)
 
         prog = block1_mix_master_user_block(primary_genre="Progressive House")
-        self.assertIn("[EDM.3]", prog)
+        self.assertIn("[HW.", prog)
+        self.assertEqual(
+            resolve_hardware_profile("Progressive House").cluster_id, "EDM.3"
+        )
         self.assertIn("sidechain", prog.lower())
 
         amapiano = block1_mix_master_user_block(
             primary_genre="Amapiano-Vinahouse",
         )
-        self.assertIn("[EDM.12]", amapiano)
+        self.assertIn("[HW.", amapiano)
+        self.assertEqual(
+            resolve_hardware_profile("Amapiano-Vinahouse").cluster_id, "EDM.12"
+        )
         self.assertIn("log drum", amapiano.lower())
 
     def test_build_user_block_injects_part_e_hardware(self):
@@ -1078,9 +1314,9 @@ class TestDrumMatrix(unittest.TestCase):
 
     def test_genre_hybridization_user_block(self):
         block = genre_hybridization_user_block("Melodic Techno", "Indie Acoustic")
-        self.assertIn("DUAL-GENRE HYBRIDIZATION", block)
-        self.assertIn("Genre A DOMINANT (Melodic Techno)", block)
-        self.assertIn("Genre B SUBORDINATE (Indie Acoustic)", block)
+        self.assertIn("GENRE HYBRIDIZATION & CULTURAL ROUTING MATRIX", block)
+        self.assertIn("primaryGenre=Melodic Techno", block)
+        self.assertIn("subGenreFusion=Indie Acoustic", block)
 
     def test_build_user_block_injects_hybridization_when_fusion_set(self):
         body = GeneratePromptBody(
@@ -1090,7 +1326,7 @@ class TestDrumMatrix(unittest.TestCase):
             vibe="cinematic",
         )
         block = _build_user_block(body)
-        self.assertIn("DUAL-GENRE HYBRIDIZATION", block)
+        self.assertIn("GENRE HYBRIDIZATION & CULTURAL ROUTING MATRIX", block)
         self.assertIn("Split-DNA", block)
         self.assertIn("Subordinate tag accent rule", block)
 
@@ -1130,32 +1366,33 @@ class TestCodeTranslationMatrix(unittest.TestCase):
             suno_version="v5.5",
             primary_genre="Praise and Worship",
             vibe="uplifting",
-            lyric_temperament_codes="/TENDER /L99",
+            active_modifier_codes="/TENDER /L99",
         )
         block = _build_user_block(body)
-        self.assertIn("CODE TRANSLATION MATRIX", block)
-        self.assertIn("C_final modifier string", block)
-        self.assertIn("rnb_soul", block)
+        self.assertIn("[CODE TRANSLATION: /TENDER for rnb_soul]", block)
+        self.assertIn("[CODE TRANSLATION: /L99 for rnb_soul]", block)
+        self.assertIn("Apply these specific sonic characteristics", block)
 
 
 class TestLiveInstrumentMatrix(unittest.TestCase):
     def test_resolve_neo_soul(self):
-        self.assertEqual(resolve_genre_instrument_key("Neo-Soul", ""), "neo-soul")
+        self.assertEqual(resolve_genre_instrument_key("Neo-Soul", ""), "neo_soul")
 
     def test_harmonized_aliases_and_primary_first(self):
         self.assertEqual(
             resolve_genre_instrument_key("Praise/Worship", ""),
-            "praise and worship",
+            "praise_and_worship",
         )
-        self.assertEqual(resolve_genre_instrument_key("Vinahouse", ""), "amapiano")
+        self.assertEqual(resolve_genre_instrument_key("Vinahouse", ""), "vinahouse")
         self.assertEqual(
             resolve_genre_instrument_key("Amapiano", "Soulful House"),
             "amapiano",
         )
         self.assertEqual(
             resolve_genre_instrument_key("Reggaeton", "Latin Pop"),
-            "afrobeats",
+            "latin",
         )
+        self.assertEqual(resolve_genre_instrument_key("Tech House", ""), "deep_house")
 
     def test_generate_v55_with_l99(self):
         style, meta = generate_live_instrument_prompt(
@@ -1175,15 +1412,34 @@ class TestLiveInstrumentMatrix(unittest.TestCase):
             primary_genre="Neo-Soul",
             vibe="intimate",
             real_instrumentals="Wurlitzer Electric Piano, Fender Jazz Bass",
-            lyric_temperament_codes="/L99",
+            active_modifier_codes="/L99",
             audio_environment_mode="studio_isolated",
         )
         block = _build_user_block(body)
-        self.assertIn("LIVE INSTRUMENT ACCOMPANIMENT", block)
-        self.assertIn("[neo-soul]", block)
+        self.assertIn("REAL INSTRUMENT ACCOMPANIMENT", block)
+        self.assertIn("[neo_soul]", block)
         self.assertIn("Vocal backing patch: [close-mic]", block)
+        self.assertIn("MANDATORY: Feature the following", block)
         self.assertIn("styleInjection", block)
         self.assertIn("metaTagInjection", block)
+
+    def test_live_instrument_avoid_augment(self):
+        out = augment_avoid_clause(
+            avoid="harsh clipping",
+            real_instrumentals="Live Drum Kit & Congas",
+        )
+        self.assertIn("dead-room isolation", out)
+        self.assertNotIn("crowd noise", out)
+        self.assertIn("harsh clipping", out)
+
+    def test_pop_live_drum_uses_prompt_text(self):
+        style, _meta = generate_live_instrument_prompt(
+            "Pop",
+            "Live Drum Kit & Congas",
+            version="v5.5",
+        )
+        self.assertIn("Acoustic studio drum kit", style)
+        self.assertNotIn("stadium snare", style.lower())
 
     def test_live_environment_patches_vocal_doubles(self):
         rows = [
@@ -1212,6 +1468,27 @@ class TestHumanRealism(unittest.TestCase):
         block = human_realism_user_block(75)
         self.assertIn("Human Realism Level: 75/100", block)
         self.assertIn("Prioritize authenticity", block)
+        self.assertIn("PHONETIC INTEGRITY", block)
+
+    def test_phonetic_integrity_pidgin_vs_standard(self):
+        std = build_phonetic_integrity_rule(None)
+        pidgin = build_phonetic_integrity_rule("nigerian_pidgin")
+        self.assertIn("PHONETIC INTEGRITY", std)
+        self.assertIn("breathing", std)
+        self.assertIn("Nigerian Pidgin", pidgin)
+        self.assertIn("wahala", pidgin)
+
+    def test_elite_directive_stage1_audit_sections(self):
+        self.assertIn("§0.3A", ELITE_HUMAN_LYRICIST_DIRECTIVE)
+        self.assertIn("Genre Overlap Rule", ELITE_HUMAN_LYRICIST_DIRECTIVE)
+        self.assertIn("FIELD:simple", ELITE_HUMAN_LYRICIST_DIRECTIVE)
+        self.assertIn("§0.8 VOCAL SPEC, TONE & ACCENT", ELITE_HUMAN_LYRICIST_DIRECTIVE)
+        self.assertNotIn("k_genre_cliche_blacklist.dart", ELITE_HUMAN_LYRICIST_DIRECTIVE)
+
+    def test_human_realism_passes_dialect_to_phonetic_rule(self):
+        block = human_realism_user_block(75, dialect_style_id="nigerian_pidgin")
+        self.assertIn("DO NOT normalize", block)
+        self.assertIn("dey", block)
 
     def test_build_user_block_injects_human_realism(self):
         body = GeneratePromptBody(
@@ -1225,7 +1502,7 @@ class TestHumanRealism(unittest.TestCase):
         self.assertIn("HUMAN REALISM", block)
         self.assertIn("Human Realism Level: 90/100", block)
         self.assertIn("Maximum human realism", block)
-        self.assertIn("primary objective is **NOT** to write beautiful, poetic lyrics", block)
+        self.assertIn("**Primary objective:** Write lyrics that sound like they came from a real human artist", block)
 
     def test_block2_opt_out_skips_human_realism(self):
         body = GeneratePromptBody(
@@ -1266,9 +1543,11 @@ class TestVocalAccent(unittest.TestCase):
             language="English",
         )
         self.assertIn("NON-NEGOTIABLE", block)
-        self.assertIn("British (England)", block)
-        self.assertIn("Block 2 staging", block)
-        self.assertIn("standard English", block)
+        self.assertIn("user_selected_accent: british", block)
+        self.assertIn("Layer 1 descriptor set", block)
+        self.assertIn("dry room close-mic", block)
+        self.assertIn("STAGING AND ACCENT RULES", block)
+        self.assertIn("English only", block)
         self.assertIn("Female Lead", block)
 
     def test_accent_vs_dialect_constraint_when_accent_only(self):
@@ -1307,9 +1586,82 @@ class TestVocalAccent(unittest.TestCase):
             vocal_accent="West African (Nigeria)",
         )
         self.assertIn("G:Pop|", ctx)
-        self.assertIn("ACCENT:West African (Nigeria)", ctx)
+        self.assertIn("ACCENT:nigerian", ctx)
         self.assertIn("RULE:accent-only", ctx)
         self.assertIn("RULE:regional-tag-once", ctx)
+
+    def test_ibibio_layer1_omits_calabar_tokens(self):
+        desc = layer1_descriptor_for("nigerian_ibibio")
+        self.assertIn("Cross-river coastal cadence", desc)
+        self.assertNotIn("Calabar", desc)
+
+    def test_accent_smoke_gospel_ibibio(self):
+        block = vocal_accent_user_block("nigerian_ibibio", vocal_spec="Male Lead")
+        self.assertIn("Cross-river coastal cadence", block)
+        self.assertNotIn("British Accent", block)
+
+    def test_accent_smoke_afrobeats_lagos(self):
+        block = vocal_accent_user_block("nigerian")
+        self.assertIn("Afrobeats vocal pocket", block)
+
+    def test_accent_smoke_reggaeton_latin(self):
+        block = vocal_accent_user_block("latin_american")
+        self.assertIn("Spanish consonant treatment", block)
+
+    def test_accent_smoke_jazz_american(self):
+        block = vocal_accent_user_block("american")
+        self.assertIn("polished vocal", block)
+
+    def test_accent_smoke_metal_british(self):
+        block = vocal_accent_user_block("british")
+        self.assertIn("dry room close-mic", block)
+
+
+class TestVocalSpecTone(unittest.TestCase):
+    def test_user_block_line_labels_spec_and_tone(self):
+        line = vocal_spec_tone_user_block_line(
+            vocal_spec="Male Lead",
+            vocal_tone="Breathy",
+        )
+        self.assertEqual(line, "Vocal: spec=Male Lead · tone=Breathy")
+
+    def test_user_block_directive_routes_instrumental(self):
+        block = vocal_spec_tone_user_block(
+            vocal_spec="Instrumental Only",
+            vocal_tone=None,
+        )
+        self.assertIn("instrumental-only", block)
+        self.assertIn("user_vocal_spec", block)
+
+    def test_predicate_helpers(self):
+        from app.vocal_spec_tone import (
+            is_choir,
+            is_custom_spec,
+            is_rap_forward,
+            normalize_tone,
+            routes_to_block2,
+            suppresses_lead_lyrics,
+        )
+
+        self.assertTrue(is_choir("Gospel Choir"))
+        self.assertTrue(is_rap_forward("rap vocal space"))
+        self.assertTrue(routes_to_block2("Instrumental Only"))
+        self.assertTrue(suppresses_lead_lyrics("Instrumental Only"))
+        self.assertTrue(is_custom_spec("Custom Breath Stack"))
+        self.assertEqual(normalize_tone("  warm   breathy  "), "warm breathy")
+
+    def test_build_user_block_injects_vocal_spec_tone_directive(self):
+        body = GeneratePromptBody(
+            suno_version="v5.5",
+            primary_genre="Amapiano",
+            vibe="club",
+            vocal_spec="Vocal Chants Only",
+            vocal_tone="hypnotic spoken chant hooks",
+        )
+        block = _build_user_block(body)
+        self.assertIn("Vocal: spec=Vocal Chants Only", block)
+        self.assertIn("VOCAL SPEC & TONE", block)
+        self.assertIn("chant-first", block)
 
 
 class TestPayloadOptimization(unittest.TestCase):
@@ -1393,7 +1745,10 @@ class TestRemixEngine(unittest.TestCase):
         self.assertIn("Harmonic skeleton", block)
         self.assertIn("INSTRUMENTAL MODE", block)
         self.assertIn("topline melody", block)
-        self.assertIn("NEVER print song title", block)
+        self.assertIn("DESCRIPTOR-ONLY", block)
+        self.assertIn("Never print song titles", block)
+        self.assertNotIn("Mercy", block)
+        self.assertNotIn("Worship", block)
 
     def test_instrumental_remix_output_strips_lyrics(self):
         raw = (
@@ -1416,6 +1771,20 @@ class TestHumanAuthenticity(unittest.TestCase):
         self.assertTrue(is_festival_vocal_lane("Uplifting Trance", ""))
         self.assertTrue(is_festival_vocal_lane("Melodic Techno", ""))
         self.assertFalse(is_festival_vocal_lane("Bluegrass", ""))
+
+    def test_word_boundaries_prevent_false_positives(self):
+        self.assertFalse(is_electronic_lane("warehouse", ""))
+        self.assertTrue(is_electronic_lane("Future Bass", ""))
+        self.assertTrue(is_situation_first_story_lane("singer-songwriter", ""))
+        self.assertTrue(is_festival_vocal_lane("k-pop", ""))
+
+    def test_rnb_resolves_as_story_lane(self):
+        self.assertTrue(is_situation_first_story_lane("r&b", ""))
+        self.assertTrue(is_situation_first_story_lane("rnb", ""))
+
+    def test_gospel_is_story_lane_but_not_partial(self):
+        self.assertTrue(is_situation_first_story_lane("gospel", ""))
+        self.assertFalse(is_partial_situation_story_lane("gospel", ""))
 
     def test_situation_first_story_lane_scope(self):
         self.assertTrue(is_situation_first_story_lane("Modern Country", ""))
@@ -1444,6 +1813,7 @@ class TestHumanAuthenticity(unittest.TestCase):
         self.assertIn("concrete images", block)
         self.assertIn("NEVER output artist", block)
         self.assertIn("Festival/melodic electronic", block)
+        self.assertIn("Electronic: breakdown intimacy", block)
         self.assertIn("DJ-friendly", block)
 
     def test_build_user_block_injects_authenticity(self):
@@ -1662,34 +2032,32 @@ class TestSunoInternalOutputStrip(unittest.TestCase):
 
 class TestSunoSystemPromptV2(unittest.TestCase):
     def test_block2_arrangement_staging_format(self):
-        self.assertIn("BLOCK 2 — ARRANGEMENT STAGING FORMAT", SYSTEM_PROMPT_V2)
+        self.assertTrue(
+            SYSTEM_PROMPT_V2.startswith(
+                "Before emitting any staging bracket, scan it against SECTION D"
+            )
+        )
+        self.assertIn("SECTION D — AI-GENERIC WORD BLACKLIST", SYSTEM_PROMPT_V2)
         self.assertIn(
-            "[16-bar filtered kick intro, rising hats, low-pass sweep]",
+            "STAGING COHERENCE + ACCENT ROUTING + GENRE HYGIENE",
             SYSTEM_PROMPT_V2,
         )
-        self.assertIn(
-            "UPLIFTING TRANCE / PROGRESSIVE TRANCE / MELODIC TECHNO",
-            SYSTEM_PROMPT_V2,
-        )
+        self.assertIn("ARRANGEMENT STAGING FORMAT & LEXICON", SYSTEM_PROMPT_V2)
         self.assertIn("[{staging}]", SYSTEM_PROMPT_V2)
         self.assertIn("GENRE-SPECIFIC LYRICS PROMPTS", SYSTEM_PROMPT_V2)
-        self.assertIn("HARDSTYLE (vocal", SYSTEM_PROMPT_V2)
-        self.assertIn("[Male Spoken Word]", SYSTEM_PROMPT_V2)
-        self.assertIn("[Pitched Female Chops]", SYSTEM_PROMPT_V2)
-        self.assertIn("HARDSTYLE LYRIC & MELODY-SYNC", SYSTEM_PROMPT_V2)
-        self.assertIn("Anti-Talking-Rap", SYSTEM_PROMPT_V2)
-        self.assertIn("LYRIC FOURTH-WALL LAW", SYSTEM_PROMPT_V2)
-        self.assertIn("fourth_wall_check", SYSTEM_PROMPT_V2)
-        self.assertIn("AMAPIANO HYBRID PRODUCTION RULE", SYSTEM_PROMPT_V2)
-        self.assertIn("never *live* or *acoustic* log drum", SYSTEM_PROMPT_V2)
-        self.assertIn("INSTRUMENTAL STAGING CONSTRAINT", SYSTEM_PROMPT_V2)
-        self.assertIn("TRADITIONAL GOSPEL / PRAISE & WORSHIP ARCHITECTURE", SYSTEM_PROMPT_V2)
-        self.assertIn("STUDIO-ISOLATION DIRECTIVE (ANTI-CROWD CHEERS)", SYSTEM_PROMPT_V2)
-        self.assertIn("LAYER 2.8: LIVE PERFORMANCE ARENA MODE", SYSTEM_PROMPT_V2)
+        self.assertIn("ELECTRONIC LOOP GRIDS", SYSTEM_PROMPT_V2)
+        self.assertIn("GENRE HYBRIDIZATION & CULTURAL ROUTING MATRIX", SYSTEM_PROMPT_V2)
         self.assertIn("Dead-room isolation, Pristine studio environment", SYSTEM_PROMPT_V2)
         self.assertIn("Thunderous stadium crowd cheering", SYSTEM_PROMPT_V2)
-        self.assertIn("CRITICAL RECONCILIATION RULE", SYSTEM_PROMPT_V2)
-        self.assertIn("reconciliation_cleanup", SYSTEM_PROMPT_V2)
+        # Two-pass blueprint (Suno-only; Udio temporarily disabled)
+        self.assertIn(
+            "CREATION PIPELINE — TWO-PASS EXECUTION ORDER (SUNO ONLY)",
+            SYSTEM_PROMPT_V2,
+        )
+        self.assertIn("Conflict resolution", SYSTEM_PROMPT_V2)
+        self.assertIn("SUNO METATAG SYNTAX — ALLOWLIST", SYSTEM_PROMPT_V2)
+        self.assertIn("Udio temporarily disabled", SYSTEM_PROMPT_V2)
+        self.assertNotIn("Udio (if specified)", SYSTEM_PROMPT_V2)
 
 
 class TestSunoLyricPhoneticSanitize(unittest.TestCase):
@@ -1800,6 +2168,31 @@ class TestSunoLyricPhoneticSanitize(unittest.TestCase):
         self.assertIn("Isolated multi-tracked vocal doubles", out)
         self.assertNotIn("Harmonic Backing", out)
 
+    def test_studio_isolation_strips_crowd_from_chorus(self):
+        raw = (
+            "[Chorus]\n"
+            "[Thunderous stadium crowd cheering, crowd singing along loudly]\n"
+            "Hook line."
+        )
+        out = sanitize_studio_isolation_tags(raw, primary_genre="Afrobeats")
+        self.assertNotIn("crowd", out.lower())
+        self.assertNotIn("stadium", out.lower())
+        self.assertIn("Multi-tracked vocal overlays", out)
+
+    def test_studio_isolation_scrubs_block1_crowd_tokens(self):
+        raw = (
+            "BLOCK 1 — PASTE INTO SUNO: STYLE\n"
+            "Afrobeats, zero audience noise, no crowd sounds.\n\n"
+            "BLOCK 2 — PASTE INTO SUNO: LYRICS\n"
+            "[Intro]\n"
+            "[Dead-room isolation]\n"
+            "Line one."
+        )
+        out = sanitize_studio_isolation_tags(raw, primary_genre="Afrobeats")
+        block1 = out.split("BLOCK 2")[0]
+        self.assertNotIn("audience", block1.lower())
+        self.assertNotIn("crowd", block1.lower())
+
     def test_audio_engine_normalizer_strips_dj_intro_in_block_2(self):
         raw = (
             "BLOCK 1 — PASTE INTO SUNO: STYLE\n"
@@ -1894,6 +2287,367 @@ class TestHumanAuthenticityGospel(unittest.TestCase):
         )
         self.assertIn("Live Performance Arena Mode", block)
         self.assertNotIn("Studio-Isolation Directive", block)
+
+    def test_amapiano_genre_lyrics_includes_guardrail(self):
+        from app.genre_lyrics_directives import genre_lyrics_user_block
+
+        block = genre_lyrics_user_block(
+            primary_genre="Amapiano",
+            sub_genre_fusion="Private School",
+            vibe="log drum lounge",
+        )
+        self.assertIn("GLOBAL LYRICIST GUARDRAIL", block)
+        self.assertIn("LOG DRUM IS KING", block)
+
+    def test_amapiano_thematic_variator_block(self):
+        from app.advanced_thematic_variator import advanced_thematic_variator_block
+
+        block = advanced_thematic_variator_block(
+            primary="Amapiano",
+            fusion="Private School",
+            vibe="log drum lounge",
+        )
+        self.assertIn("AMAPIANO", block)
+        self.assertIn("LOG DRUM IS KING", block)
+        self.assertIn("vows", block)
+
+    def test_secret_inside_chest_injects_template(self):
+        from app.genre_lyrics_directives import genre_lyrics_user_block
+
+        block = genre_lyrics_user_block(
+            primary_genre="Amapiano",
+            vibe="Secret Inside Your Chest",
+            lyric_theme_notes="affair at midnight",
+        )
+        self.assertIn("Secret Inside Your Chest", block)
+        self.assertIn("[Drop: Destructive 32nd-Note Log Drum]", block)
+
+    def test_dont_call_me_lonely_injects_master(self):
+        from app.genre_lyrics_directives import genre_lyrics_user_block
+
+        block = genre_lyrics_user_block(
+            primary_genre="Amapiano",
+            vibe="Don't call me lonely",
+            lyric_theme_notes="call me outside",
+        )
+        self.assertIn("Don't Call Me Lonely", block)
+        self.assertIn("Rain on the pavement", block)
+        self.assertIn("[Verse 2]", block)
+        self.assertIn("COMMERCIAL ARRANGEMENT ORDER", block)
+        self.assertIn("she was nineteen", block.lower())
+
+    def test_amapiano_theme_fit_rule_not_locked_chorus(self):
+        from app.genre_lyrics_directives import (
+            amapiano_lyrics_user_block,
+            genre_lyrics_user_block,
+        )
+
+        amapiano = amapiano_lyrics_user_block()
+        self.assertIn("THEME FIT", amapiano)
+        self.assertIn("off-theme", amapiano.lower())
+        self.assertIn("log drum understand", amapiano.lower())
+        self.assertNotIn("LOCKED CHORUS", amapiano.upper())
+        self.assertNotIn("twoPinkLines_master", amapiano)
+
+        block = genre_lyrics_user_block(
+            primary_genre="Amapiano",
+            vibe="pregnancy reveal",
+            lyric_theme_notes="office after dark reputation",
+        )
+        self.assertNotIn("LOCKED CHORUS", block.upper())
+        self.assertNotIn("two pink lines on a plastic stick", block.lower())
+
+    def test_amapiano_bans_age_cliche_in_directive(self):
+        from app.genre_lyrics_directives import amapiano_lyrics_user_block
+
+        block = amapiano_lyrics_user_block()
+        self.assertIn("she was nineteen", block.lower())
+        self.assertIn("Verse 2", block)
+
+    def test_dynamic_structural_engine_amapiano_breakdown(self):
+        from app.dynamic_structural_engine import dynamic_structural_user_block
+
+        block = dynamic_structural_user_block(
+            "Amapiano",
+            fusion="Private School",
+            suno_version="v5.5",
+        )
+        self.assertIn("DYNAMIC STRUCTURAL ENGINE", block)
+        self.assertIn("Breakdown", block)
+        self.assertIn("v5.5 PRO syntax", block)
+        self.assertIn("v5.5_max_arc=true", block)
+        self.assertIn("[End]", block)
+        self.assertIn("RENDERED BRACKET LAYOUT", block)
+        self.assertIn("amapiano", block)
+
+    def test_dynamic_structural_engine_folk_no_drop(self):
+        from app.dynamic_structural_engine import dynamic_structural_user_block
+
+        block = dynamic_structural_user_block("Folk", fusion="Acoustic", suno_version="v5.0")
+        self.assertIn("NO [Drop]", block)
+        self.assertIn("Instrumental Interlude", block)
+        self.assertIn("v5.5_max_arc=false", block)
+
+    def test_dynamic_structural_engine_v45_syntax(self):
+        from app.dynamic_structural_engine import dynamic_structural_user_block
+
+        block = dynamic_structural_user_block("Synth Pop", suno_version="v4.5")
+        self.assertIn("v4.5 syntax", block)
+        self.assertIn("1–2 words", block)
+
+    def test_future_house_thematic_variator_block(self):
+        from app.advanced_thematic_variator import advanced_thematic_variator_block
+
+        block = advanced_thematic_variator_block(
+            primary="Future House",
+            fusion="",
+            vibe="chrome lobby",
+        )
+        self.assertIn("FUTURE HOUSE", block)
+        self.assertIn("BLACKLIST", block)
+        self.assertIn("neon", block)
+        self.assertIn("ARCHETYPE", block)
+
+    def test_hardstyle_genre_lyrics_includes_variator(self):
+        from app.genre_lyrics_directives import genre_lyrics_user_block
+
+        block = genre_lyrics_user_block(
+            primary_genre="Hardstyle",
+            sub_genre_fusion="",
+            vibe="festival",
+        )
+        self.assertIn("HARDSTYLE", block)
+        self.assertIn("DYNAMIC SHIFT", block)
+        self.assertIn("PRE-DROP", block)
+        self.assertIn("we own the night", block)
+
+    def test_edm_breakdown_genre_lyrics_includes_guardrails(self):
+        from app.genre_lyrics_directives import genre_lyrics_user_block
+
+        block = genre_lyrics_user_block(
+            primary_genre="Uplifting Trance",
+            sub_genre_fusion="",
+            vibe="euphoric festival",
+        )
+        # Master EDM lyric engine owns the lane (legacy breakdown engine is
+        # fallback-only) and carries a native trance profile.
+        self.assertIn("CROSS-ARCHITECTURE NON-NEGOTIABLES", block)
+        self.assertIn("SUB-GENRE: TRANCE / UPLIFTING TRANCE", block)
+        self.assertIn("STRICT WRITING RULES FOR ALL EDM", block)
+        self.assertIn("Pre-drop trigger", block)
+        self.assertNotIn("4 AM", block)
+
+    def test_hardstyle_wins_over_edm_breakdown(self):
+        from app.genre_lyrics_directives import genre_lyrics_user_block
+
+        block = genre_lyrics_user_block(primary_genre="Hardstyle")
+        self.assertIn("HARDSTYLE", block)
+        self.assertNotIn("EDM BREAKDOWN VOCAL GUARDRAILS", block)
+
+    def test_hardstyle_euro_dance_bootleg_lyrics_profile(self):
+        from app.genre_lyrics_directives import genre_lyrics_user_block
+
+        block = genre_lyrics_user_block(
+            primary_genre="Hardstyle",
+            sub_genre_fusion="Euro-Dance Bootleg",
+            vibe="150 BPM festival rave bootleg",
+        )
+        # Master hardstyle lyric engine owns the lane and carries a native
+        # euro-dance bootleg sub-genre profile.
+        self.assertIn("EURO-DANCE BOOTLEG HARDSTYLE", block)
+        self.assertIn("Euro-dance", block)
+        self.assertIn("pitch-shifted vocal chops", block)
+        self.assertIn("HARDSTYLE", block.upper())
+
+    def test_big_room_fusion_genre_lyrics_includes_guardrails(self):
+        from app.genre_lyrics_directives import genre_lyrics_user_block
+
+        block = genre_lyrics_user_block(
+            primary_genre="Progressive House",
+            sub_genre_fusion="Big Room House",
+            vibe="festival anthem supersaw",
+        )
+        self.assertIn("CROSS-ARCHITECTURE NON-NEGOTIABLES", block)
+        self.assertIn("BIG ROOM FUSION", block)
+        self.assertIn("Pre-Drop Trigger", block)
+        self.assertIn("THICK HUMANIZED VOCAL PRESENCE", block)
+        self.assertNotIn("EDM BREAKDOWN VOCAL GUARDRAILS", block)
+
+    def test_big_room_fusion_elite_engine_user_block(self):
+        from app.big_room_fusion_progressive_engine import (
+            compose_arrangement_architecture,
+            compose_elite_module_block,
+            user_block_append_for,
+        )
+
+        block = user_block_append_for(
+            primary_genre="Progressive House",
+            sub_genre_fusion="Big Room House",
+        )
+        self.assertIn("ELITE BIG ROOM FUSION", block)
+        self.assertIn("Mainstage EDM", block)
+        self.assertIn("Layered supersaw leads", block)
+        self.assertIn("Access Virus TI", block)
+        self.assertIn("pre-shifted acoustic claps", block)
+        self.assertIn("ARRANGEMENT ARCHITECTURE", block)
+        self.assertIn("INSTANT TENSION", block)
+        self.assertEqual(
+            block,
+            compose_elite_module_block(
+                primary_genre="Progressive House",
+                sub_genre_fusion="Big Room House",
+            ).strip(),
+        )
+        lane_a = compose_arrangement_architecture(
+            primary_genre="Progressive Big Room House",
+        )
+        self.assertIn("8-PART ARRANGEMENT", lane_a)
+
+    def test_big_room_hardstyle_cinematic_hybrid_lyrics_and_elite(self):
+        from app.big_room_hardstyle_cinematic_hybrid_engine import (
+            compose_arrangement_architecture,
+            compose_block1_seed,
+            compose_dj_mix_enforcement_block,
+            compose_structural_constraints_block,
+            user_block_append_for as hybrid_elite,
+        )
+        from app.genre_lyrics_directives import genre_lyrics_user_block
+
+        block = genre_lyrics_user_block(
+            primary_genre="Hardstyle",
+            sub_genre_fusion="Euphoric Hardstyle / Rawstyle",
+            vibe="150 BPM mainstage hard dance",
+        )
+        # Master hardstyle lyric engine owns this lane (the cinematic-hybrid
+        # specialty path requires big-room/cinematic markers) and resolves a
+        # native rawstyle profile.
+        self.assertIn("STRICT WRITING RULES FOR ALL HARDSTYLE", block)
+        self.assertIn("SUB-GENRE: RAWSTYLE", block)
+        self.assertIn("[Mid-Intro]", block)
+        self.assertIn("ADVANCED THEMATIC GUARDRAILS — HARDSTYLE", block)
+        self.assertIn("250Hz vocal warmth pocket", block)
+        elite = hybrid_elite(
+            primary_genre="Hardstyle",
+            sub_genre_fusion="Euphoric Hardstyle / Rawstyle",
+        )
+        self.assertIn("150 BPM", elite)
+        self.assertIn("CLIMAX DROP", elite.upper())
+        self.assertIn("STRUCTURAL CONSTRAINTS", elite)
+        self.assertIn("ELITE HARDSTYLE ARRANGEMENT MODULE", elite)
+        seed = compose_block1_seed()
+        self.assertIn("Authentic Hardstyle intro tool", seed)
+        self.assertIn("Authentic Hardstyle outro tool", seed)
+        self.assertIn("REQUIRED", compose_dj_mix_enforcement_block())
+        self.assertIn(
+            "[Percussive fade out, final low-end hit, complete silence]",
+            compose_structural_constraints_block(),
+        )
+        progressive = compose_arrangement_architecture(
+            primary_genre="Progressive Hardstyle",
+        )
+        self.assertIn("8-PART HARD DANCE ARC", progressive)
+
+    def test_anti_scream_scrubs_exclamations_and_tags(self):
+        from app.anti_scream_filter import apply_anti_scream_to_lyrics
+
+        raw = (
+            "[Chorus]\nWake up now!\n[Maximum Aggression]\n"
+            "Feel the power!\n[Drop]\nGo now!"
+        )
+        out = apply_anti_scream_to_lyrics(raw, primary_genre="hardstyle")
+        self.assertNotIn("!", out)
+        self.assertIn("[Heavy Produced Mix]", out)
+
+    def test_anti_scream_hardstyle_monologue_delivery_tags(self):
+        from app.anti_scream_filter import apply_anti_scream_to_lyrics
+
+        raw = "[Monologue]\nThe clock strikes midnight.\n[Drop]\nDrop."
+        out = apply_anti_scream_to_lyrics(raw, primary_genre="hardstyle")
+        self.assertIn("[Deep Pitch-Down Male Voiceover]", out)
+        self.assertIn("[Calm Controlled Spoken Word]", out)
+
+
+class TestMusicPromptRouting(unittest.TestCase):
+    def _body(self, **kwargs):
+        from types import SimpleNamespace
+
+        defaults = dict(
+            primary_genre="",
+            sub_genre_fusion="",
+            vibe="",
+            language="English",
+            vocal_accent="",
+            dialect_style_id="",
+            dialect_variant_id="",
+            bpm=None,
+        )
+        defaults.update(kwargs)
+        return SimpleNamespace(**defaults)
+
+    def test_amapiano_mainstream(self):
+        from app.music_prompt_routing import classify_from_body
+
+        c = classify_from_body(self._body(vibe="Amapiano groove, log drum"))
+        self.assertEqual(c.routing_key, "GEN_AFRICAN_MAINSTREAM")
+
+    def test_pidgin_ibibio(self):
+        from app.music_prompt_routing import classify_from_body
+
+        c = classify_from_body(
+            self._body(
+                vibe="Nigerian Pidgin gospel",
+                vocal_accent="nigerian_ibibio",
+                dialect_variant_id="ibibio",
+            )
+        )
+        self.assertEqual(c.routing_key, "GEN_AFRICAN_PIDGIN")
+        self.assertEqual(c.pidgin_sub_variant, "ibibio")
+
+    def test_hybrid_multi_genre(self):
+        from app.music_prompt_routing import classify_from_body, pick_model_key
+
+        c = classify_from_body(
+            self._body(
+                primary_genre="Amapiano",
+                sub_genre_fusion="Vinahouse",
+                vibe="Amapiano + Vinahouse hybrid",
+            )
+        )
+        self.assertEqual(c.routing_key, "HYBRID_MULTI_GENRE")
+        self.assertTrue(c.is_hybrid)
+        self.assertEqual(pick_model_key(c), "glm")
+        self.assertEqual(c.hybrid_resolution.tempo_strategy, "dual_section")
+
+    def test_hybrid_tempo_in_user_block(self):
+        from app.music_prompt_routing import (
+            build_routing_user_block_append,
+            classify_from_body,
+        )
+
+        c = classify_from_body(
+            self._body(primary_genre="Amapiano", sub_genre_fusion="Vinahouse")
+        )
+        block = build_routing_user_block_append(c)
+        self.assertIn("tempo_strategy=dual_section", block)
+        self.assertIn("TEMPO_STRATEGY=dual_section", block)
+
+    def test_hybrid_cultural(self):
+        from app.music_prompt_routing import classify_from_body
+
+        c = classify_from_body(
+            self._body(vibe="K-pop with English verse and Korean chorus")
+        )
+        self.assertEqual(c.routing_key, "HYBRID_CULTURAL")
+
+    def test_routing_append_includes_key(self):
+        from app.music_prompt_routing import (
+            build_routing_user_block_append,
+            classify_from_body,
+        )
+
+        c = classify_from_body(self._body(vibe="Reggaeton"))
+        block = build_routing_user_block_append(c)
+        self.assertIn("routing_key=GEN_LATIN", block)
 
 
 if __name__ == "__main__":

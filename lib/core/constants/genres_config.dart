@@ -1,4 +1,22 @@
+import '../utils/genre_fx_matrix_data.dart';
 import '../utils/suno_prompt_builder.dart';
+
+/// Engine family for FX lane routing (anti-artifact factory + melody auto-mode).
+enum EngineFamily {
+  electronic,
+  rockMetal,
+  hiphopPop,
+  acousticOrchestral,
+}
+
+extension EngineFamilyConfigKey on EngineFamily {
+  String get configKey => switch (this) {
+        EngineFamily.electronic => 'electronic',
+        EngineFamily.rockMetal => 'rock_metal',
+        EngineFamily.hiphopPop => 'hiphop_pop',
+        EngineFamily.acousticOrchestral => 'acoustic_orchestral',
+      };
+}
 
 /// UI + API genre lane aligned to [tools/genre_fx_matrix.json].
 class AppSupportedGenre {
@@ -58,7 +76,7 @@ class GenresConfig {
     ),
     AppSupportedGenre(
       id: 'hiphop',
-      label: 'Hip-Hop / Boom Bap',
+      label: 'Hip-Hop / Rap',
       category: 'Urban',
     ),
     AppSupportedGenre(
@@ -67,8 +85,13 @@ class GenresConfig {
       category: 'Urban',
     ),
     AppSupportedGenre(
-      id: 'pop',
-      label: 'Mainstream Pop',
+      id: 'boom_bap',
+      label: 'Boom Bap / Old School Hip-Hop',
+      category: 'Urban',
+    ),
+    AppSupportedGenre(
+      id: 'reggaeton',
+      label: 'Reggaeton / Dembow',
       category: 'Urban',
     ),
     AppSupportedGenre(
@@ -77,9 +100,14 @@ class GenresConfig {
       category: 'Urban',
     ),
     AppSupportedGenre(
-      id: 'reggaeton',
-      label: 'Reggaeton / Dembow',
-      category: 'Urban',
+      id: 'pop',
+      label: 'Mainstream Pop',
+      category: 'Pop',
+    ),
+    AppSupportedGenre(
+      id: 'mandopop',
+      label: 'Mandopop / C-Pop',
+      category: 'Pop',
     ),
     AppSupportedGenre(
       id: 'rock',
@@ -108,7 +136,12 @@ class GenresConfig {
     ),
     AppSupportedGenre(
       id: 'afrobeats',
-      label: 'Afrobeats / Amapiano',
+      label: 'Afrobeats / Afro-Pop',
+      category: 'World',
+    ),
+    AppSupportedGenre(
+      id: 'amapiano',
+      label: 'Amapiano / Log Drum',
       category: 'World',
     ),
     AppSupportedGenre(
@@ -117,8 +150,23 @@ class GenresConfig {
       category: 'World',
     ),
     AppSupportedGenre(
+      id: 'world',
+      label: 'World / Bollywood / MENA',
+      category: 'World',
+    ),
+    AppSupportedGenre(
+      id: 'reggae',
+      label: 'Reggae / Dub',
+      category: 'World',
+    ),
+    AppSupportedGenre(
       id: 'cinematic',
       label: 'Cinematic Film Score',
+      category: 'Other',
+    ),
+    AppSupportedGenre(
+      id: 'worship',
+      label: 'Worship / Gospel',
       category: 'Other',
     ),
     AppSupportedGenre(
@@ -151,11 +199,18 @@ class GenresConfig {
     return resolveLaneId(primaryGenre, fusionGenre);
   }
 
+  /// All canonical anchors for a family's FX injection points, in priority
+  /// order. Without `[Tag]\n` suffixes — for injection logic that needs
+  /// to check multiple anchors.
+  static List<String> canonicalAnchorsForFamily(String laneId) {
+    return GenreFxMatrixData.getAnchors(family: laneId);
+  }
+
+  /// Primary canonical anchor for a family's FX injection point in Block 2.
+  /// Returns the first `[Tag]\n` form (with trailing newline).
   static String fxLyricsAnchor(String laneId) {
-    if (laneId.trim().toLowerCase() == 'hardstyle') {
-      return '[Monologue]\n';
-    }
-    return '[Chorus]\n';
+    final anchors = canonicalAnchorsForFamily(laneId);
+    return '${anchors.first}\n';
   }
 
   static List<String> categoriesInOrder() {
@@ -165,5 +220,32 @@ class GenresConfig {
       if (seen.add(g.category)) out.add(g.category);
     }
     return out;
+  }
+
+  /// GenresConfig lane category → EngineConfig family (Refinement v3.0).
+  static EngineFamily? engineFamilyForCategory(String category) {
+    return switch (category) {
+      'Electronic' => EngineFamily.electronic,
+      'Urban' || 'Pop' => EngineFamily.hiphopPop,
+      'Rock' => EngineFamily.rockMetal,
+      'Traditional' || 'World' || 'Other' => EngineFamily.acousticOrchestral,
+      _ => null,
+    };
+  }
+
+  static EngineFamily? engineFamilyForLaneId(String laneId) {
+    final genre = byId(laneId.trim().toLowerCase());
+    if (genre == null) return null;
+    return engineFamilyForCategory(genre.category);
+  }
+
+  /// Representative FX lane id for an engine family.
+  static String laneForFamily(EngineFamily family) {
+    return switch (family) {
+      EngineFamily.electronic => 'edm',
+      EngineFamily.hiphopPop => 'hiphop',
+      EngineFamily.rockMetal => 'rock',
+      EngineFamily.acousticOrchestral => 'cinematic',
+    };
   }
 }

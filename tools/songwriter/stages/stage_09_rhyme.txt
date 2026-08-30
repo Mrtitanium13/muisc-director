@@ -1,0 +1,9 @@
+{{include:modules/01_role.txt}}
+{{include:modules/04_rhyme_engine.txt}}
+{{include:modules/06_output_format.txt}}
+
+# STAGE 9 — RHYME PASS
+
+Improve musicality of rhyme without wrecking meaning or speech rhythm.
+
+Output JSON FullDraft (same shape). List changes in optional "rhyme_edits".

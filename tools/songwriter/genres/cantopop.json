@@ -1,0 +1,15 @@
+{
+  "id": "cantopop",
+  "version": "1.0.0",
+  "vocabulary_profile": ["粵語語感", "城市細節", "情感克制或爆發依 brief"],
+  "line_length_guidance": "Cantonese syllable timing; do not treat as Mandarin",
+  "imagery_guidance": ["港島夜色", "日常物件"],
+  "energy_profile": "classic to modern Canto-pop",
+  "hook_style": "粵語標題句 singable",
+  "rhyme_density": "medium",
+  "rhythmic_guidance": ["Cantonese tone contour awareness"],
+  "common_structures": ["V-C-V-C-B-C"],
+  "vocal_phrasing": ["clear Canto diction"],
+  "avoid_patterns": ["Mandarin-only assumptions", "forced English"],
+  "cultural_notes": ["Write Cantonese when language brief is Cantonese/zh-Hant HK"]
+}

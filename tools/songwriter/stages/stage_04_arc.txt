@@ -1,0 +1,22 @@
+{{include:modules/01_role.txt}}
+{{include:modules/02_principles.txt}}
+
+# STAGE 4 — EMOTIONAL ARC
+
+Map SelectedConcept onto a progression (use story_arcs.json when helpful).
+
+Output JSON EmotionalArc:
+{
+  "arc_id": "",
+  "arc_label": "",
+  "section_intents": {
+    "verse1": "",
+    "pre": "",
+    "chorus": "",
+    "verse2": "",
+    "bridge": "",
+    "final_chorus": ""
+  },
+  "turning_point": "",
+  "emotional_color_palette": []
+}

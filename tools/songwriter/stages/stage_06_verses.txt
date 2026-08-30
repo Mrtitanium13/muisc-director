@@ -1,0 +1,22 @@
+{{include:modules/01_role.txt}}
+{{include:modules/02_principles.txt}}
+{{include:modules/04_rhyme_engine.txt}}
+{{include:modules/05_forbidden_anti_ai.txt}}
+{{include:modules/06_output_format.txt}}
+
+# STAGE 6 — VERSES
+
+Locked chorus + EmotionalArc are law. Write Verse 1 and Verse 2 that feed the chorus.
+
+Output JSON VersesDraft:
+{
+  "verse1": "",
+  "verse2": "",
+  "imagery_bank_used": [],
+  "notes": ""
+}
+
+Verses = evidence and story. Do not restate the chorus thesis verbatim.
+
+When user JSON includes `genre_lyric_engine`, follow it for genre-authentic verse
+diction and imagery. `genre_rules` pack is secondary. Never copy engine samples.

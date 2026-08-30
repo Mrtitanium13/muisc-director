@@ -1,52 +1,207 @@
 # GENRE-SPECIFIC LYRICS PROMPTS (BLOCK 2 — AUTO-SELECT)
 
+
+
 **When:** Primary genre (or fusion) matches a lane below **and** Block 2 has vocals. **Overrides** generic roadmaps for structure, themes, and line budgets. Staging → **ARRANGEMENT STAGING FORMAT §3**.
+
+
 
 **Hard Techno / Techno (no vocals):** use **HARD TECHNO / TECHNO (instrumental)** roadmap from genre structures.
 
+
+
+**Authoritative routing:** Full taxonomy themes → **GENRE HUMANIZATION ENGINE § SECTION I**. Block 2 structure → **§ SECTION II**. Syllable law → **MELODY-SYNC § CORE MATRIX LOOKUP TABLE**. Phonetics → **MELODY-SYNC § CRITICAL PHONETIC & STRUCTURAL INTEGRITY LAWS**.
+
+
+
 ---
 
-## 1. HARDSTYLE (vocal — euphoric / raw / festival)
+
+
+## 1. HARDSTYLE / RAWSTYLE / EUPHORIC HARDSTYLE (RUNTIME OVERRIDE)
+
+
 
 **Auto-select when:** `Hardstyle` · `Euphoric Hardstyle` · `Rawstyle` · `Hard Bounce` (vocal) · hardstyle fusion.
 
-**Melody-sync:** **MELODY-SYNC § HARDSTYLE** (syllables, phonetics). This module: themes + vocal tags + line counts.
 
-### Creative brief
 
-| Dimension | Guidance |
-|-----------|----------|
-| **Themes** | Defiance · resilience · euphoria · chaos · unity |
-| **Mood** | Euphoric · dark · aggressive · hopeful (1–2 dominant) |
-| **Vocal style** | Male spoken (intro/build) + female sung (breakdown/drop) + pitched chops on drop |
-| **Structure arc** | Cinematic intro → build/pre-drop → drop → soulful breakdown → final drop → outro |
-| **Key imagery** | Fire · storms · static · chains · battles · light/dark contrast |
+**Full spec:** **tools/hardstyle_vocal_lyricist_engine.txt** (runtime injectors mirror Dart/Python).
 
-Honor user **Key Phrase** as hook anchor when provided.
 
-### Section constraints
 
-| Section | Lines | Vocal / energy |
-|---------|------:|----------------|
-| **Intro** | 4–6 | `[Male Spoken Word]` `[Cinematic]` |
-| **Build-Up** | 2–4 | `[Male Spoken Word]` `[Rhythmic, locked to snare]` |
-| **Pre-Drop** | 1–2 | `[Male Whisper]` or spoken |
-| **Drop** | 4–8 | `[Pitched Female Chops]` `[Anthemic]` |
-| **Breakdown** | 4–6 | `[Female Soulful Lead]` `[Soulful, legato, half-time]` |
-| **Final Drop** | 4–8 | `[Anthemic Full Stack]` `[Euphoric]` |
-| **Outro** | 2–4 | `[Whispered Ad-libs]` or `[Fade Out]` |
+**Structure:** **GENRE HUMANIZATION ENGINE § SECTION II.1 ELECTRONIC LOOP GRIDS**.
 
-### Path C brief (internal map — do not echo in output)
 
-`Theme` · `Mood` · `Vocal Style` · `Key Phrase` · `Structure: cinematic intro, breakdown, anthemic drop`
+
+**Human realism:** Breakdown = vulnerable confession; Build-up = cold defiant survival; Pre-drop = single scream-command (*BREATHE*, *NEVER*, *GO*).
+
+
+
+**Anti-AI ban:** Melodramatic clichés (*we own the night*, *ghosts pulling near*, *strobe light flash*) and clinical phrasing (*hollows out my chest cavity*). No sci-fi/rave metaphor stack.
+
+
+
+**Syllables:** **MELODY-SYNC § HARDSTYLE / HARD RAVES** row.
+
+
 
 ### Hardstyle QA (internal)
 
-- MELODY-SYNC pre-output check passed
-- Breakdown delivers hope after dark intro
-- No generic “hands up” without hardstyle imagery
-- Zero artist names
+
+
+* Breakdown → build dynamic shift readable.
+
+* Pre-drop = single scream-command word.
+
+* Drop = chop/mantra only — no narrative sentences.
+
+* Zero banned melodramatic/clinical hits.
+
+* MELODY-SYNC + phonetic laws passed.
+
+* Zero artist names.
+
+
 
 ---
 
-**More genres:** Add numbered sections below (brief + section table + QA).
+
+
+## 2. EDM BREAKDOWN VOCAL (TECHNO · TRANCE · HOUSE · FESTIVAL EDM) (RUNTIME OVERRIDE)
+
+
+
+**Auto-select when:** Vocal EDM lane matches **tools/edm_breakdown_vocal_lyricist_engine.txt** (not Hardstyle, Amapiano, Future House, or Big Room Fusion / Progressive House + Big Room).
+
+
+
+**Focus:** Internal monologues, physical boundaries, raw intimacy, sensory overload, relationship tension. Low-register dry vocals spoken/whispered tight to capsule.
+
+
+
+**Anti-AI guardrails:** Ban sci-fi/rave metaphors (frequency, static tension, vibrations, dissolving, galaxies, starlight, seismic, neon). **Internal conversational realism** — immediate psychological state via short blunt sentences and thought fragments; adaptable to any user theme or time-of-day (never hardcode clock times or forced backdrops).
+
+
+
+**Pre-drop trigger:** Sharp command or emotionally heavy phrase 1–2 bars before final drop (*Run*, *Now*, *Just look at me*).
+
+
+
+**Sub-profiles:** `peak_time_techno` · `vocal_trance` · `deep_melodic`.
+
+
+
+**Syllables:** **MELODY-SYNC** TECHNO / HOUSE / LOOP GRIDS · FESTIVAL ANTHEMS · Pre-Drop 2–5 syllables.
+
+
+
+### EDM Breakdown QA (internal)
+
+
+
+* Zero sci-fi/rave metaphor hits.
+
+* Internal conversational realism — immediate psychological state; no mandatory time/scene staging unless user supplied.
+
+* Breakdown/build-up/outro placement only.
+
+* Pre-drop trigger present.
+
+* MELODY-SYNC syllable symmetry per section.
+
+* Zero artist names.
+
+
+
+---
+
+
+
+## 3. BIG ROOM FUSION / PROGRESSIVE HOUSE (RUNTIME OVERRIDE)
+
+
+
+**Auto-select when:** `Progressive House` + `Big Room` fusion · `Big Room House` · `Big Room Fusion` · `Festival Anthem` + progressive/big-room markers.
+
+
+
+**Full spec:** **tools/big_room_fusion_progressive_vocal_lyricist_engine.txt** (runtime injectors mirror Dart/Python).
+
+
+
+**Structure:** **edm_drop** roadmap — [Verse], [Build-up], [Drop]/[Chorus], sparse [Breakdown] reset.
+
+
+
+**Human realism:** Verse = intimate internal conversational realism; Build = ascending repetitive hook fragments; Pre-drop = sharp 2–5 syllable trigger; Drop = anthem mantra/chop cells only.
+
+
+
+**Anti-AI ban:** Sci-fi/rave metaphors; DJ-callout filler (*hands up*, *feel the beat*, *we're going higher*, *infinite skies*). No forced scene/time backdrops unless user supplied.
+
+
+
+**Syllables:** **MELODY-SYNC § FESTIVAL ANTHEMS** row + Pre-Drop 2–5 syllables.
+
+
+
+### Big Room Fusion QA (internal)
+
+
+
+* Verse → build → drop dynamic shift readable.
+
+* Pre-drop trigger present before final drop.
+
+* Drop = mantra/chop only — no narrative sentences.
+
+* Zero sci-fi/rave or DJ-callout filler hits.
+
+* MELODY-SYNC + phonetic laws passed.
+
+* Zero artist names.
+
+
+
+---
+
+
+
+## 4. ELITE HARDSTYLE / HARD DANCE (150 BPM — RUNTIME OVERRIDE)
+
+**Auto-select when:** `Hardstyle` · `Euphoric Hardstyle` · `Rawstyle` · `Hard Dance` · `Hybrid Hardstyle` (Euro-Dance Bootleg excluded → hardstyle euro-dance path).
+
+**Full spec:** **tools/big_room_hardstyle_cinematic_hybrid_vocal_lyricist_engine.txt** (runtime injectors mirror Dart/Python).
+
+**Structure:** Hard dance roadmap with mandatory **[Mid-Intro]** instrumental power + **[Climax Drop]** payoff at **150 BPM**.
+
+**Lyric-to-structure mapping:** Intro/Mid-Intro = instrumental only; Breakdown = cinematic intimate; Build-up = open-vowel urgency; Climax Drop = anthemic chop/mantra.
+
+**Anti-AI ban:** Sham rave filler; sci-fi/rave tropes; cold-cut endings.
+
+**Syllables:** **MELODY-SYNC § HARDSTYLE / HARD RAVES** + high-velocity hard dance density.
+
+### Hard Dance QA (internal)
+
+* Intro + Mid-Intro instrumental only — zero vocals.
+* Breakdown → build → climax drop arc readable.
+* 32-bar DJ bookends + percussive fade to silence.
+* 150 BPM lyric density maintained between sections.
+* Profile tag: `mainstage_euphoric_rawstyle_narrative_150_thick_humanized`.
+* Thick proximity/weight + reverb vacuum + 250Hz warmth pocket required.
+
+* Zero banned cliché hits.
+
+* MELODY-SYNC + phonetic laws passed.
+
+* Zero artist names.
+
+
+
+---
+
+
+
+**More genres:** Add numbered runtime overrides below when a lane needs explicit auto-select beyond SECTION I + II routing.
+

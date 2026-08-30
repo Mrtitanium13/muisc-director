@@ -1,0 +1,15 @@
+{
+  "id": "dancehall",
+  "version": "1.0.0",
+  "vocabulary_profile": ["riddim talk", "toast energy", "Patwa only if language brief allows"],
+  "line_length_guidance": "punchy; call to dancefloor",
+  "imagery_guidance": ["sound system", "heat", "motion"],
+  "energy_profile": "riddim-forward",
+  "hook_style": "chantable; DJ-friendly",
+  "rhyme_density": "medium",
+  "rhythmic_guidance": ["offbeat accents", "space for toast"],
+  "common_structures": ["Intro-V-C-V-C"],
+  "vocal_phrasing": ["toasting optional", "sung chorus"],
+  "avoid_patterns": ["fake accent parody", "generic reggae tourist lines"],
+  "cultural_notes": ["Patwa authenticity requires language brief — do not fake"]
+}

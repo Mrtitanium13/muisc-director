@@ -297,11 +297,10 @@ class AudioAnalysisModel {
     final buf = StringBuffer();
 
     buf.writeln(
-
-      'TARGET AUDIO PROFILE (foundational layout constraints — anchor vocal tags, '
-
-      'mix styles, arrangement pacing):',
-
+      'SOURCE AUDIO ANALYSIS (ROLE: Remix Architect. TASK: Deconstruct the following track analysis. '
+      'Use its core elements—BPM, key, structure, and lyrics—as the foundational blueprint for the new track. '
+      'Re-contextualize this blueprint within the new genre described in the main prompt. '
+      'You MUST adhere to the BPM and Key unless explicitly told otherwise.):',
     );
 
     buf.writeln(compactProfile);

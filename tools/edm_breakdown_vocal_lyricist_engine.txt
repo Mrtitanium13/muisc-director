@@ -1,0 +1,60 @@
+# EDM BREAKDOWN VOCAL LYRICIST ENGINE (Techno · Trance · House · Festival EDM)
+
+**When:** Primary genre or fusion matches a vocal EDM lane below **and** Block 2 has vocals. **Overrides** generic EDM poetry (infinite skies, neon overdrive, frequency metaphors) for breakdown/build-up placement.
+
+**Scope:** Block 2 lyrics confined to **[Breakdown]**, **[Build-up]** / **[Build]**, and sparse **[Outro]** tags only — no crowded verse grids. Drops stay instrumental or chop-ready hooks per **MELODY-SYNC § CORE MATRIX LOOKUP TABLE**.
+
+**Sub-profile routing:** Runtime resolves **peak_time_techno** · **vocal_trance** · **deep_melodic** from genre labels (see runtime injectors).
+
+---
+
+## UNIVERSAL ANTI-AI GUARDRAILS (ALL EDM BREAKDOWN PROFILES)
+
+1. **BAN SCI-FI & RAVE METAPHORS:** Never use *frequency, static tension, vibrations, dissolving, galaxies, starlight, seismic, neon* (and close variants: cosmic, interstellar, wavelength, dimension, transcend the night). These read as robotic club clichés.
+2. **INTERNAL CONVERSATIONAL REALISM:** Write exactly how a real person thinks or speaks when they are **vulnerable, hyper-focused, or experiencing intense emotion**. Use short, blunt sentences, thought fragments, and jagged conversational phrasing (*"Don't say anything," "If you touch me, it's over," "I can hear my heart"*) instead of poetic metaphors. Focus entirely on the character's **immediate psychological state**, keeping it completely adaptable to any theme or time-of-day setting the user selects.
+3. **VOCAL PLACEMENT:** Low-register, dry vocals — spoken or whispered tight against the microphone capsule with ultra-close-mic intimateness, high-compression proximity effect, and detailed chest resonance unless the sub-profile calls for floating sung hooks. Keep a dedicated low-mid vocal warmth pocket; never thin, distant, karaoke-wet, or buried under the club bed. Keep vocals thick and humanized under dense club production (warm doubles, pristine high-end air boost).
+4. **PRE-DROP TRIGGER:** The 1–2 bars before the final drop must culminate in a sharp actionable command or one emotionally heavy phrase — production trigger point (*"Run," "Now," "Just look at me"*).
+5. **LAYOUT INTEGRATION:** Sparse text only in breakdown/build-up/outro markers. Leave air for kicks, subs, and filter sweeps.
+
+---
+
+## SUB-GENRE MATRIX
+
+### 1. BIG ROOM TECHNO / PEAK-TIME (`peak_time_techno`)
+
+**Auto-select when:** Big Room Techno · Peak-Time Techno · Hard Techno · Minimal Techno · Acid Techno · Schranz · Industrial Techno · generic Techno (non-melodic).
+
+- **Vibe/Focus:** Internal monologues, physical boundaries, raw intimacy, sensory overload — psychological pressure over narrative exposition.
+- **Arrangement:** Spoken-word or whispered delivery; stark contrast against aggressive driving kicks.
+- **Syllables:** **MELODY-SYNC** TECHNO / HOUSE / LOOP GRIDS row; Pre-Drop trigger 2–5 syllables.
+
+### 2. UPLIFTING / VOCAL TRANCE (`vocal_trance`)
+
+**Auto-select when:** Uplifting Trance · Progressive Trance · Vocal Trance · Trance · Festival EDM · Big Room EDM · Mainstage Dance.
+
+- **Vibe/Focus:** Longing, unrequited love, turning points, emotional release — anchored in **felt honesty**, not galaxy/neon poetry or cinematic travelogue.
+- **Arrangement:** Floating harmonies, long-held vowels, highly repetitive hooks chop-ready during build-up.
+- **Syllables:** **MELODY-SYNC** FESTIVAL ANTHEMS row.
+
+### 3. DEEP HOUSE / MELODIC TECHNO (`deep_melodic`)
+
+**Auto-select when:** Deep House · Soulful House · Melodic Techno · Melodic House · Progressive House · Tech House · generic House (non-big-room).
+
+- **Vibe/Focus:** Conversational fragments, casual intimacy, relationship tension, cynicism mixed with hope — cool, detached, intimate psychological realism.
+- **Arrangement:** Low-register dry vocals — spoken or softly sung tight to the capsule.
+- **Syllables:** **MELODY-SYNC** TECHNO / HOUSE / LOOP GRIDS + Build fragments 2–4 syllables.
+
+---
+
+## INTERNAL QA (silent)
+
+* Sci-fi/rave metaphor scan = zero hits.
+* Internal conversational realism — immediate psychological state readable in every vocal line; no mandatory time-of-day or scene staging unless user supplied.
+* Breakdown/build-up/outro only — no verse-heavy pop grids unless user roadmap demands.
+* Pre-drop trigger present before final drop.
+* MELODY-SYNC syllable symmetry within each tagged section.
+* Zero artist names.
+
+---
+
+**Exclusions:** Hardstyle/Rawstyle/Hard Bounce → **hardstyle_vocal_lyricist_engine.txt**. Amapiano/Afro-House → Amapiano directive. Future House → Future House directive. Big Room Fusion / Progressive House + Big Room → **big_room_fusion_progressive_vocal_lyricist_engine.txt**. Big Room + Hardstyle cinematic hybrid → **big_room_hardstyle_cinematic_hybrid_vocal_lyricist_engine.txt**.

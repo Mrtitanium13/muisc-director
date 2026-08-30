@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
-import '../constants/api_constants.dart';
 import '../utils/api_base_url_normalize.dart';
 import '../network/dio_client.dart';
 import 'api_base_url_resolver.dart';

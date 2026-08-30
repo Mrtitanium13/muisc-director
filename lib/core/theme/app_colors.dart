@@ -15,12 +15,24 @@ abstract final class AppColors {
   static const Color accentSecondary = Color(0xFF4DB8E8);
   /// Border / highlight cyan (#00BBFF) — chips, glow accents
   static const Color accentTertiary = Color(0xFF00BBFF);
+  /// Creodome brand cyan (#00F2FF) — product headers / ecosystem alignment
+  static const Color creodomeCyan = Color(0xFF00F2FF);
+
+  /// Selected chip / toggle fill (cyan, readable on dark surfaces)
+  static Color get chipSelectedFill =>
+      accentTertiary.withValues(alpha: 0.32);
+  /// Selected chip / toggle border
+  static const Color chipSelectedBorder = accentTertiary;
+  /// Active switch thumb
+  static const Color toggleActive = creodomeCyan;
 
   static const Color textPrimary = Color(0xFFFFFFFF);
   static const Color textSecondary = Color(0xFFB0B0B0);
   static const Color textTertiary = Color(0xFF808080);
   static const Color error = Color(0xFFF44336);
   static const Color warning = Color(0xFFFFC107);
+  /// Template / featured accent (star chips, highlights)
+  static const Color accentGold = Color(0xFFFFCA28);
   static const Color success = Color(0xFF4CAF50);
 
   /// CTA / hero buttons — Sabi blue gradient (dark → mid → light)

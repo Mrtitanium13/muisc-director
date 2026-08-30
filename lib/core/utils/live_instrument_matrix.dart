@@ -1,4 +1,3 @@
-import 'genre_key_resolver.dart';
 import 'live_instrument_matrix_data.dart';
 
 /// Genre-accurate live instrument profiles (tools/live_instrument_matrix.json).
@@ -9,6 +8,8 @@ class LiveInstrument {
     required this.category,
     required this.defaultArticulation,
     required this.mixRole,
+    this.promptText = '',
+    this.aliasHints = const [],
   });
 
   final String id;
@@ -16,28 +17,126 @@ class LiveInstrument {
   final String category;
   final String defaultArticulation;
   final String mixRole;
+
+  /// LLM-facing label when set; UI keeps [name].
+  final String promptText;
+  final List<String> aliasHints;
+
+  String get promptLabel {
+    final p = promptText.trim();
+    return p.isNotEmpty ? p : name;
+  }
 }
 
 class LiveInstrumentMatrix {
   LiveInstrumentMatrix._();
 
-  static const _defaultKey = 'pop';
+  static const _defaultKey = 'default';
 
-  static LiveInstrument _fromRow(Map<String, String> row) => LiveInstrument(
-        id: row['id']!,
-        name: row['name']!,
-        category: row['category']!,
-        defaultArticulation: row['defaultArticulation']!,
-        mixRole: row['mixRole']!,
-      );
+  static const _liveAmbienceStudioClauses = [
+    'dead-room isolation',
+    'close-mic studio capture',
+    'dry acoustic room',
+  ];
+
+  static LiveInstrument _fromRow(Map<String, String> row) {
+    final aliasRaw = row['aliasHints'] ?? '';
+    return LiveInstrument(
+      id: row['id']!,
+      name: row['name']!,
+      category: row['category']!,
+      defaultArticulation: row['defaultArticulation']!,
+      mixRole: row['mixRole']!,
+      promptText: row['promptText'] ?? '',
+      aliasHints: aliasRaw.isEmpty
+          ? const []
+          : aliasRaw.split('|').map((s) => s.trim()).where((s) => s.isNotEmpty).toList(),
+    );
+  }
+
+  static const _legacyAliases = <String, String>{};
+
+  /// When selection text includes "Live", reinforce studio capture (positive tokens only).
+  static bool selectionImpliesLiveAmbience(String realInstrumentals) =>
+      realInstrumentals.toLowerCase().contains('live');
+
+  static String augmentAvoidClause({
+    required String avoid,
+    required String realInstrumentals,
+  }) {
+    if (!selectionImpliesLiveAmbience(realInstrumentals)) {
+      return avoid.trim();
+    }
+    final seen = <String>{};
+    final out = <String>[];
+    for (final clause in [
+      if (avoid.trim().isNotEmpty) avoid.trim(),
+      ..._liveAmbienceStudioClauses,
+    ]) {
+      final key = clause.toLowerCase();
+      if (seen.add(key)) out.add(clause);
+    }
+    return out.join(', ');
+  }
+
+  static String? _bundleForLabel(String label) {
+    final key = LiveInstrumentMatrixData.bundleKeyForGenre(label);
+    if (key == null || !LiveInstrumentMatrixData.byGenre.containsKey(key)) {
+      return null;
+    }
+    return key;
+  }
+
+  static String _bestPartialAlias(String blob) {
+    final key = LiveInstrumentMatrixData.bundleKeyForGenre(blob);
+    if (key != null && LiveInstrumentMatrixData.byGenre.containsKey(key)) {
+      return key;
+    }
+    return '';
+  }
+
+  static String? _legacyHit(String text, Set<String> keys) {
+    final lower = text.toLowerCase();
+    for (final entry in _legacyAliases.entries) {
+      if (lower.contains(entry.key) && keys.contains(entry.value)) {
+        return entry.value;
+      }
+    }
+    return null;
+  }
 
   static String resolveGenreKey(String primary, String fusion) {
-    return GenreKeyResolver.resolveKey(
-      LiveInstrumentMatrixData.byGenre.keys,
-      primary,
-      fusion,
-      defaultKey: _defaultKey,
-    );
+    final keys = LiveInstrumentMatrixData.byGenre.keys.toSet();
+    final blob = '${primary.trim()} ${fusion.trim()}'.toLowerCase();
+
+    if (fusion.trim().isNotEmpty) {
+      final primaryHit = _bundleForLabel(primary) ?? _legacyHit(primary, keys);
+      if (primaryHit != null) return primaryHit;
+    }
+
+    for (final label in [primary, fusion]) {
+      final hit = _bundleForLabel(label);
+      if (hit != null) return hit;
+    }
+
+    final legacy = _legacyHit(blob, keys);
+    if (legacy != null) return legacy;
+
+    final partial = _bestPartialAlias(blob);
+    if (partial.isNotEmpty) return partial;
+
+    return _bestGenreKeyFromBlob(blob).ifEmpty(_defaultKey);
+  }
+
+  static String _bestGenreKeyFromBlob(String blob) {
+    var best = '';
+    for (final key in LiveInstrumentMatrixData.byGenre.keys) {
+      final phrase = key.replaceAll('_', ' ');
+      if (blob.contains(phrase) && phrase.length > best.length) {
+        best = key;
+      }
+    }
+    return best;
   }
 
   static List<LiveInstrument> instrumentsForGenre(
@@ -50,28 +149,56 @@ class LiveInstrumentMatrix {
     return rows.map(_fromRow).toList();
   }
 
+  static List<LiveInstrument> _allInstrumentsUnion() {
+    final seen = <String>{};
+    final out = <LiveInstrument>[];
+    for (final rows in LiveInstrumentMatrixData.byGenre.values) {
+      for (final row in rows) {
+        final inst = _fromRow(row);
+        if (seen.add(inst.id)) out.add(inst);
+      }
+    }
+    return out;
+  }
+
   static List<String> parseSelection(String raw) =>
       raw.split(',').map((t) => t.trim()).where((t) => t.isNotEmpty).toList();
 
+  static bool _tokenMatchesInstrument(String token, LiveInstrument inst) {
+    final t = token.toLowerCase().trim();
+    if (t.isEmpty) return false;
+    if (inst.id.toLowerCase() == t || inst.name.toLowerCase() == t) {
+      return true;
+    }
+    final label = inst.promptLabel.toLowerCase();
+    if (label == t || t.contains(label) || label.contains(t)) {
+      return true;
+    }
+    for (final alias in inst.aliasHints) {
+      final a = alias.toLowerCase();
+      if (a == t || t.contains(a) || a.contains(t)) return true;
+    }
+    return false;
+  }
+
   static List<LiveInstrument> _matchSelected(
     List<LiveInstrument> available,
-    List<String> tokens,
-  ) {
+    List<String> tokens, {
+    List<LiveInstrument>? fallbackCatalog,
+  }) {
     final out = <LiveInstrument>[];
-    String norm(String s) => s.toLowerCase().trim();
+    final catalog = fallbackCatalog ?? available;
     for (final token in tokens) {
-      final t = norm(token);
       LiveInstrument? hit;
       for (final inst in available) {
-        if (norm(inst.id) == t || norm(inst.name) == t) {
+        if (_tokenMatchesInstrument(token, inst)) {
           hit = inst;
           break;
         }
       }
       if (hit == null) {
-        for (final inst in available) {
-          final n = norm(inst.name);
-          if (t.contains(n) || n.contains(t)) {
+        for (final inst in catalog) {
+          if (_tokenMatchesInstrument(token, inst)) {
             hit = inst;
             break;
           }
@@ -91,7 +218,13 @@ class LiveInstrumentMatrix {
         return ' (Neve 1073 preamp, analog warmth)';
       case 'horns':
       case 'strings':
+      case 'saxophones':
+      case 'trumpets':
+      case 'winds':
         return " (Neumann U47 close-mic'd, dry room)";
+      case 'bass':
+      case 'melodic_bass':
+        return ' (Ampeg SVT warmth, tight DI blend)';
       default:
         return '';
     }
@@ -116,7 +249,12 @@ class LiveInstrumentMatrix {
       return (styleInjection: '', metaTagInjection: '');
     }
     final available = instrumentsForGenre(genre, fusionGenre);
-    final selected = _matchSelected(available, tokens);
+    final catalog = _allInstrumentsUnion();
+    final selected = _matchSelected(
+      available,
+      tokens,
+      fallbackCatalog: catalog,
+    );
     if (selected.isEmpty) {
       return (styleInjection: '', metaTagInjection: '');
     }
@@ -125,35 +263,46 @@ class LiveInstrumentMatrix {
     final l99 = powerCodes.toUpperCase().contains('/L99');
 
     final descriptions = selected.map((inst) {
+      final label = inst.promptLabel;
       final mod = _gearModifier(inst, l99);
+      final usePromptOnly = inst.promptText.trim().isNotEmpty;
       if (v == 'v4.5') {
-        return '${inst.name}, ${inst.defaultArticulation}, ${inst.mixRole}$mod';
+        if (usePromptOnly) {
+          return '$label, ${inst.mixRole}$mod';
+        }
+        return '$label, ${inst.defaultArticulation}, ${inst.mixRole}$mod';
       }
       if (v == 'v5') {
-        return 'featuring ${inst.defaultArticulation} ${inst.name} sitting in the ${inst.mixRole}$mod';
+        if (usePromptOnly) {
+          return 'featuring $label sitting in the ${inst.mixRole}$mod';
+        }
+        return 'featuring ${inst.defaultArticulation} $label sitting in the ${inst.mixRole}$mod';
       }
-      return 'driven by a ${inst.defaultArticulation} ${inst.name}$mod, perfectly seated in the ${inst.mixRole}';
+      if (usePromptOnly) {
+        return 'driven by $label$mod, perfectly seated in the ${inst.mixRole}';
+      }
+      return 'driven by a ${inst.defaultArticulation} $label$mod, perfectly seated in the ${inst.mixRole}';
     }).toList();
 
     if (v == 'v4.5') {
       return (
         styleInjection: ', ${descriptions.join(', ')}',
-        metaTagInjection: '[${selected.first.name} Feature]',
+        metaTagInjection: '[${selected.first.promptLabel} Feature]',
       );
     }
     if (v == 'v5') {
       return (
         styleInjection: '. ${descriptions.join(', ')}.',
         metaTagInjection:
-            '[Instrumental: ${selected.map((s) => s.name).join(' and ')} interplay]',
+            '[Instrumental: ${selected.map((s) => s.promptLabel).join(' and ')} interplay]',
       );
     }
     var meta =
-        '[Instrumental Break: Feature ${selected.first.defaultArticulation} ${selected.first.name}, ${selected.first.mixRole}, dynamic lift, subtle tape saturation]';
+        '[Instrumental Break: Feature ${selected.first.defaultArticulation} ${selected.first.promptLabel}, ${selected.first.mixRole}, dynamic lift, subtle tape saturation]';
     if (selected.length > 1) {
       final sec = selected[1];
       meta +=
-          '\n[Bridge: Intimate interplay between ${sec.name} and vocals, ${sec.mixRole}]';
+          '\n[Bridge: Intimate interplay between ${sec.promptLabel} and vocals, ${sec.mixRole}]';
     }
     return (
       styleInjection:
@@ -173,9 +322,11 @@ class LiveInstrumentMatrix {
     if (raw.isEmpty) return '';
 
     final key = resolveGenreKey(primaryGenre, subGenreFusion);
+    final catalog = _allInstrumentsUnion();
     final matched = _matchSelected(
       instrumentsForGenre(primaryGenre, subGenreFusion),
       parseSelection(raw),
+      fallbackCatalog: catalog,
     );
     final prompt = generatePrompt(
       genre: primaryGenre,
@@ -186,14 +337,15 @@ class LiveInstrumentMatrix {
     );
 
     final lines = <String>[
-      'LIVE INSTRUMENT ACCOMPANIMENT (LIVE INSTRUMENT PROTOCOL — Block 1 prose + Block 2 meta-tags):',
+      'Matrix schema: ${LiveInstrumentMatrixData.schemaVersion}',
       'Matched genre profile: [$key]',
       'User selection: $raw',
     ];
     if (matched.isNotEmpty) {
       for (final inst in matched) {
+        final label = inst.promptLabel;
         lines.add(
-          '• ${inst.name}: ${inst.defaultArticulation} | mix: ${inst.mixRole}',
+          '• $label (${inst.name}): ${inst.defaultArticulation} | mix: ${inst.mixRole}',
         );
       }
     } else {
@@ -213,8 +365,17 @@ class LiveInstrumentMatrix {
       );
     }
     lines.add(
-      'Never list bare instrument names. No artist names. Honor version-aware injection from LIVE INSTRUMENT PROTOCOL.',
+      'Never list bare instrument names. No artist names. Honor version-aware injection from REAL INSTRUMENT PROTOCOL.',
     );
-    return lines.join('\n');
+
+    final body = lines.join('\n');
+    return '[REAL INSTRUMENT ACCOMPANIMENT] (MANDATORY: Feature the following '
+        'instruments prominently. Emphasize their natural, acoustic character and '
+        'the specified articulations. This is a production requirement, not a '
+        'suggestion.):\n$body';
   }
+}
+
+extension _IfEmpty on String {
+  String ifEmpty(String fallback) => isEmpty ? fallback : this;
 }

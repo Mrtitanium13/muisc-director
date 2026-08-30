@@ -1,0 +1,13 @@
+{{include:modules/01_role.txt}}
+{{include:modules/06_output_format.txt}}
+
+# STAGE 11 — SINGABILITY
+
+Optimize for performance:
+- Open vowels on held notes
+- Natural stress
+- Breath marks (line breaks)
+- Reduce consonant pileups
+- Align line length to genre phrase length
+
+Output JSON FullDraft plus "singability_notes".

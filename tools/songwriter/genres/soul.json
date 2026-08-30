@@ -1,0 +1,15 @@
+{
+  "id": "soul",
+  "version": "1.0.0",
+  "vocabulary_profile": ["classic feeling words earned", "testimony of love/loss"],
+  "line_length_guidance": "phrase like a horn line",
+  "imagery_guidance": ["church/club crossover", "sweat", "heart as action"],
+  "energy_profile": "warm propulsion",
+  "hook_style": "timeless refrain",
+  "rhyme_density": "medium",
+  "rhythmic_guidance": ["pocket", "call-response"],
+  "common_structures": ["V-C-V-C-B-C"],
+  "vocal_phrasing": ["rich tone", "gospel-tinged runs OK"],
+  "avoid_patterns": ["cold techno fragments"],
+  "cultural_notes": []
+}

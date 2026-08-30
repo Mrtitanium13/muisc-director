@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -8,28 +6,46 @@ import '../../core/constants/on_device_api_keys.dart';
 import '../../core/network/dio_client.dart';
 import '../../core/utils/api_connectivity.dart';
 import '../../core/utils/chat_completion_helpers.dart';
-import '../../core/constants/melody_style_data.dart';
+import '../../core/ai/modules/genre_lyrics_emission.dart';
+import '../../core/ai/modules/humanized_lyrics_qa.dart';
 import '../../core/constants/song_structure_data.dart';
+import '../../core/constants/structural_hierarchy_directive.dart';
 import '../../core/constants/suno_system_prompt_v2_candidate.dart';
 import '../../core/utils/suno_block2_opt_out.dart';
 import '../../core/utils/suno_format_validation.dart';
 import '../../core/utils/suno_internal_output_strip.dart';
 import '../../core/utils/payload_optimization.dart';
 import '../../core/utils/remix_payload_compiler.dart';
-import '../../data/models/audio_analysis_model.dart';
-import '../../data/models/audio_analysis_model.dart';
+import '../../features/remix/application/remix_telemetry.dart';
 import '../../data/models/song_generation_type.dart';
 import '../../core/utils/suno_lyric_phonetic_sanitize.dart';
 import '../../core/utils/suno_output_qa.dart';
 import '../../core/utils/suno_output_split.dart';
 import '../../core/constants/suno_prompt_limits.dart';
 import '../../core/constants/block1_mix_master_directive.dart';
+import '../../services/narrative_brief_builder.dart';
+import '../../core/suno_prompt_router.dart';
+import '../../core/constants/big_room_fusion_progressive_engine.dart';
+import '../../core/constants/big_room_hardstyle_cinematic_hybrid_engine.dart';
+import '../../core/constants/thick_humanized_vocal_presence.dart';
+import '../../core/utils/dynamic_structural_engine.dart';
 import '../../core/utils/drum_matrix.dart';
+import '../../core/routing/music_prompt_engine.dart';
+import '../../core/routing/music_prompt_routing_monitor.dart';
 import '../../core/utils/genre_hybridization_matrix.dart';
 import '../../core/utils/live_instrument_matrix.dart';
 import '../../core/utils/code_translation_matrix.dart';
 import '../../core/constants/human_authenticity_config.dart';
+import '../../core/constants/genre_data.dart';
+import '../../songwriter/models/lyric_result.dart';
+import '../../songwriter/models/song_brief.dart';
+import '../../core/constants/prompt_flow_data.dart';
 import '../../core/constants/genre_lyrics_directives.dart';
+import '../../core/constants/master_edm_lyric_engine.dart';
+import '../../core/constants/master_gospel_lyric_engine.dart';
+import '../../core/constants/master_hardstyle_lyric_engine.dart';
+import '../../core/constants/master_progressive_big_room_house_lyric_engine.dart';
+import '../../core/constants/lyric_craft_hierarchy_directive.dart';
 import '../../core/constants/human_realism_config.dart';
 import '../../core/constants/production_intensity_config.dart';
 import '../../core/utils/suno_prompt_builder.dart';
@@ -43,8 +59,8 @@ import '../../core/constants/theme_consistency_pass.dart';
 import '../../core/constants/dialect_style_data.dart';
 import '../../core/constants/audio_environment_data.dart';
 import '../../core/constants/vocal_accent_data.dart';
+import '../../core/constants/vocal_spec_tone_data.dart';
 import '../../core/utils/theme_consistency_split.dart';
-import '../models/melody_variation_mode.dart';
 import '../models/suno_field_output_mode.dart';
 import '../models/track_duration_config.dart';
 import '../models/user_input_model.dart';
@@ -55,12 +71,34 @@ class OpenAIService {
   final Dio _dio;
   final SharedPreferences _prefs;
 
-  static const _melodyRotateIndexKey = 'md_melody_variation_rotate_index';
-
-  final _rand = Random();
-
   ({String apiKey, bool useOpenRouter}) get _onDeviceCredentials =>
       OnDeviceApiKeys.resolveActive(_prefs);
+
+  /// Multi-stage lyric pipeline via server `POST /generate-lyrics`.
+  /// Requires [ApiConstants.resolveMdApiBase] / MD_API_BASE_URL.
+  Future<LyricResult> generateSongwriterLyrics(SongBrief brief) async {
+    final mdBase = ApiConstants.resolveMdApiBase(_prefs);
+    if (mdBase == null || mdBase.isEmpty) {
+      throw StateError(
+        'Songwriter pipeline requires MD_API_BASE_URL (Music Director server).',
+      );
+    }
+    await assertMusicDirectorServerReachable(mdBase);
+    final api = createMusicDirectorApiDio(mdBase);
+    final res = await api.post<Map<String, dynamic>>(
+      ApiPaths.generateLyrics,
+      options: songwriterRequestOptions(),
+      data: {
+        ...brief.toJson(),
+        ...OnDeviceApiKeys.serverRequestFields(_prefs),
+      },
+    );
+    final body = res.data;
+    if (body == null) {
+      throw StateError('Empty /generate-lyrics response');
+    }
+    return LyricResult.fromJson(body);
+  }
 
   /// [appendToUserBlock] is appended to the model user message (strict retry, A/B tests).
   /// [temperatureOverride] when non-null replaces [ApiConstants.promptTemperatureFor] for this call.
@@ -76,13 +114,6 @@ class OpenAIService {
     String? continuationUserRequest,
     bool skipThemeConsistencyPass = false,
   }) async {
-    final sessionVar = _resolveMelodySessionVariation(input);
-    final melodyBlock = MelodyStyleData.composeUserBlock(
-      melodyStyleId: input.melodyStyleId,
-      melodyCustomNotes: input.melodyCustomNotes,
-      sessionVariationDirective: sessionVar,
-    );
-
     final mdBase = ApiConstants.resolveMdApiBase(_prefs);
     if (mdBase != null && mdBase.isNotEmpty) {
       try {
@@ -90,20 +121,17 @@ class OpenAIService {
         final text = await _generateOnServer(
           mdBase,
           input,
-          melodyBlock,
           userBlockSuffix: appendToUserBlock,
           continuationPriorOutput: continuationPriorOutput,
           continuationUserRequest: continuationUserRequest,
           preferLightweightModel: preferLightweightModel,
         );
-        await _advanceMelodyRotationIfNeeded(input);
         return _finalizeSunoV2Output(text, input);
       } catch (e) {
         if (_shouldFallbackToOnDeviceAfterServerFailure(e) &&
             OnDeviceApiKeys.hasActiveKey(_prefs)) {
           final onDevice = await _generateOnDeviceSunoPrompt(
             input: input,
-            melodyBlock: melodyBlock,
             appendToUserBlock: appendToUserBlock,
             continuationPriorOutput: continuationPriorOutput,
             continuationUserRequest: continuationUserRequest,
@@ -120,7 +148,6 @@ class OpenAIService {
 
     return _generateOnDeviceSunoPrompt(
       input: input,
-      melodyBlock: melodyBlock,
       appendToUserBlock: appendToUserBlock,
       continuationPriorOutput: continuationPriorOutput,
       continuationUserRequest: continuationUserRequest,
@@ -143,7 +170,6 @@ class OpenAIService {
 
   Future<String> _generateOnDeviceSunoPrompt({
     required UserInputModel input,
-    required String? melodyBlock,
     String? appendToUserBlock,
     String? continuationPriorOutput,
     String? continuationUserRequest,
@@ -154,7 +180,7 @@ class OpenAIService {
   }) async {
     final creds = _onDeviceCredentials;
     final key = creds.apiKey;
-    var userBlock = _buildUserContent(_withGenreFxApplied(input), melodyUserBlock: melodyBlock);
+    var userBlock = _buildUserContent(_withGenreFxApplied(input));
     final cont = _continuationAppend(
       continuationPriorOutput,
       continuationUserRequest,
@@ -179,13 +205,45 @@ class OpenAIService {
     }
 
     final useOpenRouter = creds.useOpenRouter;
-    final endpoint = useOpenRouter
-        ? ApiConstants.openRouterChatCompletions
-        : ApiConstants.laozhangChatCompletions;
     final lightweight = ApiConstants.shouldUseLightweightChatModel(
       input,
       preferLightweightForRegenerate: preferLightweightModel,
     );
+
+    String? routedDraftModel;
+    String? routedPolishModel;
+    String? pidginSubVariant;
+    MusicPromptRoutingMonitor.recordRoutingGateCheck();
+    if (ApiConstants.useSunoPromptV2Candidate()) {
+      final plan = MusicPromptEngine.prepare(
+        input: input,
+        useOpenRouter: useOpenRouter,
+        lightweight: lightweight,
+        textHint: input.vibe,
+      );
+      userBlock = '${userBlock.trim()}\n\n${plan.userBlockAppend}';
+      pidginSubVariant = plan.classification.pidginSubVariant;
+      if (!lightweight) {
+        routedDraftModel = MusicPromptEngine.draftModelForPlan(
+          plan: plan,
+          useOpenRouter: useOpenRouter,
+          lightweight: false,
+        );
+        routedPolishModel = MusicPromptEngine.polishModelForPlan(
+          plan: plan,
+          useOpenRouter: useOpenRouter,
+        );
+      }
+    } else if (VocalAccentData.coerceStored(input.vocalAccent ?? '') ==
+            'nigerian_ibibio' ||
+        input.dialectVariantId == 'ibibio') {
+      MusicPromptRoutingMonitor.warnIbibioV1Fallback();
+      pidginSubVariant = 'ibibio';
+    }
+
+    final endpoint = useOpenRouter
+        ? ApiConstants.openRouterChatCompletions
+        : ApiConstants.laozhangChatCompletions;
     final headers = <String, String>{
       'Authorization': 'Bearer $key',
       'Content-Type': 'application/json',
@@ -198,7 +256,9 @@ class OpenAIService {
     final lyricsTrim = input.optionalLyrics.trim();
     final hasLyrics = lyricsTrim.isNotEmpty;
     final simple = input.sunoFieldOutputMode == SunoFieldOutputMode.simple;
-    final pathC = !simple && input.generateLyrics && !hasLyrics;
+    final pathC = !simple &&
+        (input.generateLyrics || input.useVibeAsLyricSource) &&
+        !hasLyrics;
     final block2OptOut = userRequestedBlock2OptOut(input);
     final lyricsTask = _lyricsTaskFor(input);
     final lyricsWords = hasLyrics
@@ -229,6 +289,60 @@ class OpenAIService {
         lyricsTask;
     final effectiveMaxTok = hybridLaozhang && maxTok < 4200 ? 4200 : maxTok;
 
+    final fewShotPrefix = MasterGospelLyricEngine.shouldInjectFewShot(
+          primaryGenre: input.primaryGenre,
+          subGenreFusion: input.subGenreFusion,
+          vibe: input.vibe,
+          lyricThemeNotes: input.lyricThemeNotes,
+          lyricsTask: lyricsTask,
+        )
+        ? MasterGospelLyricEngine.fewShotPrefixMessages(
+            primaryGenre: input.primaryGenre,
+            subGenreFusion: input.subGenreFusion,
+            vibe: input.vibe,
+            lyricThemeNotes: input.lyricThemeNotes,
+          )
+        : MasterHardstyleLyricEngine.shouldInjectFewShot(
+            primaryGenre: input.primaryGenre,
+            subGenreFusion: input.subGenreFusion,
+            vibe: input.vibe,
+            lyricThemeNotes: input.lyricThemeNotes,
+            lyricsTask: lyricsTask,
+          )
+        ? MasterHardstyleLyricEngine.fewShotPrefixMessages(
+            primaryGenre: input.primaryGenre,
+            subGenreFusion: input.subGenreFusion,
+            vibe: input.vibe,
+            lyricThemeNotes: input.lyricThemeNotes,
+          )
+        : MasterProgressiveBigRoomHouseLyricEngine.shouldInjectFewShot(
+            primaryGenre: input.primaryGenre,
+            subGenreFusion: input.subGenreFusion,
+            vibe: input.vibe,
+            lyricThemeNotes: input.lyricThemeNotes,
+            lyricsTask: lyricsTask,
+          )
+        ? MasterProgressiveBigRoomHouseLyricEngine.fewShotPrefixMessages(
+            primaryGenre: input.primaryGenre,
+            subGenreFusion: input.subGenreFusion,
+            vibe: input.vibe,
+            lyricThemeNotes: input.lyricThemeNotes,
+          )
+        : MasterEdmLyricEngine.shouldInjectFewShot(
+            primaryGenre: input.primaryGenre,
+            subGenreFusion: input.subGenreFusion,
+            vibe: input.vibe,
+            lyricThemeNotes: input.lyricThemeNotes,
+            lyricsTask: lyricsTask,
+          )
+        ? MasterEdmLyricEngine.fewShotPrefixMessages(
+            primaryGenre: input.primaryGenre,
+            subGenreFusion: input.subGenreFusion,
+            vibe: input.vibe,
+            lyricThemeNotes: input.lyricThemeNotes,
+          )
+        : null;
+
     try {
       final text = await _generateOnDevice(
         endpoint: endpoint,
@@ -240,8 +354,11 @@ class OpenAIService {
         temperature: temperature,
         maxTok: effectiveMaxTok,
         lyricsTask: lyricsTask,
+        draftModelOverride: routedDraftModel,
+        polishModelOverride: routedPolishModel,
+        pidginSubVariant: pidginSubVariant,
+        chatPrefixTurns: fewShotPrefix,
       );
-      await _advanceMelodyRotationIfNeeded(input);
       return _deliverSunoOutput(
         text,
         input,
@@ -261,8 +378,8 @@ class OpenAIService {
           temperature: temperature,
           maxTok: maxTok,
           applyLaozhangHygiene: !useOpenRouter,
+          chatPrefixTurns: fewShotPrefix,
         );
-        await _advanceMelodyRotationIfNeeded(input);
         return _deliverSunoOutput(
           text,
           input,
@@ -297,15 +414,17 @@ class OpenAIService {
     for (var attempt = 0; attempt < 2; attempt++) {
       final finalized = _finalizeSunoV2Output(text, input);
       if (!_needsFormatRetry(finalized, input)) {
-        return _deliverSunoOutput(
+        return _deliverWithLyricQualityGate(
           text,
           input,
           applyThemePass: !serverMode,
+          preferLightweightModel: preferLightweightModel,
+          continuationPriorOutput: continuationPriorOutput,
+          continuationUserRequest: continuationUserRequest,
         );
       }
 
       final expectLyrics = !userRequestedBlock2OptOut(input);
-      final parsed = parseSunoOutput(finalized);
       final qa = FormatValidationResult.validate(
         finalized,
         expectLyricsBlock: expectLyrics,
@@ -337,7 +456,14 @@ class OpenAIService {
 
     final finalized = _finalizeSunoV2Output(text, input);
     if (!_needsFormatRetry(finalized, input)) {
-      return _deliverSunoOutput(text, input, applyThemePass: !serverMode);
+      return _deliverWithLyricQualityGate(
+        text,
+        input,
+        applyThemePass: !serverMode,
+        preferLightweightModel: preferLightweightModel,
+        continuationPriorOutput: continuationPriorOutput,
+        continuationUserRequest: continuationUserRequest,
+      );
     }
 
     // Server runs its own completion pass; on-device LaoZhang needs it here.
@@ -355,14 +481,125 @@ class OpenAIService {
       }
     }
 
-    return _deliverSunoOutput(text, input, applyThemePass: !serverMode);
+    return _deliverWithLyricQualityGate(
+      text,
+      input,
+      applyThemePass: !serverMode,
+      preferLightweightModel: preferLightweightModel,
+      continuationPriorOutput: continuationPriorOutput,
+      continuationUserRequest: continuationUserRequest,
+    );
+  }
+
+  static const _maxLyricQualityRetries = 1;
+
+  bool _shouldRunLyricQualityGate(UserInputModel input) {
+    if (!ApiConstants.useSunoPromptV2Candidate()) return false;
+    if (userRequestedBlock2OptOut(input)) return false;
+    if (!_lyricsTaskFor(input)) return false;
+    if (input.optionalLyrics.trim().isNotEmpty) return false;
+    if (remixEngineActive(input) &&
+        input.songGenerationType == SongGenerationType.instrumental) {
+      return false;
+    }
+    return GenreLyricsEmission.emitsLyrics(_genreLabelForLyricQa(input));
+  }
+
+  String _genreLabelForLyricQa(UserInputModel input) {
+    final fusion = input.subGenreFusion.trim();
+    if (fusion.isNotEmpty) return fusion;
+    final primary = input.primaryGenre.trim();
+    return primary.isEmpty ? 'Pop' : primary;
+  }
+
+  HumanizedLyricsQaResult? _lyricQaOnDelivered(
+    String delivered,
+    UserInputModel input, {
+    bool recordSession = true,
+  }) {
+    if (!_shouldRunLyricQualityGate(input)) return null;
+    final parsed = parseSunoOutput(_finalizeSunoV2Output(delivered, input));
+    final lyrics = parsed.lyricsBody?.trim() ?? '';
+    if (lyrics.isEmpty) return null;
+    return HumanizedLyricsQa.enforceHumanizedLyrics(
+      lyrics,
+      _genreLabelForLyricQa(input),
+      recordSession: recordSession,
+      regenerateOnClicheHits: true,
+    );
+  }
+
+  /// Post-process delivery, then optionally one lyric-quality regenerate pass.
+  Future<String> _deliverWithLyricQualityGate(
+    String text,
+    UserInputModel input, {
+    required bool applyThemePass,
+    required bool preferLightweightModel,
+    String? continuationPriorOutput,
+    String? continuationUserRequest,
+  }) async {
+    if (!_shouldRunLyricQualityGate(input)) {
+      return _deliverSunoOutput(text, input, applyThemePass: applyThemePass);
+    }
+
+    var bestDelivered = await _deliverSunoOutput(
+      text,
+      input,
+      applyThemePass: applyThemePass,
+    );
+    var bestQa = _lyricQaOnDelivered(bestDelivered, input);
+    if (bestQa == null || !bestQa.shouldRegenerate) {
+      return bestDelivered;
+    }
+    var activeQa = bestQa;
+
+    for (var attempt = 0; attempt < _maxLyricQualityRetries; attempt++) {
+      final suffix = HumanizedLyricsQa.buildRegenerateSuffix(activeQa);
+      final retryMaxTok = (_baseMaxCompletionTokens(input) * 1.2).ceil().clamp(
+            1400,
+            8192,
+          );
+      final retryRaw = await generateSunoPrompt(
+        input,
+        preferLightweightModel: preferLightweightModel,
+        appendToUserBlock: suffix,
+        temperatureOverride: 0.42,
+        maxCompletionTokensOverride: retryMaxTok,
+        continuationPriorOutput: continuationPriorOutput,
+        continuationUserRequest: continuationUserRequest,
+        skipThemeConsistencyPass: true,
+      );
+
+      final retryFinalized = _finalizeSunoV2Output(retryRaw, input);
+      if (_needsFormatRetry(retryFinalized, input)) continue;
+
+      final retryDelivered = await _deliverSunoOutput(
+        retryRaw,
+        input,
+        applyThemePass: applyThemePass,
+      );
+      final retryQa = _lyricQaOnDelivered(
+        retryDelivered,
+        input,
+        recordSession: false,
+      );
+      if (retryQa == null) continue;
+
+      if (HumanizedLyricsQa.isBetterResult(retryQa, activeQa)) {
+        bestDelivered = retryDelivered;
+        activeQa = retryQa;
+      }
+      if (!retryQa.shouldRegenerate) break;
+    }
+
+    return bestDelivered;
   }
 
   int _baseMaxCompletionTokens(UserInputModel input) {
     final lyricsTrim = input.optionalLyrics.trim();
     final hasLyrics = lyricsTrim.isNotEmpty;
     final pathC = input.sunoFieldOutputMode != SunoFieldOutputMode.simple &&
-        input.generateLyrics &&
+        (input.generateLyrics || input.useVibeAsLyricSource) &&
         !hasLyrics;
     final lyricsWords = hasLyrics
         ? lyricsTrim.split(RegExp(r'\s+')).where((w) => w.isNotEmpty).length
@@ -405,13 +642,7 @@ class OpenAIService {
     final key = creds.apiKey;
     if (key.isEmpty) return partial;
 
-    final sessionVar = _resolveMelodySessionVariation(input);
-    final melodyBlock = MelodyStyleData.composeUserBlock(
-      melodyStyleId: input.melodyStyleId,
-      melodyCustomNotes: input.melodyCustomNotes,
-      sessionVariationDirective: sessionVar,
-    );
-    var userBlock = _buildUserContent(_withGenreFxApplied(input), melodyUserBlock: melodyBlock);
+    var userBlock = _buildUserContent(_withGenreFxApplied(input));
     final cont = _continuationAppend(
       continuationPriorOutput,
       continuationUserRequest,
@@ -763,13 +994,22 @@ $f
     required double temperature,
     required int maxTok,
     required bool lyricsTask,
+    String? draftModelOverride,
+    String? polishModelOverride,
+    String? pidginSubVariant,
+    List<Map<String, String>>? chatPrefixTurns,
   }) async {
-    final draftModel = ApiConstants.draftModelForPromptWithProvider(
-      language: language,
-      lightweight: lightweight,
-      useOpenRouter: useOpenRouter,
-      lyricsTask: lyricsTask,
-    );
+    final draftModel = draftModelOverride ??
+        ApiConstants.draftModelForPromptWithProvider(
+          language: language,
+          lightweight: lightweight,
+          useOpenRouter: useOpenRouter,
+          lyricsTask: lyricsTask,
+        );
+    final polishModel = polishModelOverride ??
+        ApiConstants.polishModelForPromptWithProvider(
+          useOpenRouter: useOpenRouter,
+        );
 
     final systemContent = _systemPromptForProvider(useOpenRouter);
     final hygiene = !useOpenRouter;
@@ -787,6 +1027,7 @@ $f
           temperature: temperature,
           maxTok: maxTok,
           primaryModel: draftModel,
+          chatPrefixTurns: chatPrefixTurns,
         );
         if (!lyricsTask || !sunoOutputIncomplete(single)) return single;
         final completed = await _completeLaozhangTruncatedOutput(
@@ -808,6 +1049,7 @@ $f
         temperature: temperature,
         maxTok: maxTok,
         applyLaozhangHygiene: hygiene,
+        chatPrefixTurns: chatPrefixTurns,
       );
     }
 
@@ -820,6 +1062,7 @@ $f
             temperature: temperature,
             maxTok: maxTok,
             primaryModel: draftModel,
+            chatPrefixTurns: chatPrefixTurns,
           )
         : await _completeChatCompletion(
             endpoint: endpoint,
@@ -830,22 +1073,24 @@ $f
             temperature: temperature,
             maxTok: maxTok,
             applyLaozhangHygiene: hygiene,
+            chatPrefixTurns: chatPrefixTurns,
           );
 
     if (useOpenRouter) {
       final polishMaxTok = maxTok.clamp(3200, 8192);
       try {
+        final polishUser = buildSunoPolishUserMessage(
+          draft: draft,
+          originalUserBlock: userBlock,
+          pidginSubVariant: pidginSubVariant,
+        );
+        _assertIbibioPolishGuard(polishUser, pidginSubVariant);
         return await _completeChatCompletion(
           endpoint: endpoint,
           headers: headers,
-          model: ApiConstants.polishModelForPromptWithProvider(
-            useOpenRouter: useOpenRouter,
-          ),
+          model: polishModel,
           systemContent: kSunoPolishSystemPrompt,
-          userBlock: buildSunoPolishUserMessage(
-            draft: draft,
-            originalUserBlock: userBlock,
-          ),
+          userBlock: polishUser,
           temperature: 0.4,
           maxTok: polishMaxTok,
           applyLaozhangHygiene: hygiene,
@@ -861,6 +1106,7 @@ $f
       draft: draft,
       userBlock: userBlock,
       maxTok: maxTok,
+      pidginSubVariant: pidginSubVariant,
     );
     if (lyricsTask && sunoOutputIncomplete(result)) {
       final completed = await _completeLaozhangTruncatedOutput(
@@ -881,6 +1127,15 @@ $f
   int _laozhangPolishMaxTokens(int maxTok) =>
       maxTok < 3200 ? 3200 : maxTok.clamp(3200, 8192);
 
+  void _assertIbibioPolishGuard(String polishUserBlock, String? pidginSubVariant) {
+    if (pidginSubVariant != 'ibibio') return;
+    assert(
+      polishUserBlock.contains('Abasi'),
+      'Ibibio vocabulary missing from polish stage — '
+      'final lyrics will lose cultural markers',
+    );
+  }
+
   int _laozhangCompletionMaxTokens(int maxTok) =>
       (maxTok * 1.5).ceil().clamp(4200, 8192);
 
@@ -890,11 +1145,14 @@ $f
     required String draft,
     required String userBlock,
     required int maxTok,
+    String? pidginSubVariant,
   }) async {
     final polishUser = buildSunoPolishUserMessage(
       draft: draft,
       originalUserBlock: userBlock,
+      pidginSubVariant: pidginSubVariant,
     );
+    _assertIbibioPolishGuard(polishUser, pidginSubVariant);
     final polishMaxTok = _laozhangPolishMaxTokens(maxTok);
     final models = <String>{
       ApiConstants.polishModelForPromptWithProvider(useOpenRouter: false),
@@ -967,6 +1225,7 @@ $f
     required double temperature,
     required int maxTok,
     required String primaryModel,
+    List<Map<String, String>>? chatPrefixTurns,
   }) async {
     final models = <String>{
       primaryModel,
@@ -985,6 +1244,7 @@ $f
           temperature: temperature,
           maxTok: maxTok,
           applyLaozhangHygiene: true,
+          chatPrefixTurns: chatPrefixTurns,
         );
       } catch (e) {
         lastError = e;
@@ -997,6 +1257,21 @@ $f
     );
   }
 
+  List<Map<String, String>> _buildChatMessages({
+    required String systemContent,
+    required String userBlock,
+    List<Map<String, String>>? chatPrefixTurns,
+  }) {
+    final messages = <Map<String, String>>[
+      {'role': 'system', 'content': systemContent},
+    ];
+    if (chatPrefixTurns != null) {
+      messages.addAll(chatPrefixTurns);
+    }
+    messages.add({'role': 'user', 'content': userBlock});
+    return messages;
+  }
+
   Future<String> _completeChatCompletion({
     required String endpoint,
     required Map<String, String> headers,
@@ -1006,13 +1281,15 @@ $f
     required double temperature,
     required int maxTok,
     bool applyLaozhangHygiene = false,
+    List<Map<String, String>>? chatPrefixTurns,
   }) async {
     final payload = <String, dynamic>{
       'model': model,
-      'messages': [
-        {'role': 'system', 'content': systemContent},
-        {'role': 'user', 'content': userBlock},
-      ],
+      'messages': _buildChatMessages(
+        systemContent: systemContent,
+        userBlock: userBlock,
+        chatPrefixTurns: chatPrefixTurns,
+      ),
       'temperature': temperature,
       'max_tokens': maxTok,
     };
@@ -1122,8 +1399,7 @@ Output ONLY the final complete two-block Suno reply.''';
 
   Future<String> _generateOnServer(
     String base,
-    UserInputModel input,
-    String? melodyUserBlock, {
+    UserInputModel input, {
     String? userBlockSuffix,
     String? continuationPriorOutput,
     String? continuationUserRequest,
@@ -1133,7 +1409,14 @@ Output ONLY the final complete two-block Suno reply.''';
     final lyricsTrim = fxInput.optionalLyrics.trim();
     final hasLyrics = lyricsTrim.isNotEmpty;
     final simple = input.sunoFieldOutputMode == SunoFieldOutputMode.simple;
-    final pathC = !simple && input.generateLyrics && !hasLyrics;
+    final pathC = !simple &&
+        (input.generateLyrics || input.useVibeAsLyricSource) &&
+        !hasLyrics;
+    final family = StructuralFamilyResolver.resolve(
+      primaryGenre: input.primaryGenre,
+      fusionGenre: input.subGenreFusion,
+      commercialLane: input.genreFxLaneId.isEmpty ? null : input.genreFxLaneId,
+    );
     final api = createMusicDirectorApiDio(base);
     final res = await api.post<Map<String, dynamic>>(
       ApiPaths.generatePrompt,
@@ -1154,6 +1437,7 @@ Output ONLY the final complete two-block Suno reply.''';
         'dialect_variant_id': input.dialectVariantId,
         'audio_environment_mode': input.audioEnvironmentModeId,
         'reference_artists': input.referenceArtists,
+        'sonic_tags': input.sonicTags,
         'avoid': input.avoid,
         'language': input.language,
         'include_analyzer_data': input.includeAnalyzerData,
@@ -1161,10 +1445,14 @@ Output ONLY the final complete two-block Suno reply.''';
         'track_duration_label': input.trackDurationLabel,
         'dj_intro_mix_in': input.djIntroMixIn,
         'dj_outro_mix_out': input.djOutroMixOut,
-        'song_structure_directive': SongStructureData.userBlockDirective(
-          presetId: input.songStructurePresetId,
-          customNotes: input.songStructureCustom,
+        'song_structure_directive': _structureUserBlock(
+          input,
+          useV2: ApiConstants.useSunoPromptV2Candidate(),
+          block2OptOut: userRequestedBlock2OptOut(input),
+          family: family,
         ),
+        'song_structure_preset_id': input.songStructurePresetId,
+        'song_structure_custom': input.songStructureCustom,
         'optional_lyrics': fxInput.optionalLyrics,
         'remix_from_analyzer': input.remixFromAnalyzer,
         'remix_original_song_title': input.remixOriginalSongTitle,
@@ -1175,8 +1463,12 @@ Output ONLY the final complete two-block Suno reply.''';
           'chord_progression': input.chordProgression.trim(),
         'field_output_mode': input.sunoFieldOutputMode.name,
         'generate_lyrics': pathC,
+        'use_vibe_as_lyric_source': input.useVibeAsLyricSource,
         'lyric_theme_notes': input.lyricThemeNotes,
-        'lyric_temperament_codes': input.lyricTemperamentCodes,
+        'active_modifier_codes': input.activeModifierCodes,
+        'melody_style_id': input.melodyStyleId,
+        'melody_custom_notes': input.melodyCustomNotes,
+        'bpm_hint': GenreData.bpmHintForLabel(input.primaryGenre) ?? '',
         'human_realism': input.humanRealism,
         'production_intensity': input.productionIntensity,
         'genre_fx_lane': input.genreFxLaneId,
@@ -1186,9 +1478,8 @@ Output ONLY the final complete two-block Suno reply.''';
           djIntro: input.djIntroMixIn,
           djOutro: input.djOutroMixOut,
           bpmRaw: input.bpm,
+          family: family,
         ).toPromptContext(),
-        if (melodyUserBlock != null && melodyUserBlock.trim().isNotEmpty)
-          'melody_user_block': melodyUserBlock.trim(),
         if (userBlockSuffix != null && userBlockSuffix.trim().isNotEmpty)
           'user_block_suffix': userBlockSuffix.trim(),
         if (continuationPriorOutput != null &&
@@ -1211,64 +1502,11 @@ Output ONLY the final complete two-block Suno reply.''';
     return text.trim();
   }
 
-  String? _resolveMelodySessionVariation(UserInputModel input) {
-    if (kMelodySessionVariationDirectives.isEmpty) return null;
-    switch (input.melodyVariationMode) {
-      case MelodyVariationMode.none:
-        return null;
-      case MelodyVariationMode.random:
-        return kMelodySessionVariationDirectives[
-            _rand.nextInt(kMelodySessionVariationDirectives.length)];
-      case MelodyVariationMode.rotate:
-        final i = _prefs.getInt(_melodyRotateIndexKey) ?? 0;
-        return kMelodySessionVariationDirectives[
-            i % kMelodySessionVariationDirectives.length];
-    }
-  }
-
-  Future<void> _advanceMelodyRotationIfNeeded(UserInputModel input) async {
-    if (input.melodyVariationMode != MelodyVariationMode.rotate) return;
-    final next = (_prefs.getInt(_melodyRotateIndexKey) ?? 0) + 1;
-    await _prefs.setInt(_melodyRotateIndexKey, next);
-  }
-
-  static String _resolvedAnalyzerConstraints(UserInputModel i) {
-    final summary = i.analyzerSummary.trim();
-    if (summary.isEmpty) {
-      return AudioAnalysisModel.fallbackAnalyzerSummary;
-    }
-    for (final line in summary.split('\n')) {
-      final t = line.trim();
-      if (t.isEmpty ||
-          t.startsWith('TARGET AUDIO PROFILE') ||
-          t.contains(':') && t.indexOf(',') > t.indexOf(':')) {
-        continue;
-      }
-      if (t.contains(',')) {
-        return AudioAnalysisModel.sanitizeProfile(t);
-      }
-    }
-    final lines = summary.split('\n').map((l) => l.trim()).toList();
-    final targetIdx = lines.indexWhere((l) => l.startsWith('TARGET AUDIO PROFILE'));
-    if (targetIdx >= 0 && targetIdx + 1 < lines.length) {
-      return AudioAnalysisModel.sanitizeProfile(lines[targetIdx + 1]);
-    }
-    return AudioAnalysisModel.fallbackAnalyzerSummary;
-  }
-
   String _vocalUserBlockLine(UserInputModel i) {
-    final spec = (i.vocalSpec ?? '').trim();
-    final tone = (i.vocalTone ?? '').trim();
-    final accent = (i.vocalAccent ?? '').trim();
-    final parts = <String>[
-      if (spec.isNotEmpty) spec,
-      if (tone.isNotEmpty) tone,
-      if (accent.isNotEmpty)
-        'accent/delivery (style-only, not impersonation or voice cloning): '
-            '$accent',
-    ];
-    if (parts.isEmpty) return 'Vocal:';
-    return 'Vocal: ${parts.join(' — ')}';
+    return VocalSpecToneData.userBlockLine(
+      vocalSpec: i.vocalSpec,
+      vocalTone: i.vocalTone,
+    );
   }
 
   UserInputModel _withGenreFxApplied(UserInputModel input) {
@@ -1283,12 +1521,56 @@ Output ONLY the final complete two-block Suno reply.''';
     return input.copyWith(vibe: fx.vibe, optionalLyrics: fx.optionalLyrics);
   }
 
-  String _buildUserContent(UserInputModel i, {String? melodyUserBlock}) {
+  String _structureUserBlock(
+    UserInputModel i, {
+    required bool useV2,
+    required bool block2OptOut,
+    required StructuralFamily family,
+  }) {
+    final hybridLane = BigRoomHardstyleCinematicHybridEngine.matchesLane(
+      primaryGenre: i.primaryGenre,
+      subGenreFusion: i.subGenreFusion,
+    );
+    final djOk = djMixAllowedForFamily(family);
+    final lock = SongStructureData.userBlockDirective(
+      presetId: i.songStructurePresetId,
+      customNotes: i.songStructureCustom,
+      sunoVersion: i.sunoVersion,
+      primaryGenre: i.primaryGenre,
+      subGenreFusion: i.subGenreFusion,
+      commercialLane: i.genreFxLaneId.isEmpty ? null : i.genreFxLaneId,
+      includeDjIntro: hybridLane ? djOk : i.djIntroMixIn && djOk,
+      includeDjOutro: hybridLane ? djOk : i.djOutroMixOut && djOk,
+    );
+    if (hybridLane) {
+      return [
+        lock,
+        BigRoomHardstyleCinematicHybridEngine.composeStructuralConstraintsBlock(),
+      ].join('\n\n');
+    }
+    if (!useV2 || block2OptOut) return lock;
+    final custom = i.songStructureCustom.trim();
+    if (RegExp(r'\[[^\]]+\]').hasMatch(custom)) return lock;
+    return lock;
+  }
+
+  String _buildUserContent(UserInputModel i) {
     final hasLyrics = i.optionalLyrics.trim().isNotEmpty;
     final useV2 = ApiConstants.useSunoPromptV2Candidate();
     final simple = i.sunoFieldOutputMode == SunoFieldOutputMode.simple;
-    final pathC = !simple && i.generateLyrics && !hasLyrics;
+    final pathC = !simple &&
+        (i.generateLyrics || i.useVibeAsLyricSource) &&
+        !hasLyrics;
     final block2OptOut = userRequestedBlock2OptOut(i);
+    final family = StructuralFamilyResolver.resolve(
+      primaryGenre: i.primaryGenre,
+      fusionGenre: i.subGenreFusion,
+      commercialLane: i.genreFxLaneId.isEmpty ? null : i.genreFxLaneId,
+    );
+    final hybridLane = BigRoomHardstyleCinematicHybridEngine.matchesLane(
+      primaryGenre: i.primaryGenre,
+      subGenreFusion: i.subGenreFusion,
+    );
     final buf = StringBuffer();
     if (useV2) {
       buf.writeln(
@@ -1308,28 +1590,78 @@ Output ONLY the final complete two-block Suno reply.''';
         ),
       );
     }
-    if (i.remixFromAnalyzer) {
-      buf.writeln(
-        useV2
-            ? SunoPromptLimits.remixFromAnalyzerUserBlockSupplementV2(i.sunoVersion)
-            : SunoPromptLimits.remixFromAnalyzerUserBlockSupplement(i.sunoVersion),
+    final remixRes = remixResolutionFor(i);
+    final existingBuf = buf.toString();
+    if (remixRes.mode == RemixMode.analyzerGenreFlip) {
+      final before = buf.toString();
+      if (!before.contains(remixAnalyzerBlockMarker)) {
+        buf.writeln(
+          useV2
+              ? SunoPromptLimits.remixFromAnalyzerUserBlockSupplementV2(
+                  i.sunoVersion,
+                )
+              : SunoPromptLimits.remixFromAnalyzerUserBlockSupplement(
+                  i.sunoVersion,
+                ),
+        );
+      }
+      RemixTelemetry.activation(
+        mode: remixRes.mode,
+        nearActivation: remixRes.nearActivation,
+        genre: i.primaryGenre,
+        songGenerationType: i.songGenerationType.apiValue,
+        blockInjected: !before.contains(remixAnalyzerBlockMarker),
       );
-    }
-    if (remixEngineActive(i)) {
-      buf.writeln(
-        remixStyleFlipUserBlockSupplement(
-          originalSongTitle: i.remixOriginalSongTitle,
-          originalArtist: i.remixOriginalArtist,
-          targetGenre: i.primaryGenre,
-          generationType: i.songGenerationType,
-        ),
+    } else if (remixRes.mode == RemixMode.interpolation) {
+      final block = remixStyleFlipUserBlockSupplement(
+        originalSongTitle: i.remixOriginalSongTitle,
+        originalArtist: i.remixOriginalArtist,
+        targetGenre: i.primaryGenre,
+        generationType: i.songGenerationType,
+        bpm: i.bpm ?? '',
+        keyRoot: i.keyRoot ?? '',
+        scale: i.scale ?? '',
+        vibe: i.vibe,
+        existingUserBlock: existingBuf,
+      );
+      if (block.isNotEmpty) buf.writeln(block);
+      RemixTelemetry.activation(
+        mode: remixRes.mode,
+        nearActivation: remixRes.nearActivation,
+        genre: i.primaryGenre,
+        songGenerationType: i.songGenerationType.apiValue,
+        title: i.remixOriginalSongTitle,
+        artist: i.remixOriginalArtist,
+        blockInjected: block.isNotEmpty,
+      );
+    } else if (remixRes.nearActivation) {
+      RemixTelemetry.activation(
+        mode: remixRes.mode,
+        nearActivation: true,
+        genre: i.primaryGenre,
+        songGenerationType: i.songGenerationType.apiValue,
+        title: i.remixOriginalSongTitle,
+        artist: i.remixOriginalArtist,
+        blockInjected: false,
       );
     }
     buf
       ..writeln('Suno version: ${i.sunoVersion}')
-      ..writeln('Primary genre: ${i.primaryGenre}')
-      ..writeln('Fusion / sub-genre: ${i.subGenreFusion}')
-      ..writeln('Vibe / idea: ${i.vibe}');
+      ..writeln(
+        'Primary genre: ${primaryGenreWithDjToolModifier(
+          primaryGenre: i.primaryGenre,
+          djIntroMixIn: hybridLane ? true : i.djIntroMixIn,
+          djOutroMixOut: hybridLane ? true : i.djOutroMixOut,
+          family: family,
+        )}',
+      )
+      ..writeln('Fusion / sub-genre: ${i.subGenreFusion}');
+    for (final line in PromptFlowData.buildVibeUserBlockLines(
+      vibe: i.vibe,
+      useVibeAsLyricSource: i.useVibeAsLyricSource,
+    )) {
+      buf.writeln(line);
+    }
     if (useV2) {
       final hybridBlock = GenreHybridizationMatrix.userBlockDirective(
         primaryGenre: i.primaryGenre,
@@ -1341,6 +1673,21 @@ Output ONLY the final complete two-block Suno reply.''';
       ..writeln('BPM: ${i.bpm ?? 'unspecified'}')
       ..writeln('Key: ${i.keyRoot ?? ''} ${i.scale ?? ''}'.trim())
       ..writeln(_vocalUserBlockLine(i));
+    final specToneBlock = VocalSpecToneData.userBlockDirective(
+      vocalSpec: i.vocalSpec,
+      vocalTone: i.vocalTone,
+    );
+    if (specToneBlock.isNotEmpty) {
+      buf.writeln(specToneBlock);
+    }
+    final thickVocal = ThickHumanizedVocalPresence.composeUserBlock(
+      primaryGenre: i.primaryGenre,
+      subGenreFusion: i.subGenreFusion,
+      vocalSpec: i.vocalSpec,
+    );
+    if (thickVocal.isNotEmpty) {
+      buf.writeln(thickVocal);
+    }
     final accentBlock = VocalAccentData.userBlockDirective(
       accent: i.vocalAccent,
       vocalSpec: i.vocalSpec ?? '',
@@ -1361,19 +1708,33 @@ Output ONLY the final complete two-block Suno reply.''';
     buf.writeln(
       AudioEnvironmentData.userBlockDirective(i.audioEnvironmentModeId),
     );
+    if (i.includeAnalyzerData) {
+      final analyzerSummary = i.analyzerSummary.trim();
+      if (analyzerSummary.isNotEmpty) {
+        buf.writeln(analyzerSummary);
+      }
+    }
+    final refArtists = i.referenceArtists.trim();
+    if (refArtists.isNotEmpty) {
+      buf.writeln(
+        '[ARTIST DNA REFERENCES] (ROLE: Music DNA Translator. TASK: Analyze the following references. Extract their core musical characteristics (timbre, harmony, rhythm, structure). Synthesize these traits into descriptive prose for the music model. STRICTLY FORBIDDEN: Do NOT mention the original artist, song, or album names in your output.): $refArtists',
+      );
+    }
+    if (i.sonicTags.isNotEmpty) {
+      buf.writeln(
+        '[SONIC CHARACTERISTICS] (REQUIREMENTS: These are MANDATORY production instructions. Apply them LITERALLY to the final music prompt. DO NOT interpret, translate, or dilute these instructions in any way.): ${i.sonicTags.join(', ')}',
+      );
+    }
     buf
       ..writeln(
-        'Reference influences (artist/producer/DJ/song/album names OK — '
-        'ARTIST REFERENCE PROCESSING: hidden_internal_only DNA; merge multiples; '
-        'never output names, song titles, or albums): ${i.referenceArtists}',
+        'Avoid: ${LiveInstrumentMatrix.augmentAvoidClause(avoid: i.avoid, realInstrumentals: i.realInstrumentals)}',
       )
-      ..writeln('Avoid: ${i.avoid}')
       ..writeln('Language: ${i.language}');
     if (useV2) {
       final codeBlock = CodeTranslationMatrix.userBlockDirective(
         primaryGenre: i.primaryGenre,
         subGenreFusion: i.subGenreFusion,
-        codesBlob: i.lyricTemperamentCodes,
+        codesBlob: i.activeModifierCodes,
         sunoVersion: i.sunoVersion,
         vibe: i.vibe,
       );
@@ -1392,10 +1753,6 @@ Output ONLY the final complete two-block Suno reply.''';
             : 'CHORD PROGRESSION (user specified — integrate into SUNO STRUCTURE: parenthetical harmony per section where chords change; echo briefly as chord/pad/guitar voicing language in SUNO STYLE; align with Key/scale when both are set): $cp',
       );
     }
-    final mb = melodyUserBlock?.trim();
-    if (mb != null && mb.isNotEmpty) {
-      buf.writeln(mb);
-    }
     final realInst = i.realInstrumentals.trim();
     if (realInst.isNotEmpty) {
       buf.writeln(
@@ -1405,7 +1762,7 @@ Output ONLY the final complete two-block Suno reply.''';
                 subGenreFusion: i.subGenreFusion,
                 selectionRaw: realInst,
                 sunoVersion: i.sunoVersion,
-                powerCodes: i.lyricTemperamentCodes,
+                powerCodes: i.activeModifierCodes,
               )
             : 'Real / acoustic instruments (live or mic’d — foreground in SUNO STYLE, not as lyrics): $realInst',
       );
@@ -1414,32 +1771,71 @@ Output ONLY the final complete two-block Suno reply.''';
       TrackDurationConfig.fromUserInput(
         duration: i.trackDuration,
         trackDurationLabel: i.trackDurationLabel,
-        djIntro: i.djIntroMixIn,
-        djOutro: i.djOutroMixOut,
+        djIntro: hybridLane ? true : i.djIntroMixIn,
+        djOutro: hybridLane ? true : i.djOutroMixOut,
         bpmRaw: i.bpm,
+        family: family,
+        primaryGenre: i.primaryGenre,
+        fusionGenre: i.subGenreFusion,
       ).toPromptContext(),
     );
-    buf.writeln(
-      buildDjMixUserBlock(
-        djIntroMixIn: i.djIntroMixIn,
-        djOutroMixOut: i.djOutroMixOut,
-        v2UnifiedOutput: useV2,
-      ),
-    );
+    if (hybridLane) {
+      buf.writeln(
+        BigRoomHardstyleCinematicHybridEngine.composeDjMixEnforcementBlock(),
+      );
+    } else {
+      buf.writeln(
+        buildDjMixUserBlock(
+          djIntroMixIn: i.djIntroMixIn,
+          djOutroMixOut: i.djOutroMixOut,
+          sunoVersion: i.sunoVersion,
+          family: family,
+          v2UnifiedOutput: useV2,
+        ),
+      );
+    }
     if (useV2) {
       buf.writeln(
         Block1MixMasterDirective.userBlockDirective(
           primaryGenre: i.primaryGenre,
           subGenreFusion: i.subGenreFusion,
-          djIntro: i.djIntroMixIn,
-          djOutro: i.djOutroMixOut,
+          sunoVersion: i.sunoVersion,
+        ),
+      );
+      buf.writeln(
+        SunoPromptRouterV2.userBlockDirective(
+          primaryGenre: i.primaryGenre,
+          subGenreFusion: i.subGenreFusion,
+          sunoVersion: i.sunoVersion,
         ),
       );
     }
+    final eliteHybrid = BigRoomHardstyleCinematicHybridEngine.userBlockAppendFor(
+      primaryGenre: i.primaryGenre,
+      subGenreFusion: i.subGenreFusion,
+    );
+    if (eliteHybrid.isNotEmpty) {
+      buf.writeln(eliteHybrid);
+    } else {
+      final eliteBr = BigRoomFusionProgressiveEngine.userBlockAppendFor(
+        primaryGenre: i.primaryGenre,
+        subGenreFusion: i.subGenreFusion,
+      );
+      if (eliteBr.isNotEmpty) {
+        buf.writeln(eliteBr);
+      }
+    }
+    final structuralHierarchy =
+        StructuralHierarchyDirective.userBlockDirective(i);
+    if (structuralHierarchy != null) {
+      buf.writeln(structuralHierarchy);
+    }
     buf.writeln(
-      SongStructureData.userBlockDirective(
-        presetId: i.songStructurePresetId,
-        customNotes: i.songStructureCustom,
+      _structureUserBlock(
+        i,
+        useV2: useV2,
+        block2OptOut: block2OptOut,
+        family: family,
       ),
     );
     if (simple) {
@@ -1456,7 +1852,14 @@ Output ONLY the final complete two-block Suno reply.''';
         if (tn.isNotEmpty) {
           buf.writeln('Lyric theme / subject / POV / keywords: $tn');
         }
-        final tc = i.lyricTemperamentCodes.trim();
+        final narrativeBrief = NarrativeBriefBuilder.build(
+          primaryGenre: i.primaryGenre,
+          subGenreFusion: i.subGenreFusion,
+          mood: i.vibe.trim().isNotEmpty ? i.vibe.trim() : 'unspecified',
+          themes: NarrativeBriefBuilder.themesFromNotes(i.lyricThemeNotes),
+        );
+        buf.writeln('NARRATIVE BRIEF: $narrativeBrief');
+        final tc = i.activeModifierCodes.trim();
         if (tc.isNotEmpty) {
           buf.writeln('TEMPERAMENT CODES: $tc');
         }
@@ -1478,6 +1881,13 @@ Output ONLY the final complete two-block Suno reply.''';
     if (!block2OptOut) {
       if (useV2) {
         buf.writeln(
+          DynamicStructuralEngine.userBlockDirective(
+            primaryGenre: i.primaryGenre,
+            subGenreFusion: i.subGenreFusion,
+            sunoVersion: i.sunoVersion,
+          ),
+        );
+        buf.writeln(
           DrumMatrix.userBlockDirective(
             primaryGenre: i.primaryGenre,
             subGenreFusion: i.subGenreFusion,
@@ -1485,7 +1895,16 @@ Output ONLY the final complete two-block Suno reply.''';
           ),
         );
       }
-      buf.writeln(HumanRealismConfig.userBlockDirective(i.humanRealism));
+      final lyricHierarchy = LyricCraftHierarchyDirective.userBlockDirective(i);
+      if (lyricHierarchy != null) {
+        buf.writeln(lyricHierarchy);
+      }
+      buf.writeln(
+        HumanRealismConfig.userBlockDirective(
+          i.humanRealism,
+          dialectStyleId: i.dialectStyleId,
+        ),
+      );
       buf.writeln(
         HumanAuthenticityConfig.userBlockDirective(
           primaryGenre: i.primaryGenre,
@@ -1494,163 +1913,22 @@ Output ONLY the final complete two-block Suno reply.''';
           audioEnvironmentModeId: i.audioEnvironmentModeId,
         ),
       );
-    }
-    if (i.includeAnalyzerData) {
-      final detail = i.analyzerSummary.trim();
-      buf.writeln(
-        'TARGET AUDIO PROFILE (foundational layout constraints — anchor vocal tags, '
-        'mix styles, arrangement pacing):',
+      final genreLyrics = GenreLyricsDirectives.userBlockDirective(
+        primaryGenre: i.primaryGenre,
+        subGenreFusion: i.subGenreFusion,
+        vibe: i.vibe,
+        lyricThemeNotes: i.lyricThemeNotes,
+        vocalSpec: i.vocalSpec,
+        vocalTone: i.vocalTone,
+        melodyStyleId: i.melodyStyleId,
+        melodyCustomNotes: i.melodyCustomNotes,
+        bpmHint: GenreData.bpmHintForLabel(i.primaryGenre),
+        genreFxLaneId: i.genreFxLaneId,
       );
-      buf.writeln(_resolvedAnalyzerConstraints(i));
-      if (detail.isNotEmpty) {
-        buf.writeln('\nAudio analysis detail:\n$detail');
+      if (genreLyrics.isNotEmpty) {
+        buf.writeln(genreLyrics);
       }
     }
     return buf.toString();
-  }
-
-  String _mockPrompt(UserInputModel i) {
-    final useV2 = ApiConstants.useSunoPromptV2Candidate();
-    final hasLyrics = i.optionalLyrics.trim().isNotEmpty;
-    final simple = i.sunoFieldOutputMode == SunoFieldOutputMode.simple;
-    final preset = SongStructureData.presetById(i.songStructurePresetId);
-    final order = preset?.sectionOrder ?? '';
-    String structureLine;
-    if (order.isNotEmpty) {
-      structureLine =
-          '[Intro]\n(long DJ-friendly entry — offline preview)\n[Body]\n(Roadmap: $order)\n[Outro]\n(tail / resolve)';
-    } else if (i.songStructurePresetId == SongStructureData.customId &&
-        i.songStructureCustom.trim().isNotEmpty) {
-      structureLine =
-          '[Intro]\n(setup)\n[Custom sections]\n(${i.songStructureCustom.trim()})\n[Outro]\n(fade)';
-    } else {
-      structureLine =
-          '[Intro]\n(arc opens)\n[Body]\n(development — offline preview)\n[Outro]\n(resolve)';
-    }
-    final djBits = <String>[];
-    if (i.djIntroMixIn) {
-      djBits.add(
-        'DJ mix-in intro; long filtered kick/hat buildup; 24+ bars before main groove; crossfade-friendly.',
-      );
-    }
-    if (i.djOutroMixOut) {
-      djBits.add(
-        'DJ mix-out; long tail; gradual filter; no hard stop; blend to next track.',
-      );
-    }
-    final djSuffix = djBits.isEmpty ? '' : ' ${djBits.join(' ')}';
-    final ri = i.realInstrumentals.trim();
-    final riBit = ri.isEmpty
-        ? ''
-        : ' Real / acoustic instrumentation: $ri (mic’d, room-aware).';
-    final chordBit = i.chordProgression.trim().isEmpty
-        ? ''
-        : ' Harmony roadmap: ${i.chordProgression.trim()}.';
-    const proProduction =
-        'Pro studio production: large-diaphragm condenser vocal chain, plate + short room, controlled de-ess; '
-        'tuned live drums, amp/DI guitars where fit, wide analog synths; glue bus compression, mono-safe sub, '
-        'streaming-ready master polish.';
-    final hitmakerBit = userRequestedHitmakerMode(i)
-        ? ' Hitmaker / Melodic Math: center-stack vocals (1176-style punch), sidechained pulsing bass, ~−8 LUFS, ear candy every ~8s.'
-        : '';
-    final styleBody = '''
-${i.primaryGenre.isNotEmpty ? i.primaryGenre : 'Electronic'} — ${i.vibe.isNotEmpty ? i.vibe : 'cinematic tension'}. ${i.bpm != null ? '${i.bpm} BPM.' : ''} ${i.keyRoot != null && i.scale != null ? '${i.keyRoot} ${i.scale}.' : ''}$chordBit ${i.vocalSpec ?? 'Vocals TBD'}. ${i.avoid.isNotEmpty ? 'Avoid: ${i.avoid}.' : ''}$riBit$djSuffix $proProduction$hitmakerBit''';
-    if (useV2) {
-      if (simple) {
-        final genre = i.primaryGenre.isNotEmpty ? i.primaryGenre : 'electronic';
-        final oneLine =
-            'A $genre track${i.bpm != null ? ' at ${i.bpm} BPM' : ''}${i.keyRoot != null && i.scale != null ? ' in ${i.keyRoot} ${i.scale}' : ''}, ${i.vibe.isNotEmpty ? i.vibe : 'cinematic tension'} — offline Simple Mode preview (connect API for full generation).';
-        return '''
-BLOCK 1 — PASTE INTO SUNO: STYLE
-
-$oneLine
-
-(${i.sunoVersion} — Simple Mode / Description field; offline preview.)
-'''.trim();
-      }
-      if (hasLyrics) {
-        return '''
-BLOCK 1 — PASTE INTO SUNO: STYLE
-
-$styleBody
-Arrangement arc (offline): $structureLine
-
-BLOCK 2 — PASTE INTO SUNO: LYRICS
-
-[Verse]
-${i.optionalLyrics.trim()}
-
-[End]
-
-(${i.sunoVersion} — offline preview: connect API for full generation)
-'''.trim();
-      }
-      if (i.generateLyrics) {
-        return '''
-BLOCK 1 — PASTE INTO SUNO: STYLE
-
-$styleBody
-Arrangement arc (offline): $structureLine
-
-BLOCK 2 — PASTE INTO SUNO: LYRICS
-
-[Verse]
-(offline Path C — connect API for original lyric generation)
-
-[End]
-
-(${i.sunoVersion} — Human Songwriter Engine requires live model)
-'''.trim();
-      }
-      return '''
-BLOCK 1 — PASTE INTO SUNO: STYLE
-
-$styleBody
-Arrangement arc (offline): $structureLine
-
-(${i.sunoVersion} — offline preview — no lyrics block. Set MD_API_BASE_URL or add an API key for live generation.)
-'''.trim();
-    }
-    if (hasLyrics) {
-      return '''
-SUNO STRUCTURE
-$structureLine
-
-SUNO STYLE
-$styleBody
-
-SUNO LYRICS
-[Verse]
-${i.optionalLyrics.trim()}
-
-[${i.sunoVersion} — offline preview: connect API for full generation]
-'''.trim();
-    }
-    if (i.generateLyrics) {
-      return '''
-SUNO STRUCTURE
-$structureLine
-
-SUNO STYLE
-$styleBody
-
-SUNO LYRICS
-[Verse]
-(offline Path C — connect API for original lyric generation)
-
-[${i.sunoVersion} — Human Songwriter Engine requires live model]
-'''.trim();
-    }
-    return '''
-SUNO STRUCTURE
-$structureLine
-
-SUNO STYLE
-$styleBody
-
-[${i.sunoVersion} — offline preview — no lyrics block]
-
-(Set MD_API_BASE_URL or add an API key for live generation.)
-'''.trim();
   }
 }

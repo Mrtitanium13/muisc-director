@@ -334,12 +334,17 @@ bool _bodyHasEndTagLine(String body) {
   return false;
 }
 
+/// Machine parsing anchor between Block 1 prose and Block 2 (prompt-mandated).
+bool _isBlock1EndSeparatorLine(String t) =>
+    t.trim().toUpperCase() == '---BLOCK_1_END---';
+
 String _stripDecorativeLines(String text) {
   return text
       .split('\n')
       .where((l) {
         final t = l.trim();
         if (t.isEmpty) return true;
+        if (_isBlock1EndSeparatorLine(t)) return false;
         if (RegExp(r'^[\-=]{3,}$').hasMatch(t)) return false;
         return !_isSeparatorOrBannerOnlyLine(t);
       })

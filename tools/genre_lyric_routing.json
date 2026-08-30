@@ -1,0 +1,26 @@
+{
+  "_schema": {
+    "purpose": "Priority-ordered genre lyric engine routing. Engine bodies live in tools/*.txt or inline_directives."
+  },
+  "global_guardrail": "GLOBAL LYRICIST GUARDRAIL (strict):\nDo NOT copy, reuse, or interpolate exact lyrics, phrases, or signature hooks from existing artists or reference datasets (tools/lyrics_training/*Dataset.json). All lyrics must be 100% original. References are cadence, structure, and tone only.\nTHEME FIT (mandatory): every sung line — especially chorus — must advance or emotionally land the stated vibe/theme/story. Reject off-theme words, generic club filler, and production-meta lines (instrument/drum personification). Put groove/instrument cues only in [section tags], never as chorus meaning. Do not lock specific chorus text; rewrite freely within the theme.",
+  "inline_directives": {
+    "future_house": "CRITICAL DIRECTION FOR FUTURE HOUSE LYRICS:\n1. Industrial realism and tactile imagery — concrete objects, built spaces, routine detail.\n2. Zero generic AI buzzwords, car-melancholy loops, or club clichés.\n3. High-tier pop-house songwriting: punchy pre-drop cues, controlled vocal delivery.\n4. Prefer [Verse], [Pre-Chorus], [Chorus], [Drop] with minimalist drop anchors.",
+    "amapiano": "CRITICAL DIRECTION FOR AMAPIANO / PRIVATE SCHOOL / AFRO-HOUSE LYRICS:\n1. English-dominant canvas — contemporary global urban phrasing, spatial late-night imagery, smooth vocal pockets for deep house tempo. BAN generic Western pop clichés (\"vows,\" \"committing sin\") and age-number tropes (\"she was nineteen,\" \"i was seventeen,\" numeric youth hooks). Prefer atmospheric maturity: receipts, gate lights, rain, auntie asking, city detail.\n2. COMMERCIAL ARRANGEMENT ORDER (mandatory): Intro → Verse 1 → Chorus → Verse 2 → Chorus → Bridge → Percussion Breakdown → Drop → Final Chorus → Outro. NEVER place Verse 2 after Drop/Final Chorus. NEVER sandwich two Choruses with only Drop/Breakdown between before Verse 2.\n3. LOG DRUM IS KING: tag progression to percussive log drum punch (e.g. [Drop: Heavy Rolling Log Drum], [Vocal Chant Interlude]). Log drum = FM synthesized club bass in tags — never live/acoustic log drum.\n4. Embed production-ready layout via Dynamic Structural Engine (tools/dynamic_structural_engine.txt) — assemble & prune per genre; never static one-size-fits-all templates.\n5. Cadence reference only: tools/lyrics_training/amapianoDataset.json (20 English-led hits) — never copy artist hooks or lyric phrases.\n6. Definitive polished master (structure + tone): tools/lyrics_training/dontCallMeLonely_master.txt\n7. THEME FIT (mandatory): every sung line — especially chorus — must advance or emotionally land the stated vibe/theme/story. Reject words or phrases that are off-theme, generic club filler, or production-meta (instrument/drum personification like \"log drum understand\", \"rhythm heals the plan\", empty \"pieces click\"). Put groove/instrument cues only in [section tags], never as chorus meaning."
+  },
+  "file_engines": {
+    "hardstyle_vocal": "tools/hardstyle_vocal_lyricist_engine.txt",
+    "big_room_fusion_progressive": "tools/big_room_fusion_progressive_vocal_lyricist_engine.txt",
+    "big_room_hardstyle_hybrid": "tools/big_room_hardstyle_cinematic_hybrid_vocal_lyricist_engine.txt",
+    "edm_breakdown_vocal": "tools/edm_breakdown_vocal_lyricist_engine.txt"
+  },
+  "routes": [
+    {"type": "gospel_master", "priority": 10},
+    {"type": "southern_gospel_country", "priority": 20},
+    {"type": "big_room_hardstyle_hybrid", "engine": "big_room_hardstyle_hybrid", "priority": 30},
+    {"type": "hardstyle_vocal", "engine": "hardstyle_vocal", "priority": 40},
+    {"type": "future_house", "inline": "future_house", "priority": 50},
+    {"type": "big_room_fusion_progressive", "engine": "big_room_fusion_progressive", "priority": 60},
+    {"type": "amapiano", "inline": "amapiano", "priority": 70},
+    {"type": "edm_breakdown_vocal", "engine": "edm_breakdown_vocal", "priority": 80}
+  ]
+}

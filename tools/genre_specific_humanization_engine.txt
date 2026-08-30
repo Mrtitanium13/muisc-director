@@ -1,543 +1,327 @@
 # GENRE-SPECIFIC HUMANIZATION & AUTHENTICITY ENGINE (PLATINUM LAYER 3)
 
-**Scope:** Platinum Songwriting Engine v4.0 **Layer 3** — regional and genre-specific authenticity. Stage 12 (humanization pass) in the **CREATION PIPELINE**. Runs **after** genre is locked, **after** **§12 NIGERIA CULTURAL REALISM ENGINE** when Nigerian context applies, and **before** final Block 2 delivery.
+**Scope:** Platinum Songwriting Engine v4.0 **Layer 3** — linguistic, cultural, and idiomatic thematic profiling across the full genre taxonomy. Runs **after** genre is locked and **after** **NIGERIA CULTURAL REALISM ENGINE** when Nigerian context applies, before final Block 2 delivery.
 
-**Precedence:** Overrides generic “add household detail / coffee / porch” humanization in **Human Songwriter Engine v3.0 §5** and **Music Creation Intelligence §5** when genre lanes differ. SECTION 0 + SECTION 2 bracket skeleton still win on structure.
+**Precedence:** Overrides generic humanization in **Human Songwriter Engine v3.0 §5** and **Music Creation Intelligence §5** when genre lanes differ. SECTION 0 + SECTION 2 bracket skeleton still win on structure. Syllable math → **MELODY-SYNCED LYRIC ENGINE § CORE MATRIX LOOKUP TABLE**. Phonetic peak laws → **MELODY-SYNC § CRITICAL PHONETIC & STRUCTURAL INTEGRITY LAWS**.
 
-**Silent:** Never print engine name, genre authenticity labels, or test checklist results in the user-visible reply.
-
----
-
-## PURPOSE
-
-Humanization must NOT use the same rules for every genre.
-
-Different genres express authenticity differently.
-
-The system must identify the genre before applying humanization rules.
-
-Generic humanization is prohibited.
-
-Use genre-specific authenticity standards.
+**Silent:** Never print engine name, genre authenticity labels, syllable counts, or test-checklist results in the user-visible reply.
 
 ---
 
-# MASTER RULE
+## SECTION I: THE GENRE-SPECIFIC HUMANIZATION & AUTHENTICITY ENGINE (LAYER 3)
 
-Ask:
+This module handles linguistic, cultural, and idiomatic thematic profiling across your app's entire ecosystem.
 
-"What would make a listener of THIS genre believe a real artist wrote this?"
+### 1. EDM CATEGORIES (32 SUB-GENRES)
+*   **House / Deep House / Soulful House / Tech House / Future House / Disco House:**
+    *   *Law:* Short repetitive hooks grounded in **psychological realism** — raw intimacy, relationship tension, physical release. Low-register dry vocals spoken or whispered tight to the capsule.
+    *   *Banned:* Narrative country/folk storytelling, sci-fi/rave metaphors (frequency, neon, galaxies, vibrations, dissolving), forced scene backdrops.
+    *   *Preferred:* Blunt fragments, internal monologue, conversational honesty — not club-hands-up filler.
+*   **Progressive House / Melodic House / Future Bass / Uplifting Trance / Trance:**
+    *   *Law:* Emotional release through **felt honesty** — longing, turning points, unrequited love. Floating sung hooks chop-ready in build-ups; sparse breakdown intimacy.
+    *   *Banned:* Galaxy/neon poetry (infinite skies, blinding light, starlight, horizons), sci-fi rave clichés, melodramatic festival declarations.
+    *   *Preferred:* Short blunt emotional phrases, repetitive singable hooks — psychological state over cinematic travelogue.
+*   **Big Room / Big Room Techno / Techno / Hard Techno / Melodic Techno / Acid Techno:**
+    *   *Law:* Internal monologues, physical boundaries, sensory overload — hypnotic spoken/whispered delivery against driving kicks.
+    *   *Banned:* Sweet pop love stories, sci-fi metaphors (frequency, static tension, neon, seismic), clinical body-horror phrasing.
+    *   *Preferred:* Commands, confessions, jagged fragments — vulnerable or hyper-focused psychological state.
+*   **Dubstep / Melodic Dubstep / Drum & Bass / Liquid DnB:**
+    *   *Law:* Liquid lanes utilize smooth, soulful, half-time R&B vocal flows. Heavy Dubstep and Drum & Bass lanes utilize sharp, high-aggression, rapid MC-style hype commands.
+    *   *Banned:* Monotonous jazz-club phrasing or slow, acoustic-guitar singer-songwriter metrics.
+    *   *Vocabulary:* Rewind, watch the drop, break the cage, liquid sky, heavy pressure, feel the friction.
+*   **Hardstyle / Rawstyle / Hard Bounce / EDM Bounce:**
+    *   *Law:* **Dynamic shift mandatory:** [Breakdown] = vulnerable unpolished spoken confession; [Build-up] = cold defiant survival/determination; [Pre-Drop] = ONE yelled/screamed command word before kick impact. Drop = chop/mantra cells only.
+    *   *Banned:* Melodramatic clichés (we own the night, ghosts pulling near, strobe light flash), clinical phrasing (hollows out my chest cavity, destroy the grid), sci-fi rave metaphors, cozy mundane filler.
+    *   *Preferred:* Honest confession → fierce command arc — e.g. *"The room is spinning"* → *"Look me in the eyes"* → *"GO."*
+*   **Nu-Disco / Future Funk / Vinahouse / Amapiano-Vinahouse / Afro House / UK Garage / Jersey Club:**
+    *   *Law:* Funk/Disco lanes require retro, high-energy, infectious party-groove hooks. Vinahouse/Jersey variants require hyper-repetitive, rapid, loop-ready vocal micro-chops snapped to punchy kick grids.
+    *   *Banned:* Long, sprawling ambient prose or somber, melancholy indie-rock laments.
+    *   *Vocabulary:* Hit the floor, bassline bounce, funky rhythm, non-stop, check the clock, step to the beat.
 
-Apply the answer.
+### 2. HIP HOP CATEGORIES (13 SUB-GENRES)
+*   **Boom Bap / Hip Hop / Jazz Rap:**
+    *   *Law:* Prioritize intricate internal rhyming structures, street-level storytelling, clever double-entendres, and deep metaphorical social analysis.
+    *   *Banned:* Monotone electronic whispers or high-energy festival screaming.
+    *   *Vocabulary:* Concrete jungle, static needles, raw ink, city blocks, vinyl loops, deep crates.
+*   **Trap / Melodic Trap / Drill / UK Drill / NY Drill / Phonk:**
+    *   *Law:* Lines must match high-velocity hi-hat rolls or aggressive sliding 808 glides. Drill lines must focus on cold, tactical, high-intensity street narratives. Phonk lines require sinister, low-fidelity tape-loop processing hooks.
+    *   *Banned:* Sweet pop-acoustic cliches, soft falsettos, or country-style instrumentation markers.
+    *   *Vocabulary:* Cold steel, tracking codes, frozen blocks, zero mercy, baseline phantom, smoke screens.
+*   **Lo-Fi Hip Hop / Chillhop / Cloud Rap:**
+    *   *Law:* Deliver warm, nostalgic, sleepy, ultra-relaxed internal monologues or hazy, abstract bedroom reflections.
+    *   *Banned:* High-register belt screaming, aggressive double-time military drilling cadences.
+    *   *Vocabulary:* Midnight rain, coffee steam, faded polaroids, drift away, static skies, slow motion.
+*   **Afro-Swing / Afro Rap:**
+    *   *Law:* Deliver fluid, melodic rap flows heavily mixed with West African pidgin phrasing and London street vernacular, locked directly to infectious cross-rhythmic pockets.
+    *   *Banned:* Stark, abrasive, distorted punk-metal shouting patterns.
+    *   *Vocabulary:* Moving sweet, on my wave, standard procedure, lock the lane, daily paper.
 
-Not all genres require:
+### 3. R&B / SOUL CATEGORIES (9 SUB-GENRES)
+*   **R&B / Contemporary R&B / 90s R&B / New Jack Swing / Trap Soul:**
+    *   *Law:* Write highly expressive, silky, melismatic lines utilizing complex vocal runs. Trap Soul must feature dark, moody, relationship-centered vulnerability. New Jack Swing requires high-tempo, swing-beat dance-pop confidence.
+    *   *Banned:* Monotone spoken-word robot text or country bluegrass licks.
+    *   *Vocabulary:* Midnight drive, neon shadows, temperature rising, no regrets, silky touch, baseline heartbeat.
+*   **Soul / Neo-Soul / Funk / Quiet Storm:**
+    *   *Law:* Prioritize deep, organic chest-voice warmth, vintage analog performance dynamics, socially conscious commentary, or smooth, late-night acoustic intimacy.
+    *   *Banned:* Hyperpop robotic glitches or harsh metalcore growls.
+    *   *Vocabulary:* Natural vibe, velvet skies, inner fire, standard love, electric current, sweet healing.
 
-* storytelling
-* hyper-specific details
-* realism
+### 4. POP CATEGORIES (14 SUB-GENRES)
+*   **Pop / Mainstream Pop / Pop / Max Martin / Electropop / Dance Pop / Synth Pop:**
+    *   *Law:* Enforce absolute precision engineering. Hooks must feature hyper-mathematical line symmetry, immediate melodic earworms, and razor-sharp, pristine commercial tracking patterns.
+    *   *Banned:* Intentionally unstructured rambling, unrhymed free-verse, or abrasive industrial distortions.
+    *   *Vocabulary:* High voltage, cross the line, target lock, neon lightning, countdown, state of mind.
+*   **Bedroom Pop / Indie Pop:**
+    *   *Law:* Deliver soft, intimate, unpolished, quirky, raw bedroom vulnerability. Vocals must sound like an un-engineered, close-mic home studio setup.
+    *   *Banned:* Massively stacked, polished group harmonies or theatrical arena belting.
+    *   *Vocabulary:* Paper-thin walls, taped-up posters, cold tea, dynamic shift, messy room, unspoken thoughts.
+*   **K-POP / J-POP / C-Pop / Mandopop:**
+    *   *Law:* Construct rapid, multi-lingual code-switch blocks. Alternate frequently between native Asian lyrics and catchy English hook phrases. Structure lyrics to sound like a synchronized multi-member idol group performance.
+    *   *Banned:* Monotonous single-vocal solo phrasing without any dynamic arrangement switches.
+    *   *Vocabulary:* Starlight eyes, synchronized heart, countdown three-two-one, neon rain, dream chase.
+*   **Latin Pop:**
+    *   *Law:* Deliver highly romantic, vibrant, rhythmic pop toplines locked directly to infectious acoustic guitar plucking patterns or modern pop-reggaeton grooves.
+    *   *Banned:* Dark industrial dystopian content or cold, non-rhythmic indie prose.
+    *   *Vocabulary:* Mi amor, bajo el sol, irresistible, dulce veneno, paso a paso, fuego ardiente.
+*   **Hyperpop:**
+    *   *Law:* Emphasize hyper-saturated, pixelated, chaotic internet-culture imagery, glitchy text processing, and self-referential plastic pop clichés.
+    *   *Banned:* Organic acoustic folk warmth or classic traditional blues patterns.
+    *   *Vocabulary:* Glitch my heart, plastic crown, laser beams, overload, fully reset, digital candy.
 
-Some genres require:
+### 5. ROCK / METAL CATEGORIES (16 SUB-GENRES)
+*   **Rock / Classic Rock / Hard Rock / Alternative / Alt Rock / Indie Rock:**
+    *   *Law:* Target driving, authentic guitar-driven grit, systemic defiance, real room acoustics, and high-energy stadium choruses.
+    *   *Banned:* Slick, hyper-quantized electronic club mantras or hip-hop trap triplet code patterns.
+    *   *Vocabulary:* Electric static, wire lines, standard deviation, crash down, neon wild, out of gas.
+*   **Pop Punk / Emo / Punk:**
+    *   *Law:* Deliver fast, punchy, nasal, angst-fueled staccato vocal lines that open up into explosive, melodic, highly energetic anthemic choruses.
+    *   *Banned:* Gentle, jazzy melismatic runs or smooth, detached electronic club whispers.
+    *   *Vocabulary:* Dead-end town, teenage shadows, broken baseline, status quo, screaming loud, baseline exit.
+*   **Metal / Heavy Metal / Metalcore / Death Metal:**
+    *   *Law:* Enforce dramatic structural dynamic shifts. Verses must use fast, consonant-heavy staccato patterns over heavy guitars, opening up into soaring clean legato choruses or brutal, guttural breakdown growls.
+    *   *Banned:* Bubblegum pop-romance clichés or soft, breathy uncompressed vocal hooks.
+    *   *Vocabulary:* Iron gates, shattered glass, systematic crash, cold ash, phantom shadows, razor edges.
+*   **Post-Rock / Shoegaze / Dream Pop:**
+    *   *Law:* Keep vocals soft, blurry, and deeply integrated into massive walls of ambient guitar distortion, functioning as a warm texture rather than an upfront pop narrative.
+    *   *Banned:* Crisp, razor-sharp commercial rap cadences or aggressive crowd-command shouting.
+    *   *Vocabulary:* Pale sunlight, blurred windows, shifting waves, echoes, static hiss, faint shadows.
 
-* worship
-* emotional vulnerability
-* crowd participation
-* spiritual connection
-* anthem energy
+### 6. COUNTRY / FOLK CATEGORIES (8 SUB-GENRES)
+*   **Country / Modern Country / Outlaw Country / Americana / Folk-Rock / Bluegrass / Indie Folk / Singer-Songwriter:**
+    *   *Law:* Prioritize literal, front-porch narrative storytelling. Establish concrete settings, specific times, real characters, and honest emotional stakes over raw acoustic/organic instrumentation.
+    *   *Banned:* Highly processed synthwave imagery, urban street drilling terminologies, or plastic hyperpop cliches.
+    *   *Vocabulary:* Dusty highway, screen door, cold rain, dynamic truth, open plains, midnight train.
 
-Adjust accordingly.
+### 7. GOSPEL / WORSHIP CATEGORIES (12 SUB-GENRES)
+*   **Gospel / Traditional Gospel / Contemporary Gospel / Urban Gospel / Southern Gospel / Country Gospel / Afro-Gospel:**
+    *   *Law:* Focus on soul-stirring spiritual transformation, massive call-and-response choir stacks, and high-energy vocal improvisations.
+    *   *Banned:* Bleak dystopian cynicism, existential despair, or materialist street-bravado themes.
+    *   *Vocabulary:* Overflow, heavy chains breaking, joy rising, power in the spirit, dynamic grace, open heavens.
+*   **Praise/Worship / Modern Worship / Worship Ballad / CCM / Pop Worship:**
+    *   *Law:* Deliver simple, reverent, highly vertical congregational lyrics designed for easy stadium singalongs over soaring, atmospheric instrumental builds.
+    *   *Banned:* Rapid-fire technical rap subdivisions or abrasive metalcore growling blocks.
+    *   *Vocabulary:* Faithful cornerstone, holy fire, standard surrender, endless wonder, ocean of grace, stand in awe.
 
----
+### 8. JAZZ / BLUES CATEGORIES (12 SUB-GENRES)
+*   **Jazz / Vocal Jazz / Bebop / Smooth Jazz / Jazz Fusion / Fusion / Nu-Jazz / Acid Jazz / Big Band:**
+    *   *Law:* Deliver complex, sophisticated micro-timed phrasing that pulls relaxed behind the rhythm grid, incorporating smooth jazz imagery, night-club poetry, or abstract syncopated lines.
+    *   *Banned:* Rigidly quantized mechanical metronome counts or aggressive punk-rock delivery.
+    *   *Vocabulary:* Velvet midnight, smoking neon, syncopated heartbeat, cool rain, silver smoke, abstract blue.
+*   **Blues / Chicago Blues / Delta Blues:**
+    *   *Law:* Force the strict traditional 3-line AAB stanza format (Line 1, Line 1 repeated with emotional variance, Line 2 raw thematic payoff). Emphasize deep down-home grit and hard-luck storytelling.
+    *   *Banned:* Standard 4-line commercial pop-verse layouts or electronic synthesizer terminologies.
+    *   *Vocabulary:* Crossroads, heavy dust, early morning train, worn-out shoes, breaking down, crying out.
 
-# GOSPEL / WORSHIP AUTHENTICITY ENGINE
+### 9. LATIN CATEGORIES (11 SUB-GENRES)
+*   **Reggaeton / Dembow / Brazilian Funk / Latin Pop:**
+    *   *Law:* Align short, staccato, highly rhythmic vocal phrasing directly with the iconic 16th-note dembow or funk snare loop. Incorporate natural Spanglish code-switching.
+    *   *Banned:* Long, sprawling, ambient post-rock essays without clear rhythmic punctuation.
+    *   *Vocabulary:* Fuego, dale mami, la discoteca, rompiendo el bajo, sacude el ritmo, bajo las luces.
+*   **Bachata / Salsa / Cumbia / Vallenato / Sertanejo / Forró / Bossa Nova:**
+    *   *Law:* Bachata requires tragic romance synchronized with syncopated guitar picking. Salsa requires high-tempo narrative verses that erupt into explosive, call-and-response Montuno chorus sections. Bossa Nova requires whispered, conversational night-club jazz poetry.
+    *   *Banned:* Aggressive electronic drill slang or loud metalcore vocal screaming patterns.
+    *   *Vocabulary:* Corazón herido, amargo destino, repica el tambor, sabrosura, brisa del mar, noche loca.
 
-## PRIMARY OBJECTIVE
+### 10. REGGAE / DUB CATEGORIES (5 SUB-GENRES)
+*   **Reggae / Roots Reggae / Dub / Dancehall / Soca:**
+    *   *Law:* Roots/Dub requires conscious spiritual social commentary delivered relaxed behind the beat, leaving wide gaps for tape-delay echo trails. Dancehall/Soca demands explosive carnival energy and rapid dancefloor commands.
+    *   *Banned:* Dark industrial techno vocabulary or clinical, sterile cybernetic metaphors.
+    *   *Vocabulary:* Positive vibration, sound system, fire burning, rhythm grid, moving massive, elevation.
 
-Worship songs are not primarily about the singer.
+### 11. AFRO / WORLD CATEGORIES (12 SUB-GENRES)
+*   **Afrobeats / Amapiano / Highlife / Fuji / Gqom:**
+    *   *Law:* Float fluidly and elastically over deep log-drum frames or polyrhythmic percussion beds, utilizing highly repetitive, infectious pidgin hooks and celebratory group accents.
+    *   *Banned:* Gloomy bedroom-pop angst or fast-speed heavy-metal screaming layers.
+    *   *Vocabulary:* Standard energy, non-stop vibration, catch the wave, pure magic, heavy baseline.
+*   **Bollywood / Filmi / Punjabi / Bhangra / Folk / Middle Eastern / City Pop:**
+    *   *Law:* Desi fusions must start with a soaring, long-vowel solo vocal introduction before snapping into rapid, highly rhythmic staccato verses locked to a pounding drum grid. City Pop requires retro-80s neon-lit nightlife sophistication.
+    *   *Banned:* Aggressive Western street-drill drillings or harsh industrial noise blocks.
+    *   *Vocabulary:* Golden horizon, dhol beating, starry night, neon expressway, dancing shadows.
 
-They are about:
-
-* God
-* Faith
-* Worship
-* Praise
-* Testimony
-* Gratitude
-* Surrender
-* Hope
-* Redemption
-
----
-
-## FOCUS AREAS
-
-Increase:
-
-* prayer language
-* gratitude
-* testimony
-* praise
-* faith declarations
-* scriptural themes
-* worship moments
-* spiritual intimacy
-
-Reduce:
-
-* excessive scenery
-* excessive symbolism
-* random household details
-* meaningless poetic phrases
-* vague metaphors
-
----
-
-## WORSHIP LANGUAGE
-
-Encourage:
-
-* Lord
-* Father
-* Savior
-* Redeemer
-* King
-* Mercy
-* Faithfulness
-* Grace
-* Presence
-* Holy
-* Worthy
-* Deliverance
-
-Only when naturally relevant.
-
-## GOSPEL STAGING ARCHITECTURE (BLOCK 2 BRACKETS)
-
-Traditional Praise & Worship presets must **never** inherit club/EDM mix language in staging tags.
-
-- **Ban:** sidechain pump, filter sweep, DJ intro/outro, mix-out groove, supersaw, sub bloom, riser, loop-as-club-grid.
-- **Use:** `Isolated multi-tracked vocal doubles, Tight double-tracked vocal stacks` · `Dead-room isolation, pristine studio environment, close-mic vocal tracking` (Intro) · `Analog VCA glue, warm dynamic leveling` · `Sustained studio band resolution, clean multi-track fade, trailing organ decay`. **Never** `Studio Harmonic Backing` / `Harmonic Overlays` · **no tape hiss** in Intro/Outro.
-- **Full law:** **ARRANGEMENT STAGING FORMAT §1 TRADITIONAL GOSPEL / PRAISE & WORSHIP ARCHITECTURE** · **STUDIO-ISOLATION DIRECTIVE (ANTI-CROWD CHEERS)**.
-
----
-
-## TESTIMONY MODE
-
-Ask:
-
-"What did God do?"
-
-Examples:
-
-* He healed
-* He restored
-* He carried me
-* He delivered me
-* He forgave me
-* He provided
-* He protected me
-
-Build lyrics around experiences.
-
-Not around scenery.
-
----
-
-## PRAISE MODE
-
-Ask:
-
-"Who is God?"
-
-Examples:
-
-* Faithful
-* Holy
-* Worthy
-* Mighty
-* Loving
-* Merciful
-
-Praise should feel genuine.
-
-Not generic.
-
----
-
-## PRAYER MODE
-
-Allow direct communication with God.
-
-Examples:
-
-Good:
-
-"Lord, teach me how to trust You."
-
-Good:
-
-"Father, hold my heart together."
-
-Good:
-
-"When I lost my way, You called my name."
-
----
-
-## CONGREGATIONAL TEST
-
-Ask:
-
-"Could 500 people sing this together in church?"
-
-If NO:
-
-Rewrite.
+### 12. CINEMATIC CATEGORIES (13 SUB-GENRES)
+*   **Orchestral / Film Score / Cinematic / Trailer / Ambient / Dark Ambient / Ambient Score:**
+    *   *Law:* Treat vocals purely as minimalist atmospheric instruments. Keep performance text highly sparse, relying on long, lingering choral chants or deep, spoken trailer narration.
+    *   *Banned:* Fast conversational pop chatter or standard verse-chorus top-40 radio pacing.
+    *   *Vocabulary:* Eternal void, eclipse, endless time, phantom world, deep shadow, silent expansion.
+*   **Synthwave / Retrowave / Vaporwave / New Wave / Industrial / EBM:**
+    *   *Law:* Synthwave/Retrowave requires retro-80s dystopian driving moods and neon-tinted highway imagery. Industrial/EBM requires harsh, mechanical, ultra-quantized electronic distortion commands.
+    *   *Banned:* Acoustic porch fingerpicking or sunny, cheerful commercial beach pop.
+    *   *Vocabulary:* Chrome engines, grid runner, digital horizon, machine protocol, laser drive, static sky.
 
 ---
 
-## WORSHIP CHORUS TEST
+## SECTION II:THE HARDSTYLE / ALL-GENRE VOCAL PIPELINE (BLOCK 2)
 
-The chorus should:
+This matrix locks the structural layout per genre group, blocking invalid pop structures to protect Suno V4 vocal integrity.
 
-* be memorable
-* be easy to sing
-* contain clear worship language
-* communicate one spiritual truth
+### 1. ELECTRONIC LOOP GRIDS
+*   **Sub-Genres:** `Hardstyle` · `Rawstyle` · `Hard Bounce` · `EDM Bounce` · `Techno` · `Hard Techno` · `Acid Techno` · `Big Room Techno` · `Vinahouse` · `Amapiano-Vinahouse` · `Gqom`.
+*   *Pipeline Matrix:*
+    *   **[Intro: Monolithic Kick Pulse]** (0 lines) -> `[Hard Quantized Rhythmic Sub-Rumble Loop, Zero Lyrics]`
+    *   **[Vocal Progression: System Command]** (2 lines) -> `[Pitched-Down, Dry Monotone Delivery, High Saturation]`
+    *   **[Cinematic Breakdown]** (4 lines) -> `[Atmospheric Pad Expansion, Ethereal Reverb Drift, Tension Ramping]`
+    *   **[Build: The Adrenaline Shock]** (1 line) -> `[Ultra-Compressed Stuttering Phrase, Exponential Pitch Rise]`
+    *   **[Drop: Mainstage Impact]** (0 lines) -> `[Complete Vocal Vacuum, Pounding Maximum Distortion Bass Synthesis]`
+    *   **[Outro: Warehouse Decay]** (1 line) -> `[Residual Feedback Loop, Ring Modulated Vocal Decay]` -> `[End]`
 
-Avoid overly complex writing.
+### 2. ELEVATED FESTIVAL ANTHEMS
+*   **Sub-Genres:** `Progressive House` · `Melodic House` · `Future House` · `Future Bass` · `Melodic Techno` · `Trance` · `Uplifting Trance` · `Melodic Dubstep`.
+*   *Pipeline Matrix:*
+    *   **[Intro: Evolving Arpeggio]** (0 lines) -> `[Ambient Pluck Sequence Evolving, Wide Stereo Width]`
+    *   **[Verse: Cinematic Awakening]** (4 lines) -> `[Lush, Reverb-Drenched Wide Topline, Soaring Legato Phrasing]`
+    *   **[Build: Tension Multiplier]** (2 lines) -> `[Vocal Chopped Stutters, Rising High-Pass Filter Sweep]`
+    *   **[Drop: Euphoric Release]** (0 lines) -> `[Vocal Cut or Heavily Sidechained to Massive Lead Supersaws, 16 Bars]`
+    *   **[Chorus: Central Hook Payoff]** (4 lines) -> `[Full Power Stacked Harmonies, Open-Vowel Legato Release]`
+    *   **[Outro: Ambient Wash Out]** (2 lines) -> `[Fading Delay Tails of the Main Hook Theme]` -> `[End]`
+
+### 3. RAP POCKET GRIDS
+*   **Sub-Genres:** `Hip Hop` · `Boom Bap` · `Trap` · `Melodic Trap` · `Drill` · `UK Drill` · `NY Drill` · `Phonk` · `Jazz Rap` · `Afro Rap` · `Afro-Swing` · `Dancehall`.
+*   *Pipeline Matrix:*
+    *   **[Intro: Horizon Static]** (2 lines) -> `[Spoken Monologue, Heavy Vinyl Crackle or Lo-Fi Tape Filter]`
+    *   **[Verse: Grid Subdivision]** (12–16 lines) -> `[Breath-Locked Aggressive Rap Delivery, Center-Panned Dry Vocal]`
+    *   **[Chorus: Rhythmic Anchor]** (4–8 lines) -> `[Stacked Vocal Double Overlays, Heavy Percussive Bass Saturation]`
+    *   **[Outro: Grid Decay]** (2 lines) -> `[Filtered Vocal Delay Trails, Decaying Beat Pocket]` -> `[End]`
+
+### 4. SOARING STADIUM RELEASE
+*   **Sub-Genres:** `Rock` · `Hard Rock` · `Classic Rock` · `Alternative` · `Alt Rock` · `Pop Punk` · `Emo` · `Punk` · `Metal` · `Heavy Metal` · `Metalcore` · `Death Metal`.
+*   *Pipeline Matrix:*
+    *   **[Verse: Staccato Friction]** (4–6 lines) -> `[Aggressive Rhythmic Delivery, Consonant-Heavy Punches]`
+    *   **[Pre-Chorus: Rising Lift]** (4 lines) -> `[Grit-Inflected High-Register Sing-Scream, Accelerating Drums]`
+    *   **[Chorus: Melodic Release]** (4–8 lines) -> `[Full Stack Belting Vocals, Massive Open-Vowel Legato Release]`
+    *   **[Bridge: Break-Wall Breakdown]** (2–4 lines) -> `[Guttural Screamed Growls or Deep Instrumental Riffing Grid]`
+    *   **[Outro: Amp Feedback Hiss]** (2 lines) -> `[Guitar Amp Static Hiss, Fading Vocal Echo]` -> `[End]`
+
+### 5. IDOL SYSTEM MULTI-TRACKING
+*   **Sub-Genres:** `Pop` · `Mainstream Pop` · `Pop / Max Martin` · `Electropop` · `Dance Pop` · `K-Pop` · `J-Pop` · `C-Pop` · `Mandopop` · `Hyperpop` · `Synth Pop` · `Bollywood` · `Bhangra` · `Punjabi`.
+*   *Pipeline Matrix:*
+    *   **[Intro: Bright Hook Preview]** (2 lines) -> `[A Cappella Group Harmonies, Stereo Stacked Hook Theme]`
+    *   **[Verse 1: Solo Performance]** (4 lines) -> `[Crisp High-Register Solo Track, Clean Commercial Pop Snap Pocket]`
+    *   **[Verse 2: Style Shift / Code-Switch]** (4 lines) -> `[Double-Time Rhythmic Delivery Shift, Sudden Production Pivot]`
+    *   **[Pre-Chorus: Dramatic Escalation]** (4 lines) -> `[Ascending Multi-Voice Harmony Build, High-Pass Filter Lift]`
+    *   **[Chorus: Polished Anthem Climax]** (4–8 lines) -> `[Full Group Vocal Stack, Maximum Commercial Topline Processing]`
+    *   **[Outro: Synchronized Grid End]** (2 lines) -> `[Bright Group Vocal Ad-libs, Sharp Synchronized Beat Stop]` -> `[End]`
+
+### 6. ORGANIC ESSENCE & TRADITIONAL RADIO
+*   **Sub-Genres:** `House (Deep/Soulful/Afro)` · `Amapiano` · `Lo-Fi Hip Hop` · `Chillhop` · `Cloud Rap` · `R&B` · `Contemporary R&B` · `Neo-Soul` · `Soul` · `90s R&B` · `New Jack Swing` · `Quiet Storm` · `Trap Soul` · `Funk` · `Bedroom Pop` · `Indie Pop` · `Post-Rock` · `Shoegaze` · `Dream Pop` · `Country` · `Modern Country` · `Outlaw Country` · `Americana` · `Folk-Rock` · `Bluegrass` · `Indie Folk` · `Singer-Songwriter` · `Gospel` · `Traditional Gospel` · `Contemporary Gospel` · `Urban Gospel` · `Praise/Worship` · `Modern Worship` · `Worship Ballad` · `CCM` · `Pop Worship` · `Southern Gospel` · `Country Gospel` · `Jazz` · `Vocal Jazz` · `Bebop` · `Smooth Jazz` · `Jazz Fusion` · `Fusion` · `Nu-Jazz` · `Acid Jazz` · `Big Band` · `Latin Pop` · `Bachata` · `Salsa` · `Bossa Nova` · `Cumbia` · `Vallenato` · `Sertanejo` · `Forró` · `Reggae` · `Roots Reggae` · `Dub` · `Soca` · `Highlife` · `Fuji` · `Filmi` · `Folk` · `Middle Eastern` · `City Pop` · `New Wave`.
+*   *Pipeline Matrix:*
+    *   **[Verse: Narrative Core]** (4–6 lines) -> `[Front-and-Center Clean Solo Vocal, Clear Acoustic Instrument Separation]`
+    *   **[Pre-Chorus: Harmonic Step]** (2–4 lines) -> `[Vocal Double Layering, Expanding Chordal Harmonies]`
+    *   **[Chorus: Central pay-off Theme]** (4–8 lines) -> `[Polished Multi-Voice Harmony Stack, Wide Balanced Stereo Field]`
+    *   **[Bridge: Acoustic Reset Zone]** (4 lines) -> `[Stripped-Back Intimate Vocal Delivery, Bare Structural Deviation]`
+    *   **[Outro: Natural Air Fade]** (2–4 lines) -> `[Improvisational Vocal Ad-libs, Natural Studio Trailing Decay]` -> `[End]`
+
+### 7. DETACHED ATMOSPHERIC SCORES
+*   **Sub-Genres:** `Film Score` · `Cinematic` · `Trailer` · `Ambient` · `Dark Ambient` · `Ambient Score` · `Vaporwave` · `Industrial` · `EBM`.
+*   *Pipeline Matrix:*
+    *   **[Section: Sonic Awakening]** (0 lines) -> `[Evolving Cinematic Textures, Ethereal Low-Frequency Resonance]`
+    *   **[Vocal Layer: Minimalist Chant]** (2 lines) -> `[Sparse Choral Drone Stacks or Deep Monotone Narrative Spoken Word]`
+    *   **[Section: Maximum Dynamic Scale]** (0 lines) -> `[Massive Wall of Orchestral Instrumentation or Industrial Synthesizer Grids]`
+    *   **[Outro: Dissolving Echoes]** (0 lines) -> `[Complete Reverb Wash Dissolve, Decaying Frequencies]` -> `[End]`
+
+### 8. VINTAGE CROSSROADS METRIC
+*   **Sub-Genres:** `Blues` · `Chicago Blues` · `Delta Blues`.
+*   *Pipeline Matrix:*
+    *   **[Verse: Call-and-Response Stanza 1]** (3 lines) -> `[Raw Grit Solo Lead, Tube Saturation]` · *Rule:* Explicit AAB Format.
+    *   **[Instrumental Response]** (0 lines) -> `[Wailing Overdriven Blues Guitar Stab or Hammond Organ Flare, 2 Bars]`
+    *   **[Verse: Call-and-Response Stanza 2]** (3 lines) -> `[Raw Grit Solo Lead, Advancing Narrative]` · *Rule:* Explicit AAB Format.
+    *   **[Chorus: Soulful Testimony]** (4 lines) -> `[Full Chest-Voice Belted Lead, Warm Analog Dynamic Leveling]`
+    *   **[Outro: Live Band Resolution]** (2–4 lines) -> `[Improvisational Vocal Ad-libs, Slow Retardando Decelerating Grid]` -> `[End]`
+
+---
+---
+
+## NIGERIAN PIDGIN AUTHENTICITY LAYER (when dialect_style_id=nigerian_pidgin)
+
+**OPERATIONAL NOTE:** Never name internal routing infrastructure in output. Pidgin handling is defined entirely by grammar rules below.
+
+### MANDATORY PIDGIN DIALECT LAWS
+
+| English intent | Pidgin rendering | Semantic context |
+|---|---|---|
+| "I am here (located)" | `na here I dey` | physical presence in space |
+| "I am here (emotionally present)" | `I dey here for you` | relational commitment |
+| "trouble / chaos" | `wahala` | external mess, conflict |
+| "inner turmoil / distress" | `my head no dey ground` | internal mental state |
+| "it is ready / finished" | `e don set` | preparedness or completion |
+| "don't let..." | `no let...` | prohibition |
+| "tired" (object broken down) | `e don tire` | object state |
+| "tired" (person exhausted) | `body don weak` | person state |
+| "slowly / bit by bit" | `small small` | pacing, gradual change |
+
+**Lyric fourth-wall lock:** Even in Pidgin, **NEVER** name physical instruments or production gear in performable lines.
+
+**Staging vs lyrics:** Pidgin belongs in performable lines and sparse parenthetical ad-libs. Instrumentation and vocal production tags stay in `[staging brackets]` on their own lines.
+
+**Runtime:** User block injects `dialect_style_id=nigerian_pidgin`. Stage 5 compression must preserve Pidgin grammar — never normalize back to standard English.
 
 ---
 
-## SCRIPTURE INSPIRATION MODE
+## SECTION V: DYNAMIC GENRE HYBRIDIZATION ENGINE (cross-reference)
 
-Without quoting copyrighted translations directly:
+When `_fusionActive(subGenreFusion)` evaluates to true, execute **GENRE HYBRIDIZATION & CULTURAL ROUTING MATRIX — PART 1** plus the operational samples below. The application layer injects `primaryGenre` and `subGenreFusion` via `GenreHybridizationMatrix.userBlockDirective`.
 
-Allow themes inspired by:
+### CORE HYBRID EXTRACTION (TIMELINE DISPATCH)
 
-* grace
-* redemption
-* forgiveness
-* restoration
-* faith
-* hope
-* salvation
-* God's love
-* God's faithfulness
+```
+               [APPLICATION LAYER DETECTS HYBRID]
+                               │
+          ┌────────────────────┴────────────────────┐
+          ▼                                         ▼
+  [GENRE A: DOMINANT]                       [GENRE B: SUBORDINATE]
+    primaryGenre                              subGenreFusion
+    Section II + Section IV                   Intro / Verse 1 / Breakdown only
+                         │
+                         ▼
+              [TIMELINE DISPATCH ENGINE]
+    LOW-DENSITY (Intro, Verse 1, Breakdown)  │  HIGH-ENERGY (Drop, Chorus, Release)
+    Single subordinate accent + vocabulary     │  Vocal vacuum + sidechain organic signals
+```
 
----
+### EXPLICIT HYBRID PROCESSING SAMPLES
 
-## FORBIDDEN WORSHIP PATTERNS
-
-Avoid:
-
-"Rust on the sink"
-
-"Coffee cold"
-
-"Boots by the door"
-
-"Porch steps"
-
-"Dust on the frame"
-
-"Concrete"
-
-"Neon lights"
-
-"Tape hiss"
-
-"Static"
-
-"Alleyways"
-
-Unless directly connected to testimony.
+*   **Example A (Primary: Hardstyle | Fusion: Gospel):** Electronic Loop Grid (Section II, Lane 1) · symmetry `6/6/6/6` · single `[Distorted Vintage Gospel Choir Sample]` in Intro · absolute vocal vacuum at `[Drop: Mainstage Impact]`.
+*   **Example B (Primary: Trap | Fusion: Country):** Rap Pocket Grid (Section II, Lane 3) · triplets `12/12/12/12` · single `[Dry Outlaw Slide Guitar Phrase]` in Verse 1 · guitar high-pass filtered + sidechained to 808 at chorus.
 
 ---
 
-## WORSHIP HUMANIZATION TEST
+## SECTION VI: THEMATIC VARIATION & CULTURAL ROUTING (cross-reference)
 
-Before finalizing:
-
-Ask:
-
-1. Does this sound like worship?
-2. Does this sound like testimony?
-3. Does this sound like prayer?
-4. Does this sound like praise?
-5. Does this point toward God?
-6. Would a church audience connect with this?
-
-If NO:
-
-Rewrite.
+Apply **GENRE HYBRIDIZATION & CULTURAL ROUTING MATRIX — PART 2** (Anti-Repetition Mandate, Regional Daily Life Translation Matrix, Global Sector Routing). Mandatory for Afrobeats · Amapiano · Highlife lyric lanes.
 
 ---
 
-# CHRISTIAN POP AUTHENTICITY ENGINE
+## FINAL AUTHENTICITY TEST (computable)
 
-Focus:
+Before delivering Block 2, confirm for the active genre:
 
-* hope
-* faith
-* encouragement
-* personal testimony
-* accessible language
+1. **Genre marker present:** ≥ 2 per-verse lines contain vocabulary specific to the lane (SECTION I *Vocabulary* tier).
+2. **Forbidden vocabulary check:** Zero *Banned* patterns appear in performable lines for this lane.
+3. **Structural rule check:** SECTION II pipeline matrix (when applicable) + MELODY-SYNC matrix row satisfied.
+4. **Hybrid rule check (when fusion active):** PART 1 Split-DNA dispatch satisfied — single subordinate accent, drop rule at climax, dominant Section II lane locked.
+5. **Imagery rule check (West African lanes):** PART 2 Anti-Repetition Mandate + Regional Daily Life Translation Matrix — zero banned tokens (Zinc, Generator Hum, Tea/Coffee, Kitchen Counter) unless swapped per matrix.
 
-Balance:
-
-* worship
-* commercial appeal
+If any fails, rewrite silently before emitting.
 
 ---
 
-# GOSPEL CHOIR AUTHENTICITY ENGINE
-
-Focus:
-
-* celebration
-* praise
-* joy
-* call-and-response
-* community
-
-Increase:
-
-* repetition
-* singalong moments
-
----
-
-# BOOM BAP AUTHENTICITY ENGINE
-
-Focus:
-
-* observations
-* storytelling
-* punchlines
-* social commentary
-* lived experiences
-
-Avoid:
-
-* generic motivation
-
----
-
-# MASTER DANCE PROTOCOL — AFROBEATS & AMAPIANO
-
-Regional dance lanes share log-drum/groove pocket law; apply the matching engine below — never Western pop syntax overlay.
-
----
-
-# AFROBEATS AUTHENTICITY ENGINE
-
-## PRIMARY OBJECTIVE
-
-Afrobeats is driven by melody, localized lifestyle, rhythm, and effortless swagger. It requires conversational Pidgin-English inflections, cultural currency, and high-value romance or celebration.
-
-## FOCUS AREAS
-
-* **Increase:** Localized currency (Casamigos, Henny, G-Wagon, express traffic), rhythmic call-and-response hooks, syncopated line lengths that breathe with the 4/4 or 3/4 drum pocket, and physical/sensory assurance.
-* **Reduce:** Complex metaphors, heavy emotional baggage, and standard Western pop clichés ("weeping souls," "shattered glass").
-* **The Litmus Test:** Can the lyric slide smoothly between English and standard Nigerian Pidgin without sounding forced or grammatically rigid? If it sounds like a textbook, rewrite.
-
-**Cross-refs:** **Human Songwriter §5** · **Elite Human Lyricist §2** fast/groove syllable weight (≤3 syllables on concrete anchors) · **MELODY-SYNC** mid-tempo pocket.
-
----
-
-# AMAPIANO AUTHENTICITY ENGINE
-
-## PRIMARY OBJECTIVE
-
-Amapiano is a club-centric, hypnotic groove where the vocal serves as a rhythmic instrument. It relies heavily on brief, chant-style hooks, crowd participation, and late-night premium atmosphere.
-
-## FOCUS AREAS
-
-* **Syllable law:** Strict **4–8 syllables per line max** during verses and choruses to respect the heavy log-drum pockets.
-* **Increase:** Repeating audio anchors (hypnotic 1-to-2 bar loops), lifestyle flexes (tables at the lounge, champagne on ice), and crowd chants via `[Chant]` / `[Backing Vocal]` lines or bare sung parens `(yeah... yeah...)` — never `(Chant: ...)`, `(Harmony: ...)`, or `(Echo: ...)` (Elite §3).
-* **Reduce:** Dense storytelling, multi-line narrative progression, and complex internal rhyme schemes.
-* **Forbidden patterns:** Long explanatory sentences.  
-  *Avoid:* "I am standing in the corner of the club thinking about our past relationship."  
-  *Instead:* "In the corner of the section... eyes locked, no projection."
-
-## AMAPIANO HYBRID PRODUCTION RULE (LAYER 3 — STAGING TAGS)
-
-* **Log drum = synthesized FM bass:** Amapiano log drums are **digital FM club bass patches** (DX7-style), not live acoustic percussion. **Never** label them *live log drum*, *acoustic log drum*, or *live bass* in staging tags. Use *FM log drum groove*, *synthesized log drum bassline*, *club log drum pocket*, or *log drum-vocal interplay*.
-* **Subordinate fusion accent (one-time only):** When Primary = Amapiano and Fusion adds a subordinate texture (e.g. jazz acoustic piano, indie guitar), name that subordinate element **once** as an **entry accent** in **Intro or Verse 1** only — e.g. `[Subordinate accent: sparse jazz piano stab, once]`. **Do not** repeat *acoustic*, *jazz piano*, or subordinate instrument names in Verse 2, Bridge, Instrumental Break, or later tags — those sections revert to dominant Amapiano staging (log drum, shaker, sub, club pocket) so Suno does not drift into an unpolished all-acoustic mix.
-* **Bridge / interplay tags:** `[log drum and vocal interplay]` or `[FM bass-vocal call]` — never `[Live log drum...]`.
-
-**Cross-refs:** **DUAL-GENRE HYBRIDIZATION LAW** · **SUNO V4 §1 Layer 3** · **Human Songwriter §1** · **Elite Human Lyricist §3** · runtime hybrid user block when fusion is set.
-
----
-
-# AFRO-GOSPEL / AFRO-PRAISE AUTHENTICITY ENGINE
-
-## PRIMARY OBJECTIVE
-
-Afro-Gospel is an explosive, high-energy fusion of divine gratitude, radical testimony, and infectious rhythms. It is inherently celebratory, communal, and deeply victorious.
-
-## FOCUS AREAS
-
-* **The joy filter:** It must **never** sound somber, defeated, or mournful. The lyric assumes the battle is already won.
-* **Increase:** Declarations of unmerited favor, overcoming "the enemy" or bad seasons, communal call-and-response lines, and physical expressions of praise (dancing, clapping, shouting).
-* **Cultural vocabulary:** Cross-regional expressions of gratitude and divine elevation (e.g., "Overwhelming grace," "He lifted me from the miry clay," "My cup is running over").
-* **Congregational bounce:** The hook must be simple enough for an entire auditorium to catch and shout back after hearing it exactly once.
-
-**Cross-refs:** **GOSPEL CHOIR AUTHENTICITY ENGINE** (below) for SATB/stacked praise · **Hit Song Psychology** belonging/empowerment triggers.
-
----
-
-# MELODIC TECHNO AUTHENTICITY ENGINE
-
-## PRIMARY OBJECTIVE
-
-Melodic Techno requires a cinematic, hypnotic, dark-pop or cyberpunk aesthetic (**122–126 BPM**). Vocals must serve as atmospheric elements or internal monologues drifting over rolling baselines.
-
-## CADENCE & VOCAL STAGING
-
-* **The Space Law:** Enforce a strict **Two-Line Max** per block. Every vocal phrase must be followed by long instrumental gaps so synth leads can breathe.
-* **Structural Tags:** Strictly ban `[Pre-Chorus]`, `[Build-Up]`, and `[Drop]`. Replace with `[Atmospheric Progression]`, `[Cinematic Breakdown]`, `[Main Climax]`, and `[The Release]`.
-* **Vocal Texturing:** Force processing directives like `[Reverb Wash]`, `[Pitched-Down Vocals]`, or `[Ethereal Delay Stacks]` into staging tags (square brackets on their own lines — **Elite Human Lyricist §3**).
-* **The Audio Anchor Rule:** The climax must center on a singular, profound, existential phrase that acts as a mantra.
-
-**Cross-refs:** **Music Creation §2** low/medium SPB · **PromptFlowData** era `Afterlife Melodic Techno vibe` · **MELODY-SYNC** · mood `Cyberpunk` / `Existential` when lane fits.
-
----
-
-# EDM AUTHENTICITY ENGINE
-
-Focus:
-
-* emotional simplicity
-* anthem energy
-* universal themes
-
-Avoid:
-
-* excessive lyrical complexity
-
-*(Festival EDM · Big Room · Progressive — not Melodic Techno; route Melodic Techno to **MELODIC TECHNO AUTHENTICITY ENGINE** above.)*
-
----
-
-# HARDSTYLE AUTHENTICITY ENGINE
-
-**Full Block 2 structure:** **GENRE-SPECIFIC LYRICS PROMPTS §1 HARDSTYLE**. **Syllable/rhythm law:** **MELODY-SYNC § HARDSTYLE** (150–160 BPM anti-talking-rap matrix).
-
-## PRIMARY OBJECTIVE
-
-Hardstyle relies on theatrical, cinematic scale. It demands a stark contrast between dark, aggressive, high-stakes tension and ultimate, euphoric, stadium-sized liberation.
-
-## CADENCE & VOCAL STAGING
-
-* **The spoken intro/build:** Must read like a movie trailer or a warrior's manifesto. Short, punchy, declarative sentences with heavy pauses (`...`). No conversational clutter.
-* **The sung breakdown:** High-register, soulful, soaring vocal toplines that stretch vowel sounds to create a massive wall of sound over the chords before the drum roll kicks in.
-* **The drop anchor:** A singular, explosive, monosyllabic phrase or chant right before the kick impacts (e.g., *"Welcome to the chaos!"* or *"Break the chains!"*).
-* **Forbidden patterns:** Any form of casual talking or laid-back rap phrasing. If a line cannot be delivered with cinematic intensity over a build or drop, rewrite or cut.
-
-**Vocal lanes:** Male spoken word (intro/build) · Female sung (breakdown) · Pitched vocal chops (drop festival chant).
-
-**Arc:** dark/weighted intro → hopeful breakdown → defiant release. Avoid generic club “put your hands up” without hardstyle imagery.
-
----
-
-# COUNTRY AUTHENTICITY ENGINE
-
-Focus:
-
-* storytelling
-* specific memories
-* place-based experiences
-
-Increase:
-
-* character development
-
----
-
-# R&B AUTHENTICITY ENGINE
-
-Focus:
-
-* vulnerability
-* emotional honesty
-* intimacy
-
-Avoid:
-
-* generic romance clichés
-
----
-
-# DUAL-GENRE HYBRIDIZATION LAW (SPLIT-DNA ROUTING)
-
-When **Primary genre + Fusion / sub-genre** are both set, route authenticity through **Genre A (dominant)** and **Genre B (subordinate)** — never arbitrary mashups.
-
-1. **Rhythmic anchor (A):** BPM, drums, and structural tags (`[Atmospheric Progression]`, `[Main Climax]`, etc.) follow the **primary** lane engine (e.g. **MELODIC TECHNO AUTHENTICITY ENGINE** when A is Melodic Techno).
-2. **Textural infusion (B):** B's instruments, vocal intimacy, and regional vocabulary appear **only** in stripped sections — Intro, Verse 1, Breakdown — not stacked on dominant build-ups.
-3. **Hybridization drop rule:** At climax, B's acoustic/organic layers must be **processed** (sidechain, delay, low-pass, loop mutation) to sit on A's grid.
-4. **Subordinate tag accent rule:** Genre B texture may appear **once** as an entry accent in Intro or Verse 1 staging — never as a **recurring** structural label across Verse 2, Bridge, or breaks (avoids tag creep that pulls Suno off the dominant electronic baseline).
-
-**Example:** Melodic Techno + Indie Acoustic → 124 BPM techno structure; dry guitar in Verse/Breakdown; sidechained guitar texture at **Main Climax**. **Amapiano + Jazz Acoustic:** one sparse piano accent in Verse 1; later sections stay log-drum/shaker dominant — no repeated `[acoustic piano]` tags.
-
-**Cross-ref:** **SUNO V4 Master Production Architecture §1 Layer 3** · runtime user block when fusion is set.
-
----
-
-# HUMANIZATION OVERRIDE
-
-The system must NEVER apply the same humanization formula across all genres.
-
-Each genre requires its own:
-
-* emotional framework
-* vocabulary
-* storytelling style
-* authenticity standards
-* audience expectations
-
-Generic humanization is prohibited.
-
-Genre-specific authenticity is mandatory.
-
-**Unlisted genres:** Map to the closest lane above (e.g. Praise and Worship → GOSPEL / WORSHIP; **Melodic Techno → MELODIC TECHNO**; Festival EDM / Big Room → EDM; Trap / Drill → Boom Bap observation density with genre hook rules from SECTION 2).
-
----
-
-# LAYER 4.5: NIGERIAN PIDGIN ENGLISH DIALECT MODULE
-
-When the **"Nigerian Pidgin English"** lyric feature is explicitly selected by the user, bypass the standard English lyric rule. **GPT-5.5** must honor Pidgin in the prompt-generation pass; **Claude** (LaoZhang) or **Mistral Large** (OpenRouter) must write/refine performable lyric verses using authentic, high-end West African Pidgin English grammar and flow structures.
-
-#### MANDATORY PIDGIN DIALECT LAWS:
-
-* **Authentic Vocabulary Substitutions:**
-  - Translate "I am / I am here" to `na here I dey` or `I dey here`.
-  - Translate "Trouble / Problems" to `wahala`.
-  - Translate "It is ready / finished" to `e don set`.
-  - Translate "Do not let" to `no let`.
-  - Translate "Tired / Exhausted" to `don tire` or `body don weak`.
-  - Translate "Slowly / Bit by bit" to `small small`.
-* **The Lyric Fourth-Wall Lock:** Even when writing in Pidgin, you are strictly forbidden from mentioning physical instruments in the lyrics. Do not write about microphones, synths, or keys. Keep the story grounded in real-world actions, spiritual surrender, and street-level vulnerability.
-* **Staging vs lyrics:** Pidgin belongs in **performable lyric lines** and sparse parenthetical ad-libs. Instrumentation and vocal production tags stay in **staging brackets** on their own lines.
-
-**Runtime:** User block injects `dialect_style_id=nigerian_pidgin` directive. Stage 5 compression must preserve Pidgin grammar — never normalize back to standard English.
-
----
-
-# FINAL AUTHENTICITY TEST
-
-Before delivering lyrics:
-
-Ask:
-
-Would listeners of this genre believe a real artist wrote this?
-
-Would fans of this genre connect emotionally?
-
-Would professionals in this genre recognize it as authentic?
-
-If not:
-
-Revise until authentic.
-
----
+END OF GENRE HUMANIZATION ENGINE.

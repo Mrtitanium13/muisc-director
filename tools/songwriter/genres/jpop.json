@@ -1,0 +1,15 @@
+{
+  "id": "jpop",
+  "version": "1.0.0",
+  "vocabulary_profile": ["melodic storytelling", "seasonal imagery", "JP/EN if brief allows"],
+  "line_length_guidance": "anime-pop to city-pop range per energy",
+  "imagery_guidance": ["seasons", "trains", "sky"],
+  "energy_profile": "bright to bittersweet",
+  "hook_style": "melodic title hook",
+  "rhyme_density": "low",
+  "rhythmic_guidance": ["melody-first phrasing"],
+  "common_structures": ["V-C-V-C-B-C"],
+  "vocal_phrasing": ["clear lead", "harmony stacks"],
+  "avoid_patterns": ["forced English rap unless brief asks"],
+  "cultural_notes": []
+}

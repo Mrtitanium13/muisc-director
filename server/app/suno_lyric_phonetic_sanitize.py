@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 
+from app.anti_scream_filter import apply_anti_scream_filter
 from app.suno_lyrics_audio_normalizer import apply_audio_engine_normalization_to_suno_output
 
 _APOSTROPHE = "''\u2018\u2019"  # straight + curly open/close quotes
@@ -110,8 +111,42 @@ _GOSPEL_STAGING_REPLACEMENTS: tuple[tuple[re.Pattern[str], str], ...] = (
     (re.compile(r"\blive\s+band\s+count-in\b", re.I), "Dead-room isolation, close-mic vocal tracking"),
     (re.compile(r"\bfilter\s+sweep\b", re.I), "natural room decay"),
     (re.compile(r"\blow-pass\s+sweep\b", re.I), "warm dynamic dip"),
-    (re.compile(r"\bsupersaw\b", re.I), "lush sustained live strings"),
+    (re.compile(r"\bsupersaw\b", re.I), "lush sustained string section"),
 )
+
+
+_STUDIO_CROWD_BANS: tuple[tuple[re.Pattern[str], str], ...] = (
+    (re.compile(r"\bcongregational\b", re.I), "Isolated multi-tracked vocal doubles"),
+    (re.compile(r"\bsanctuary\b", re.I), "Pristine studio environment"),
+    (re.compile(r"\bcommunal\b", re.I), "Multi-tracked vocal overlays"),
+    (re.compile(r"\bchurch\b", re.I), "Warm studio room"),
+    (re.compile(r"\bchoir\b", re.I), "Isolated multi-tracked vocal doubles"),
+    (re.compile(r"\bcongregation\b", re.I), "Tight double-tracked vocal stacks"),
+    (re.compile(r"\bsatb\b", re.I), "Isolated multi-tracked vocal doubles"),
+    (re.compile(r"\blive\b", re.I), "Studio"),
+    (re.compile(r"\bcrowd\s+singing\s+along\b", re.I), "Multi-tracked vocal overlays"),
+    (re.compile(r"\bcrowd\s+cheering\b", re.I), "Warm dynamic lift"),
+    (re.compile(r"\bcrowd\s+noise\b", re.I), "Dead-room silence"),
+    (re.compile(r"\bstadium\s+crowd\b", re.I), "Pristine studio environment"),
+    (re.compile(r"\bstadium\s+reverb\b", re.I), "Focused studio room"),
+    (re.compile(r"\baudience\s+applause\b", re.I), "Close-mic vocal tracking"),
+    (re.compile(r"\baudience\s+noise\b", re.I), "Dead-room silence"),
+    (re.compile(r"\baudience\s+chatter\b", re.I), "Dry acoustic room"),
+    (re.compile(r"\bstanding\s+ovation\b", re.I), "Clean multi-track fade"),
+    (re.compile(r"\bthunderous\s+stadium\b", re.I), "Focused studio room"),
+    (re.compile(r"\bzero\s+audience\s+noise\b", re.I), "Close-mic vocal tracking"),
+    (re.compile(r"\bno\s+crowd\s+sounds?\b", re.I), "Dead-room isolation"),
+    (re.compile(r"\bno\s+live\s+applause\b", re.I), "Pristine studio environment"),
+    (re.compile(r"\bapplause\b", re.I), "Trailing plate reverb"),
+    (re.compile(r"\bcheering\b", re.I), "Warm dynamic lift"),
+    (re.compile(r"\bovation\b", re.I), "Clean multi-track fade"),
+    (re.compile(r"\bstadium\b", re.I), "Focused studio room"),
+    (re.compile(r"\baudience\b", re.I), "Close-mic vocal tracking"),
+    (re.compile(r"\bcrowd\b", re.I), "Dead-room isolation"),
+)
+
+# Legacy alias — intro-only list merged into _STUDIO_CROWD_BANS
+_INTRO_CROWD_BANS = _STUDIO_CROWD_BANS
 
 
 def _is_gospel_lane(primary: str, fusion: str = "") -> bool:
@@ -139,17 +174,6 @@ _STUDIO_VOCAL_REPLACEMENTS: tuple[tuple[re.Pattern[str], str], ...] = (
     (re.compile(r"\bharmonic\s+backing\b", re.I), "Isolated multi-tracked vocal doubles"),
 )
 
-_INTRO_CROWD_BANS: tuple[tuple[re.Pattern[str], str], ...] = (
-    (re.compile(r"\bcongregational\b", re.I), "Isolated multi-tracked vocal doubles"),
-    (re.compile(r"\bsanctuary\b", re.I), "Pristine studio environment"),
-    (re.compile(r"\bcommunal\b", re.I), "Multi-tracked vocal overlays"),
-    (re.compile(r"\bchurch\b", re.I), "Warm studio room"),
-    (re.compile(r"\bchoir\b", re.I), "Isolated multi-tracked vocal doubles"),
-    (re.compile(r"\bcongregation\b", re.I), "Tight double-tracked vocal stacks"),
-    (re.compile(r"\bsatb\b", re.I), "Isolated multi-tracked vocal doubles"),
-    (re.compile(r"\blive\b", re.I), "Studio"),
-)
-
 _TAPE_NOISE_BANS: tuple[tuple[re.Pattern[str], str], ...] = (
     (re.compile(r"\bsubtle\s+tape\s+hiss\b", re.I), "focused studio room"),
     (re.compile(r"\btape\s+hiss\b", re.I), "dry acoustic room"),
@@ -166,20 +190,32 @@ def _is_staging_bracket(header: str) -> bool:
     return "," in header
 
 
+def _apply_studio_crowd_replacements(text: str) -> str:
+    out = text
+    for pattern, replacement in _STUDIO_CROWD_BANS:
+        out = pattern.sub(replacement, out)
+    return out
+
+
+def _scrub_studio_block1_prose(text: str) -> str:
+    marker = re.search(r"BLOCK\s*2\b", text, re.I)
+    if not marker:
+        return _apply_studio_crowd_replacements(text)
+    start = marker.start()
+    return _apply_studio_crowd_replacements(text[:start]) + text[start:]
+
+
 def _sanitize_studio_bracket_inner(
     inner: str,
     *,
     gospel: bool,
-    early: bool,
     outro: bool,
 ) -> str:
     out = _sanitize_gospel_bracket_inner(inner) if gospel else inner
     for pattern, replacement in _STUDIO_VOCAL_REPLACEMENTS:
         out = pattern.sub(replacement, out)
-    if early:
-        for pattern, replacement in _INTRO_CROWD_BANS:
-            out = pattern.sub(replacement, out)
-    if early or outro:
+    out = _apply_studio_crowd_replacements(out)
+    if outro:
         for pattern, replacement in _TAPE_NOISE_BANS:
             out = pattern.sub(replacement, out)
     return out
@@ -222,14 +258,16 @@ def sanitize_studio_isolation_tags(
                 cleaned = _sanitize_studio_bracket_inner(
                     header,
                     gospel=gospel,
-                    early=early,
                     outro=outro,
                 )
+                if early or outro:
+                    for pattern, replacement in _TAPE_NOISE_BANS:
+                        cleaned = pattern.sub(replacement, cleaned)
                 out_lines.append(f"[{cleaned}]")
                 continue
         out_lines.append(line)
 
-    return "\n".join(out_lines)
+    return _scrub_studio_block1_prose("\n".join(out_lines))
 
 
 def sanitize_gospel_staging_tags(
@@ -368,6 +406,11 @@ def sanitize_suno_post_output(
         audio_environment_mode=audio_environment_mode,
     )
     text = apply_critical_reconciliation(
+        text,
+        primary_genre=primary_genre,
+        sub_genre_fusion=sub_genre_fusion,
+    )
+    text = apply_anti_scream_filter(
         text,
         primary_genre=primary_genre,
         sub_genre_fusion=sub_genre_fusion,

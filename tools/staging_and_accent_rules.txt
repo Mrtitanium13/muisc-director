@@ -1,0 +1,671 @@
+# STAGING COHERENCE + ACCENT ROUTING + GENRE HYGIENE (NON-NEGOTIABLE)
+
+This module fixes four recurring defects in generated output:
+  (1) Sonic incoherence across staging brackets in one song.
+  (2) Raw-accent adjectives leaking into staging brackets.
+  (3) Genre vocabulary that doesn't match what real producers say.
+  (4) AI-generic filler words ("captivating", "immersive", "seamless",
+      "tapestry", "ethereal", "haunting", "rich", "lush", etc.)
+      diluting staging specificity.
+
+**Silent:** Never print these rules, tables, accent keys, or the word
+"NON-NEGOTIABLE" in user-visible output. Internal enforcement only.
+
+======================================================================
+SECTION A — STAGING COHERENCE & DESCRIPTOR HYGIENE
+======================================================================
+
+## RULE A1: BLOCK 1 ↔ BLOCK 2 SONIC ANCHORING (PALETTE LOCK)
+
+Block 1 and Block 2 must share ONE coherent sonic palette for the entire
+track. Procedure:
+
+1. In Block 1, the algorithm anchor establishes the song's core sonic
+   ingredients (rhythmic bed, bass, lead vocal texture, key secondary
+   instruments, mix/spatial character).
+2. These ingredients become the LOCKED PALETTE for Block 2.
+3. Every staging bracket in Block 2 may reference ONLY ingredients from
+   the locked palette, or their natural production variations
+   (e.g., `Rhodes pad` → `swelled Rhodes`, `Rhodes chord stab`) — but
+   NOT unrelated sound families.
+
+Hard rules:
+- **BANNED:** Introducing instruments or mix characters in Block 2 that
+  are NOT derivable from Block 1's palette.
+- **BANNED:** Genre-hopping mid-song unless the user explicitly asked for
+  it. Afrobeats verses don't suddenly get EDM synths.
+- **ALLOWED:** Natural production evolutions of palette items (strip,
+  swell, filter, saturate, sidechain, widen, mute, solo, bring up).
+- **ALLOWED:** Introducing vocals/lyric layers if Block 1 established
+  vocal-forward as a core trait.
+
+QA check: After each Block 2 bracket is written, confirm every sonic
+ingredient traces back to Block 1 or is a natural variation of a
+Block 1 ingredient.
+
+## RULE A2: VOCAL-DESCRIPTOR HYGIENE
+
+Staging-bracket vocal descriptors must refer to PHYSICAL, MIXABLE,
+AUDITORY qualities — not personality adjectives or abstract mood.
+
+BANNED vocal adjectives in staging brackets:
+  "soulful", "emotional", "passionate", "heartfelt", "angelic",
+  "ethereal", "haunting", "mesmerizing", "captivating", "raw",
+  "powerful", "explosive", "intense", "vulnerable", "broken".
+
+These are lyric-layer words, not staging words. They bleed into the
+vocal performance in unpredictable ways (Suno interprets them as
+performance directions, not mix shapes).
+
+REQUIRED: Replace with physical descriptors:
+  "close-mic lead", "breathy verse vocal", "belted chorus", "falsetto
+  lift", "stacked harmonies wide", "doubled lead", "roomy vocal",
+  "dry intimate vocal", "vocal-forward mix", "warm chest register",
+  "bright EQ on vocal", "glossy vocal sheen", "vocal chop layers",
+  "whisper doubles left/right", "half-time vocal pocket".
+
+## RULE A3: SECTION CONTINUITY (NO SONIC WHIPLASH)
+
+Adjacent staging brackets must transition logically. No sudden sonic
+jumps that Suno cannot interpolate.
+
+Banned transitions:
+- Acoustic → full synth orchestra in one bracket without intermediate
+  build-up.
+- Sparse Rhodes → wall of distorted guitars without `[breakdown]` or
+  `[build-up]` scaffolding.
+- Acapella → full band in the first verse.
+
+Allowed transitions:
+- Use `[build-up]`, `[breakdown]`, `[pre-chorus]`, or `[bridge]` as
+  transitional scaffolding.
+- Introduce one new element per bracket maximum.
+- Energy escalation should be gradual unless the section label
+  explicitly demands a jump (e.g., `[drop]`).
+
+## RULE A4: STRUCTURAL TEMPLATE DISPATCH
+
+The staging structure template must match the lyrical tone and genre.
+EDM templates are NOT interchangeable with pop templates are NOT
+interchangeable with hip-hop templates.
+
+Dispatch table:
+
+| Genre lane | Use this structure | Do NOT use |
+|---|---|---|
+| Intimate pop / R&B ballad | `[Intro] [Verse] [Pre-Chorus] [Chorus] [Verse 2] [Pre-Chorus] [Chorus] [Bridge] [Final Chorus] [Outro]` | `[Build-up] [Drop] [Breakdown]` |
+| Festival EDM / Progressive House / House | `[Intro] [Build-up] [Drop] [Breakdown] [Build-up 2] [Final Drop] [Outro]` | `[Verse] [Pre-Chorus]` |
+| Hip-Hop / Trap / Boom Bap | `[Intro] [Verse 1] [Hook] [Verse 2] [Hook] [Verse 3] [Outro]` | Pop `[Pre-Chorus]`, EDM `[Drop]` |
+| Gospel / Worship | `[Intro] [Verse 1] [Chorus] [Verse 2] [Chorus] [Vamp] [Spontaneous] [Outro]` | EDM `[Drop] [Build-up]` |
+| Highlife / Afro-pop | `[Intro] [Verse 1] [Chorus] [Verse 2] [Chorus] [Solo] [Outro]` | EDM `[Drop]` |
+| Amapiano | `[Intro] [Build-up] [Drop (log-drum)] [Breakdown] [Build-up 2] [Final Drop]` | Pop ballad template |
+
+**Enforced:** When a genre lane locks in, the structural template is
+locked. Do not cross-apply templates. The mismatch is the single most
+common cause of "weird" output.
+
+## RULE A5: ANTI-AI-VOCABULARY SCAN (MUST PASS BEFORE EMISSION)
+
+Before emitting any staging bracket, scan for Section D's blacklist
+(AI-generic words). No raw occurrence is permitted in any bracket.
+Replace per the Section D translation table.
+
+## RULE A6: GENRE-SPECIFIC INTRO/OUTRO BAR SCAFFOLDING (158 GENRES)
+
+Every app genre maps to exactly one of seven **ScaffoldType** values.
+The runtime router injects bar counts into the user block; Block 2
+`[Intro]` / `[Outro]` staging brackets MUST honor the dispatched plan.
+
+### ScaffoldType definitions
+
+| ScaffoldType | Intro bars | Outro bars | Use case |
+|---|---|---|---|
+| `clubExtended` | 32 | 32 | DJ mix-in standard (township, warehouse, festival extended) |
+| `clubStandard` | 24 (DnB 32) | 24–32 | Tighter club genres — DJ-mixed, less atmospheric |
+| `clubTight` | 16 | 16–24 | Modern club-adjacent (garage, future bass, bounce) |
+| `radioShort` | 4–8 (Hyperpop/Punk 2) | 8–12 | Hook-first radio format |
+| `radioWide` | 8–12 | 12–16 | Radio with room for musical intro |
+| `narrativeWide` | 8–16 | 16–24 | Live jam / storytelling / ambient build |
+| `ambientLong` | 16–32 | 24–32 | Long atmospheric builds and tails |
+
+### Dual-path sub-routing (runtime)
+
+**Afrobeats** (not Afro-Gospel):
+- Vibe hint contains `club`, `extended mix`, `DJ set`, `log drum`, or
+  `perreo` → `clubStandard` (16-bar intro / 24-bar outro).
+- No club hint → default `radioWide` (8-bar intro / 16-bar outro).
+
+**Reggaeton**:
+- Vibe hint contains `club`, `remix`, `DJ`, `perreo`, or
+  `dembow heavy` → `clubTight` (16-bar intro / 24-bar outro).
+- No club hint → default `radioShort` (4-bar intro / 16-bar outro).
+
+### Hybrid rule
+
+When `is_hybrid=true`, the **dominant** genre's scaffold owns intro/outro
+bar counts. Secondary genre adds texture only — never overrides bar plan.
+
+### QA assertions (bar-count consistency)
+
+- `clubExtended` genres (Amapiano, Techno, Vinahouse, Gqom, House…):
+  Block 2 intro MUST reference **32 bars** (mix-in ready).
+- `radioShort` genres (K-Pop, Trap, Gospel, Mandopop radio path…):
+  Block 2 MUST NOT contain **32-bar** or **24-bar** club scaffolding.
+- `ambientLong` genres (Lo-Fi Hip Hop, Post-Rock, Dub…):
+  Block 2 MUST reference **16/24/32-bar** extended atmospheric markers.
+- Every genre in the app taxonomy (158 total) has an explicit runtime
+  entry in `GenreScaffoldMap` — no silent default fall-through.
+
+**Enforced:** Match intro/outro bar language in Block 2 staging brackets
+to the dispatched ScaffoldType. Cross-applying club 32-bar scaffolding
+to radio/gospel/pop lanes is a hard FAIL.
+
+======================================================================
+SECTION B — ACCENT ROUTING ENGINE
+======================================================================
+
+The user-selected accent (from app dropdown) must NEVER appear as a
+raw adjective attached to a vocal/mix/delivery word in staging
+brackets. Raw forms like `American lead`, `British vocal`, `Nigerian
+breath`, `Ibibio doubles` are **BANNED**. Suno cannot decode these.
+
+Translate each accent into its Suno-compatible production descriptor
+set per the tables below. Only the descriptor set is allowed in
+brackets.
+
+### Precedence
+
+1. `nigerian_ibibio` → CALABAR CADENCE row (preferred per app config,
+   richest descriptor set).
+2. `nigerian_igbo` → IGBO PIDGIN row (tonal percussive).
+3. `nigerian_rivers_state` → HARBOUR PIDGIN row.
+4. `nigerian` (no sub-selector) → LAGOS STANDARD row.
+5. Other accents → corresponding global row.
+6. If accent = `nigerian_*` AND lyric language is set to Nigerian
+   Pidgin → route vocabulary to Layer 4.5 Pidgin Layer AND the
+   sub-variant's Layer 2 vocabulary below.
+
+### Global Accent → Descriptor Map
+
+| Accent | Descriptor set (replace raw tag with this) |
+|---|---|
+| `american` | polished vocal, bright EQ, vocal-forward mix, glossy doubles, warm chest lead, pop-radio sheen |
+| `british` | dry room close-mic, jangly vocal, mid-Atlantic pop tone, restrained belt, minimal plate reverb |
+| `irish` | warm room vocal, folk-leaning lead, intimate delivery, slight cadence lilt, sparse room |
+| `west_african` | syncopated vocal pocket, call-and-response texture, coastal pop mix, rhythmic lead |
+| `south_african` | Amapiano vocal stack, chantable delivery, warm log-drum pocket, wide harmonies |
+| `australian` | dry-room close-mic, relaxed indie vocal, warm lead, laid-back belt, minimal verb |
+| `canadian` | polished vocal, soft consonants, vocal-forward, bright mix, warm chest lead |
+| `caribbean` | Dancehall vocal pocket, sharp consonants, rhythmic lead, reverb tails, dub-friendly space |
+| `latin_american` | warm intimate vocal, Spanish consonant treatment, breathy belt, close-mic, romantic sheen |
+
+### Nigerian Sub-Variants (4-row expanded family)
+
+#### `nigerian` — Lagos / Standard (default when no sub-region chosen)
+
+Afrobeats vocal pocket, Lagos pop mix, warm midrange, conversational
+cadence, Yoruba-staccato undertone, syncopated vowel pacing,
+glossy vocal-forward mix
+
+
+#### `nigerian_rivers_state` — Harbour Pidgin (Port Harcourt / Niger Delta)
+
+hard consonant treatment, clipped syllable endings, tight rhythmic
+pocket, Niger Delta rap tone, Harbour Pidgin pacing, vocal-forward
+gritty mix, fast consonant-to-consonant transitions, minimal vowel
+elongation, oil-city delivery weight
+
+
+#### `nigerian_igbo` — Igbo Pidgin (South-East Nigeria)
+
+tonal percussive delivery, sharp pitch contours on vowels, Igbo
+Pidgin cadence, staccato vocal pocket, percussive consonants,
+Eastern highlife warmth, vocal-forward mix with tight midrange,
+pitch-rise phrase endings, rhythmic consonant clusters
+
+
+#### ⭐ `nigerian_ibibio` — Calabar Cadence (PREFERRED, Akwa Ibom / Cross River)
+
+triplet-feel vocal pocket, Calabar coastal cadence, soft consonant
+treatment, melodic terminal rise, open vowel phrasing, maritime
+lyrical swing, flowing triplet flow, Calabar vocal warmth, musical
+terminal elongation, Cross-river melodic lilt, breathy close-mic
+intimacy on verses, rising intonation on statement endings, Ibibio
+cadence signature
+
+
+This row is intentionally the densest descriptor set because Ibibio
+cadence is the most distinctive of the four and the app's preferred
+flavor.
+
+### Layer 2 — Lyric Vocabulary Guidance (performable text hints)
+
+Applies ONLY when the user's language setting is compatible:
+- English-only request → Layer 2 is silent (Layer 1 still applies).
+- Nigerian Pidgin request → Layer 2 activates sub-variant's vocabulary.
+- Pidgin + English code-switch → Layer 2 surfaces at most once per
+  section (chorus or hook).
+
+#### Lagos / Standard Pidgin
+
+Core vocabulary: wahala, abeg, no be small thing, na so, oya, sef,
+na me, I no go, you sabi, wetin, how you dey, e go be, na wa o.
+Grammar patterns: I dey go, you don come?, we go.
+
+
+#### Rivers State (Harbour) Pidgin
+
+Distinctive pronouns: yu (you), de (they), wi (we), am (him/her/it).
+Distinctive markers: de go (instead of dey go), wetin dey sup,
+na so e be, I tell yu, de talk say.
+Tone: harder, direct, oil-city clipped delivery.
+
+
+#### Igbo Pidgin
+
+Distinctive markers: una/unu (you plural), nnam (my friend), ebee
+(where), kedu (how), gini (what), chi (God / personal deity in
+spiritual contexts).
+Sample phrases: Una dey go?, Gini na-eme?.
+Tone: tonal percussive, pitch-rise phrase endings.
+
+
+#### ⭐ Ibibio / Efik (PREFERRED vocabulary)
+
+Distinctive markers: Abasi (God — central to Cross-river gospel),
+esie (him/it), mmo (they/them), kpa (just / only), edinen (true /
+truly), emi (this), idaha (time / season), nno (welcome / greeting),
+fo (your), mi (me/I).
+Cultural references: Akwa Ibom, Cross River, Calabar.
+Cadence phrases: Abasi mi kpa emi edinen, Idaha fo mi, Mi dey nno,
+Esie kpa edinen.
+
+
+**Cross-river gospel specific (Ibibio):** the word `Abasi` anchors
+spiritual references. `Abasi mi` (my God), `Abasi edinen` (true God).
+When the track is gospel/worship-toned with Ibibio cadence, `Abasi`
+replaces `God` / `Jesus` where natural.
+
+### QA: Accent Routing
+
+Before emitting Block 2:
+1. Scan every bracket for: `American`, `British`, `Nigerian`,
+   `Rivers State`, `Harbour`, `Igbo`, `Ibibio`, `Efik`, `Calabar`,
+   `Irish`, `West African`, `South African`, `Australian`, `Canadian`,
+   `Caribbean`, `Latin American`. Case-insensitive. If any appear,
+   replace with the Layer 1 descriptor set.
+2. Never output raw-accent + descriptor combination in one bracket.
+3. Confirm Ibibio-specific brackets contain at least one Ibibio
+   cadence marker (`triplet-feel`, `open vowel phrasing`, `melodic
+   terminal rise`, `Cross-river lilt`).
+4. Confirm sub-variant distinction — Ibibio output should not leak
+   Lagos vocabulary (`wahala`, `abeg`) unless user requested
+   code-switch.
+
+======================================================================
+SECTION C — PROFESSIONAL GENRE VOCABULARY TABLES
+======================================================================
+
+Each table below lists what ACTUAL STUDIO-FLOOR PRODUCERS say (USE)
+next to the AI-generic equivalents they don't say (AVOID). Use the
+USE column; avoid the AVOID column entirely.
+
+### C1: Afrobeats / Afro-pop (Lagos-led)
+
+**USE:**
+- shaker pocket
+- log-drum bass
+- highlife guitar lick
+- clave-aligned percussion
+- syncopated bass line
+- call-and-response vocal stack
+- triplet shaker pattern
+- djembe hits
+- talking drum texture
+- Naija swing
+- bouncy groove
+- percussion layers
+
+**AVOID (replace with USE):**
+- ~~vibrant percussion~~ → percussion layers
+- ~~infectious groove~~ → bouncy groove
+- ~~mesmerizing rhythm~~ → shaker pocket
+- ~~rich cultural tapestry~~ → talking drum texture
+- ~~dynamic beat~~ → log-drum bass
+- ~~captivating rhythm~~ → triplet shaker pattern
+
+### C2: Amapiano
+
+**USE:**
+- log-drum pattern
+- shaker loop
+- soulful piano chord
+- deep sub bass
+- private school piano (sub-genre term)
+- Kwaito-influenced bass
+- dusty percussion
+- vocal chants
+- township groove
+- airy pads
+- slow-burn build
+- log-drum slide
+
+**AVOID:**
+- ~~immersive soundscape~~ → airy pads
+- ~~lush production~~ → deep sub bass + vocal chants
+- ~~ethereal atmosphere~~ → airy pads + township groove
+
+### C3: Gospel / Worship
+
+**USE:**
+- Hammond B3 swell
+- choir stack on 2 and 4
+- handclap on 2 and 4
+- testimony-style verse
+- altar call dynamic
+- worship swell
+- praise break
+- anointed lift
+- call and shout response
+- organ drawbar lift
+- congregational sing-along
+- tambourine drive
+
+**AVOID:**
+- ~~uplifting anthem~~ → anointed lift + congregational sing-along
+- ~~powerful worship~~ → altar call dynamic
+- ~~spiritual atmosphere~~ → Hammond B3 swell
+- ~~inspiring glory~~ → praise break
+- ~~transcendent moment~~ → worship swell
+- ~~ethereal anointing~~ → Hammond B3 swell + anointed lift
+
+### C4: Highlife (Classic & Modern)
+
+**USE:**
+- palm-wine guitar riff
+- horn section stabs
+- swing-feel bass
+- two-step rhythm
+- high-pitched vocal lift
+- brass section call-and-response
+- West African swing
+- guitar interplay
+- trumpet call phrases
+- buoyant tempo
+- clean guitar tone
+
+**AVOID:**
+- ~~rich musical heritage~~ → West African swing + palm-wine guitar
+- ~~captivating horns~~ → brass section call-and-response
+- ~~vintage feel~~ → clean guitar tone + palm-wine guitar riff
+
+### C5: Pop / R&B
+
+**USE:**
+- hook-forward structure
+- radio-polished
+- vocal-forward mix
+- stacked harmonies (wide)
+- bright EQ lift
+- punchy kick
+- snare that cracks
+- glossy sheen
+- catchy top-line
+- whisper doubles left/right
+- half-time vocal pocket
+- belted chorus lift
+
+**AVOID:**
+- ~~seamless production~~ → radio-polished
+- ~~catchy and memorable~~ → hook-forward
+- ~~perfectly crafted~~ → radio-polished + glossy sheen
+- ~~rich vocal texture~~ → stacked harmonies wide
+- ~~powerful chorus~~ → belted chorus lift
+- ~~intimate verse~~ → whisper doubles left/right
+- ~~ethereal atmosphere~~ → whisper doubles + glossy sheen
+
+### C6: Hip-Hop / Trap / Boom Bap
+
+**USE:**
+- rattling hats
+- hard 808 sub
+- triplet flow pocket
+- dark melodic loop
+- snare that snaps
+- spaced-out pads
+- vocal chopped samples
+- 808 bass slide
+- ad-lib layers
+- hi-hat rolls
+- boom-bap drum swing
+- raw drum break (sample-ref, not adjective)
+- vinyl crackle bed
+
+**AVOID:**
+- ~~hard-hitting beat~~ → hard 808 sub + snare that snaps
+- ~~gritty urban vibe~~ → raw drum break + dark melodic loop
+- ~~street anthemic~~ → raw drum break + ad-lib layers
+- ~~aggressive flow~~ → triplet flow pocket
+- ~~mesmerizing beat~~ → dark melodic loop + hi-hat rolls
+
+### C7: House / Progressive House / EDM
+
+**USE:**
+- four-on-the-floor kick
+- sidechain pump
+- filtered synth stabs
+- white-noise riser
+- 16th-note hats
+- vocal chop lead
+- breakdown pad swell
+- peak-time kick
+- acid 303 squelch
+- piano-house chord
+- tension build with snare rolls
+
+**AVOID:**
+- ~~immersive drop~~ → peak-time kick + filtered synth stabs
+- ~~seamless mix~~ → four-on-the-floor kick + sidechain pump
+- ~~energetic anthem~~ → peak-time kick + white-noise riser
+- ~~ethereal breakdown~~ → breakdown pad swell
+- ~~dynamic build~~ → tension build with snare rolls
+- ~~captivating melody~~ → vocal chop lead
+
+### C8: Reggaeton / Latin
+
+**USE:**
+- dembow rhythm pattern
+- perreo bass
+- syncopated snare
+- trumpet stabs
+- Spanish vocal lead
+- Latin pop sheen
+- clave alignment
+- guiro texture
+- tumbao bass pattern
+- romantic vocal delivery
+
+**AVOID:**
+- ~~fiery latin groove~~ → dembow rhythm + syncopated snare
+- ~~passionate delivery~~ → romantic vocal delivery
+- ~~seductive rhythm~~ → tumbao bass + perreo bass
+
+### C9: Country / Folk
+
+**USE:**
+- pedal steel slide
+- acoustic fingerpicking
+- story-driven verse
+- boot-stomp kick
+- campfire guitar bed
+- twang vocal tone
+- fiddle fills
+- brushed snare
+- storytelling vocal pocket
+- warm acoustic room
+
+**AVOID:**
+- ~~heartfelt storytelling~~ → story-driven verse
+- ~~authentic country sound~~ → pedal steel slide + twang vocal tone
+- ~~rustic atmosphere~~ → warm acoustic room + campfire guitar bed
+- ~~vulnerable vocal~~ → storytelling vocal pocket (staging word)
+
+### C10: Rock / Alternative
+
+**USE:**
+- live-room drum feel
+- overdriven guitar stack
+- crunchy rhythm guitar
+- punchy drum room
+- feedback swell
+- bass-driven verse
+- raw vocal take
+- double-tracked guitars
+- crashing cymbals
+
+**AVOID:**
+- ~~raw emotion~~ → raw vocal take (staging-only interpretation)
+- ~~explosive chorus~~ → crashing cymbals + overdriven guitar stack
+- ~~powerful guitar~~ → double-tracked guitars + crunchy rhythm guitar
+- ~~gritty vibe~~ → live-room drum feel + overdriven guitar
+
+### C11: Soul / Neo-Soul
+
+**USE:**
+- laid-back beat pocket
+- Rhodes warm chord
+- tight bass line
+- brushed drum feel
+- sultry lead vocal
+- stacked background harmonies
+- muted trumpet fills
+- wah-guitar texture
+- live band feel
+- finger-snap on 2 and 4
+
+**AVOID:**
+- ~~soulful delivery~~ → sultry lead vocal + stacked harmonies
+- ~~luscious groove~~ → tight bass line + laid-back beat pocket
+- ~~lush atmosphere~~ → Rhodes warm chord + wah-guitar texture
+- ~~intimate vibe~~ → finger-snap on 2 and 4 + brushed drum
+
+### C12: Jazz
+
+**USE:**
+- swing feel
+- brushed drums
+- walking bass line
+- brass section hits
+- upright bass
+- ride cymbal pattern
+- piano comping
+- horn solo pocket
+- blue-note phrasing
+
+**AVOID:**
+- ~~sophisticated arrangement~~ → brass section hits + piano comping
+- ~~captivating solo~~ → horn solo pocket
+- ~~smooth jazz atmosphere~~ → brushed drums + walking bass line
+
+======================================================================
+SECTION D — AI-GENERIC WORD BLACKLIST + TRANSLATION TABLE
+======================================================================
+
+**Hard rule:** NONE of the words in the left column may appear in ANY
+staging bracket of generated output (Block 1 OR Block 2). If the LLM
+finds itself writing any of these, swap immediately to the right-column
+translation.
+
+| BANNED (AI-generic) | REPLACE WITH (studio-floor language) |
+|---|---|
+| immersive | roomy, airy, wide, close or distant mix |
+| captivating | hook-forward, catchy, memorable |
+| mesmerizing | loop-driven, hypnotic groove |
+| spellbinding | tension-building riser |
+| seamless | clean transitions, smooth edits |
+| effortless | laid-back pocket, relaxed groove |
+| flawless | tight mix, locked-in groove |
+| perfectly crafted | radio-polished, tight production |
+| tapestry | layered mix, stacked harmonies |
+| mosaic | layered textures, stacked arrangements |
+| symphony | full arrangement |
+| landscape | wide mix, broad stereo image |
+| rich | warm, thick, dense, full |
+| vibrant | punchy, bright, alive |
+| lush | wide harmonies, stacked pads |
+| plush | thick pads, deep sub |
+| ethereal | airy pads, high breathy vocal, floating |
+| haunting | dark minor, eerie pads, minor-key tension |
+| transcendent | peak-time lift, full-stack climax |
+| otherworldly | distant reverb, wide stereo, airy pads |
+| nuanced | subtle mix detail, quiet layering |
+| subtle | low in the mix, whisper-thin layer |
+| intricate | layered arrangement, detail-heavy production |
+| dynamic | loud/soft shifts, energy swings |
+| versatile | multiple arrangement modes |
+| robust | thick, full, punchy |
+| innovative | unexpected turn, fresh arrangement |
+| elevated | lift at chorus, lift at drop |
+| empowering | anointed lift, belted chorus |
+| uplifting | bright lift, congregational sing-along |
+| inspiring | testimony-style, altar call dynamic |
+| journey | arrangement arc, progression through song |
+| exploration | arrangement turns, bridge detour |
+| adventure | key change, tempo lift |
+| delves into | moves into, transitions to |
+| unveils | drops into, reveals at |
+| showcases | features, spotlights |
+| highlights | brings forward, lifts |
+| sonic | (just say the sound) — e.g., "sonic texture" → "padded Rhodes" |
+| auditory | (just say the sound) — e.g., "auditory experience" → "roomy mix" |
+| acoustic | (only when actually acoustic instruments) |
+| cinematic | big arrangement, wide mix, orchestra swells |
+| epic | peak-time, full-stack, big chorus |
+| grand | wide mix, full arrangement |
+| majestic | wide harmonies, full brass lift |
+| raw emotion | raw vocal take (staging sense) |
+| deep connection | (not usable as staging descriptor — remove) |
+| authentic vibe | live-band feel, roomy drum feel |
+
+**Borderline words — ALLOWED inside LYRICS, BANNED inside staging
+brackets:**
+- warm, soft, deep, bright, dark, light, heavy, open, closed
+- These are fine for lyrics; for staging brackets they must be paired
+  with a concrete referent: `warm sub`, `soft consonant treatment`,
+  `deep 808 sub`, `bright EQ lift`, `dark melodic loop`.
+
+**Enforcement:** Before emitting any staging bracket, the LLM must
+scan against this blacklist. Any hit is a hard FAIL of that bracket
+and must be rewritten before emission.
+
+======================================================================
+MASTER QA CHECKLIST (RUN SILENTLY BEFORE BLOCK 2 EMISSION)
+======================================================================
+
+1. **Palette lock:** every Block 2 bracket traces back to Block 1
+   palette items. No ungrounded new sounds.
+2. **Structural dispatch:** structural template matches the genre
+   lane. No cross-applied templates.
+3. **Rule A6 scaffold:** intro/outro bar counts match dispatched
+   ScaffoldType for the locked genre (dominant wins on hybrids).
+4. **Vocal-descriptor hygiene:** no abstract personality adjectives
+   in brackets. Only physical/mixable descriptors.
+5. **Section continuity:** no sonic whiplash between adjacent
+   brackets.
+6. **Zero raw-accent leak:** no raw nation/region adjectives attached
+   to vocal/mix/delivery words.
+7. **Sub-variant distinction:** Nigerian sub-variant vocabulary
+   matches the selection (Ibibio ≠ Lagos leak, etc.).
+8. **Blacklist scan:** every bracket passes Section D blacklist.
+9. **Genre vocabulary match:** genre-specific descriptors drawn from
+   Section C USE column, not AVOID column.
+10. **Meta-text leak check:** no production directions to the model
+    itself ("let it fade out", "drop the beat here", etc.) in
+    performable lyrics.
+11. **Parenthetical discipline:** performable-lyric parentheticals
+    contain only sung ad-libs ("oh", "yeah", "woo"). No stage
+    directions inside parentheses.
+
+======================================================================
+END OF STAGING + ACCENT + GENRE HYGIENE MODULE
+======================================================================

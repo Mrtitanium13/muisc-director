@@ -77,7 +77,9 @@ def apply_suno_compression_pass(
     mode = (field_mode or "custom").strip().lower()
     payload = compact_payload_text(text)
     user_msg = (
-        f"{ctx}\nFIELD:{mode}\n\nFULL OUTPUT (Stage 5 compress; preserve intent):\n"
+        f"{ctx}\nFIELD:{mode}\n\n"
+        "Apply Stage 5 Syntax Compression Law (system prompt).\n\n"
+        "FULL OUTPUT (Stage 5 compress; preserve intent):\n"
         f"---\n{payload}\n---\n"
         "Return complete two-block reply only. No commentary."
     )

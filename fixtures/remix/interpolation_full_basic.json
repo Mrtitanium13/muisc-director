@@ -1,0 +1,32 @@
+{
+  "id": "interpolation_full_basic",
+  "input": {
+    "mode": "interpolation",
+    "title": "Test Song",
+    "artist": "Test Artist feat. Someone",
+    "primary_genre": "synthwave",
+    "bpm": "118",
+    "key_root": "A",
+    "scale": "Minor",
+    "song_type": "full",
+    "remix_from_analyzer": false
+  },
+  "expect": {
+    "engine_active": true,
+    "mode": "interpolation",
+    "block_version": "1.3",
+    "block_contains": [
+      "LAYER 4.8",
+      "REMIX / MUSICAL INTERPOLATION ENGINE",
+      "DESCRIPTOR-ONLY",
+      "REFERENCE DNA",
+      "synthwave",
+      "FULL-SONG",
+      "v1.3",
+      "118"
+    ],
+    "block_excludes": ["Test Song", "Test Artist", "Someone"],
+    "compact_excludes": ["Test Song", "Test Artist", "Someone", "RMX:src="],
+    "compact_contains": ["lock:melody+rhythm+chords", "v=1.3", "fp="]
+  }
+}

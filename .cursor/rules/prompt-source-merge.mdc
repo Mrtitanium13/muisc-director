@@ -1,40 +1,51 @@
 ---
-description: Always regenerate merged prompts and matrix Dart after editing tools sources
-globs: tools/**/*.txt, tools/**/*.json, tools/merge_*.py, tools/gen_*.py
-alwaysApply: false
+description: Always regenerate merged prompts and matrix Dart after editing tools sources — mandatory agent workflow
+globs: tools/**/*.txt, tools/**/*.json, tools/merge_*.py, tools/gen_*.py, server/app/suno_system_prompt_v2.py, lib/core/constants/suno_system_prompt_v2_candidate.dart, lib/core/**/*_data.dart
+alwaysApply: true
 ---
 
-# Prompt and matrix source merge
+# Prompt and matrix source merge (mandatory)
 
-**Never hand-edit generated artifacts.** Edit sources under `tools/`, then rebuild.
+**Never hand-edit generated artifacts.** Edit sources under `tools/`, then rebuild before ending the task.
+
+## Agent workflow (every applicable task)
+
+1. Edit source file(s) in `tools/` (or matrix JSON).
+2. **Run merge** before marking work complete:
+   ```bash
+   python tools/merge_all.py
+   ```
+3. If only prompt `.txt` changed (no JSON): `python tools/merge_suno_v2_prompt.py` is acceptable.
+4. When the user asks for a commit: stage **sources + generated outputs** together.
+
+**Do not skip merge** after changing any file listed below. Leaving generated Dart/Python out of sync is a ship blocker.
 
 ## Generated outputs (do not edit by hand)
 
 | Source | Generated |
 |--------|-----------|
-| `tools/*.txt` (prompt stack) | `lib/core/constants/suno_system_prompt_v2_candidate.dart`, `elite_human_lyricist_directive.dart`, `server/app/suno_system_prompt_v2.py` |
+| `tools/suno_v2_system_prompt_body.txt` (preferred) or modular `tools/*.txt` in `merge_suno_v2_prompt.py` chain | `lib/core/constants/suno_system_prompt_v2_candidate.dart`, `elite_human_lyricist_directive.dart`, `server/app/suno_system_prompt_v2.py` |
+| `tools/songwriter/**` (modules, stages, JSON configs) | `lib/core/constants/songwriter_prompts_data.dart`, `server/app/songwriter/prompts_data.py` |
 | `tools/drum_matrix.json` | `lib/core/utils/drum_matrix_data.dart` |
 | `tools/genre_fx_matrix.json` | `lib/core/utils/genre_fx_matrix_data.dart` |
 | `tools/live_instrument_matrix.json` | `lib/core/utils/live_instrument_matrix_data.dart` |
 | `tools/code_translation_matrix.json` | `lib/core/utils/code_translation_matrix_data.dart` |
-| `tools/genre_hardware_profiles_v2_1.json` | `lib/core/constants/genre_hardware_profiles_data.dart` |
+| `tools/genre_hardware_profiles_v2_1.json` | `lib/data/generated/genre_hardware_profiles_data.dart` (consumer: `lib/services/genre_hardware_profiles.dart`) |
 
-## Required after source edits
+## Hand-edited in parallel (no merge — keep Python/Dart in sync manually)
 
-Run from repo root:
+| Area | Files |
+|------|-------|
+| Runtime user-block injectors | `server/app/*.py`, `lib/core/utils/*.dart`, `lib/core/constants/genre_lyrics_directives.dart` |
+| Lyric masters (read at runtime) | `tools/lyrics_training/*_master.txt`, `*_template.txt` |
+| Flutter UI / models | `lib/presentation/**`, `lib/data/models/**` |
+
+When changing runtime injectors **and** canonical `tools/*.txt` spec for the same feature, update **both** and run `merge_all.py` for the tools side.
+
+## Merge entrypoint
 
 ```bash
 python tools/merge_all.py
 ```
 
-Or prompt-only: `python tools/merge_suno_v2_prompt.py`
-
-**Always run merge** at the end of any task that changes `tools/*.txt` or matrix `tools/*.json`. Do not leave generated Dart/Python out of sync with sources.
-
-## Edit order
-
-1. Change source file(s) in `tools/`
-2. Run `python tools/merge_all.py`
-3. Commit sources and generated files together when the user asks for a commit
-
-See `tools/README.md` and `docs/CREATION_PIPELINE.md` for merge order.
+See `tools/README.md` and `docs/CREATION_PIPELINE.md` for full merge order.

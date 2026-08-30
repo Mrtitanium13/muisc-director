@@ -29,7 +29,7 @@ Test: open `http://localhost:8080/health`
 3. **Variables (LaoZhang default)**:
    - `OPENAI_API_KEY` — **required** for `/generate-prompt` and Gemini `/analyze`. Use a key from [api.laozhang.ai/token](https://api.laozhang.ai/token).
    - `OPENAI_BASE_URL` — optional; defaults to `https://api.laozhang.ai/v1` when unset.
-   - `PROMPT_PIPELINE` — `hybrid` (default on LaoZhang lyrics: GPT-5.5 multilingual prompt → Claude lyrics + expression) or `single` (one model).
+   - `PROMPT_PIPELINE` — `hybrid` (default on LaoZhang lyrics: GPT-5.5 multilingual prompt → Claude lyrics + expression), `two_pass` / `architect` (Pass 1 JSON blueprint → Pass 2 Block 1/2), or `single` (one model).
    - `PROMPT_VISION_MODEL` / `PROMPT_DRAFT_MODEL` — LaoZhang multilingual prompt generation default `gpt-5.5` (African languages, Nigerian Pidgin).
    - `PROMPT_LYRICS_MODEL` / `PROMPT_POLISH_MODEL` — LaoZhang lyrics + artistic expression default `claude-sonnet-4-5`.
    - `PROMPT_LYRICS_FALLBACK_MODEL` — last-resort fallback `gemini-2.5-pro`.
@@ -50,9 +50,9 @@ Test: open `http://localhost:8080/health`
    - `OPENROUTER_ONLY=true`
    - `OPENROUTER_API_KEY` or `OPENAI_API_KEY` — OpenRouter key
    - `OPENAI_BASE_URL=https://openrouter.ai/api/v1` (implied when `OPENROUTER_ONLY` is on)
-   - **Stage 1–2:** `OPENROUTER_GENERATE_MODEL=qwen/qwen3.7-max`, `THEME_CONSISTENCY_MODEL=qwen/qwen3.7-max`
+   - **Stage 1–2:** `OPENROUTER_GENERATE_MODEL=qwen/qwen3.7-plus`, `THEME_CONSISTENCY_MODEL=qwen/qwen3.7-plus`
    - **Stage 3:** `HUMANIZATION_MODEL=mistralai/mistral-large`
-   - **Stage 4–5:** `PROMPT_POLISH_MODEL=qwen/qwen3.7-max`, `SUNO_COMPRESSION_MODEL=qwen/qwen3.7-max`
+   - **Stage 4–5:** `PROMPT_POLISH_MODEL=qwen/qwen3.7-plus`, `SUNO_COMPRESSION_MODEL=qwen/qwen3.7-plus`
    - `OPENROUTER_HTTP_REFERER` / `OPENROUTER_APP_TITLE` — attribution headers
 
 4. Railway URL → Flutter `.env`:

@@ -1,0 +1,15 @@
+{
+  "id": "mandopop",
+  "version": "1.0.0",
+  "vocabulary_profile": ["情感细腻", "生活细节", "contemporary Mandarin"],
+  "line_length_guidance": "balanced character counts per breath",
+  "imagery_guidance": ["雨", "窗", "手机", "城市夜景 — only when specific"],
+  "energy_profile": "ballad to midtempo pop",
+  "hook_style": "title phrase memorable in Mandarin",
+  "rhyme_density": "medium",
+  "rhythmic_guidance": ["cadence over English stress"],
+  "common_structures": ["V-PC-C-V-PC-C-B-C"],
+  "vocal_phrasing": ["clear diction", "emotional lift"],
+  "avoid_patterns": ["English rhyme schemes forced on Chinese", "translationese"],
+  "cultural_notes": ["Prefer native Mandarin songwriting instincts"]
+}

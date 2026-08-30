@@ -1,0 +1,43 @@
+{
+  "_schema": {
+    "purpose": "Human Realism slider bands (0-100) — single source for Dart + Python",
+    "default_level": 75,
+    "min_level": 0,
+    "max_level": 100
+  },
+  "helper_text": "Controls how closely lyrics resemble authentic human songwriting instead of polished AI writing.\n\nLow values produce highly lyrical, poetic, and technically impressive lyrics.\n\nHigh values produce more natural, imperfect, conversational, and believable lyrics.",
+  "bands": [
+    {
+      "min": 0,
+      "max": 20,
+      "label": "Highly poetic and stylized",
+      "instructions": "Generate highly lyrical and artistic lyrics.\n\nUse:\n• Dense rhyme schemes\n• Metaphors\n• Symbolism\n• Strong imagery\n• Technical writing\n• Polished songwriting\n\nMinimize:\n• Everyday details\n• Imperfections\n• Conversational language"
+    },
+    {
+      "min": 21,
+      "max": 40,
+      "label": "Professional songwriter",
+      "instructions": "Generate professional commercial songwriting.\n\nUse:\n• Strong hooks\n• Good imagery\n• Clean structure\n• Controlled storytelling\n\nAllow some realism but maintain polished writing."
+    },
+    {
+      "min": 41,
+      "max": 60,
+      "label": "Balanced",
+      "instructions": "Balance artistry and realism.\n\nUse:\n• Personal observations\n• Memorable hooks\n• Occasional imperfections\n• Natural speech\n\nAvoid excessive poetic language."
+    },
+    {
+      "min": 61,
+      "max": 80,
+      "label": "Authentic artist",
+      "instructions": "Prioritize authenticity.\n\nUse:\n• Real-life situations\n• Personal details\n• Specific observations\n• Natural conversations\n• Human contradictions\n\nReduce:\n• Excessive metaphors\n• Forced rhymes\n• Abstract imagery\n\nAllow some rough edges."
+    },
+    {
+      "min": 81,
+      "max": 100,
+      "label": "Raw human realism",
+      "instructions": "Maximum human realism.\n\nWrite as if a real artist drafted the lyrics in a notebook.\n\nRequirements:\n• Use specific details.\n• Use realistic situations.\n• Include flaws.\n• Include uncertainty.\n• Include opinions.\n• Include unique observations.\n• Include occasional incomplete thoughts.\n• Allow imperfect rhyme schemes.\n• Allow conversational language.\n• Allow surprising topic shifts.\n\nAvoid:\n• AI-style motivational language\n• Generic inspiration\n• Excessive imagery\n• Every line sounding profound\n• Constant metaphors\n• Overly polished writing\n\nLyrics should feel lived-in rather than written.\nThe listener should believe a real person experienced these events."
+    }
+  ],
+  "low_poetic_guardrail": "At this Human Realism level you MAY increase poetic density, metaphors, and rhyme craft per the band instructions above, but you MUST still obey the Elite Human Lyricist core bans (no motivational clichés, no AI-favored vocabulary spam, no making every line profound).",
+  "user_block_header": "HUMAN REALISM (scales poetic polish vs authentic grit on top of Elite Human Lyricist; Block 2 only):"
+}

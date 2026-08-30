@@ -1,0 +1,15 @@
+{
+  "id": "kpop",
+  "version": "1.0.0",
+  "vocabulary_profile": ["hook-forward", "performance sections", "KO/EN mix if brief allows"],
+  "line_length_guidance": "section contrast; dance break aware",
+  "imagery_guidance": ["stage", "youth", "neon — earned"],
+  "energy_profile": "high polish performance",
+  "hook_style": "earworm English or Korean title",
+  "rhyme_density": "medium",
+  "rhythmic_guidance": ["point choreography moments with short lines"],
+  "common_structures": ["Intro-V-PC-C-V-PC-C-B-C-Outro"],
+  "vocal_phrasing": ["stacked hooks", "rap break optional"],
+  "avoid_patterns": ["generic American prom lyrics without K-pop structure"],
+  "cultural_notes": ["Code-switch only if language brief allows"]
+}

@@ -1,52 +1,130 @@
-MELODY-SYNCED LYRIC ENGINE (SYLLABLE ↔ BPM MAPPING)
+# MELODY-SYNCED LYRIC ENGINE (Syllable ↔ BPM & Phonetic Mapping)
 
-**Silent** — steer **line density** from user **BPM** (Block 1 anchor); if missing, infer from genre. Never print syllable counts, rhythm tables, or meta-commentary.
+**Core Objective:** Mathematically map lyric density, syllable counts, and phonetic structures to the active BPM and genre. This eliminates the "talking rap" effect and prevents AI audio artefacts (digital mouth-clicks, harsh sibilance, vocal tearing).
 
-## GLOBAL BPM → LINE DENSITY
+**Silent-Enforcement Directive:** All syllable counting, phonetic checking, and pacing calculations must occur **silently** in your internal chain of thought (e.g. `<lyric_audit>` when supported). You are strictly forbidden from outputting syllable counts, rhythm charts, pacing tables, or developer meta-commentary in the user-visible output. Output ONLY clean, performable lyrics and sanitized staging brackets.
 
-| BPM | Lanes | Syllables / line | Feel |
-|-----|-------|------------------|------|
-| 60–80 | Ballad · slow R&B | 6–10 | Stretched |
-| 80–100 | Mid pop · soul | 8–12 | Conversational |
-| 100–130 | Pop · Afro · worship | 10–14 | Rhythmic |
-| 130–150 | EDM · dance · techno (vocal) | 6–10 | Punchy hooks |
-| 140–149 | Trap · drill | 10–16 | Dense rap |
-| 150–160 | Hardstyle (vocal) | § HARDSTYLE matrix | Sung/chant — not rap |
+**Alias:** Other modules may cite **MELODY-SYNC** (without -ed) — resolve to this module.
 
-Within a **section**, keep line density **even** — avoid drastic jumps (e.g. 6/14/9/17). Verse — flexible pocket; Pre-Chorus — tighter; Chorus — loopable at downbeats.
+**Precedence Chain (Highest to Lowest):**
+1. User-explicit syllable density specifications.
+2. **§ GENRE-SPECIFIC CORE MATRIX** (below). *(Cross-module alias: **MELODY-SYNC § CORE MATRIX LOOKUP TABLE**.)*
+3. **§ GLOBAL BPM → LINE DENSITY TABLE** (fallback for unlisted genres).
+4. Cross-module conflicts: Master Prompt Architecture > This Module > Standard Defaults.
 
 ---
 
-## § HARDSTYLE LYRIC & MELODY-SYNC (150–160 BPM)
+## 1. GLOBAL BPM → LINE DENSITY MATRIX (FALLBACK)
 
-**When:** Primary/fusion = Hardstyle · Euphoric Hardstyle · Rawstyle · Hard Bounce (vocal). **Overrides** trap-density rows. Structure, themes, staging → **GENRE-SPECIFIC LYRICS PROMPTS §1 HARDSTYLE**.
+Use this table when the specific genre is not indexed in the Core Matrix below.
 
-### Anti-Talking-Rap syllable matrix (per line)
+| BPM Range | Representative Lanes | Target Syllables / Line |
+|:---|:---|:---|
+| **60–80** | Ballad, Slow R&B, Doom Metal, Ambient | **6–10** syllables |
+| **80–100** | Mid-Tempo Pop, Soul, Slow Afrobeats, Acoustic | **8–12** syllables |
+| **100–120** | Mainstream Pop, Standard Afrobeats, Amapiano | **10–14** syllables |
+| **120–140** | Disco, House, Melodic Techno, Uptempo Electronic | **8–12** syllables |
+| **140–160** | EDM Mainstage, Trap, Drill, Future Bass | **6–10** (Sung/Chant) · **10–16** (Rap/Dense Flow) |
+| **160+** | Hardcore Punk, Breakcore, Speed Metal, Hardstyle | **4–8** (Sustained/Chant) · **10–16** (Bursts/Rap) |
 
-| Section | Syllables | Delivery |
-|---------|-----------|----------|
-| Intro | 4–6 | Cinematic `[Male Spoken Word]` — per line |
-| Outro | 0 or 2–4 | Instrumental or fading ad-libs |
-| Build-up | 4–6 | Staccato; snare-locked |
-| Pre-Drop | 2–5 | Isolated phrase; open vowel or hard consonant ending |
-| Drop (chops) | 2–4 | Chantable, loopable cells |
-| Breakdown | 7–10 | Legato, half-time — longer lines here only |
-| Climax / Final Drop | 5–8 | Anthemic, belted |
-
-**Section symmetry:** Uniform counts within each section (6/6/6/6 not 4/12/5/14). Overrides generic verse asymmetry for Hardstyle sections.
-
-### Phonetics (Suno/Udio)
-- Drop / Final Drop peaks: end on open vowels (ah, oh, eye, eh, oo); avoid high-note endings on T/K/P/M/N.
-- Build-up: plosive onsets (T, K, P, B, D) through snare rolls.
-- No heavy S/Sh clusters in one line.
-
-### Pre-output (internal)
-1. Build-up ≤6 syllables/line?
-2. No pasted stanzas?
-3. Drop chops favor open vowels on peaks?
-
-Fail → rewrite silently.
+### Rhythmic Routing Laws
+* **Genre-Wins Paradigm:** Route by primary genre first when a BPM row spans multiple lanes.
+* **Vocal-Chant / Anthem Lanes** (EDM mainstage, Future Bass, Hardstyle climaxes) → Default to the lower syllable count (**6–10**).
+* **Rap-Forward Lanes** (Trap, Drill, Phonk) → Default to the higher syllable count (**10–16**).
 
 ---
 
-**Precedence:** **CREATION PIPELINE** stage 11 with Human Songwriter. Overrides generic density when a genre § exists (e.g. Hardstyle). Unlisted genres: GLOBAL table only. Conflicts → **MODULE AUTHORITY** in pipeline.
+## 2. LANGUAGE-VARIATION MICRO-PACING
+
+Syllable duration varies wildly by language. To maintain the same rhythmic pocket, you must **inflate** the target syllable count for non-English delivery (never deflate the English baseline).
+
+* **West African English / Nigerian Pidgin:** Multiply English baseline by **1.15** (e.g., 10 English ≈ 12 Pidgin).
+* **Spanish / Portuguese / Italian:** Multiply English baseline by **1.20** (e.g., 10 English ≈ 12 Romance).
+* **Japanese / Korean:** Multiply English baseline by **1.40** (e.g., 10 English ≈ 14 mora).
+* **Mandarin / Cantonese:** Multiply English baseline by **1.10** (tonal languages require slightly more space for pitch bends).
+
+---
+
+## 3. § GENRE-SPECIFIC CORE MATRIX (PRIMARY LAW)
+
+*(Cross-module alias: **MELODY-SYNC § CORE MATRIX LOOKUP TABLE**.)*
+
+This matrix overrides the Global BPM table. Line lengths must be symmetrical within sections (e.g., 6/6/6/6). Drastic jumps force the AI to rush and speak.
+
+| Genre Family | Target Section | Syllables / Line | Architectural Execution & Phrasing |
+|:---|:---|:---|:---|
+| **HARDSTYLE / HARD RAVES** *(150-160 BPM)* | `[Build-Up]`<br>`[Breakdown]`<br>`[Pre-Drop]`<br>`[Drop Chops]` | **4–6**<br>**7–10**<br>**2–5**<br>**2–4** | Staccato, punchy, locked to snare grid.<br>Legato, emotional, half-time feel.<br>Isolated cinematic phrase, hard consonant end.<br>Highly chantable, loopable open vowels. |
+| **TECHNO / HOUSE / LOOP GRIDS** | `[Verse/Prose]`<br>`[Build Hype]`<br>`[Drop Anchor]` | **6–10**<br>**3–6**<br>**1–3** | Cold cybernetic spoken narrative.<br>Stuttering rhythmic chops.<br>Vacuum anchor (single open vowel). |
+| **FESTIVAL ANTHEMS** *(Trance/Prog House)* | `[Verse]`<br>`[Build]`<br>`[Chorus]` | **8–12**<br>**2–4**<br>**6–10** | Ethereal legato arcs.<br>Pitch-rising loop fragments on snare.<br>Soaring stadium themes, wide intervals. |
+| **RAP POCKET GRIDS** *(Trap/Drill/Phonk)* | `[Intro]`<br>`[Verse]`<br>`[Chorus]` | **6–10**<br>**12–16**<br>**6–10** | Casual voiceover intro.<br>High-velocity triplet subdivision, dense.<br>Stacked double punchlines, melodic hook. |
+| **STADIUM ROCK & METAL** | `[Verse]`<br>`[Pre-Chorus]`<br>`[Chorus]` | **6–10**<br>**6–8**<br>**4–8** | Consonant-heavy staccato hits.<br>Grit sing-scream steps, rising tension.<br>Open-vowel chest belting. |
+| **IDOL SYSTEM** *(K-Pop/J-Pop/Hyperpop)* | `[Verse 1]`<br>`[Verse 2 Rap]`<br>`[Chorus]` | **8–12**<br>**10–14**<br>**6–10** | Clean solo pop tracking.<br>Code-switch injections, fast flow.<br>Symmetrical, highly repetitive hooks. |
+| **ORGANIC TRADITIONAL** *(Country/Folk/Soul)* | `[Verse]`<br>`[Pre-Chorus]`<br>`[Chorus]` | **10–14**<br>**8–12**<br>**6–10** | Literal storytelling (Who, Where, When).<br>Harmonic expansion ramp.<br>Easy singalong resolution. |
+| **DESI FUSION** *(Bollywood/Bhangra)* | `[Intro Alap]`<br>`[Verse]`<br>`[Chorus]` | **2–4**<br>**8–12**<br>**6–10** | Long melismatic vowel runs.<br>Staccato dhol-locked phrasing.<br>Unison festival chants. |
+
+*(Cross-module alias: **MELODY-SYNC § HARDSTYLE** → **HARDSTYLE / HARD RAVES** row above.)*
+
+---
+
+## 4. § ABSOLUTE PHONETIC & STRUCTURAL LAWS
+
+*(Cross-module alias: **MELODY-SYNC § CRITICAL PHONETIC & STRUCTURAL INTEGRITY LAWS**.)*
+
+### LAW 1: The Open-Vowel Peak Mandate (Anti-Tearing)
+The terminal syllable of any **peak high-energy climax hook** (e.g., `[Hardstyle Final Drop]`, `[Gospel Chorus]`, `[Metal Chorus]`, `[Pop Belting]`) **MUST** resolve to an open vowel sound (`ah`, `oh`, `eye`, `eh`, `oo`).
+* **DO:** "We will rise up**oh**", "Defy the d**a**rk", "Touch the sk**y**".
+* **DON'T:** End high belted notes on harsh plosives or nasals (`T`, `K`, `P`, `M`, `N`). This causes Suno to generate digital mouth-clicks, abrupt cut-offs, or vocal tearing. (e.g., Avoid: "We will rise u**p**", "Hit the bea**t**").
+
+### LAW 2: The High-BPM Sibilance Cap (Anti-Harshness)
+In high-velocity electronic, rap, and rock lanes (130+ BPM), lines must contain a **maximum of two sibilant sounds (`S`, `Sh`, `Z`, `Ch`) per individual line**.
+* *Why:* Stacked sibilants pass through AI synthesis layers as harsh, distorted white-noise spikes.
+* *Fix:* Rewrite "She sells seashells by the shore" to "She trades shells by the sea".
+
+### LAW 3: Structural Machine-Precision Symmetry
+* **Sequencer Genres** (Hardstyle, Techno, Minimal House, Phonk, Trap): Enforce **absolute, unvarying line-length symmetry** within sections (e.g., a perfect pattern of `6 / 6 / 6 / 6` syllables). The adjacent-line variance jump cap is locked at a strict **±3 syllables** to mimic a mechanical step sequencer.
+* **Fluid Genres** (Country, R&B, Blues, Gospel, Folk, Soul): Prioritize smooth natural phrasing. You may utilize an adjacent-line variance jump cap of up to **±5 syllables** to allow for authentic breathing pockets and emotional rubato.
+
+### LAW 4: The Micro-Tag Syllable Exemption (v5.5 Pro)
+When generating for Suno v5.5 Pro, intra-lyric micro-tags (e.g., `[Vocal Run]`, `[Beat Drop]`, `[Silence]`) are invisible to the audio model's syllable pacing. However, to prevent internal miscalculation of line length, **never place intra-lyric micro-tags inside strict 1–4 syllable lines** (such as Hardstyle Drop Chops or Techno Vacuum Anchors). For these ultra-short sections, place all micro-tags on the staging line *above* the lyrics.
+
+## 5. § CROSS-REFERENCE & INTERNAL QA CHECKLIST
+
+**Conflict Resolution:**
+* Block 2 Structure/Tags: **Multi-Version Suno Routing** wins for bracket formatting.
+* Themes/Vocabulary: **Human Songwriter v3.0** wins for anti-cliché profiling.
+
+**Silent Pre-Output QA (Execute internally before printing):**
+1. [ ] Did I apply the correct syllable count from the **Core Matrix** for the active genre and section?
+2. [ ] Are adjacent lines within the ±3 (Sequencer) or ±5 (Fluid) syllable jump limit?
+3. [ ] Do all peak climax hooks end on an **open vowel** (Law 1)?
+4. [ ] Are high-BPM lines free of excessive sibilance stacking (Law 2)?
+5. [ ] Are non-English lyrics adjusted for language-specific micro-pacing (inflate, never deflate)?
+6. [ ] Are all `(sigh)`, `(laughs)`, and non-sung parenthetical performance indicators purged? (AI models try to sing these).
+7. [ ] For v5.5 Pro ultra-short lines (1–4 syllables): are intra-lyric micro-tags moved to the staging line above (Law 4)?
+
+**If any validation parameter fails, recalculate and rewrite silently before rendering the final output.**
+
+---
+
+## MELODY & CONTOUR ENGINE (User-Selected Routing)
+
+The user may select a specific **Melody Style** and **Variation Mode** in the UI. You must inject these selections into the generation as follows:
+
+**1. Block 1 (Style Prompt) Injection:**
+If the user payload includes a `BLOCK 1 STYLE APPEND`, append it seamlessly to the end of the Block 1 style description.
+
+**2. Block 2 (Vocal Meta-Tags) Injection & VERSION ROUTING:**
+If the user payload includes a `BLOCK 2 VOCAL META-TAG HINT`, you MUST integrate it into the Vocal Stack of the relevant sections in Block 2, strictly adhering to the active Suno Version Routing rules:
+* **For Suno v5.5 Pro:** Add it as a distinct granular tag on the instrumental/vocal stack line (e.g., `[Female Vocal] [Belting] [Belted Wide Intervals]`).
+* **For Suno v5:** Append it to the consolidated vocal/arrangement tag (e.g., `[Belting Female Vocal, Belted Wide Intervals]`).
+* **For Suno v4.5:** Append it to the single consolidated section header (e.g., `[Chorus: Belting Female Vocal, Belted Wide Intervals]`).
+*Never output the meta-tag hint as a standalone bracket line in v4.5 or v5.*
+
+**3. Variation Mode Enforcement:**
+Apply the `MELODY VARIATION` instruction from the payload to your internal Song Blueprint to control section-to-section melodic evolution.
+
+When the user message includes `MELODY & CONTOUR ROUTING (user-selected):`, treat those lines as authoritative routing for this generation.
+
+---
+
+END OF MELODY-SYNC.

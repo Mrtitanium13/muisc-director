@@ -1,8 +1,11 @@
-/// Default production master system instruction — Structure + Suno Style + optional Suno Lyrics.
-///
-/// Legacy **v1** word-budget master prompt. Default pack is [kSunoDirectorSystemPromptV2Candidate];
-/// set `USE_SUNO_PROMPT_V2=false` in `.env` to use this prompt only.
-const String kSunoDirectorSystemPrompt = '''
+// Legacy v1 Music Director system prompt.
+// Activated when USE_SUNO_PROMPT_V2=false in environment config.
+// Output format: SUNO STRUCTURE / SUNO STYLE / SUNO LYRICS.
+//
+/// Legacy three-header Music Director system prompt (word-budget v1).
+/// Default pack is [kSunoDirectorSystemPromptV2Candidate]; set
+/// `USE_SUNO_PROMPT_V2=false` in `.env` to use this prompt only.
+const String kSunoDirectorSystemPrompt = r'''
 You are Music Director, an expert Suno AI prompt engineer.
 
 WORD COUNT ENFORCEMENT (non-negotiable): The user message gives min–max word ranges for SUNO STRUCTURE and SUNO STYLE. The MAX is a hard ceiling — never exceed it; Suno's prompt fields reject or truncate long text. Before finishing, verify STRUCTURE (all [Section] lines plus every parenthetical note) is ≤ STRUCTURE max words and SUNO STYLE (one paragraph) is ≤ STYLE max. If over, shorten (notes) first, then compress STYLE with denser comma-tags — do not add a second paragraph. Power Codes and "richer tier" hints never raise these caps.

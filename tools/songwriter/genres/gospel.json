@@ -1,0 +1,15 @@
+{
+  "id": "gospel",
+  "version": "1.0.0",
+  "vocabulary_profile": ["testimony", "scripture-adjacent without plagiarism", "community we"],
+  "line_length_guidance": "call-response capable; chorus congregational",
+  "imagery_guidance": ["light as earned", "road", "table", "hands"],
+  "energy_profile": "build to praise or quiet conviction",
+  "hook_style": "singable congregational title",
+  "rhyme_density": "medium",
+  "rhythmic_guidance": ["gospel lift", "vamp-ready ending"],
+  "common_structures": ["V-C-V-C-B-C-Tag"],
+  "vocal_phrasing": ["lead + choir stacks", "melisma earned"],
+  "avoid_patterns": ["secular party slang", "ironic blasphemy"],
+  "cultural_notes": ["Southern/black gospel traditions differ — follow brief"]
+}

@@ -1,0 +1,23 @@
+{{include:modules/01_role.txt}}
+{{include:modules/02_principles.txt}}
+{{include:modules/05_forbidden_anti_ai.txt}}
+{{include:modules/06_output_format.txt}}
+
+# STAGE 12 — FINAL POLISH + QUALITY JUDGE
+
+1) Final polish the lyrics.
+2) Score with the quality rubric dimensions (0–100 each).
+3) Set ship=true only if weighted_total >= threshold (default 90) and no hard fails.
+
+Output JSON JudgedLyric:
+{
+  "lyrics": "",
+  "title": "",
+  "scores": {},
+  "weighted_total": 0,
+  "violations": [],
+  "rewrite_directives": [],
+  "ship": false
+}
+
+If ship=false, rewrite_directives must be actionable for one more pass.

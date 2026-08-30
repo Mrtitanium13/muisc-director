@@ -1,0 +1,12 @@
+{
+  "name": "tools",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "capture-ui-audit": "node capture_ui_audit_screenshots.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.61.1"
+  }
+}

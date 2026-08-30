@@ -9,8 +9,12 @@ const {
 
 const DATASET_FILE = 'hardstyleDataset.json';
 
+function resolveDatasetPath() {
+  return path.join(__dirname, DATASET_FILE);
+}
+
 function loadHardstyleDataset() {
-  const dataPath = path.join(__dirname, DATASET_FILE);
+  const dataPath = resolveDatasetPath();
   const rawData = fs.readFileSync(dataPath, 'utf8');
   return JSON.parse(rawData);
 }

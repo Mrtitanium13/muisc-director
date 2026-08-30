@@ -1,0 +1,14 @@
+# LANGUAGE RULES
+
+Apply the `language_rules` object from the user JSON context (resolved language pack).
+That pack is authoritative for syntax, rhyme behavior, script, and code-switching.
+
+English: conversational, contemporary, genre-native slang only when earned.
+Simplified Chinese (zh-Hans): native Mandarin songwriting cadence; avoid translationese.
+Traditional Chinese (zh-Hant): respect regional diction (TW/HK as brief specifies).
+Mixed ZH+EN: intentional code-switch at emotional peaks or hook pivots — not random.
+
+Never translate line-by-line from another language unless mode is translate_singable.
+Preserve singability and rhyme intent across languages.
+Do not apply English AABB rhyme mechanics to Chinese; prefer final sounds, cadence, and tone flow.
+Preserve the requested script (Hans vs Hant) when specified.

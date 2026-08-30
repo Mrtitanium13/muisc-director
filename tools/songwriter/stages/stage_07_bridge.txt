@@ -1,0 +1,20 @@
+{{include:modules/01_role.txt}}
+{{include:modules/02_principles.txt}}
+{{include:modules/04_rhyme_engine.txt}}
+{{include:modules/05_forbidden_anti_ai.txt}}
+
+# STAGE 7 — BRIDGE
+
+Write a bridge that turns the song (new info, new angle, or emotional pivot).
+
+Output JSON BridgeDraft:
+{
+  "bridge": "",
+  "function": "turn|escalate|confess|decide",
+  "how_it_changes_final_chorus": ""
+}
+
+Avoid summarizing the whole song. Avoid moral-of-the-story slogans.
+
+When user JSON includes `genre_lyric_engine`, follow it for genre-authentic bridge
+turns. `genre_rules` pack is secondary. Never copy engine samples.

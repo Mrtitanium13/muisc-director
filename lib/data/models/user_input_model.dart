@@ -1,8 +1,9 @@
+import '../../config/melody_config.dart';
 import '../../core/constants/audio_environment_data.dart';
 import '../../core/constants/dialect_style_data.dart';
 import '../../core/constants/production_intensity_config.dart';
-import '../../core/constants/melody_style_data.dart';
-import 'melody_variation_mode.dart';
+import '../../core/constants/suno_version.dart';
+import 'melody_evolution.dart';
 import 'song_generation_type.dart';
 import 'suno_field_output_mode.dart';
 import 'track_duration_config.dart';
@@ -11,7 +12,7 @@ class UserInputModel {
   static const Object _unset = Object();
 
   const UserInputModel({
-    this.sunoVersion = 'v5.0',
+    this.sunoVersion = SunoVersion.preferredValue,
     this.primaryGenre = '',
     this.subGenreFusion = '',
     this.vibe = '',
@@ -25,6 +26,7 @@ class UserInputModel {
     this.dialectVariantId = DialectStyleData.generalVariantId,
     this.audioEnvironmentModeId = AudioEnvironmentData.studioIsolatedId,
     this.referenceArtists = '',
+    this.sonicTags = const [],
     this.avoid = '',
     this.language = 'English',
     this.includeAnalyzerData = false,
@@ -41,13 +43,14 @@ class UserInputModel {
     this.remixOriginalArtist = '',
     this.songGenerationType = SongGenerationType.fullSong,
     this.realInstrumentals = '',
-    this.melodyStyleId = MelodyStyleData.autoId,
+    this.melodyStyleId = MelodyConfig.autoId,
     this.melodyCustomNotes = '',
-    this.melodyVariationMode = MelodyVariationMode.none,
+    this.melodyEvolution = MelodyEvolution.strict,
     this.chordProgression = '',
     this.generateLyrics = false,
+    this.useVibeAsLyricSource = false,
     this.lyricThemeNotes = '',
-    this.lyricTemperamentCodes = '',
+    this.activeModifierCodes = '',
     this.humanRealism = 75,
     this.productionIntensity = ProductionIntensityConfig.defaultLevel,
     this.genreFxLaneId = '',
@@ -75,7 +78,12 @@ class UserInputModel {
 
   /// `studio_isolated` (default) or `live_performance` — Block 2 crowd/studio staging.
   final String audioEnvironmentModeId;
+  /// Artist names or catalog codenames for DNA translation.
   final String referenceArtists;
+
+  /// Objective sonic production tags (direct instructions — not artist DNA).
+  final List<String> sonicTags;
+
   final String avoid;
   final String language;
   final bool includeAnalyzerData;
@@ -117,14 +125,14 @@ class UserInputModel {
   /// Live / acoustic / mic’d instruments to foreground in SUNO STYLE (comma-separated or free text).
   final String realInstrumentals;
 
-  /// Preset id from [MelodyStyleData.presets] or [MelodyStyleData.customId].
+  /// Preset id from [MelodyConfig.directives] or [MelodyConfig.customId].
   final String melodyStyleId;
 
   /// Free-text when [melodyStyleId] is custom.
   final String melodyCustomNotes;
 
-  /// Rotate / random session directives on top of melody style.
-  final MelodyVariationMode melodyVariationMode;
+  /// Strict / progressive / high-contrast section-to-section melodic routing.
+  final MelodyEvolution melodyEvolution;
 
   /// User-specified chord progression (Roman numerals, chord symbols, or prose).
   /// Woven into SUNO STRUCTURE (notes) and SUNO STYLE when non-empty.
@@ -133,11 +141,14 @@ class UserInputModel {
   /// Path C: original lyrics when true and [optionalLyrics] is empty.
   final bool generateLyrics;
 
+  /// When true, vibe detail textarea is sent as [SOURCE TEXT FOR LYRICS] prose-to-lyrics input.
+  final bool useVibeAsLyricSource;
+
   /// Theme / POV / keywords for Path C (optional).
   final String lyricThemeNotes;
 
   /// Space-separated temperament tokens, e.g. "/GRIT /TENDER".
-  final String lyricTemperamentCodes;
+  final String activeModifierCodes;
 
   /// 0–100: poetic/polished (low) vs natural/imperfect human lyrics (high). Default 75.
   final int humanRealism;
@@ -166,6 +177,7 @@ class UserInputModel {
     String? dialectVariantId,
     String? audioEnvironmentModeId,
     String? referenceArtists,
+    List<String>? sonicTags,
     String? avoid,
     String? language,
     bool? includeAnalyzerData,
@@ -184,11 +196,12 @@ class UserInputModel {
     String? realInstrumentals,
     String? melodyStyleId,
     String? melodyCustomNotes,
-    MelodyVariationMode? melodyVariationMode,
+    MelodyEvolution? melodyEvolution,
     String? chordProgression,
     bool? generateLyrics,
+    bool? useVibeAsLyricSource,
     String? lyricThemeNotes,
-    String? lyricTemperamentCodes,
+    String? activeModifierCodes,
     int? humanRealism,
     int? productionIntensity,
     String? genreFxLaneId,
@@ -212,6 +225,7 @@ class UserInputModel {
       audioEnvironmentModeId:
           audioEnvironmentModeId ?? this.audioEnvironmentModeId,
       referenceArtists: referenceArtists ?? this.referenceArtists,
+      sonicTags: sonicTags ?? this.sonicTags,
       avoid: avoid ?? this.avoid,
       language: language ?? this.language,
       includeAnalyzerData: includeAnalyzerData ?? this.includeAnalyzerData,
@@ -234,13 +248,14 @@ class UserInputModel {
       realInstrumentals: realInstrumentals ?? this.realInstrumentals,
       melodyStyleId: melodyStyleId ?? this.melodyStyleId,
       melodyCustomNotes: melodyCustomNotes ?? this.melodyCustomNotes,
-      melodyVariationMode:
-          melodyVariationMode ?? this.melodyVariationMode,
+      melodyEvolution: melodyEvolution ?? this.melodyEvolution,
       chordProgression: chordProgression ?? this.chordProgression,
       generateLyrics: generateLyrics ?? this.generateLyrics,
+      useVibeAsLyricSource:
+          useVibeAsLyricSource ?? this.useVibeAsLyricSource,
       lyricThemeNotes: lyricThemeNotes ?? this.lyricThemeNotes,
-      lyricTemperamentCodes:
-          lyricTemperamentCodes ?? this.lyricTemperamentCodes,
+      activeModifierCodes:
+          activeModifierCodes ?? this.activeModifierCodes,
       humanRealism: humanRealism ?? this.humanRealism,
       productionIntensity: productionIntensity ?? this.productionIntensity,
       genreFxLaneId: genreFxLaneId ?? this.genreFxLaneId,

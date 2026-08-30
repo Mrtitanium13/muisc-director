@@ -1,4 +1,4 @@
-/// Claude lyrics + expression polish (LaoZhang hybrid: GPT-5.5 multilingual prompt → Claude).
+// Claude lyrics + expression polish (LaoZhang hybrid: GPT-5.5 multilingual prompt → Claude).
 
 const String kSunoPolishSystemPrompt = '''
 
@@ -22,7 +22,7 @@ POLISH ONLY — do not change the user's creative intent, genre, BPM, key, or ly
 
 **Human Authenticity Engine (apply before return):**
 
-- Replace generic emotion ("holding on", "broken inside", "lost in the dark") with concrete images (mug, kettle, keys, unread message).
+- Replace generic emotion ("holding on", "broken inside", "lost in the dark") with concrete images invented for THIS song. Never default to kettle / receipt / bleach / "3 AM on cold tile" / unmotivated Lagos place-drops.
 
 - Chorus: one memorable hook + one plain emotional line; repeatable; no verbatim verse phrases.
 
@@ -56,7 +56,23 @@ String buildSunoPolishUserMessage({
 
   required String originalUserBlock,
 
+  String? pidginSubVariant,
+
 }) {
+
+  final ibibioGuard = pidginSubVariant == 'ibibio'
+
+      ? '''
+
+IBIBIO POLISH GUARD (mandatory — do NOT strip during polish):
+
+Preserve Calabar/Ibibio vocabulary markers in Block 2 lyrics: Abasi, esie, kpa, edinen, emi, idaha, nno, fo, mmo, mi.
+
+Do NOT replace with Lagos Pidgin (wahala, abeg, na wa o, sef, oya).
+
+'''
+
+      : '';
 
   return '''
 
@@ -68,8 +84,6 @@ ${draft.trim()}
 
 ---
 
-
-
 ORIGINAL USER REQUEST (do not contradict):
 
 ---
@@ -78,7 +92,7 @@ ${originalUserBlock.trim()}
 
 ---
 
-
+$ibibioGuard
 
 Return the polished full Suno reply only.
 

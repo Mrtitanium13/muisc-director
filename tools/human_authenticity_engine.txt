@@ -12,8 +12,10 @@ Reduce generic emotional filler (holding on, healing, broken inside, lost in the
 
 **Rule:** Pair or replace abstract emotion with concrete images in the same section — **Elite Human Lyricist §2** Flexible Anchor Rule.
 
-**Concrete image bank (examples — invent fresh):**
+**Concrete image bank (category hints only — invent fresh; never paste):**
 sweater folded on a shelf · kettle clicking off · steam from a cup · unread message · footsteps in a hallway · rain on a window · keys on a table · coffee mug beside the sink · bus pass in a coat pocket · elevator ding · cracked phone screen
+
+**Do not recycle:** "3 AM on cold tile", Lagos as a free place-drop, bleach/scrubbing floors, bent receipt by the kettle, or "Mama said… count grace before receipts." Details must fit THIS brief.
 
 Emotional realism beats poetic complexity.
 
@@ -45,7 +47,7 @@ The objective is: **"Does this sound human within this genre?"**
 
 Human authenticity and genre authenticity must work together.
 
-Full lane routing → **GENRE-SPECIFIC HUMANIZATION ENGINE** (authoritative). Quick calibration:
+Full lane routing → **GENRE-SPECIFIC HUMANIZATION ENGINE § SECTION I** (authoritative). Quick calibration:
 
 ### Hard Techno
 
@@ -62,13 +64,15 @@ Full lane routing → **GENRE-SPECIFIC HUMANIZATION ENGINE** (authoritative). Qu
 
 ### Trance
 
-* **Prioritize:** Uplift, hope, release, connection, euphoria, long emotional phrases, singable melodies.
-* **Target feeling:** Emotional transcendence.
+* **Prioritize:** Longing, turning points, emotional release, singable repetitive hooks — **felt honesty**, not galaxy poetry.
+* **Avoid:** Sci-fi/rave metaphors, infinite skies clichés, forced travelogue backdrops.
+* **Target feeling:** Emotional release grounded in real psychological state.
 
 ### Festival EDM / Big Room
 
-* **Prioritize:** Massive hooks, crowd participation, shared emotion, celebration, unity.
-* **Target feeling:** Collective energy.
+* **Prioritize:** Massive simple hooks, shared emotion, blunt conversational fragments — crowd-ready repetition.
+* **Avoid:** Melodramatic ownership clichés (*we own the night*), neon/galaxy metaphor stacks.
+* **Target feeling:** Collective release without robotic AI poetry.
 
 ### Afrobeat / Afro-House
 
@@ -234,6 +238,7 @@ A song succeeds when people remember it. Human realism alone is insufficient. Th
 ### Conversational Test
 
 * **Ask:** Does this sound like something a real person might actually say?
+* Prefer everyday idioms (*song in my heart*) over AI body-poetry (*song in my chest*, *breath fills my lungs*).
 * *Examples:* "We thank God for the blessings, we still dey hustle for more." · "Right here. Right now." · "One day go better."
 
 ### Chorus Priority Rule
@@ -407,9 +412,9 @@ Weave naturally — not a bullet list.
 
 When user enables **DJ OUTRO** or genre is club electronic, align with **SECTION 1F**:
 
-* 16-bar DJ outro · loopable percussion groove · filtered mix-out · delay tails · extended transition
-* Block 2 outro sections: strip to groove; no hard stop
-* Block 1 closing clause per 1F when flags ON
+* Extended wordless percussion mix-out · kick-and-hats groove · long loopable fade · delay tails
+* Block 2: content-rich `[Instrumental Outro: …]` + `[Fade Out: …]` bookends (name what plays)
+* Block 1 closing clause per 1F when flags ON — positive language only, never "no vocals" phrasing
 
 ---
 

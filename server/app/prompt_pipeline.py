@@ -1,16 +1,24 @@
-"""Hybrid Suno prompt pipeline: draft → optional polish; completion pass on truncation."""
+"""Suno prompt pipeline: single | hybrid draft→polish | two-pass Architect→Lyricist."""
 
 from __future__ import annotations
 
 import logging
-from typing import Any
+from typing import Any, NamedTuple
 
+from app.architect_pass import (
+    ARCHITECT_SYSTEM,
+    architect_max_tokens,
+    blueprint_to_json,
+    inject_blueprint_into_user,
+    parse_architect_blueprint,
+)
 from app.llm_config import (
     hybrid_prompt_enabled,
     llm_provider,
     resolve_draft_model,
     resolve_laozhang_lyrics_secondary_model,
     resolve_polish_model,
+    two_pass_prompt_enabled,
 )
 from app.suno_compact_retry import COMPACT_LYRICS_SYSTEM
 from app.suno_output_qa import (
@@ -20,6 +28,12 @@ from app.suno_output_qa import (
 )
 
 logger = logging.getLogger(__name__)
+
+
+class SunoPromptResult(NamedTuple):
+    text: str
+    pipeline: str
+    architect_blueprint: str | None = None
 
 # Polish must be able to return the full draft (Block 1 + Block 2); a low cap truncates output.
 _POLISH_MAX_TOKENS_CAP = 8192
@@ -44,7 +58,7 @@ YOUR FOCUS — LYRICS & ARTISTIC EXPRESSION:
 POLISH ONLY — do not change the user's creative intent, genre, BPM, key, or lyric story.
 
 **Human Authenticity Engine (apply before return):**
-- Replace generic emotion ("holding on", "broken inside", "lost in the dark") with concrete images (mug, kettle, keys, unread message).
+- Replace generic emotion ("holding on", "broken inside", "lost in the dark") with concrete images invented for THIS song. Never default to kettle / receipt / bleach / "3 AM on cold tile" / unmotivated Lagos place-drops.
 - Chorus: one memorable hook + one plain emotional line; repeatable; no verbatim verse phrases.
 - Festival/trance/melodic techno: simple singable choruses; breakdowns more intimate than drops.
 - ZERO artist/producer/song names — translate to sonic character.
@@ -100,20 +114,14 @@ def _chat(
     temperature: float,
     max_tokens: int,
 ) -> tuple[str, str | None]:
+    from app.llm_config import completion_token_kwargs
+
     kwargs: dict[str, Any] = {
         "model": model,
         "messages": messages,
         "temperature": temperature,
-        "max_tokens": max_tokens,
+        **completion_token_kwargs(model, max_tokens),
     }
-    # Gemini on some gateways also accepts max_completion_tokens.
-    model_l = model.lower()
-    if (
-        "gemini" in model_l
-        or model_l.startswith("gpt")
-        or "claude" in model_l
-    ):
-        kwargs["max_completion_tokens"] = max_tokens
     resp = client.chat.completions.create(**kwargs)
     choice = resp.choices[0]
     msg = choice.message
@@ -142,14 +150,16 @@ def _chat_simple(
     user: str,
     temperature: float,
     max_tokens: int,
+    chat_prefix_turns: list[dict[str, str]] | None = None,
 ) -> tuple[str, str | None]:
+    messages: list[dict[str, str]] = [{"role": "system", "content": system}]
+    if chat_prefix_turns:
+        messages.extend(chat_prefix_turns)
+    messages.append({"role": "user", "content": user})
     return _chat(
         client,
         model=model,
-        messages=[
-            {"role": "system", "content": system},
-            {"role": "user", "content": user},
-        ],
+        messages=messages,
         temperature=temperature,
         max_tokens=max_tokens,
     )
@@ -201,11 +211,13 @@ def _single_chat_with_laozhang_fallback(
     provider: str | None,
     lyrics_task: bool,
     user_suffix: str | None = None,
+    draft_model_override: str | None = None,
+    chat_prefix_turns: list[dict[str, str]] | None = None,
 ) -> tuple[str, str]:
     user = user_content
     if user_suffix and user_suffix.strip():
         user = f"{user_content.strip()}\n\n{user_suffix.strip()}"
-    primary = resolve_draft_model(
+    primary = draft_model_override or resolve_draft_model(
         language=language,
         lightweight=lightweight,
         provider=provider,
@@ -225,6 +237,7 @@ def _single_chat_with_laozhang_fallback(
                 user=user,
                 temperature=temp,
                 max_tokens=tok,
+                chat_prefix_turns=chat_prefix_turns,
             )
             if fin == "length":
                 logger.warning(
@@ -247,6 +260,7 @@ def _single_chat_with_laozhang_fallback(
             user=user,
             temperature=temperature,
             max_tokens=max_tokens,
+            chat_prefix_turns=chat_prefix_turns,
         )
         if finish == "length":
             logger.warning("single-path model=%s hit max_tokens (%s)", primary, max_tokens)
@@ -291,9 +305,10 @@ def generate_prompt_completion(
     max_tokens: int,
     provider: str | None = None,
     lyrics_task: bool = True,
+    draft_model_override: str | None = None,
 ) -> tuple[str, str]:
     """Multi-turn completion when a single call returns truncated Block 1 / missing Block 2."""
-    model = resolve_draft_model(
+    model = draft_model_override or resolve_draft_model(
         language=language,
         lightweight=lightweight,
         provider=provider,
@@ -371,18 +386,23 @@ def generate_prompt_hybrid(
     draft_temperature: float = 0.85,
     provider: str | None = None,
     lyrics_task: bool = True,
+    draft_model_override: str | None = None,
+    polish_model_override: str | None = None,
+    chat_prefix_turns: list[dict[str, str]] | None = None,
 ) -> tuple[str, str]:
     """
     LaoZhang: GPT-5.5 multilingual prompt (draft) → Claude Sonnet 4.5 lyrics + expression (polish).
     Returns (final_text, pipeline_label).
     """
-    draft_model = resolve_draft_model(
+    draft_model = draft_model_override or resolve_draft_model(
         language=language,
         lightweight=lightweight,
         provider=provider,
         lyrics_task=lyrics_task,
     )
-    polish_model = resolve_polish_model(provider=provider, lyrics_task=lyrics_task)
+    polish_model = polish_model_override or resolve_polish_model(
+        provider=provider, lyrics_task=lyrics_task
+    )
 
     logger.info("hybrid draft model=%s", draft_model)
     draft, draft_finish = _chat_simple(
@@ -392,6 +412,7 @@ def generate_prompt_hybrid(
         user=user_content,
         temperature=draft_temperature,
         max_tokens=max_tokens,
+        chat_prefix_turns=chat_prefix_turns,
     )
     if draft_finish == "length":
         logger.warning("hybrid draft hit max_tokens (%s); output may be incomplete", max_tokens)
@@ -428,6 +449,8 @@ def generate_prompt_single(
     provider: str | None = None,
     user_suffix: str | None = None,
     lyrics_task: bool = True,
+    draft_model_override: str | None = None,
+    chat_prefix_turns: list[dict[str, str]] | None = None,
 ) -> tuple[str, str]:
     return _single_chat_with_laozhang_fallback(
         client,
@@ -440,7 +463,134 @@ def generate_prompt_single(
         provider=provider,
         lyrics_task=lyrics_task,
         user_suffix=user_suffix,
+        draft_model_override=draft_model_override,
+        chat_prefix_turns=chat_prefix_turns,
     )
+
+
+def generate_prompt_two_pass(
+    client: Any,
+    *,
+    system_prompt: str,
+    user_content: str,
+    language: str,
+    lightweight: bool,
+    max_tokens: int,
+    temperature: float = 0.85,
+    provider: str | None = None,
+    user_suffix: str | None = None,
+    lyrics_task: bool = True,
+    draft_model_override: str | None = None,
+    polish_model_override: str | None = None,
+    chat_prefix_turns: list[dict[str, str]] | None = None,
+    architect_blueprint: str | None = None,
+) -> SunoPromptResult:
+    """
+    Pass 1 Architect (JSON blueprint) → Pass 2 Lyricist (Block 1 + Block 2).
+
+    If [architect_blueprint] is provided (format retry), Pass 1 is skipped.
+    On Pass 1 parse failure, falls back to a single full-prompt generation.
+    """
+    architect_model = draft_model_override or resolve_draft_model(
+        language=language,
+        lightweight=lightweight,
+        provider=provider,
+        lyrics_task=lyrics_task,
+    )
+    lyricist_model = polish_model_override or resolve_polish_model(
+        provider=provider, lyrics_task=lyrics_task
+    )
+
+    blueprint_json = (architect_blueprint or "").strip() or None
+    if blueprint_json is None:
+        logger.info("two-pass architect model=%s", architect_model)
+        try:
+            raw_bp, bp_finish = _chat_simple(
+                client,
+                model=architect_model,
+                system=ARCHITECT_SYSTEM,
+                user=user_content,
+                temperature=0.4,
+                max_tokens=architect_max_tokens(),
+            )
+            if bp_finish == "length":
+                logger.warning(
+                    "architect pass hit max_tokens (%s)", architect_max_tokens()
+                )
+            parsed = parse_architect_blueprint(raw_bp)
+            blueprint_json = blueprint_to_json(parsed)
+        except Exception as exc:  # noqa: BLE001
+            logger.warning(
+                "architect pass failed (%s); falling back to single-path", exc
+            )
+            text, pipeline = generate_prompt_single(
+                client,
+                system_prompt=system_prompt,
+                user_content=user_content,
+                language=language,
+                lightweight=lightweight,
+                max_tokens=max_tokens,
+                temperature=temperature,
+                provider=provider,
+                user_suffix=user_suffix,
+                lyrics_task=lyrics_task,
+                draft_model_override=draft_model_override,
+                chat_prefix_turns=chat_prefix_turns,
+            )
+            return SunoPromptResult(text, f"{pipeline}:two-pass-fallback", None)
+
+    pass2_user = inject_blueprint_into_user(
+        user_content, blueprint_json, user_suffix=user_suffix
+    )
+    logger.info("two-pass lyricist model=%s", lyricist_model)
+    try:
+        text, finish = _chat_simple(
+            client,
+            model=lyricist_model,
+            system=system_prompt,
+            user=pass2_user,
+            temperature=temperature,
+            max_tokens=max_tokens,
+            chat_prefix_turns=chat_prefix_turns,
+        )
+        if finish == "length":
+            logger.warning(
+                "lyricist pass model=%s hit max_tokens (%s)",
+                lyricist_model,
+                max_tokens,
+            )
+        label = f"two-pass:{architect_model}->{lyricist_model}"
+        return SunoPromptResult(text, label, blueprint_json)
+    except Exception as exc:  # noqa: BLE001
+        # LaoZhang: try draft model as lyricist fallback
+        if lyricist_model != architect_model:
+            logger.warning(
+                "lyricist model=%s failed (%s); retrying with %s",
+                lyricist_model,
+                exc,
+                architect_model,
+            )
+            text, finish = _chat_simple(
+                client,
+                model=architect_model,
+                system=system_prompt,
+                user=pass2_user,
+                temperature=temperature,
+                max_tokens=max_tokens,
+                chat_prefix_turns=chat_prefix_turns,
+            )
+            if finish == "length":
+                logger.warning(
+                    "lyricist fallback model=%s hit max_tokens (%s)",
+                    architect_model,
+                    max_tokens,
+                )
+            return SunoPromptResult(
+                text,
+                f"two-pass:{architect_model}->{architect_model}:fallback",
+                blueprint_json,
+            )
+        raise
 
 
 def generate_suno_prompt(
@@ -455,12 +605,33 @@ def generate_suno_prompt(
     provider: str | None = None,
     user_suffix: str | None = None,
     lyrics_task: bool = True,
-) -> tuple[str, str]:
-    """Entry: hybrid when enabled, else single-model generation."""
+    draft_model_override: str | None = None,
+    polish_model_override: str | None = None,
+    chat_prefix_turns: list[dict[str, str]] | None = None,
+    architect_blueprint: str | None = None,
+) -> SunoPromptResult:
+    """Entry: two-pass, hybrid, or single-model generation."""
+    if two_pass_prompt_enabled(lightweight=lightweight, lyrics_task=lyrics_task):
+        return generate_prompt_two_pass(
+            client,
+            system_prompt=system_prompt,
+            user_content=user_content,
+            language=language,
+            lightweight=lightweight,
+            max_tokens=max_tokens,
+            temperature=temperature,
+            provider=provider,
+            user_suffix=user_suffix,
+            lyrics_task=lyrics_task,
+            draft_model_override=draft_model_override,
+            polish_model_override=polish_model_override,
+            chat_prefix_turns=chat_prefix_turns,
+            architect_blueprint=architect_blueprint,
+        )
     if hybrid_prompt_enabled(
         lightweight=lightweight, provider=provider, lyrics_task=lyrics_task
     ):
-        return generate_prompt_hybrid(
+        text, pipeline = generate_prompt_hybrid(
             client,
             system_prompt=system_prompt,
             user_content=user_content,
@@ -470,8 +641,12 @@ def generate_suno_prompt(
             draft_temperature=temperature,
             provider=provider,
             lyrics_task=lyrics_task,
+            draft_model_override=draft_model_override,
+            polish_model_override=polish_model_override,
+            chat_prefix_turns=chat_prefix_turns,
         )
-    return generate_prompt_single(
+        return SunoPromptResult(text, pipeline, None)
+    text, pipeline = generate_prompt_single(
         client,
         system_prompt=system_prompt,
         user_content=user_content,
@@ -482,7 +657,10 @@ def generate_suno_prompt(
         provider=provider,
         user_suffix=user_suffix,
         lyrics_task=lyrics_task,
+        draft_model_override=draft_model_override,
+        chat_prefix_turns=chat_prefix_turns,
     )
+    return SunoPromptResult(text, pipeline, None)
 
 
 def completion_suffix_for(partial: str) -> str:

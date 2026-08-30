@@ -132,8 +132,8 @@ QuickDescribeMapResult mapQuickDescribeToUserInput(
     hints.add('Temperament: ${temperFound.join(' ')}');
   }
 
-  var lyricTemperamentCodes = _mergeCodeTokens(
-    base.lyricTemperamentCodes,
+  var activeModifierCodes = _mergeCodeTokens(
+    base.activeModifierCodes,
     temperFound,
   );
 
@@ -204,7 +204,7 @@ QuickDescribeMapResult mapQuickDescribeToUserInput(
     bpm: bpm ?? base.bpm,
     primaryGenre: genre ?? base.primaryGenre,
     vibe: vibe,
-    lyricTemperamentCodes: lyricTemperamentCodes,
+    activeModifierCodes: activeModifierCodes,
     generateLyrics: generateLyrics,
     vocalSpec: vocalSpec,
     vocalAccent: vocalAccent,

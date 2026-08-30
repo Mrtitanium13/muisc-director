@@ -1,0 +1,15 @@
+{
+  "id": "conflict_analyzer_wins",
+  "input": {
+    "remix_from_analyzer": true,
+    "title": "X",
+    "artist": "Y",
+    "primary_genre": "lo-fi",
+    "song_type": "full"
+  },
+  "expect": {
+    "mode": "analyzer_genre_flip",
+    "engine_active": false,
+    "blocks_injected": 1
+  }
+}

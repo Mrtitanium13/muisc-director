@@ -1,0 +1,15 @@
+{
+  "id": "afrobeats",
+  "version": "1.0.0",
+  "vocabulary_profile": ["groove talk", "romance/flex", "Pidgin only if brief language allows"],
+  "line_length_guidance": "danceable short phrases; call-response friendly",
+  "imagery_guidance": ["skin", "sun", "party as feeling", "body confidence"],
+  "energy_profile": "sunny propulsion",
+  "hook_style": "chant + melody; dancefloor sticky",
+  "rhyme_density": "medium",
+  "rhythmic_guidance": ["syncopation", "log drum space"],
+  "common_structures": ["Intro-V-C-V-C-B-C"],
+  "vocal_phrasing": ["smooth lead", "stack harmonies sparingly"],
+  "avoid_patterns": ["generic tropical cruise cliches", "forced American slang"],
+  "cultural_notes": ["Respect West African pop cadence; Pidgin is a language choice not decoration"]
+}

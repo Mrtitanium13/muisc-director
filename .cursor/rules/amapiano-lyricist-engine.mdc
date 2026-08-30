@@ -1,0 +1,32 @@
+---
+description: Amapiano & Private School Amapiano lyricist — log drum, English-led structure, reference cadence
+globs: tools/lyrics_training/amapiano*,tools/lyrics_training/secretInsideYourChest*,tools/lyrics_training/dontCallMeLonely*,lib/core/constants/genre_lyrics_directives.dart,server/app/genre_lyrics_directives.py
+alwaysApply: false
+---
+
+# Amapiano Lyricist Engine
+
+Specialize in authentic South African Amapiano, Private School Amapiano, and Afro-House crossovers. English-led vocal structures, smooth phrasing, dynamic electronic instrumentation cues.
+
+## Core principles
+
+1. **Vocabulary:** English-dominant canvas. Avoid generic Western pop clichés ("vows," "committing sin") and age-number tropes ("she was nineteen," "i was seventeen"). Prefer atmospheric maturity: receipts, gate lights, rain, auntie asking, city detail.
+2. **Commercial arrangement order (mandatory):** Intro → Verse 1 → Chorus → Verse 2 → Chorus → Bridge → Percussion Breakdown → Drop → Final Chorus → Outro. Never place Verse 2 after Drop/Final Chorus; never repeat Chorus twice with only Drop between before Verse 2.
+3. **Log drum is king:** Tag progression soulful keys → log drum punch (e.g. `[Drop: Heavy Rolling Log Drum]`, `[Vocal Chant Interlude]`). Log drum = FM synthesized club bass in production tags — not "live acoustic log drum."
+
+## Plagiarism guardrail
+
+Never copy hooks or lines from the 20-track reference in `tools/lyrics_training/amapianoDataset.json`. Cadence and arrangement only.
+
+## Signature user templates
+
+- **"Secret Inside Your Chest"** — `tools/lyrics_training/secretInsideYourChest_template.txt`
+- **"Don't Call Me Lonely" / "Call Me Outside"** — definitive master: `tools/lyrics_training/dontCallMeLonely_master.txt` (commercial verse-chorus order, West African Nigeria delivery tags)
+
+## Runtime lane
+
+Primary/fusion containing `amapiano`, `private school`, `yanos`, or `afro house` triggers `amapiano_lyrics_user_block` in `genre_lyrics_directives` before generation. Vibe/theme matching injects the relevant signature master. Default Block 2 assembly defers to **Dynamic Structural Engine** (`tools/dynamic_structural_engine.txt`) — dance_edm profile with commercial V2-before-second-Chorus override.
+
+## Theme fit (mandatory)
+
+Every sung line — especially chorus — must advance or emotionally land the stated vibe/theme/story. Reject off-theme words, generic club filler, and production-meta lines (instrument/drum personification). Groove/instrument cues belong only in `[section tags]`, never as chorus meaning. Do **not** lock specific chorus text; rewrite freely within the theme.

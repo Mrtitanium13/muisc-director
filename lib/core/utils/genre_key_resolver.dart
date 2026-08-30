@@ -1,55 +1,28 @@
-/// Shared primary+fusion genre key resolution — aliases, primary-first, boundary matching.
+/// Shared primary+fusion genre key resolution — primary-first, boundary matching.
 class GenreKeyResolver {
   GenreKeyResolver._();
-
-  static const _genreAliases = <String, String>{
-    'alternative rock': 'rock / alternative',
-    'contemporary gospel': 'praise and worship',
-    'contemporary r&b': 'contemporary r&b',
-    'lo-fi hip hop': 'boom bap',
-    'praise and worship': 'praise and worship',
-    'praise/worship': 'praise and worship',
-    'melodic techno': 'deep house',
-    'progressive house': 'progressive house',
-    'modern country': 'modern country',
-    'soulful house': 'deep house',
-    'indie rock': 'rock / alternative',
-    'heavy metal': 'rock / alternative',
-    'tech house': 'deep house',
-    'liquid dnb': 'drum and bass',
-    'jazz rap': 'jazz',
-    'uk drill': 'trap',
-    'vinahouse': 'amapiano',
-    'reggaeton': 'afrobeats',
-    'shoegaze': 'rock / alternative',
-    'neurofunk': 'drum and bass',
-    'neo-soul': 'neo-soul',
-    'drill': 'trap',
-    'rnb': 'contemporary r&b',
-    'punk': 'rock / alternative',
-    'soul': 'neo-soul',
-  };
 
   static String normalizeBlob(
     String primary,
     String fusion, {
     List<(String, String)> extraReplacements = const [],
-    bool applyDefaultAliases = true,
   }) {
-    var blob = '${primary.trim()} ${fusion.trim()}'.toLowerCase().replaceAll('&', 'and');
-    for (final pair in extraReplacements) {
-      blob = blob.replaceAll(pair.$1, pair.$2);
-    }
-    blob = blob.replaceAll('drum & bass', 'drum and bass');
-    if (applyDefaultAliases) {
-      final aliases = _genreAliases.entries.toList()
-        ..sort((a, b) => b.key.length.compareTo(a.key.length));
-      for (final entry in aliases) {
-        if (blob.contains(entry.key)) {
-          blob = '$blob ${entry.value}';
-        }
+    var blob = '${primary.trim()} ${fusion.trim()}'.toLowerCase();
+    // Normalize R&B → rnb before '&' → 'and' so "R&B" / "90s R&B" hit the rnb lane.
+    blob = blob.replaceAll(RegExp(r'r\s*&\s*b'), 'rnb');
+    blob = blob.replaceAll('&', 'and');
+
+    final replacements = extraReplacements.toList()
+      ..sort((a, b) => b.$1.length.compareTo(a.$1.length));
+    for (final pair in replacements) {
+      final pattern = RegExp(
+        '(?<![a-z0-9])${RegExp.escape(pair.$1)}(?![a-z0-9])',
+      );
+      if (pattern.hasMatch(blob)) {
+        blob = blob.replaceAll(pattern, pair.$2);
       }
     }
+
     return blob.replaceAll(RegExp(r'\s+'), ' ').trim();
   }
 
@@ -76,18 +49,12 @@ class GenreKeyResolver {
     String fusion, {
     required String defaultKey,
     List<(String, String)> extraReplacements = const [],
-    bool applyDefaultAliases = true,
   }) {
     final keySet = keys.toSet();
     if (fusion.trim().isNotEmpty) {
       final primaryHit = _bestKey(
         keySet,
-        normalizeBlob(
-          primary,
-          '',
-          extraReplacements: extraReplacements,
-          applyDefaultAliases: applyDefaultAliases,
-        ),
+        normalizeBlob(primary, '', extraReplacements: extraReplacements),
       );
       if (primaryHit.isNotEmpty) return primaryHit;
     }
@@ -97,7 +64,6 @@ class GenreKeyResolver {
         primary,
         fusion,
         extraReplacements: extraReplacements,
-        applyDefaultAliases: applyDefaultAliases,
       ),
     ).ifEmpty(defaultKey);
   }

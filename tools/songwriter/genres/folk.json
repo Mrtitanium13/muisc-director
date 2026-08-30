@@ -1,0 +1,15 @@
+{
+  "id": "folk",
+  "version": "1.0.0",
+  "vocabulary_profile": ["plain speech", "place", "memory"],
+  "line_length_guidance": "story verses; chorus as moral or feeling",
+  "imagery_guidance": ["roads", "seasons", "named people"],
+  "energy_profile": "intimate to communal",
+  "hook_style": "simple singalong",
+  "rhyme_density": "medium",
+  "rhythmic_guidance": ["guitar-phrase aware"],
+  "common_structures": ["V-C-V-C-B-C"],
+  "vocal_phrasing": ["close-mic honesty"],
+  "avoid_patterns": ["trap ad-libs", "festival EDM chants"],
+  "cultural_notes": []
+}

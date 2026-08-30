@@ -72,8 +72,8 @@ class ApiConstants {
   static const String openRouterChatCompletions =
       'https://openrouter.ai/api/v1/chat/completions';
 
-  /// OpenRouter generate / theme / compression (Qwen 3.7).
-  static const String openRouterGenerateChatModel = 'qwen/qwen3.7-max';
+  /// OpenRouter generate / theme / compression (Qwen 3.7 Plus).
+  static const String openRouterGenerateChatModel = 'qwen/qwen3.7-plus';
 
   /// OpenRouter humanization rewrite pass (Mistral Large).
   static const String openRouterHumanizationChatModel =
@@ -321,7 +321,7 @@ class ApiConstants {
     return laozhangLyricsPrimaryChatModel;
   }
 
-  /// OpenRouter: Qwen 3.7 Max. LaoZhang: Claude Sonnet 4.5 (Suno cap compliance).
+  /// OpenRouter: Qwen 3.7 Plus. LaoZhang: Claude Sonnet 4.5 (Suno cap compliance).
   static String compressionModelForProvider({required bool useOpenRouter}) =>
       useOpenRouter
           ? openRouterCompressionChatModel
@@ -477,7 +477,7 @@ class ApiConstants {
 
   static bool userRequestedBeastmode(UserInputModel input) {
     final blob =
-        '${input.vibe} ${input.lyricTemperamentCodes} ${input.avoid}'
+        '${input.vibe} ${input.activeModifierCodes} ${input.avoid}'
             .toUpperCase();
     return blob.contains('/BEASTMODE') ||
         blob.contains('BEAST MODE') ||

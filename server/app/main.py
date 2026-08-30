@@ -27,21 +27,35 @@ from app.llm_config import (
     missing_api_key_message,
     resolve_api_key,
 )
-from app.laozhang_post_process import run_laozhang_post_process
-from app.openrouter_post_process import run_openrouter_post_process
+from app.songwriter.routes import router as songwriter_router
+from app.songwriter.pipeline import pipeline_enabled as songwriter_pipeline_enabled
 from app.prompt_pipeline import (
     completion_suffix_for,
     generate_prompt_completion,
     generate_suno_prompt as run_prompt_pipeline,
 )
 from app.block1_mix_master_directive import block1_mix_master_user_block
+from app.big_room_fusion_progressive_engine import user_block_append_for as big_room_elite_user_block
+from app.big_room_hardstyle_cinematic_hybrid_engine import (
+    user_block_append_for as big_room_hardstyle_hybrid_elite_user_block,
+)
 from app.drum_matrix import drum_matrix_user_block
+from app.dynamic_structural_engine import dynamic_structural_user_block
 from app.genre_hybridization import genre_hybridization_user_block
+from app.music_prompt_routing import (
+    build_routing_user_block_append,
+    classify_from_body,
+    resolve_routed_draft_model,
+    resolve_routed_polish_model,
+)
 from app.genre_lyrics_directives import genre_lyrics_user_block
-from app.live_instrument_matrix import live_instrument_user_block
+from app.live_instrument_matrix import augment_avoid_clause, live_instrument_user_block
 from app.code_translation_matrix import code_translation_user_block
 from app.human_authenticity import human_authenticity_user_block
 from app.human_realism import human_realism_user_block
+from app.lyric_craft_hierarchy_directive import lyric_craft_hierarchy_user_block
+from app.vibe_brief_user_block import build_vibe_user_block_lines
+from app.structural_hierarchy_directive import structural_hierarchy_user_block
 from app.suno_prompt_builder import (
     build_suno_prompt,
     fx_lyrics_anchor,
@@ -57,14 +71,21 @@ from app.payload_optimization import (
 )
 from app.dialect_style import dialect_style_user_block
 from app.vocal_accent import vocal_accent_user_block
+from app.vocal_spec_tone import user_block_directive as vocal_spec_tone_user_block
+from app.vocal_spec_tone import user_block_line as vocal_spec_tone_user_block_line
+from app.thick_humanized_vocal_presence import thick_humanized_vocal_user_block
 from app.suno_internal_output_strip import strip_internal_cognition_blocks
 from app.suno_lyric_phonetic_sanitize import sanitize_suno_post_output
 from app.suno_output_qa import prompt_qa_snapshot, should_format_retry
+from app.human_voice_directive import build_stock_retry_suffix, stock_phrase_hits
 from app.remix_engine import (
+    REMIX_ANALYZER_BLOCK_MARKER,
+    RemixMode,
     apply_remix_generation_type_output,
-    remix_engine_active,
     remix_style_flip_user_block_supplement,
+    resolve_remix_mode,
 )
+from app.remix_telemetry import log_remix_activation
 from app.suno_system_prompt_v2 import SYSTEM_PROMPT_V2
 
 logger = logging.getLogger(__name__)
@@ -91,7 +112,7 @@ def _active_system_prompt() -> str:
 
 
 class GeneratePromptBody(BaseModel):
-    suno_version: str = Field(default="v5.0")
+    suno_version: str = Field(default="v5.5")
     primary_genre: str = ""
     sub_genre_fusion: str = ""
     vibe: str = ""
@@ -105,6 +126,7 @@ class GeneratePromptBody(BaseModel):
     dialect_variant_id: str = "general"
     audio_environment_mode: str = "studio_isolated"
     reference_artists: str = ""
+    sonic_tags: list[str] = Field(default_factory=list)
     avoid: str = ""
     language: str = "English"
     include_analyzer_data: bool = False
@@ -113,6 +135,8 @@ class GeneratePromptBody(BaseModel):
     dj_intro_mix_in: bool = False
     dj_outro_mix_out: bool = False
     song_structure_directive: str = ""
+    song_structure_preset_id: str = "flexible"
+    song_structure_custom: str = ""
     optional_lyrics: str = ""
     remix_from_analyzer: bool = False
     remix_original_song_title: str = ""
@@ -121,9 +145,13 @@ class GeneratePromptBody(BaseModel):
     real_instrumentals: str = ""
     chord_progression: str = ""
     melody_user_block: str = ""
+    melody_style_id: str = ""
+    melody_custom_notes: str = ""
+    bpm_hint: str = ""
     generate_lyrics: bool = False
+    use_vibe_as_lyric_source: bool = False
     lyric_theme_notes: str = ""
-    lyric_temperament_codes: str = ""
+    active_modifier_codes: str = ""
     human_realism: int = 75
     production_intensity: int = 2
     genre_fx_lane: str = ""
@@ -231,7 +259,7 @@ def _v2_field_budget_line(
     field_mode: str,
     block2_opt_out: bool,
 ) -> str:
-    _ = (suno_version or "").strip() or "v5.0"
+    _ = (suno_version or "").strip() or "v5.5"
     fm = _normalize_field_mode(field_mode)
     wmin, wmax = BLOCK1_WORD_MIN, BLOCK1_WORD_MAX
     lc = LYRICS_CHAR_MAX
@@ -349,7 +377,7 @@ def _max_completion_tokens(
 def _word_budget_line(suno_version: str, *, has_user_lyrics: bool) -> str:
     wmin, wmax = _suno_style_word_range(suno_version)
     smin, smax = _suno_structure_word_range(suno_version)
-    v = (suno_version or "").strip() or "v5.0"
+    v = (suno_version or "").strip() or "v5.5"
     if not has_user_lyrics:
         return (
             f"WORD BUDGET (Suno {v}): Output SUNO STRUCTURE then SUNO STYLE in that order. "
@@ -380,7 +408,7 @@ def _remix_from_analyzer_user_block_supplement(suno_version: str) -> str:
     """Aligned with Flutter SunoPromptLimits.remixFromAnalyzerUserBlockSupplement (legacy v1)."""
     wmin, wmax = _suno_style_word_range(suno_version)
     smin, smax = _suno_structure_word_range(suno_version)
-    v = (suno_version or "").strip() or "v5.0"
+    v = (suno_version or "").strip() or "v5.5"
     return (
         "REMIX / GENRE-FLIP (from audio analysis): Describe how the source becomes the target "
         "genre in SUNO STYLE only — weave analyzer cues briefly; do not paste or summarize raw "
@@ -393,7 +421,7 @@ def _remix_from_analyzer_user_block_supplement(suno_version: str) -> str:
 
 def _remix_from_analyzer_user_block_supplement_v2(suno_version: str) -> str:
     """Aligned with Flutter SunoPromptLimits.remixFromAnalyzerUserBlockSupplementV2."""
-    v = (suno_version or "").strip() or "v5.0"
+    v = (suno_version or "").strip() or "v5.5"
     wmin, wmax = BLOCK1_WORD_MIN, BLOCK1_WORD_MAX
     return (
         "REMIX / GENRE-FLIP (from audio analysis): Describe the transformation in "
@@ -404,56 +432,43 @@ def _remix_from_analyzer_user_block_supplement_v2(suno_version: str) -> str:
 
 
 def _dj_mix_user_block(b: GeneratePromptBody) -> str:
-    if not b.dj_intro_mix_in and not b.dj_outro_mix_out:
-        return (
-            "DJ mix: intro (mix-in)=false, outro (mix-out)=false — no special DJ blending."
-        )
-    parts: list[str] = [
-        "DJ MIX (user enabled) — NON-NEGOTIABLE; Suno must follow this in the generated audio:",
-    ]
-    if b.dj_intro_mix_in:
-        parts.append(
-            "DJ INTRO (mix-in) = ON — REQUIRED BEHAVIOR:\n"
-            "- The song MUST NOT start at full energy. Begin with a long DJ-friendly blend-in from a hypothetical previous track (16–48+ bars): sparse rhythm, filtered drums, rising hi-hats, subtle FX; main groove / chorus energy enters only AFTER this intro.\n"
-            "- No instant drop or full vocal hook at bar 0; leave space for a crossfader blend (sidechain-friendly kick, mono-safe low end, gradual filter opening).\n"
-            "- Describe the full blend-in in **Block 1** producer prose (bars, filter arc, energy staging) within **130–150 words** and **≤1000 characters**; mirror it as the FIRST section in Block 2; include key mix words (filter sweep, kick creep, snare roll, energy step at bar ~X)."
-        )
-    if b.dj_outro_mix_out:
-        parts.append(
-            "DJ OUTRO (mix-out) = ON — REQUIRED BEHAVIOR:\n"
-            "- The song MUST NOT end cold on the last downbeat. Finish with a long mix-out tail for blending into the next track: strip leads and hook, sustain hats/ride, filter down or open noise, gradual energy decay; avoid a hard stop.\n"
-            "- Describe the full mix-out in **Block 1** prose within **130–150 words** and **≤1000 characters**; mirror it as the LAST section in Block 2 (tail length, fade, last elements left in the mix)."
-        )
-    parts.append(
-        "Implementation rule: Full DJ arc in **Block 1** producer prose (≤150 words, ≤1000 chars). "
-        "In Block 2, the section timeline MUST start with a long intro segment (if intro on) and end with a long outro segment (if outro on) around the main song body — never skip or shorten these."
+    from app.big_room_hardstyle_cinematic_hybrid_engine import (
+        compose_dj_mix_enforcement_block,
+        matches_lane as hybrid_matches_lane,
     )
-    return "\n".join(parts)
+    from app.suno_dj_mix_directives import build_dj_mix_user_block
+
+    if hybrid_matches_lane(
+        primary_genre=str(b.primary_genre or ""),
+        sub_genre_fusion=str(b.sub_genre_fusion or ""),
+    ):
+        return compose_dj_mix_enforcement_block()
+    return build_dj_mix_user_block(
+        dj_intro_mix_in=bool(b.dj_intro_mix_in),
+        dj_outro_mix_out=bool(b.dj_outro_mix_out),
+        suno_version=str(b.suno_version or "v5.5"),
+        primary_genre=str(b.primary_genre or ""),
+        fusion_genre=str(b.sub_genre_fusion or ""),
+        commercial_lane=str(b.genre_fx_lane or ""),
+        v2_unified_output=_use_v2_prompt(),
+    )
 
 
 def _vocal_user_block_line(b: GeneratePromptBody) -> str:
-    spec = str(b.vocal_spec or "").strip()
-    tone = str(b.vocal_tone or "").strip()
-    accent = str(b.vocal_accent or "").strip()
-    parts: list[str] = []
-    if spec:
-        parts.append(spec)
-    if tone:
-        parts.append(tone)
-    if accent:
-        parts.append(
-            "accent/delivery (style-only, not impersonation or voice cloning): "
-            + accent
-        )
-    if not parts:
-        return "Vocal:"
-    return "Vocal: " + " — ".join(parts)
+    return vocal_spec_tone_user_block_line(
+        vocal_spec=b.vocal_spec,
+        vocal_tone=b.vocal_tone,
+    )
 
 
 def _build_user_block(b: GeneratePromptBody) -> str:
     has_lyrics = bool(str(b.optional_lyrics or "").strip())
     field_mode = _normalize_field_mode(b.field_output_mode)
-    path_c = bool(b.generate_lyrics) and not has_lyrics and field_mode != "simple"
+    path_c = (
+        (bool(b.generate_lyrics) or bool(b.use_vibe_as_lyric_source))
+        and not has_lyrics
+        and field_mode != "simple"
+    )
     block2_opt_out = _user_requested_block2_opt_out(b)
     if _use_v2_prompt():
         lines = [
@@ -467,40 +482,96 @@ def _build_user_block(b: GeneratePromptBody) -> str:
         ]
     else:
         lines = [_word_budget_line(b.suno_version, has_user_lyrics=has_lyrics)]
-    if b.remix_from_analyzer:
-        lines.append(
-            _remix_from_analyzer_user_block_supplement_v2(b.suno_version)
-            if _use_v2_prompt()
-            else _remix_from_analyzer_user_block_supplement(b.suno_version)
-        )
-    if remix_engine_active(
-        original_song_title=str(b.remix_original_song_title or ""),
-        original_artist=str(b.remix_original_artist or ""),
-    ):
-        lines.append(
-            remix_style_flip_user_block_supplement(
-                original_song_title=str(b.remix_original_song_title or ""),
-                original_artist=str(b.remix_original_artist or ""),
-                target_genre=str(b.primary_genre or ""),
-                generation_type=str(b.song_generation_type or "full_song"),
+    # Mutually exclusive remix injection (analyzer OR interpolation — never both).
+    joined_so_far = "\n".join(lines)
+    remix_res = resolve_remix_mode(
+        remix_original_song_title=str(b.remix_original_song_title or ""),
+        remix_original_artist=str(b.remix_original_artist or ""),
+        remix_from_analyzer=bool(b.remix_from_analyzer),
+    )
+    if remix_res.mode == RemixMode.ANALYZER_GENRE_FLIP:
+        injected = REMIX_ANALYZER_BLOCK_MARKER not in joined_so_far
+        if injected:
+            lines.append(
+                _remix_from_analyzer_user_block_supplement_v2(b.suno_version)
+                if _use_v2_prompt()
+                else _remix_from_analyzer_user_block_supplement(b.suno_version)
             )
+        log_remix_activation(
+            mode=remix_res.mode,
+            near_activation=remix_res.near_activation,
+            genre=str(b.primary_genre or ""),
+            song_generation_type=str(b.song_generation_type or "full_song"),
+            block_injected=injected,
+        )
+    elif remix_res.mode == RemixMode.INTERPOLATION:
+        block = remix_style_flip_user_block_supplement(
+            original_song_title=str(b.remix_original_song_title or ""),
+            original_artist=str(b.remix_original_artist or ""),
+            target_genre=str(b.primary_genre or ""),
+            generation_type=str(b.song_generation_type or "full_song"),
+            bpm=str(b.bpm or ""),
+            key_root=str(b.key_root or ""),
+            scale=str(b.scale or ""),
+            vibe=str(b.vibe or ""),
+            existing_user_block=joined_so_far,
+        )
+        if block:
+            lines.append(block)
+        log_remix_activation(
+            mode=remix_res.mode,
+            near_activation=remix_res.near_activation,
+            genre=str(b.primary_genre or ""),
+            song_generation_type=str(b.song_generation_type or "full_song"),
+            title=str(b.remix_original_song_title or ""),
+            artist=str(b.remix_original_artist or ""),
+            block_injected=bool(block),
+        )
+    elif remix_res.near_activation:
+        log_remix_activation(
+            mode=remix_res.mode,
+            near_activation=True,
+            genre=str(b.primary_genre or ""),
+            song_generation_type=str(b.song_generation_type or "full_song"),
+            title=str(b.remix_original_song_title or ""),
+            artist=str(b.remix_original_artist or ""),
+            block_injected=False,
         )
     code_block = ""
     if _use_v2_prompt():
         code_block = code_translation_user_block(
             primary_genre=str(b.primary_genre or ""),
             sub_genre_fusion=str(b.sub_genre_fusion or ""),
-            codes_blob=str(b.lyric_temperament_codes or ""),
-            suno_version=str(b.suno_version or "v5.0"),
+            codes_blob=str(b.active_modifier_codes or ""),
+            suno_version=str(b.suno_version or "v5.5"),
             vibe=str(b.vibe or ""),
         )
+    from app.suno_dj_mix_directives import primary_genre_with_dj_tool_modifier
+    from app.dynamic_structural_engine import resolve_structural_family
+
+    prompt_family = resolve_structural_family(
+        str(b.primary_genre or ""),
+        fusion=str(b.sub_genre_fusion or ""),
+        commercial_lane=str(b.genre_fx_lane or "") or None,
+    )
+    primary_genre_line = primary_genre_with_dj_tool_modifier(
+        primary_genre=str(b.primary_genre or ""),
+        dj_intro_mix_in=bool(b.dj_intro_mix_in),
+        dj_outro_mix_out=bool(b.dj_outro_mix_out),
+        family=prompt_family,
+    )
     lines.extend(
         [
-        f"Suno version: {b.suno_version}",
-        f"Primary genre: {b.primary_genre}",
-        f"Fusion / sub-genre: {b.sub_genre_fusion}",
-        f"Vibe / idea: {b.vibe}",
-    ]
+            f"Suno version: {b.suno_version}",
+            f"Primary genre: {primary_genre_line}",
+            f"Fusion / sub-genre: {b.sub_genre_fusion}",
+        ]
+    )
+    lines.extend(
+        build_vibe_user_block_lines(
+            vibe=str(b.vibe or ""),
+            use_vibe_as_lyric_source=bool(b.use_vibe_as_lyric_source),
+        )
     )
     if _use_v2_prompt():
         hybrid_block = genre_hybridization_user_block(
@@ -516,6 +587,19 @@ def _build_user_block(b: GeneratePromptBody) -> str:
         _vocal_user_block_line(b),
     ]
     )
+    spec_tone_block = vocal_spec_tone_user_block(
+        vocal_spec=b.vocal_spec,
+        vocal_tone=b.vocal_tone,
+    )
+    if spec_tone_block:
+        lines.append(spec_tone_block)
+    thick_vocal = thick_humanized_vocal_user_block(
+        primary_genre=str(b.primary_genre or ""),
+        sub_genre_fusion=str(b.sub_genre_fusion or ""),
+        vocal_spec=b.vocal_spec,
+    )
+    if thick_vocal:
+        lines.append(thick_vocal)
     accent_block = vocal_accent_user_block(
         str(b.vocal_accent or ""),
         vocal_spec=str(b.vocal_spec or ""),
@@ -533,15 +617,32 @@ def _build_user_block(b: GeneratePromptBody) -> str:
     env_block = audio_environment_user_block(str(b.audio_environment_mode or ""))
     if env_block:
         lines.append(env_block)
+    if b.include_analyzer_data:
+        analyzer_summary = str(b.analyzer_summary or "").strip()
+        if analyzer_summary:
+            lines.append(analyzer_summary)
+    ref_artists = str(b.reference_artists or "").strip()
+    if ref_artists:
+        lines.append(
+            "[ARTIST DNA REFERENCES] (ROLE: Music DNA Translator. TASK: Analyze the following references. "
+            "Extract their core musical characteristics (timbre, harmony, rhythm, structure). "
+            "Synthesize these traits into descriptive prose for the music model. "
+            "STRICTLY FORBIDDEN: Do NOT mention the original artist, song, or album names in your output.): "
+            + ref_artists
+        )
+    sonic = [s for t in (b.sonic_tags or []) if (s := str(t).strip())]
+    if sonic:
+        lines.append(
+            "[SONIC CHARACTERISTICS] (REQUIREMENTS: These are MANDATORY production instructions. "
+            "Apply them LITERALLY to the final music prompt. "
+            "DO NOT interpret, translate, or dilute these instructions in any way.): "
+            + ", ".join(sonic)
+        )
     lines.extend(
         [
-        "Reference influences (artist/producer/DJ/song/album names OK here — "
-        "ARTIST REFERENCE PROCESSING: build hidden_internal_only DNA profile; "
-        "merge if multiple; never output names, song titles, or albums in final reply): "
-        f"{b.reference_artists}",
-        f"Avoid: {b.avoid}",
-        f"Language: {b.language}",
-    ]
+            f"Avoid: {augment_avoid_clause(avoid=str(b.avoid or ''), real_instrumentals=str(b.real_instrumentals or ''))}",
+            f"Language: {b.language}",
+        ]
     )
     if code_block:
         lines.append(code_block)
@@ -568,8 +669,8 @@ def _build_user_block(b: GeneratePromptBody) -> str:
                     primary_genre=str(b.primary_genre or ""),
                     sub_genre_fusion=str(b.sub_genre_fusion or ""),
                     selection_raw=ri,
-                    suno_version=str(b.suno_version or "v5.0"),
-                    power_codes=str(b.lyric_temperament_codes or ""),
+                    suno_version=str(b.suno_version or "v5.5"),
+                    power_codes=str(b.active_modifier_codes or ""),
                     audio_environment_mode=str(b.audio_environment_mode or ""),
                 )
             )
@@ -595,6 +696,41 @@ def _build_user_block(b: GeneratePromptBody) -> str:
                 dj_outro=bool(b.dj_outro_mix_out),
             )
         )
+    elite_hybrid = big_room_hardstyle_hybrid_elite_user_block(
+        primary_genre=str(b.primary_genre or ""),
+        sub_genre_fusion=str(b.sub_genre_fusion or ""),
+    )
+    if elite_hybrid:
+        lines.append(elite_hybrid)
+    else:
+        elite_br = big_room_elite_user_block(
+            primary_genre=str(b.primary_genre or ""),
+            sub_genre_fusion=str(b.sub_genre_fusion or ""),
+        )
+        if elite_br:
+            lines.append(elite_br)
+    from app.big_room_hardstyle_cinematic_hybrid_engine import (
+        compose_structural_constraints_block,
+        matches_lane as hybrid_matches_lane,
+    )
+
+    if hybrid_matches_lane(
+        primary_genre=str(b.primary_genre or ""),
+        sub_genre_fusion=str(b.sub_genre_fusion or ""),
+    ):
+        lines.append(
+            compose_structural_constraints_block(),
+        )
+    hierarchy = structural_hierarchy_user_block(
+        preset_id=str(b.song_structure_preset_id or ""),
+        custom_notes=str(b.song_structure_custom or ""),
+        genre_fx_lane=str(b.genre_fx_lane or ""),
+        primary_genre=str(b.primary_genre or ""),
+        fusion=str(b.sub_genre_fusion or ""),
+        production_intensity=int(b.production_intensity or 2),
+    )
+    if hierarchy:
+        lines.append(hierarchy)
     if b.song_structure_directive.strip():
         lines.append(b.song_structure_directive.strip())
     if field_mode == "simple":
@@ -610,7 +746,7 @@ def _build_user_block(b: GeneratePromptBody) -> str:
             tn = str(b.lyric_theme_notes or "").strip()
             if tn:
                 lines.append(f"Lyric theme / subject / POV / keywords: {tn}")
-            tc = str(b.lyric_temperament_codes or "").strip()
+            tc = str(b.active_modifier_codes or "").strip()
             if tc:
                 lines.append(f"TEMPERAMENT CODES: {tc}")
     if _use_v2_prompt():
@@ -619,13 +755,32 @@ def _build_user_block(b: GeneratePromptBody) -> str:
     if not block2_opt_out:
         if _use_v2_prompt():
             lines.append(
+                dynamic_structural_user_block(
+                    str(b.primary_genre or ""),
+                    fusion=str(b.sub_genre_fusion or ""),
+                    suno_version=str(b.suno_version or "v5.5"),
+                )
+            )
+            lines.append(
                 drum_matrix_user_block(
                     str(b.primary_genre or ""),
                     fusion=str(b.sub_genre_fusion or ""),
-                    suno_version=str(b.suno_version or "v5.0"),
+                    suno_version=str(b.suno_version or "v5.5"),
                 )
             )
-        lines.append(human_realism_user_block(b.human_realism))
+        hierarchy = lyric_craft_hierarchy_user_block(
+            generate_lyrics=bool(b.generate_lyrics),
+            optional_lyrics=str(b.optional_lyrics or ""),
+            use_vibe_as_lyric_source=bool(b.use_vibe_as_lyric_source),
+        )
+        if hierarchy:
+            lines.append(hierarchy)
+        lines.append(
+            human_realism_user_block(
+                b.human_realism,
+                dialect_style_id=str(b.dialect_style_id or ""),
+            )
+        )
         lines.append(
             human_authenticity_user_block(
                 primary_genre=str(b.primary_genre or ""),
@@ -637,36 +792,17 @@ def _build_user_block(b: GeneratePromptBody) -> str:
         genre_lyrics = genre_lyrics_user_block(
             primary_genre=str(b.primary_genre or ""),
             sub_genre_fusion=str(b.sub_genre_fusion or ""),
+            vibe=str(b.vibe or ""),
+            lyric_theme_notes=str(b.lyric_theme_notes or ""),
+            vocal_spec=str(b.vocal_spec or ""),
+            vocal_tone=str(b.vocal_tone or ""),
+            melody_style_id=str(b.melody_style_id or ""),
+            melody_custom_notes=str(b.melody_custom_notes or ""),
+            bpm_hint=str(b.bpm_hint or ""),
+            genre_fx_lane=str(b.genre_fx_lane or ""),
         )
         if genre_lyrics:
             lines.append(genre_lyrics)
-    if b.include_analyzer_data:
-        from app.gemini_analysis import FALLBACK_ANALYZER_SUMMARY, sanitize_analyzer_summary
-
-        summary = str(b.analyzer_summary or "").strip()
-        profile = FALLBACK_ANALYZER_SUMMARY
-        if summary:
-            for line in summary.splitlines():
-                t = line.strip()
-                if "," in t and not t.endswith(":") and "TARGET AUDIO PROFILE" not in t:
-                    if ":" not in t or t.index(",") < t.index(":"):
-                        profile = sanitize_analyzer_summary(t)
-                        break
-            else:
-                for i, line in enumerate(summary.splitlines()):
-                    if line.strip().startswith("TARGET AUDIO PROFILE") and i + 1 < len(
-                        summary.splitlines()
-                    ):
-                        profile = sanitize_analyzer_summary(
-                            summary.splitlines()[i + 1].strip()
-                        )
-                        break
-        lines.append(
-            "TARGET AUDIO PROFILE (foundational layout constraints — anchor vocal tags, "
-            "mix styles, arrangement pacing):\n" + profile
-        )
-        if summary:
-            lines.append("Audio analysis detail:\n" + summary)
     cp = truncate_continuation_prior(str(b.continuation_prior_output or ""))
     cr = str(b.continuation_user_request or "").strip()
     if cp and cr:
@@ -819,6 +955,52 @@ def _resolve_system_prompt(
     return sys
 
 
+def _warn_ibibio_v1_fallback(body: GeneratePromptBody) -> None:
+    accent = str(body.vocal_accent or "").strip().lower()
+    variant = str(body.dialect_variant_id or "").strip().lower()
+    if ("ibibio" in accent or variant == "ibibio") and not _use_v2_prompt():
+        logger.warning(
+            "Ibibio cadence selected but V2 routing disabled — falling back "
+            "to V1 generic path. Quality degradation expected.",
+            extra={
+                "vocal_accent": accent,
+                "dialect_variant_id": variant,
+            },
+        )
+
+
+def _apply_music_prompt_routing(
+    body: GeneratePromptBody,
+    user_content: str,
+    *,
+    provider: str | None,
+    lyrics_task: bool,
+) -> tuple[str, str | None, str | None]:
+    """Stage 1 classify → append routing block → resolve draft/polish model overrides."""
+    _warn_ibibio_v1_fallback(body)
+    if not _use_v2_prompt():
+        return user_content, None, None
+    classification = classify_from_body(body)
+    append = build_routing_user_block_append(classification)
+    if append:
+        user_content = f"{user_content.strip()}\n\n{append}"
+    if body.prefer_lightweight_model:
+        return user_content, None, None
+    draft = resolve_routed_draft_model(
+        classification=classification,
+        language=str(body.language),
+        lightweight=False,
+        provider=provider,
+        lyrics_task=lyrics_task,
+    )
+    polish = resolve_routed_polish_model(
+        classification=classification,
+        provider=provider,
+        lyrics_task=lyrics_task,
+    )
+    return user_content, draft, polish
+
+
 def _call_prompt_pipeline(
     client: Any,
     *,
@@ -830,10 +1012,14 @@ def _call_prompt_pipeline(
     user_suffix: str | None = None,
     lyrics_task: bool = True,
     system_prompt: str | None = None,
-) -> tuple[str, str]:
+    draft_model_override: str | None = None,
+    polish_model_override: str | None = None,
+    chat_prefix_turns: list[dict[str, str]] | None = None,
+    architect_blueprint: str | None = None,
+) -> tuple[str, str, str | None]:
     sys = _resolve_system_prompt(provider, system_prompt)
     try:
-        text, pipeline = run_prompt_pipeline(
+        result = run_prompt_pipeline(
             client,
             system_prompt=sys,
             user_content=user_content,
@@ -844,8 +1030,12 @@ def _call_prompt_pipeline(
             provider=provider,
             user_suffix=user_suffix,
             lyrics_task=lyrics_task,
+            draft_model_override=draft_model_override,
+            polish_model_override=polish_model_override,
+            chat_prefix_turns=chat_prefix_turns,
+            architect_blueprint=architect_blueprint,
         )
-        return text, pipeline
+        return result.text, result.pipeline, result.architect_blueprint
     except Exception as e:  # noqa: BLE001
         raise HTTPException(502, f"LLM error: {e!s}") from e
 
@@ -896,7 +1086,11 @@ def _run_generate_prompt(body: GeneratePromptBody) -> dict[str, str]:
     lyrics = str(body.optional_lyrics or "").strip()
     has_lyrics = bool(lyrics)
     field_mode = _normalize_field_mode(body.field_output_mode)
-    path_c = bool(body.generate_lyrics) and not has_lyrics and field_mode != "simple"
+    path_c = (
+        (bool(body.generate_lyrics) or bool(body.use_vibe_as_lyric_source))
+        and not has_lyrics
+        and field_mode != "simple"
+    )
     block2_opt_out = _user_requested_block2_opt_out(body)
     lyrics_task = not block2_opt_out
     max_tok = _max_completion_tokens(
@@ -909,7 +1103,88 @@ def _run_generate_prompt(body: GeneratePromptBody) -> dict[str, str]:
     )
 
     user_content = _build_user_block(body)
-    text, pipeline = _call_prompt_pipeline(
+    user_content, draft_override, polish_override = _apply_music_prompt_routing(
+        body,
+        user_content,
+        provider=provider,
+        lyrics_task=lyrics_task,
+    )
+    from app.master_gospel_lyric_engine import (
+        few_shot_prefix_messages as master_gospel_few_shot,
+        is_gospel_lane,
+    )
+    from app.master_hardstyle_lyric_engine import (
+        few_shot_prefix_messages as master_hardstyle_few_shot,
+        should_inject_few_shot as should_inject_hardstyle_few_shot,
+    )
+    from app.master_progressive_big_room_house_lyric_engine import (
+        few_shot_prefix_messages as master_prog_big_room_few_shot,
+        should_inject_few_shot as should_inject_prog_big_room_few_shot,
+    )
+    from app.master_edm_lyric_engine import (
+        few_shot_prefix_messages as master_edm_few_shot,
+        should_inject_few_shot as should_inject_edm_few_shot,
+    )
+
+    pg = str(body.primary_genre or "")
+    fg = str(body.sub_genre_fusion or "")
+    vibe = str(body.vibe or "")
+    theme = str(body.lyric_theme_notes or "")
+
+    if lyrics_task and is_gospel_lane(
+        primary_genre=pg,
+        sub_genre_fusion=fg,
+        vibe=vibe,
+        lyric_theme_notes=theme,
+    ):
+        chat_prefix = master_gospel_few_shot(
+            primary_genre=pg,
+            sub_genre_fusion=fg,
+            vibe=vibe,
+            lyric_theme_notes=theme,
+        )
+    elif lyrics_task and should_inject_hardstyle_few_shot(
+        primary_genre=pg,
+        sub_genre_fusion=fg,
+        vibe=vibe,
+        lyric_theme_notes=theme,
+        lyrics_task=True,
+    ):
+        chat_prefix = master_hardstyle_few_shot(
+            primary_genre=pg,
+            sub_genre_fusion=fg,
+            vibe=vibe,
+            lyric_theme_notes=theme,
+        )
+    elif lyrics_task and should_inject_prog_big_room_few_shot(
+        primary_genre=pg,
+        sub_genre_fusion=fg,
+        vibe=vibe,
+        lyric_theme_notes=theme,
+        lyrics_task=True,
+    ):
+        chat_prefix = master_prog_big_room_few_shot(
+            primary_genre=pg,
+            sub_genre_fusion=fg,
+            vibe=vibe,
+            lyric_theme_notes=theme,
+        )
+    elif lyrics_task and should_inject_edm_few_shot(
+        primary_genre=pg,
+        sub_genre_fusion=fg,
+        vibe=vibe,
+        lyric_theme_notes=theme,
+        lyrics_task=True,
+    ):
+        chat_prefix = master_edm_few_shot(
+            primary_genre=pg,
+            sub_genre_fusion=fg,
+            vibe=vibe,
+            lyric_theme_notes=theme,
+        )
+    else:
+        chat_prefix = None
+    text, pipeline, architect_blueprint = _call_prompt_pipeline(
         client,
         body=body,
         user_content=user_content,
@@ -917,6 +1192,9 @@ def _run_generate_prompt(body: GeneratePromptBody) -> dict[str, str]:
         temperature=0.85,
         provider=provider,
         lyrics_task=lyrics_task,
+        draft_model_override=draft_override,
+        polish_model_override=polish_override,
+        chat_prefix_turns=chat_prefix,
     )
     pg = str(body.primary_genre or "")
     fg = str(body.sub_genre_fusion or "")
@@ -947,8 +1225,14 @@ def _run_generate_prompt(body: GeneratePromptBody) -> dict[str, str]:
             }
         )
         retry_content = _build_user_block(retry_body)
+        retry_content, retry_draft, retry_polish = _apply_music_prompt_routing(
+            retry_body,
+            retry_content,
+            provider=provider,
+            lyrics_task=lyrics_task,
+        )
         max_tok_retry = min(int(max_tok * (1.25 + attempt * 0.25)), 8192)
-        retry_text, retry_pipeline = _call_prompt_pipeline(
+        retry_text, retry_pipeline, retry_bp = _call_prompt_pipeline(
             client,
             body=retry_body,
             user_content=retry_content,
@@ -956,7 +1240,12 @@ def _run_generate_prompt(body: GeneratePromptBody) -> dict[str, str]:
             temperature=0.35,
             provider=provider,
             lyrics_task=lyrics_task,
+            draft_model_override=retry_draft,
+            polish_model_override=retry_polish,
+            architect_blueprint=architect_blueprint,
         )
+        if retry_bp:
+            architect_blueprint = retry_bp
         retry_text = _finalize_prompt_text(
             retry_text,
             field_mode,
@@ -1003,11 +1292,64 @@ def _run_generate_prompt(body: GeneratePromptBody) -> dict[str, str]:
         except Exception as e:  # noqa: BLE001
             logger.warning("completion pass failed: %s", e)
 
+    # Cross-genre stock-kit ban (Lagos tile / bleach / receipt) — one lyric retry.
+    if lyrics_task and not block2_opt_out:
+        stock_hits = stock_phrase_hits(text)
+        if stock_hits:
+            stock_suffix = build_stock_retry_suffix(stock_hits)
+            prior_suffix = str(body.user_block_suffix or "").strip()
+            stock_body = body.model_copy(
+                update={
+                    "user_block_suffix": (
+                        f"{prior_suffix}\n\n{stock_suffix}".strip()
+                        if prior_suffix
+                        else stock_suffix
+                    ),
+                }
+            )
+            try:
+                stock_content = _build_user_block(stock_body)
+                stock_content, stock_draft, stock_polish = _apply_music_prompt_routing(
+                    stock_body,
+                    stock_content,
+                    provider=provider,
+                    lyrics_task=lyrics_task,
+                )
+                stock_text, stock_pipeline, _ = _call_prompt_pipeline(
+                    client,
+                    body=stock_body,
+                    user_content=stock_content,
+                    max_tok=max_tok,
+                    temperature=0.55,
+                    provider=provider,
+                    lyrics_task=lyrics_task,
+                    draft_model_override=stock_draft,
+                    polish_model_override=stock_polish,
+                    architect_blueprint=architect_blueprint,
+                )
+                stock_text = _finalize_prompt_text(
+                    stock_text,
+                    field_mode,
+                    primary_genre=pg,
+                    sub_genre_fusion=fg,
+                    audio_environment_mode=env_mode,
+                    sanitize_output=False,
+                )
+                if not stock_phrase_hits(stock_text) or len(stock_text) > len(text):
+                    text, pipeline = stock_text, f"{stock_pipeline}:stock-retry"
+            except Exception as e:  # noqa: BLE001
+                logger.warning("stock-phrase lyric retry failed: %s", e)
+
     remix_title = str(body.remix_original_song_title or "")
     remix_artist = str(body.remix_original_artist or "")
     remix_gen_type = str(body.song_generation_type or "full_song")
+    remix_res = resolve_remix_mode(
+        remix_original_song_title=remix_title,
+        remix_original_artist=remix_artist,
+        remix_from_analyzer=bool(body.remix_from_analyzer),
+    )
     remix_instrumental = (
-        remix_engine_active(original_song_title=remix_title, original_artist=remix_artist)
+        remix_res.mode == RemixMode.INTERPOLATION
         and remix_gen_type.strip().lower() == "instrumental"
     )
     pp_lyrics_task = lyrics_task and not remix_instrumental
@@ -1075,6 +1417,7 @@ def _run_generate_prompt(body: GeneratePromptBody) -> dict[str, str]:
         original_song_title=remix_title,
         original_artist=remix_artist,
         generation_type=remix_gen_type,
+        remix_from_analyzer=bool(body.remix_from_analyzer),
     )
     return {"prompt": text, "pipeline": pipeline}
 
@@ -1101,7 +1444,10 @@ def create_app() -> FastAPI:
                 "health": "GET /health",
                 "analyze": "POST /analyze (multipart file)",
                 "generate_prompt": "POST /generate-prompt (JSON)",
+                "generate_lyrics": "POST /generate-lyrics (JSON, SONGWRITER_PIPELINE=1)",
+                "songwriter_status": "GET /songwriter/status",
             },
+            "songwriter_pipeline": songwriter_pipeline_enabled(),
         }
 
     @app.get("/health")
@@ -1158,6 +1504,8 @@ def create_app() -> FastAPI:
             "Route /api/generate-prompt is legacy. Upgrade client."
         )
         return await _generate_prompt_route(body)
+
+    app.include_router(songwriter_router)
 
     return app
 

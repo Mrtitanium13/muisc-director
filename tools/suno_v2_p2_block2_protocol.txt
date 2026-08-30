@@ -14,7 +14,7 @@ Never use these words, variants, or patterns in **lyric lines**. Apply the manda
 - "tapestry", "ethereal", "celestial", "beacon", "vessel" → Physical anchors (e.g., "cracked dashboard", "streetlamp hum", "salt on skin").
 - "resonate", "illuminate", "transformative", "testament" → Action verbs (e.g., "the way you slammed the door", "faded polaroid").
 - "leverage", "synergy", "paradigm", "multifaceted" → Conversational fragments (e.g., "we messed up", "it's complicated").
-- "whispering winds", "uncharted", "dive deep", "ignite your passion" → Sensory specifics (e.g., "3 AM rain", "cold coffee", "neon flicker").
+- "whispering winds", "uncharted", "dive deep", "ignite your passion" → Sensory specifics invented for THIS song (temperature, texture, heard sound) — never default to "3 AM rain", Lagos tile, bleach, or receipt-by-kettle stock scenes.
 
 **Also banned (flat list — no close variants):**
 "embark" "endeavor" "foster" "landscape" (metaphorical) "nuance" (noun filler) "pinnacle" "pivotal" "realm" "seamless" "traverse" "unleash" "unwavering" "vibrant" "delve" "adventure awaits" — or any compound that sounds like a motivational poster or LinkedIn post.
@@ -28,6 +28,9 @@ Never use these words, variants, or patterns in **lyric lines**. Apply the manda
 - Naming emotions directly ("I feel so sad") → Show feeling through action, image, or object.
 - Writing a bridge that simply restates the chorus sentiment louder.
 - Using "we" universally to sound anthemic when the song is clearly a personal narrative.
+- **Stock "concrete" kits** → "3 AM + cold tile + Lagos", bleach/scrubbing floors, bent receipt by a kettle, "Mama said… receipts/grace" — these are failed prior runs; invent theme-motivated details instead.
+- **Unmotivated place-drops** → Do not name Lagos (or any city) unless the user's brief, accent lane, or theme sets the song there.
+- **AI body-poetry** → Ban "song/rhythm in my chest", "breath fills my lungs", "borrowed and holy" sermon stacks. Prefer how people talk: *"song in my heart"*, *"I won't boast"*, plain gratitude — not elevated synonym hunting.
 - **Long-form mix narration as "lyrics"** → Never paste Block-1 engineer prose as if the vocalist is speaking it. One short staging bracket per section (ARRANGEMENT STAGING FORMAT), then performable words on their own lines.
 - **Sterile DAW / rider jargon as a hook** → Hooks must stay singable (body, room, stakes, metaphor a singer would say).
 - **Producer cosplay** → Famous producer names, gear lists, or "in the vein of X and Y" inside verses unless the user explicitly asked.
@@ -38,7 +41,8 @@ Never use these words, variants, or patterns in **lyric lines**. Apply the manda
 ## 2. REQUIRED CRAFT TECHNIQUES (ENFORCE ACTIVELY)
 
 - **Concrete Density:** Path B/C defaults require ≥1 specific object, place, tactile cue, or heard sound every ~2 lyric lines.
-- **Conversational Register:** Use contractions, fragments, and mid-thought line breaks. Vary line length drastically.
+- **Conversational Register:** Use contractions, fragments, and mid-thought line breaks. Vary line length drastically. Prefer idioms people actually say (*heart*, *gonna*, *I won't*) over literary dodge-words (*chest*, *lungs*, *borrowed and holy*).
+- **Kitchen-table test:** Read every line as if saying it to a friend. If it sounds like a poem written by a machine, cut it.
 - **Earned Repetition:** When repeating a phrase, change its meaning or weight by the context surrounding it.
 - **Subverted Expectations:** Set up a rhyme the listener predicts, then land somewhere unexpected (slant/near rhyme).
 - **Sensory Anchoring:** Every verse needs at least one physical-sense line (smell, texture, temperature, sound).
@@ -79,7 +83,18 @@ Never use these words, variants, or patterns in **lyric lines**. Apply the manda
 1. **The Truncation:** Drop the final couplet entirely for a sudden, impactful stop.
 2. **The Ad-Lib Layer:** Add a `(counter-melody vocal run)` or `(background choir harmony)` not present in Chorus 1.
 3. **The Lyrical Twist:** Change the final line's last word to reflect the journey of the song (e.g., "I'm coming home" becomes "I'm finally home").
-4. **The Dynamic Shift:** Prefix the tag with `[Final Chorus: half-time feel, maximum vocal belt, stripped percussion]` (version-routed staging per ARRANGEMENT STAGING FORMAT).
+4. **The Dynamic Shift:** Prefix the tag with version-routed staging per **DYNAMIC STRUCTURAL ENGINE §1** and ARRANGEMENT STAGING FORMAT — e.g. v5.5: `[Final Chorus: gospel vamp, call-and-response, ad-lib counter-melody, max dynamics]`.
+
+---
+
+## 9. v5.5 MAX ARC FLAG (LONG-FORM SINGLE PASS)
+
+When user Suno version is **v5.5** or **v5.5 Pro** (read from user message `Suno version:` line):
+
+- Set internal `v5.5_max_arc = true`.
+- Allow a **full ~4-minute single-pass** Block 2 arc without Extend scaffolding — complete Core DNA + genre modules + mandatory Final Chorus mutation in one `[End]`-terminated paste.
+- Do **not** truncate to radio-edit length unless user requests short-form / TikTok objective (then **Hit Song Psychology** `viral_moment_timing` TikTok anchor wins).
+- v4.5/v5: keep conservative section count; defer extended arcs to user Extend workflow.
 
 ---
 
@@ -90,8 +105,7 @@ Suno's parser is rigid. **Elite Human Lyricist §3** is authoritative for phonet
 - **Structure Tags:** Use ONLY `[brackets]` for arrangement (e.g., `[Verse 1]`, `[Pre-Chorus]`, `[Drop]`, `[Guitar Solo]`, `[Fade Out]`, `[End]`). Allowed tags also include `[Post-Chorus]` `[Instrumental]` `[Break]` `[Interlude]` `[Spoken Word]` `[Ad-libs]` — exact spellings per SECTION 2 / Parts A–D. Bracket stack + `{staging}` → **ARRANGEMENT STAGING FORMAT**.
 - **Phonetic spelling:** Clean variants (*idlin, blowin, countin, bout, goin, dunno*) — **no trailing apostrophes** (global). Stretched vowels via hyphens (e.g., "yeeeaah", "wooo", "nah-nah-nah").
 - **Punctuation:** No commas or periods at line ends on performable lyric lines; ellipses only per Elite §3. Exclamation points (!) sparingly inside ad-lib parens when sung.
-- **Parentheticals:** Sung/chanted **words only** — `(yeah...)`, `(never!)`, `(envelope...)`. **Never** label inside parens: no `(Echo: ...)`, `(Chant: ...)`, `(Harmony: ...)`. Use `[Backing Vocal]` / `[Chant]` on their own lines for stacked parts. **Never** put performance jargon in `( )` beside lyrics — use `[brackets]` on a separate line (Elite §3).
-- **Banned in parens:** physical stage directions `(sigh)` / `(chuckles)`; producer notes like `(Wordplay-heavy, crisp snap)`.
+- **Parentheticals:** Sung/chanted **words only** — `(yeah...)`, `(never!)`, `(envelope...)`. **v4.5/v5:** no physical stage directions `(sigh)` / `(chuckles)`. **v5.5:** granular cues allowed per Elite §3 + DYNAMIC STRUCTURAL ENGINE §1.
 - **Always end** with `[End]` on lyric paths.
 
 **Imagery & vibe sync:** Avoid flat place/space nouns as filler. When used, one sharp cinematic image. Match metaphor register to genre — praise → vast/eternal; pop → kinetic; neo-soul → tactile; rock → raw; club → pulse/light.

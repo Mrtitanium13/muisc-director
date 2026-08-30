@@ -1,0 +1,156 @@
+{
+  "version": "1.0.0",
+  "description": "Songwriter model routing — genre + language → preferred model. Provider slugs are OpenAI-compatible (LaoZhang bare id / OpenRouter vendor/model).",
+  "tiers": {
+    "tier1": ["gpt-5.5", "claude-opus", "gemini-2.5-pro"],
+    "tier2": ["kimi", "deepseek", "qwen", "glm", "ernie"]
+  },
+  "logical_models": {
+    "gpt-5.5": {
+      "laozhang": "gpt-5.5",
+      "openrouter": "openai/gpt-5.5"
+    },
+    "claude-opus": {
+      "laozhang": "claude-opus-4-5",
+      "openrouter": "anthropic/claude-opus-4"
+    },
+    "claude-sonnet": {
+      "laozhang": "claude-sonnet-4-5",
+      "openrouter": "anthropic/claude-sonnet-4"
+    },
+    "gemini-2.5-pro": {
+      "laozhang": "gemini-2.5-pro",
+      "openrouter": "google/gemini-2.5-pro"
+    },
+    "gemini-2.5-flash": {
+      "laozhang": "gemini-2.5-flash",
+      "openrouter": "google/gemini-2.5-flash"
+    },
+    "kimi": {
+      "laozhang": "moonshot-v1-128k",
+      "openrouter": "moonshotai/kimi-k2"
+    },
+    "deepseek": {
+      "laozhang": "deepseek-v3",
+      "openrouter": "deepseek/deepseek-chat"
+    },
+    "qwen": {
+      "laozhang": "qwen-max",
+      "openrouter": "qwen/qwen3.7-plus"
+    },
+    "glm": {
+      "laozhang": "glm-4-plus",
+      "openrouter": "zhipu/glm-4-plus"
+    },
+    "ernie": {
+      "laozhang": "ernie-4.5",
+      "openrouter": "baidu/ernie-4.5-300b-a47b"
+    }
+  },
+  "fallback_chain": ["gemini-2.5-pro", "gpt-5.5", "qwen", "claude-sonnet"],
+  "stage_preferences": {
+    "analyze": ["gpt-5.5", "claude-sonnet"],
+    "concepts": ["gpt-5.5", "claude-opus"],
+    "select": ["gpt-5.5"],
+    "arc": ["claude-sonnet", "gpt-5.5"],
+    "chorus": ["gpt-5.5", "claude-opus"],
+    "verses": ["claude-opus", "gpt-5.5"],
+    "bridge": ["claude-sonnet", "gpt-5.5"],
+    "transitions": ["claude-sonnet"],
+    "rhyme": ["gpt-5.5", "deepseek"],
+    "anti_ai": ["claude-opus", "claude-sonnet"],
+    "singability": ["gpt-5.5", "claude-sonnet"],
+    "polish": ["claude-opus", "gpt-5.5"],
+    "judge": ["claude-sonnet", "gemini-2.5-pro"]
+  },
+  "routes": [
+    {
+      "id": "english_pop",
+      "match": { "languages": ["en", "english"], "genres": ["pop", "dance pop", "synthpop"] },
+      "primary": "gpt-5.5",
+      "secondary": "claude-opus"
+    },
+    {
+      "id": "edm_electronic",
+      "match": { "languages": ["en", "english"], "genres": ["edm", "house", "big room", "techno", "progressive house", "future house", "trance"] },
+      "primary": "gpt-5.5",
+      "secondary": "claude-sonnet"
+    },
+    {
+      "id": "country",
+      "match": { "languages": ["en", "english"], "genres": ["country", "americana", "southern gospel"] },
+      "primary": "claude-opus",
+      "secondary": "claude-sonnet"
+    },
+    {
+      "id": "rock_metal",
+      "match": { "languages": ["en", "english"], "genres": ["rock", "metal", "alternative", "punk"] },
+      "primary": "claude-opus",
+      "secondary": "gpt-5.5"
+    },
+    {
+      "id": "afrobeats",
+      "match": { "languages": ["en", "english", "pidgin"], "genres": ["afrobeats", "afro house", "amapiano"] },
+      "primary": "gpt-5.5",
+      "secondary": "claude-sonnet"
+    },
+    {
+      "id": "hiphop_trap",
+      "match": { "languages": ["en", "english"], "genres": ["hip hop", "hip-hop", "rap", "trap", "drill"] },
+      "primary": "gpt-5.5",
+      "secondary": "deepseek"
+    },
+    {
+      "id": "gospel_rnb",
+      "match": { "languages": ["en", "english"], "genres": ["gospel", "r&b", "rnb", "soul"] },
+      "primary": "claude-opus",
+      "secondary": "gpt-5.5"
+    },
+    {
+      "id": "mandopop",
+      "match": { "languages": ["zh", "zh-hans", "zh-hant", "chinese", "mandarin"], "genres": ["mandopop", "c-pop", "chinese pop", "ballad"] },
+      "primary": "kimi",
+      "secondary": "qwen"
+    },
+    {
+      "id": "chinese_ballad",
+      "match": { "languages": ["zh", "zh-hans", "zh-hant", "chinese"], "genres": ["ballad", "slow jam", "chinese ballad"] },
+      "primary": "kimi",
+      "secondary": "ernie"
+    },
+    {
+      "id": "chinese_rap",
+      "match": { "languages": ["zh", "zh-hans", "chinese"], "genres": ["rap", "hip hop", "trap", "chinese rap"] },
+      "primary": "deepseek",
+      "secondary": "qwen"
+    },
+    {
+      "id": "mixed_zh_en",
+      "match": { "languages": ["zh-en", "mixed", "code-switch"], "genres": ["*"] },
+      "primary": "qwen",
+      "secondary": "kimi"
+    },
+    {
+      "id": "kpop_jpop",
+      "match": { "languages": ["ko", "ja", "korean", "japanese"], "genres": ["k-pop", "kpop", "j-pop", "jpop"] },
+      "primary": "gpt-5.5",
+      "secondary": "qwen"
+    },
+    {
+      "id": "latin",
+      "match": { "languages": ["es", "pt", "spanish", "portuguese"], "genres": ["latin", "reggaeton", "bachata", "salsa"] },
+      "primary": "claude-sonnet",
+      "secondary": "gpt-5.5"
+    },
+    {
+      "id": "default",
+      "match": { "languages": ["*"], "genres": ["*"] },
+      "primary": "gpt-5.5",
+      "secondary": "gemini-2.5-pro"
+    }
+  ],
+  "unavailable_policy": {
+    "description": "If primary slug fails auth/404, walk secondary then fallback_chain.",
+    "max_attempts": 4
+  }
+}

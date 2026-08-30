@@ -1,0 +1,15 @@
+{
+  "id": "trap",
+  "version": "1.0.0",
+  "vocabulary_profile": ["sparse flex", "mood", "ad-libs as texture not crutch"],
+  "line_length_guidance": "short bars; space for hi-hat energy",
+  "imagery_guidance": ["night", "money/mood if story-true", "cars as setting"],
+  "energy_profile": "cool menace or celebration",
+  "hook_style": "melodic trap hook; earworm",
+  "rhyme_density": "high",
+  "rhythmic_guidance": ["triplet feel OK", "leave 808 space"],
+  "common_structures": ["Intro-Hook-V-Hook-V-Hook"],
+  "vocal_phrasing": ["auto-tune friendly vowels", "ad-lib gaps"],
+  "avoid_patterns": ["long country storytelling", "choir gospel stacks"],
+  "cultural_notes": []
+}

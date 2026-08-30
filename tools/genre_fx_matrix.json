@@ -1,296 +1,484 @@
 {
-  "edm": {
-    "1": {
-      "style": "smooth transitions, subtle synth swells",
-      "lyrics": ""
+  "_schema": {
+    "purpose": "Genre FX matrix: per-lane style prompts + lyric injections at 3 intensity tiers",
+    "intensity": {
+      "1": "subtle (style only)",
+      "2": "moderate",
+      "3": "peak"
     },
-    "2": {
-      "style": "dramatic risers, white noise sweeps, festival drop, sidechain pumping",
-      "lyrics": "\n[Build Intensity]\n[Drop]\n"
-    },
-    "3": {
-      "style": "massive white noise sweeps, explosive snare roll builds, heavy sidechain compression, chaotic drop impact, peak-time energy",
-      "lyrics": "\n[Pre-Chorus]\n[Build Intensity]\n[Accelerating Snare Roll]\n[Drop: Full Impact]\n"
-    }
-  },
-  "hardstyle": {
-    "1": {
-      "style": "distorted reverse-bass kick foundation, euphoric supersaw pads, 150 BPM festival grid",
-      "lyrics": ""
-    },
-    "2": {
-      "style": "reverse-bass kick swells, layered snare-clap builds, anthem supersaw leads, brick-wall loudness",
-      "lyrics": "\n[Build Intensity]\n[Drop: Reverse Bass]\n"
-    },
-    "3": {
-      "style": "massive reverse-bass kick impact, accelerating snare roll, distorted supersaw anthem, rawstyle aggression, festival main-stage saturation",
-      "lyrics": "\n[Monologue]\n[Pre-Chorus]\n[Accelerating Snare Roll]\n[Drop: Reverse Bass Impact]\n"
-    }
-  },
-  "techno": {
-    "1": {
-      "style": "minimal transitions, hypnotic rhythm",
-      "lyrics": ""
-    },
-    "2": {
-      "style": "industrial sub-bass drops, modular synth swells, dark noise risers",
-      "lyrics": "\n[Filter Sweep Break]\n[Drop: Heavy Kick]\n"
-    },
-    "3": {
-      "style": "aggressive industrial modular screech, rushing white noise sweeps, dark modular filter sweeps, heavy laser FX, hypnotic build-up",
-      "lyrics": "\n[Industrial Breakdown]\n[Accelerating Percussion Build]\n[Drop: Driving Sub-Bass and Kick]\n"
-    }
-  },
-  "dnb": {
-    "1": {
-      "style": "liquid drum and bass, rolling transitions",
-      "lyrics": ""
-    },
-    "2": {
-      "style": "174 BPM, amen break drum fills, rushing white noise riser, reefer bass swell",
-      "lyrics": "\n[The Build Up]\n[Drop: Double Time]\n"
-    },
-    "3": {
-      "style": "174 BPM, rapid complex amen break drum fills, intense sub-bass glides, massive rushing white noise risers, aggressive rewer bass swell",
-      "lyrics": "\n[Breakdown: Drums Cut Out]\n[Accelerating Snare Fill]\n[Drop: Maximum Amen Break Energy]\n"
-    }
-  },
-  "synthwave": {
-    "1": {
-      "style": "80s vintage analog warmth",
-      "lyrics": ""
-    },
-    "2": {
-      "style": "cinematic risers, retro tom-drum fill, neon laser sweep",
-      "lyrics": "\n[Retro Synth Arpeggio Break]\n"
-    },
-    "3": {
-      "style": "dramatic 80s outrun cinematic risers, massive gated snare fills, classic retro tom-drum rolls, roaring analog synth swells",
-      "lyrics": "\n[Bridge: Retro Ambient Pads]\n[Gated Drum Fill]\n[Chorus: High Energy Arpeggio]\n"
-    }
-  },
-  "dubstep": {
-    "1": {
-      "style": "subtle sub-bass weight, minimal glitching",
-      "lyrics": ""
-    },
-    "2": {
-      "style": "wobble bass drops, pre-drop vocal sample cue, pitch-shifting risers",
-      "lyrics": "\n[Pre-Drop Tension]\n[Drop: Heavy Bass Impact]\n"
-    },
-    "3": {
-      "style": "aggressive tearout growls, complex LFO wobble bass modulation, mechanical metal screech FX, explosive sub-bass drops, intense rhythmic glitching",
-      "lyrics": "\n[Build: Accelerating Triplets]\n[Pre-Drop Vocal Silence]\n[Drop: Maximum Wobble Bass Chaos]\n"
-    }
-  },
-  "ambient": {
-    "1": {
-      "style": "soft atmospheric textures, infinitely long reverb",
-      "lyrics": ""
-    },
-    "2": {
-      "style": "evolving modular synth pads, tape hiss texture, swelling delay trails",
-      "lyrics": "\n[Atmospheric Swell]\n"
-    },
-    "3": {
-      "style": "ethereal field recordings, slow sweeping low-pass filters, shimmering deep granular delay, reverse reverb swells, vast organic soundscapes",
-      "lyrics": "\n[Deep Spatial Evolution]\n[Ethereal Texture Fade]\n"
-    }
-  },
-  "hiphop": {
-    "1": {
-      "style": "subtle hi-hat rolls, smooth lounge feel",
-      "lyrics": ""
-    },
-    "2": {
-      "style": "808 slides, crisp snare fills, sudden beat drop",
-      "lyrics": "\n[Drum Fill]\n"
-    },
-    "3": {
-      "style": "rapid stuttering hi-hat rolls, aggressive heavy 808 bass glides, vintage vinyl scratch FX, unexpected sudden intense beat switch",
-      "lyrics": "\n*vinyl scratch*\n- beat switch -\n[Bass Drop]\n"
-    }
-  },
-  "trap": {
-    "1": {
-      "style": "clean 808 foundation, basic rolling hi-hats",
-      "lyrics": ""
-    },
-    "2": {
-      "style": "pitch-shifting 808 glides, fast triplet snare rolls, laser hit effects",
-      "lyrics": "\n[Pre-Chorus: Beats Stutter]\n[Chorus: Full Trap Beat]\n"
-    },
-    "3": {
-      "style": "heavy maximalist 808 bass distortion, rapid machine-gun hi-hat stutter rolls, brass hit accents, cinematic orchestral hits, aggressive trap energy",
-      "lyrics": "\n[Intense Hi-Hat Build]\n*808 slide*\n[Drop: Aggressive Trap Beat]\n"
-    }
-  },
-  "pop": {
-    "1": {
-      "style": "polished modern mix, smooth dynamic scaling",
-      "lyrics": ""
-    },
-    "2": {
-      "style": "uplifting vocal riser, finger snap accents, anthemic chorus swell",
-      "lyrics": "\n[Pre-Chorus Build]\n[Chorus]\n"
-    },
-    "3": {
-      "style": "explosive pop drop, massive layered vocal harmonies, high-energy synth stabs, sudden dramatic silence break, mainstage stadium chorus scale",
-      "lyrics": "\n[Pre-Chorus: Tension Rises]\n*dramatic beat pause*\n[Chorus: Explosive Pop Hook]\n"
-    }
-  },
-  "rnb": {
-    "1": {
-      "style": "smooth vocal compression, warm Rhodes chords",
-      "lyrics": ""
-    },
-    "2": {
-      "style": "velvet bassline glides, subtle finger snap breaks, smooth vocal echo echoes",
-      "lyrics": "\n[Bridge: Vocal Ad-libs]\n"
-    },
-    "3": {
-      "style": "sensual late-night sub-bass swells, intricate acoustic drum fills, luxurious layered vocal harmony stacks, neo-soul chord transitions",
-      "lyrics": "\n[Sensual Bridge Break]\n[Vocal Run Climaxes]\n[Chorus: Deep Groove Soul]\n"
-    }
-  },
-  "reggaeton": {
-    "1": {
-      "style": "classic dembow rhythm loop, warm acoustic guitar touches",
-      "lyrics": ""
-    },
-    "2": {
-      "style": "syncopated snare rolls, airhorn accents, pumping reggaeton sub-bass",
-      "lyrics": "\n[El Bajo Rompe]\n"
-    },
-    "3": {
-      "style": "aggressive driving dembow beat drops, sharp laser siren FX, sudden club beat drops, vocal stutter vocal chops, deep sub-bass modulation",
-      "lyrics": "\n- cambio de ritmo -\n[Fuego Build Up]\n[Drop: Dembow Total]\n"
-    }
-  },
-  "rock": {
-    "1": {
-      "style": "warm overdriven guitar rhythm, natural room drums",
-      "lyrics": ""
-    },
-    "2": {
-      "style": "driving drum fills, soaring guitar feedback, punchy anthemic chorus",
-      "lyrics": "\n[Drum Roll Transition]\n"
-    },
-    "3": {
-      "style": "screaming Marshall amp guitar solos, thunderous double-kick drum rolls, crashing cymbal accents, explosive stadium rock chorus impact",
-      "lyrics": "\n[Bridge: Guitar Feedback Swell]\n[Massive Drum Fill]\n[Chorus: High Energy Stadium Rock]\n"
-    }
-  },
-  "metal": {
-    "1": {
-      "style": "distorted rhythm guitars, steady double-bass foundation",
-      "lyrics": ""
-    },
-    "2": {
-      "style": "rapid double-bass drum fills, screaming pinch harmonics, sudden heavy breakdown",
-      "lyrics": "\n[Breakdown]\n"
-    },
-    "3": {
-      "style": "crushing down-tuned djent guitar chugs, lightning-fast blast beats, brutal bass drops, catastrophic slam breakdown, screaming guitar solo",
-      "lyrics": "\n[Pre-Breakdown: Guitars Cut Out]\n*bass drop shockwave*\n[Breakdown: Heavy Slam Djent]\n"
-    }
-  },
-  "indie": {
-    "1": {
-      "style": "lo-fi bedroom pop aesthetic, jangly clean guitars",
-      "lyrics": ""
-    },
-    "2": {
-      "style": "vintage spring reverb swells, driving indie basslines, organic tambourine shakes",
-      "lyrics": "\n[Instrumental Outro Fade]\n"
-    },
-    "3": {
-      "style": "swirling psychedelic shoegaze guitar walls, massive tape-delay oscillation swells, emotional quiet-loud dynamic explosions, unpolished garage rock drum fills",
-      "lyrics": "\n[Bridge: Quiet Intimate Guitars]\n[Explosive Guitars In]\n[Chorus: Wall of Sound]\n"
-    }
-  },
-  "country": {
-    "1": {
-      "style": "warm acoustic guitar strumming, clean mix",
-      "lyrics": ""
-    },
-    "2": {
-      "style": "twangy pedal steel guitar swells, driving acoustic drum fills, organic banjo picking",
-      "lyrics": "\n[Key Change Transition]\n"
-    },
-    "3": {
-      "style": "roaring southern rock electric guitar riffs, anthemic stadium country drum rolls, blazing fast fiddle solos, driving double-time acoustic finish",
-      "lyrics": "\n[Guitar and Fiddle Duel]\n[Big Drum Fill]\n[Chorus: Upbeat Stadium Country]\n"
-    }
-  },
-  "folk": {
-    "1": {
-      "style": "intimate solo fingerstyle acoustic guitar, close natural room mic",
-      "lyrics": ""
-    },
-    "2": {
-      "style": "soft cello swells, layered acoustic vocal harmonies, organic foot stomps",
-      "lyrics": "\n[Harmonies In]\n"
-    },
-    "3": {
-      "style": "sweeping orchestral string swells, thunderous cinematic acoustic foot-stomp hits, soaring emotional vocal harmony cascades, mandolin tremolo picking swells",
-      "lyrics": "\n[Bridge: Whispered Intimate]\n[Crescendo: Orchestral Folk Swell]\n"
+    "style_vocabulary": "SONIC RESULT only — no DAW routing / mastering terms",
+    "lyrics_format": "[Bracket Tag] — single style, no asterisks or dashes",
+    "families_required": [
+      "edm",
+      "techno",
+      "hardstyle",
+      "dnb",
+      "synthwave",
+      "dubstep",
+      "ambient",
+      "hiphop",
+      "trap",
+      "boom_bap",
+      "amapiano",
+      "pop",
+      "rnb",
+      "reggaeton",
+      "latin",
+      "rock",
+      "metal",
+      "indie",
+      "country",
+      "folk",
+      "afrobeats",
+      "cinematic",
+      "jazz",
+      "worship",
+      "mandopop",
+      "world",
+      "reggae"
+    ],
+    "fields": {
+      "primary_anchors": "Bracket tags for FX injection priority (golden anchors)",
+      "style_prompts": "Block 1 production FX prose by tier (1=subtle, 2=moderate, 3=peak)",
+      "lyric_injections": "Block 2 micro-structure bracket tags by tier"
     }
   },
   "afrobeats": {
-    "1": {
-      "style": "relaxed west african percussion, smooth synth bass",
-      "lyrics": ""
+    "primary_anchors": [
+      "[Chorus]"
+    ],
+    "style_prompts": {
+      "1": "relaxed west african percussion, smooth synth bass",
+      "2": "vibrant shaker loops, log drum accents, syncopated vocal chops",
+      "3": "heavy syncopated log drum drops, rapid talking drum rolls, bright call-and-response vocal echo stacks, ultra-danceable afro-pop groove drops"
     },
-    "2": {
-      "style": "vibrant shaker loops, log drum accents, syncopated vocal chops",
-      "lyrics": "\n[Log Drum Break]\n"
+    "lyric_injections": {
+      "1": "",
+      "2": "[Log Drum Break]",
+      "3": "[Percussion Breakdown]\n[Log Drum Build]\n[Drop: Heavy Log Drums]"
     },
-    "3": {
-      "style": "heavy syncopated Amapiano log drum drops, rapid talking drum rolls, bright call-and-response vocal echo stacks, ultra-danceable afro-pop groove drops",
-      "lyrics": "\n[Percussion Breakdown]\n*bass drop*\n[Drop: Heavy Log Drums]\n"
-    }
+    "lyric_engine_directives": "Syncopated West African pop phrasing, call-and-response hooks, dance-floor gratitude and celebration. Keep lines short, rhythmic, and chant-ready."
   },
-  "latin": {
-    "1": {
-      "style": "classic acoustic salsa groove, soft hand percussion",
-      "lyrics": ""
+  "amapiano": {
+    "primary_anchors": [
+      "[Log Drum Verse]"
+    ],
+    "style_prompts": {
+      "1": "soft shaker pulse, atmospheric pad, log drum tease",
+      "2": "log drum pattern lock, group chant accents, rising hats",
+      "3": "heavy log drum bass variation, full groove peak, percussive breakdown, group chant accent flood"
     },
-    "2": {
-      "style": "bright brass stabs, driving conga drum fills, energetic cowbell syncopation",
-      "lyrics": "\n[Descarga Percusion]\n"
+    "lyric_injections": {
+      "1": "",
+      "2": "[Log Drum Verse]",
+      "3": "[Breakdown: Log Drum Isolates]\n[Chant Accents Build]\n[Drop: Full Groove Peak]"
     },
-    "3": {
-      "style": "explosive horn section flares, hyper-accelerated timbale drum fills, high-energy call-and-response montuno hooks, driving carnival percussion drops",
-      "lyrics": "\n[Solo de Timbales]\n[Mambo: Full Horn Section In]\n"
-    }
+    "lyric_engine_directives": ""
+  },
+  "ambient": {
+    "primary_anchors": [
+      "[Atmospheric Swell]"
+    ],
+    "style_prompts": {
+      "1": "soft atmospheric textures, infinitely long reverb",
+      "2": "evolving modular synth pads, tape hiss texture, swelling delay trails",
+      "3": "ethereal field recordings, slow sweeping low-pass filters, shimmering deep granular delay, reverse reverb swells, vast organic soundscapes"
+    },
+    "lyric_injections": {
+      "1": "",
+      "2": "[Atmospheric Swell]",
+      "3": "[Deep Spatial Evolution]\n[Ethereal Texture Fade]"
+    },
+    "lyric_engine_directives": "Sparse, imagistic lines or instrumental-only bracket tags. Avoid narrative density; favor texture words and spatial mood."
+  },
+  "boom_bap": {
+    "primary_anchors": [
+      "[Hook]"
+    ],
+    "style_prompts": {
+      "1": "dusted vinyl crackle, warm close-mic vocal pocket",
+      "2": "crisp horn flash, wider vocal doubles, swung 16th feel",
+      "3": "heavy boom bap break pressure, dramatic DJ scratch cut, dense drum loop, vocal urgency peak"
+    },
+    "lyric_injections": {
+      "1": "",
+      "2": "[Ad-lib Accents]\n[Hook Lift]",
+      "3": "[DJ Scratch Break]\n[Ad-lib Flood]\n[Hook: Maximum Pocket]"
+    },
+    "lyric_engine_directives": "Story-first bars with concrete detail, internal rhyme, and sample-era authenticity. No motivational poster lines."
   },
   "cinematic": {
-    "1": {
-      "style": "soft orchestral strings, gentle piano spacing",
-      "lyrics": ""
+    "primary_anchors": [
+      "[Climax]",
+      "[Orchestral Climax]"
+    ],
+    "style_prompts": {
+      "1": "soft orchestral strings, gentle piano spacing",
+      "2": "dramatic orchestral brass hits, rising string staccatos, ticking clock tension",
+      "3": "thunderous taiko drum ensemble drops, epic choir vocal chords, soaring heroic brass peaks, massive sub-bass impact booms, blockbuster cinematic trailer scales"
     },
-    "2": {
-      "style": "dramatic orchestral brass hits, rising string staccatos, ticking clock tension",
-      "lyrics": "\n[Dramatic Crescendo]\n"
+    "lyric_injections": {
+      "1": "",
+      "2": "[Dramatic Crescendo]",
+      "3": "[Tension Building Sub-Bass]\n[Epic Orchestral Crescendo]\n[Coda: Full Grand Scale Resolve]"
     },
-    "3": {
-      "style": "thunderous taiko drum ensemble drops, epic choir vocal chords, soaring heroic brass peaks, massive sub-bass impact booms, blockbuster cinematic trailer scales",
-      "lyrics": "\n[Tension Building Sub-Bass]\n[Epic Orchestral Crescendo]\n[Drop: Full Grand Scale Chorus]\n"
-    }
+    "lyric_engine_directives": "Arc-driven imagery with rising stakes; orchestral section tags. Favor cinematic verbs over abstract emotion labels."
+  },
+  "country": {
+    "primary_anchors": [
+      "[Chorus]"
+    ],
+    "style_prompts": {
+      "1": "warm acoustic guitar strumming, clean mix",
+      "2": "twangy pedal steel guitar swells, driving acoustic drum fills, organic banjo picking",
+      "3": "roaring southern rock electric guitar riffs, anthemic stadium country drum rolls, blazing fast fiddle solos, driving double-time acoustic finish"
+    },
+    "lyric_injections": {
+      "1": "",
+      "2": "[Key Change Transition]",
+      "3": "[Guitar and Fiddle Duel]\n[Big Drum Fill]\n[Chorus: Upbeat Stadium Country]"
+    },
+    "lyric_engine_directives": "Narrative storytelling, concrete place names, family and road imagery. Twang-friendly vowels; avoid generic Nashville clichés."
+  },
+  "dnb": {
+    "primary_anchors": [
+      "[Drop: Double Time]"
+    ],
+    "style_prompts": {
+      "1": "liquid drum and bass, rolling transitions",
+      "2": "174 BPM, amen break drum fills, rushing white noise riser, reese bass swell",
+      "3": "174 BPM, rapid complex amen break drum fills, intense sub-bass glides, massive rushing white noise risers, aggressive reese bass swell"
+    },
+    "lyric_injections": {
+      "1": "",
+      "2": "[Rising Groove Build]\n[Drop: Double Time]",
+      "3": "[Breakdown: Drums Cut Out]\n[Accelerating Snare Fill]\n[Drop: Maximum Amen Break Energy]"
+    },
+    "lyric_engine_directives": "Minimal vocal topline or chop-ready phrases; high-energy chants and breathless build cues. No slow ballad phrasing in drops."
+  },
+  "dubstep": {
+    "primary_anchors": [
+      "[Drop: Heavy Bass Impact]"
+    ],
+    "style_prompts": {
+      "1": "subtle sub-bass weight, minimal glitching",
+      "2": "wobble bass drops, pre-drop vocal sample cue, pitch-shifting risers",
+      "3": "aggressive tearout growls, complex LFO wobble bass modulation, mechanical metal screech FX, explosive sub-bass drops, intense rhythmic glitching"
+    },
+    "lyric_injections": {
+      "1": "",
+      "2": "[Pre-Drop Tension]\n[Drop: Heavy Bass Impact]",
+      "3": "[Build: Accelerating Triplets]\n[Pre-Drop Vocal Silence]\n[Drop: Maximum Wobble Bass Chaos]"
+    },
+    "lyric_engine_directives": "Pre-drop tension phrases, chop cells, and bass-drop mantras. Avoid flowing poetry in drop sections."
+  },
+  "edm": {
+    "primary_anchors": [
+      "[Drop]",
+      "[Build]"
+    ],
+    "style_prompts": {
+      "1": "smooth transitions, subtle synth swells",
+      "2": "dramatic risers, white noise sweeps, festival drop, dancing ducking-kick pulse, low-saturated four-on-the-floor that breathes with the pads",
+      "3": "massive white noise sweeps, explosive snare roll builds, heavy ducking-kick impact, pumping groove that lifts with the drop, chaotic drop impact, peak-time energy"
+    },
+    "lyric_injections": {
+      "1": "",
+      "2": "[Rising Energy Build]\n[Drop: Festival Impact]",
+      "3": "[Pre-Chorus]\n[Rising Energy Build]\n[Accelerating Snare Roll]\n[Drop: Full Impact]"
+    },
+    "lyric_engine_directives": "Festival-ready hooks, build/release cues, and anthem repetition. Keep drop sections chant-simple."
+  },
+  "folk": {
+    "primary_anchors": [
+      "[Chorus]"
+    ],
+    "style_prompts": {
+      "1": "intimate solo fingerstyle acoustic guitar, close natural room mic",
+      "2": "soft cello swells, layered acoustic vocal harmonies, organic foot stomps",
+      "3": "sweeping orchestral string swells, thunderous cinematic acoustic foot-stomp hits, soaring emotional vocal harmony cascades, mandolin tremolo picking swells"
+    },
+    "lyric_injections": {
+      "1": "",
+      "2": "[Harmonies In]",
+      "3": "[Bridge: Whispered Intimate]\n[Crescendo: Orchestral Folk Swell]"
+    },
+    "lyric_engine_directives": "Intimate first-person narrative, acoustic-room honesty, nature and relationship detail."
+  },
+  "hardstyle": {
+    "primary_anchors": [
+      "[Monologue]",
+      "[Drop: Reverse Bass]"
+    ],
+    "style_prompts": {
+      "1": "distorted reverse-bass kick foundation, euphoric supersaw pads, 150 BPM festival grid",
+      "2": "reverse-bass kick swells, layered snare-clap builds, anthem supersaw leads, dense anthem punch",
+      "3": "massive reverse-bass kick impact, accelerating snare roll, distorted supersaw anthem, rawstyle aggression, festival main-stage saturation"
+    },
+    "lyric_injections": {
+      "1": "",
+      "2": "[Rising Energy Build]\n[Drop: Reverse Bass]",
+      "3": "[Monologue]\n[Pre-Chorus]\n[Accelerating Snare Roll]\n[Drop: Reverse Bass Impact]"
+    },
+    "lyric_engine_directives": ""
+  },
+  "hiphop": {
+    "primary_anchors": [
+      "[Hook]",
+      "[Chorus]"
+    ],
+    "style_prompts": {
+      "1": "subtle hi-hat rolls, dusty head-nod groove",
+      "2": "808 slides, crisp snare fills, sudden beat break",
+      "3": "rapid stuttering hi-hat rolls, aggressive heavy 808 bass glides, vintage vinyl scratch FX, unexpected sudden intense beat switch"
+    },
+    "lyric_injections": {
+      "1": "",
+      "2": "[Drum Fill]",
+      "3": "[Vinyl Scratch Break]\n[Beat Switch]\n[808 Bass Drop]"
+    },
+    "lyric_engine_directives": "Punchy internal rhyme, vivid street/detail imagery, strong hook repetition. No empty flex filler."
+  },
+  "indie": {
+    "primary_anchors": [
+      "[Chorus]"
+    ],
+    "style_prompts": {
+      "1": "lo-fi bedroom pop aesthetic, jangly clean guitars",
+      "2": "vintage spring reverb swells, driving indie basslines, organic tambourine shakes",
+      "3": "swirling psychedelic shoegaze guitar walls, massive tape-delay oscillation swells, emotional quiet-loud dynamic explosions, unpolished garage rock drum fills"
+    },
+    "lyric_injections": {
+      "1": "",
+      "2": "[Instrumental Outro Fade]",
+      "3": "[Bridge: Quiet Intimate Guitars]\n[Explosive Guitars In]\n[Chorus: Wall of Sound]"
+    },
+    "lyric_engine_directives": "Understated emotional specificity, conversational phrasing, imperfect rhyme welcome."
   },
   "jazz": {
-    "1": {
-      "style": "smoky late-night jazz lounge mood, soft brushed drums",
-      "lyrics": ""
+    "primary_anchors": [
+      "[Solo]"
+    ],
+    "style_prompts": {
+      "1": "smoky late-night jazz lounge mood, soft brushed drums",
+      "2": "walking bassline transitions, smooth saxophone melody solos, crisp drum stick clicks",
+      "3": "fast uptempo bebop swing drum fills, intricate walking double-bass lines, chaotic free-jazz horn improvisation breaks, complex extended piano chord modulations"
     },
-    "2": {
-      "style": "walking bassline transitions, smooth saxophone melody solos, crisp drum stick clicks",
-      "lyrics": "\n[Saxophone Solo]\n"
+    "lyric_injections": {
+      "1": "",
+      "2": "[Saxophone Solo]",
+      "3": "[Drum Solo Break]\n[Full Band Swing In]"
     },
-    "3": {
-      "style": "fast uptempo bebop swing drum fills, intricate walking double-bass lines, chaotic free-jazz horn improvisation breaks, complex extended piano chord modulations",
-      "lyrics": "\n[Drum Solo Break]\n[Full Band Swing In]\n"
-    }
+    "lyric_engine_directives": "Sophisticated but singable lines; room for scat/solo sections. Favor mood over plot."
+  },
+  "latin": {
+    "primary_anchors": [
+      "[Mambo: Full Horn Section In]"
+    ],
+    "style_prompts": {
+      "1": "classic acoustic salsa groove, soft hand percussion",
+      "2": "bright brass stabs, driving conga drum fills, energetic cowbell syncopation",
+      "3": "explosive horn section flares, hyper-accelerated timbale drum fills, high-energy call-and-response montuno hooks, driving carnival percussion drops"
+    },
+    "lyric_injections": {
+      "1": "",
+      "2": "[Descarga Percusion]",
+      "3": "[Solo de Timbales]\n[Mambo: Full Horn Section In]"
+    },
+    "lyric_engine_directives": "Romantic or celebratory Spanish/English blend as user language dictates; percussive syllable feel."
+  },
+  "mandopop": {
+    "primary_anchors": [
+      "[Chorus]"
+    ],
+    "style_prompts": {
+      "1": "intimate vocal, subtle erhu undertone, spare piano",
+      "2": "guzheng shimmer, string pad layer, rising vocal delivery",
+      "3": "full key-change lift, soaring erhu lead line, orchestral string swell, dramatic vocal belt"
+    },
+    "lyric_injections": {
+      "1": "",
+      "2": "[Pre-Chorus Build]",
+      "3": "[Bridge: Erhu Statement]\n[Key Change]\n[Chorus: Full String Swell Peak]"
+    },
+    "lyric_engine_directives": "Melodic, cinematic Mandarin or bilingual hooks; key-change lift language in final chorus."
+  },
+  "metal": {
+    "primary_anchors": [
+      "[Breakdown]"
+    ],
+    "style_prompts": {
+      "1": "distorted rhythm guitars, steady double-bass foundation",
+      "2": "rapid double-bass drum fills, screaming pinch harmonics, sudden heavy breakdown",
+      "3": "crushing down-tuned djent guitar chugs, lightning-fast blast beats, brutal bass drops, catastrophic slam breakdown, screaming guitar solo"
+    },
+    "lyric_injections": {
+      "1": "",
+      "2": "[Breakdown]",
+      "3": "[Pre-Breakdown: Guitars Cut Out]\n[Bass Drop Shockwave]\n[Breakdown: Heavy Slam Djent]"
+    },
+    "lyric_engine_directives": "Aggressive declarative lines, breakdown chants, scream-ready syllables. No soft pop metaphors in heavy sections."
+  },
+  "pop": {
+    "primary_anchors": [
+      "[Chorus]"
+    ],
+    "style_prompts": {
+      "1": "polished modern mix, smooth dynamic scaling",
+      "2": "uplifting vocal riser, finger snap accents, anthemic chorus swell",
+      "3": "explosive pop drop, massive layered vocal harmonies, high-energy synth stabs, sudden dramatic silence break, mainstage stadium chorus scale"
+    },
+    "lyric_injections": {
+      "1": "",
+      "2": "[Pre-Chorus Build]\n[Chorus]",
+      "3": "[Pre-Chorus: Tension Rises]\n[Dramatic Beat Pause]\n[Chorus: Explosive Pop Hook]"
+    },
+    "lyric_engine_directives": "Relatable love/loss/celebration themes, accessible AABB/ABAB hooks, memorable post-chorus earworms."
+  },
+  "reggae": {
+    "primary_anchors": [
+      "[Chorus]"
+    ],
+    "style_prompts": {
+      "1": "warm one-drop groove, spring reverb skank, round bass weight",
+      "2": "dub delay throws, offbeat organ bubble, echoing snare drops",
+      "3": "heavy dub echo cascades, thunderous one-drop drum and bass weight, spring reverb splashes, sound-system sub pressure, crowd chant call-and-response"
+    },
+    "lyric_injections": {
+      "1": "",
+      "2": "[Dub Echo Break]",
+      "3": "[Breakdown: Bass and Drums Isolate]\n[Delay Throw Build]\n[Drop: Full One-Drop Return]"
+    },
+    "lyric_engine_directives": "Laid-back behind-the-beat phrasing, conscious or romantic themes, patois-friendly hooks when dialect allows; leave space for echo trails."
+  },
+  "reggaeton": {
+    "primary_anchors": [
+      "[Drop: Dembow Total]"
+    ],
+    "style_prompts": {
+      "1": "classic dembow rhythm loop, warm acoustic guitar touches",
+      "2": "syncopated snare rolls, airhorn accents, pumping reggaeton sub-bass",
+      "3": "aggressive driving dembow beat drops, sharp laser siren FX, sudden club beat drops, vocal stutter vocal chops, deep sub-bass modulation"
+    },
+    "lyric_injections": {
+      "1": "",
+      "2": "[El Bajo Rompe]",
+      "3": "[Cambio de Ritmo]\n[Build: Fuego Energy]\n[Drop: Dembow Total]"
+    },
+    "lyric_engine_directives": "Dembow-pocket phrasing, romantic or party energy, short hook loops for drop stacking."
+  },
+  "rnb": {
+    "primary_anchors": [
+      "[Chorus]"
+    ],
+    "style_prompts": {
+      "1": "velvet-pressed vocal tone, soft-knee sung intimacy, warm Rhodes chords",
+      "2": "velvet bassline glides, subtle finger snap breaks, smooth vocal echo trails",
+      "3": "sensual late-night sub-bass swells, intricate acoustic drum fills, luxurious layered vocal harmony stacks, neo-soul chord transitions"
+    },
+    "lyric_injections": {
+      "1": "",
+      "2": "[Bridge: Vocal Ad-libs]",
+      "3": "[Sensual Bridge Break]\n[Vocal Run Climaxes]\n[Chorus: Deep Groove Soul]"
+    },
+    "lyric_engine_directives": "Sensual specificity, conversational ad-libs, velvet tone in verse; stacked harmonies in chorus."
+  },
+  "rock": {
+    "primary_anchors": [
+      "[Chorus]"
+    ],
+    "style_prompts": {
+      "1": "warm overdriven guitar rhythm, natural room drums",
+      "2": "driving drum fills, soaring guitar feedback, punchy anthemic chorus",
+      "3": "screaming Marshall amp guitar solos, thunderous double-kick drum rolls, crashing cymbal accents, explosive stadium rock chorus impact"
+    },
+    "lyric_injections": {
+      "1": "",
+      "2": "[Drum Roll Transition]",
+      "3": "[Bridge: Guitar Feedback Swell]\n[Massive Drum Fill]\n[Chorus: High Energy Stadium Rock]"
+    },
+    "lyric_engine_directives": "Anthemic chorus lines, raw emotional honesty, guitar-solo section tags when instrumental breaks apply."
+  },
+  "synthwave": {
+    "primary_anchors": [
+      "[Chorus: High Energy Arpeggio]",
+      "[Bridge]"
+    ],
+    "style_prompts": {
+      "1": "80s vintage analog warmth",
+      "2": "cinematic risers, retro tom-drum fill, neon laser sweep",
+      "3": "dramatic 80s outrun cinematic risers, massive gated snare fills, classic retro tom-drum rolls, roaring analog synth swells"
+    },
+    "lyric_injections": {
+      "1": "",
+      "2": "[Retro Synth Arpeggio Break]",
+      "3": "[Bridge: Retro Ambient Pads]\n[Gated Drum Fill]\n[Chorus: High Energy Arpeggio]"
+    },
+    "lyric_engine_directives": "Retro-futurist nostalgia, neon mood without sci-fi cliché spam, 80s cinematic brevity."
+  },
+  "techno": {
+    "primary_anchors": [
+      "[Drop: Heavy Kick]"
+    ],
+    "style_prompts": {
+      "1": "minimal transitions, hypnotic rhythm",
+      "2": "industrial sub-bass drops, modular synth swells, dark noise risers",
+      "3": "aggressive industrial modular screech, rushing white noise sweeps, dark modular filter sweeps, heavy laser FX, hypnotic build-up"
+    },
+    "lyric_injections": {
+      "1": "",
+      "2": "[Filter Sweep Break]\n[Drop: Heavy Kick]",
+      "3": "[Industrial Breakdown]\n[Accelerating Percussion Build]\n[Drop: Driving Sub-Bass and Kick]"
+    },
+    "lyric_engine_directives": "Minimal vocal fragments or hypnotic mantra loops; industrial realism over festival poetry."
+  },
+  "trap": {
+    "primary_anchors": [
+      "[Hook]"
+    ],
+    "style_prompts": {
+      "1": "clean 808 foundation, basic rolling hi-hats",
+      "2": "pitch-shifting 808 glides, fast triplet snare rolls, laser hit effects",
+      "3": "heavy maximalist 808 bass distortion, rapid machine-gun hi-hat stutter rolls, brass hit accents, cinematic orchestral hits, aggressive trap energy"
+    },
+    "lyric_injections": {
+      "1": "",
+      "2": "[Hook: Beats Stutter Build]\n[Hook: Full Trap Pocket]",
+      "3": "[Intense Hi-Hat Build]\n[808 Slide Accent]\n[Hook: Aggressive Trap Beat]"
+    },
+    "lyric_engine_directives": "808-pocket phrasing, dark mood, triplet-friendly syllable counts, hook-first repetition."
+  },
+  "worship": {
+    "primary_anchors": [
+      "[Chorus Lift]",
+      "[Chorus]"
+    ],
+    "style_prompts": {
+      "1": "warm pad swell, close-mic tender vocal, sparse arrangement",
+      "2": "drums lift in, wider vocal harmonies, worship lift",
+      "3": "full gospel choir belt, hands-up climax, congregational vamp, dynamic peak"
+    },
+    "lyric_injections": {
+      "1": "",
+      "2": "[Chorus Lift]",
+      "3": "[Bridge: Congregational Vamp]\n[Spontaneous Flow]\n[Chorus: Full Choir Climax]"
+    },
+    "lyric_engine_directives": "Themes of grace, redemption, and worship. Call-and-response phrasing, uplifting vocabulary, biblical allusion when natural — avoid secular metaphors in climax sections."
+  },
+  "world": {
+    "primary_anchors": [
+      "[Chorus]"
+    ],
+    "style_prompts": {
+      "1": "warm hand percussion, subtle string or reed ornament, intimate melodic lead",
+      "2": "bright dhol or tabla accents, sitar or oud color, syncopated dance groove, layered vocal ornaments",
+      "3": "festival percussion drops, soaring melismatic vocal runs, full string and reed ensemble swell, high-energy cinematic world-pop climax"
+    },
+    "lyric_injections": {
+      "1": "",
+      "2": "[Percussion Break]",
+      "3": "[Breakdown: Hand Percussion Isolates]\n[Hook Chant Build]\n[Chorus: Full Ensemble Peak]"
+    },
+    "lyric_engine_directives": "Bollywood, Bhangra, Punjabi, Filmi, and Middle Eastern phrasing — rhythmic hooks, melisma-friendly vowels, celebratory or romantic imagery."
   }
 }

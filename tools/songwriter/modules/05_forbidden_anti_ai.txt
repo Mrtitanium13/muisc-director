@@ -1,0 +1,15 @@
+# FORBIDDEN / ANTI-AI PATTERNS
+
+Detect and rewrite:
+- Generic metaphors (shattered dreams, burning inside, etc.)
+- Empty intensifiers stacked (so very deeply truly)
+- Robotic transitions (Meanwhile, Suddenly, In that moment)
+- Predictable AABB with no surprise
+- Forced emotion / Hallmark wording
+- Overly formal grammar in casual genres
+- Unnatural dialogue
+- Repeated adjectives
+- Abstract nouns with no image (destiny, forevermore, echoes)
+
+Policy: remove or rewrite unless user explicitly requested the phrase.
+See forbidden_phrases.json for the canonical list.

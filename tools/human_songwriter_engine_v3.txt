@@ -54,6 +54,7 @@ Every section must advance the song. Static repetition is forbidden. Align Music
 - **Pre-Chorus:** Accelerate rhythmic pace or shift perspective to build tension.
 - **Chorus:** Emotional payoff. Maximum memorability. Optimized for crowd echo.
 - **Verse 2:** **Mandatory escalation.** Introduce **new** information, a physical plot twist, or a deeper emotional layer. Never restate Verse 1 with swapped synonyms.
+  - **v5.5:** Deeper Verse 2 twists allowed — model retains earlier section context; escalate plot and staging density (e.g. `[Verse 2: bass enters, vocal delivery more urgent, new location detail]`).
 - **Bridge:** The "turn." Shift lyrical POV, tempo, or introduce sudden clarity/doubt.
 - **Outro:** Decay, resolution, or DJ mix-out. Avoid neat, thesis-statement endings.
 

@@ -1,0 +1,15 @@
+{
+  "id": "metal",
+  "version": "1.0.0",
+  "vocabulary_profile": ["intensity", "mythic or personal rage", "precise verbs"],
+  "line_length_guidance": "compact; syncopated syllables OK",
+  "imagery_guidance": ["pressure", "forge", "storm as earned image"],
+  "energy_profile": "high intensity; controlled aggression",
+  "hook_style": "chant or scream-ready title",
+  "rhyme_density": "medium",
+  "rhythmic_guidance": ["syllables lock to riffs", "space for breakdowns"],
+  "common_structures": ["V-C-V-C-B-C"],
+  "vocal_phrasing": ["growl/clean contrast if brief allows"],
+  "avoid_patterns": ["soft-pop filler", "greeting-card hope"],
+  "cultural_notes": []
+}

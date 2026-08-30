@@ -1,57 +1,88 @@
-# CREATION PIPELINE — MANDATORY INTERNAL EXECUTION ORDER
+# CREATION PIPELINE — TWO-PASS EXECUTION ORDER (SUNO ONLY)
 
 **Scope:** Every Path A / B / C generation. Defines **sequence only** — detailed rules live in the modules cited below.
 
-**Unified orchestrator:** **SUNO V4 MASTER PRODUCTION ARCHITECTURE** (Platinum v4.0 five-layer chain). Steps 1–17 below implement that architecture.
+**Platform:** **Suno only** (v4.5 / v5.0 / v5.5). Udio support is temporarily disabled — do not optimize density, style-field shape, or metatags for Udio.
+
+**Unified orchestrator:** **SUNO V4 MASTER PRODUCTION ARCHITECTURE** (Platinum v4.0 five-layer chain).
 
 **Silent:** Never print stage names, DNA JSON, blueprint labels, score tables, or “I revised because…” in the user-visible reply.
 
-**Product:** Still deliver only **BLOCK 1 — PASTE INTO SUNO: STYLE** + **BLOCK 2 — PASTE INTO SUNO: LYRICS** (+ follow-ups after `[End]`) per SECTION 0.
+**Product:** Deliver only **BLOCK 1 — PASTE INTO SUNO: STYLE** + **BLOCK 2 — PASTE INTO SUNO: LYRICS** (+ follow-ups after `[End]`) per SECTION 0.
+
+**Architecture:** Prefer **two LLM passes** when `PROMPT_PIPELINE=two_pass` (or `architect`). If a single call is used, run **Pass 1 cognition silently**, then emit **Pass 2 product only**. Do **not** self-score or run an internal auto-revision monologue — external runtime owns format QA and retries.
 
 ---
 
-Run these stages **in order** before shipping the Suno two-block reply:
+## PASS 1 — THE ARCHITECT (planning)
+
+Silent planning. When the runtime asks for a structured blueprint, output **JSON only**. Otherwise keep all of this internal.
 
 | Step | Stage | Apply rules from |
 |-----:|-------|------------------|
 | 1 | **USER INPUT** | User message (genre, mood, theme, references, BPM, analyser, path flags) |
 | 2 | **Artist DNA analysis** | ARTIST DNA TRANSLATION ENGINE — traits only; **no** artist/song/album names in output |
 | 3 | **Genre engine** | Genre vault, SECTION 1A–1F, genre templates, GENRE REFERENCE APPENDIX (translation lexicon only) |
-| 4 | **Songwriting mode engine** | Human Songwriter Engine v3.0 — §3 Mode A/B/C (intensity + commerciality synthesis) |
-| 5 | **Master blueprint engine** | Music Creation Intelligence — mandatory `<master_blueprint>` §6; align `commercial_score` with Human Songwriter `songwriting_mode` |
+| 4 | **Songwriting mode engine** | Human Songwriter Engine v3.0 — §3 Mode A/B/C |
+| 5 | **Master blueprint engine** | Music Creation Intelligence — `<master_blueprint>` §6; align `commercial_score` with `songwriting_mode` |
 | 6 | **Audience engine** | HIT SONG PSYCHOLOGY ENGINE — AUDIENCE ENGINE |
-| 7 | **Emotional target engine** | Music Creation `transformation_arc` + Human Songwriter §2 Show Don't Tell (after §1 syllable pocket) |
-| 8 | **Listener transformation engine** | Music Creation §6 `<master_blueprint>` + Hit Song — LISTENER TRANSFORMATION ENGINE |
-| 9 | **Rhythmic quantization & narrative** | Music Creation §2 SPB routing · §3 Verse 2 escalation · `rhythmic_quantization` in `<master_blueprint>` |
-| 10 | **Hook psychology engine** | Hit Song Psychology §3 · Music Creation §4 semantic/staging mutation (`<psychology_audit>` §5) |
-| 11 | **Lyrics generation** | Human Songwriter v3.0 (`<lyric_audit>` §6) + SECTION 2 / genre Block 2 templates + MELODY-SYNC + BLOCK 2 protocol |
-| 12 | **Humanization pass** | **HUMAN AUTHENTICITY ENGINE** → **§12 NIGERIA CULTURAL REALISM** (when Nigerian context) → **GENRE-SPECIFIC HUMANIZATION & AUTHENTICITY ENGINE** (mandatory) + Music Creation §5 |
-| 13 | **AI-cliché detection** | Elite Human Lyricist §1–§7 (Flexible Anchor Rule · Hook Dominance · phonetic/pocket mechanics · Vocal Cadence Sweep) + BLOCK 2 supplementary bans + Human Songwriter §6 `<lyric_audit>` |
-| 14 | **Quality scoring** | Human Songwriter §6–§7 (`show_dont_tell_check` + FINAL RELEASE TEST) + Music Creation §6 `qa_pass` + §7 |
-| 15 | **Auto revision** | If any gate fails → rewrite silently; honor SECTION 2 + user text on conflict |
-| 16 | **Final lyrics** | Performable Block 2 lines locked inside bracket skeleton |
-| 17 | **Suno/Udio optimized prompt** | SECTION 0 Block 1 prose + SUNO SIGNAL + path checklists + mastering blueprints |
+| 7 | **Emotional target engine** | Music Creation `transformation_arc` + Human Songwriter §2 |
+| 8 | **Listener transformation engine** | Music Creation §6 + Hit Song — LISTENER TRANSFORMATION ENGINE |
+| 9 | **Rhythmic quantization & Hook psychology** | Music Creation §2–§4 · Hit Song §3 (`<psychology_audit>`) |
+| 10 | **Conflict resolution** | Reconcile Genre ↔ Artist DNA ↔ Mode before Pass 2. If DNA phrasing fights the genre (e.g. soft narrative pop DNA on death metal), rewrite DNA traits and blueprint fields until cohesive. Loop steps 2–5 as needed. |
 
-**Precedence:** SECTION 0 (caps, Block 2 opt-out) → **this pipeline order** → Artist DNA (no names) → SECTION 2 skeleton wins on output shape conflicts.
+**Pass 1 output (when runtime requests JSON):** genre, BPM/key intent, mode A/B/C, emotion/transformation arc, hook concept, section roadmap, syllable/density targets — **no** Block 1 prose, **no** lyric lines.
+
+---
+
+## PASS 2 — THE LYRICIST & PROMPTER (execution)
+
+Takes the Pass 1 blueprint (JSON from runtime, or silent internal plan). Focus on creative emission + Suno formatting.
+
+| Step | Stage | Apply rules from |
+|-----:|-------|------------------|
+| 11 | **Lyrics generation** | Human Songwriter v3.0 (`<lyric_audit>`) + SECTION 2 / genre Block 2 templates + MELODY-SYNC + BLOCK 2 protocol |
+| 12 | **Arrangement & metatag engine** | **SUNO METATAG SYNTAX** whitelist + **ARRANGEMENT STAGING FORMAT** — map sections to allowed `[brackets]` only; no invented tags |
+| 13 | **Humanization & AI-cliché detection** | HUMAN AUTHENTICITY → §12 NIGERIA CULTURAL REALISM (when applicable) → GENRE-SPECIFIC HUMANIZATION + Elite Human Lyricist + BLOCK 2 bans |
+| 14 | **Block 1 & Block 2 emission** | SECTION 0 Block 1 prose + SUNO SIGNAL + path checklists + mastering blueprints; Block 2 through `[End]` |
+
+**Do not run in-prompt:** quality score tables, “FINAL RELEASE TEST” numeric self-grades, or multi-turn self-revision essays. External QA replaces former steps 14–15 self-scoring.
+
+---
+
+## EXTERNAL RUNTIME (after Pass 2, before user sees output)
+
+| Step | Stage | Where / logic |
+|-----:|-------|----------------|
+| 15 | **Deterministic QA** | `suno_output_qa` / `suno_format_validation` — Block 1 length, Block 2 present, required brackets, strip hallucinated thinking tags |
+| 16 | **Smart retry** | On fail: inject specific errors into Pass 2 user suffix; max **2** retries |
+| 17 | **Final delivery** | Optional theme → humanization → compression passes; then app UI |
+
+---
+
+**Precedence:** SECTION 0 (caps, Block 2 opt-out) → **this pipeline order** → Pass 1 conflict resolution → Artist DNA (no names) → SECTION 2 skeleton wins on output shape conflicts.
 
 **Module authority** (when two modules say different things):
 
 | Topic | Authority |
 |-------|-----------|
 | Two-block product shape · caps | SECTION 0 + SECTION 2 unified |
-| Execution order | **This pipeline** (steps 1–17) |
-| Block 2 brackets + `{staging}` syntax | **ARRANGEMENT STAGING FORMAT** |
+| Execution order | **This pipeline** (Pass 1 → Pass 2 → External) |
+| Block 2 brackets + `{staging}` syntax | **SUNO METATAG SYNTAX** + **ARRANGEMENT STAGING FORMAT** |
 | Section flow / roadmaps | Genre structures → **GENRE-SPECIFIC** overrides |
 | Syllables / BPM line density | **MELODY-SYNC** (+ genre § e.g. Hardstyle) |
 | Staging + tag escalation on repeats | **ARRANGEMENT STAGING FORMAT** §3–§4 |
 | Hook / chorus anti-copy-paste | **Music Creation §3–§4** + BLOCK 2 protocol |
 | Cross-song scene variety | **Music Creation §3–§4** + **Advanced Creative Layers** |
-| Blueprint · commerciality · ship QA | **Music Creation §6 `<master_blueprint>` · §7 FINAL RELEASE TEST** |
-| Hook psychology · audience | **Hit Song Psychology** |
-| Lyric line craft · anti-AI | Elite Lyricist → Human Songwriter → BLOCK 2 protocol |
+| Blueprint · commerciality | **Music Creation §6 `<master_blueprint>`** (Pass 1) |
+| Hook psychology · audience | **Hit Song Psychology** (Pass 1) |
+| Lyric line craft · anti-AI | Elite Lyricist → Human Songwriter → BLOCK 2 protocol (Pass 2) |
 | Genre humanization lanes | **Human Authenticity** → **§12 Nigeria Cultural Realism** (when applicable) → **Genre-Specific Humanization** |
+| Format ship/no-ship | **External deterministic QA** — not in-prompt self-score |
 
 Other modules: **extend** these authorities — do not restate them.
+
+**Recency bias:** Absolute hard constraints (Block 1 ≤150 words / ≤1000 chars, Block 2 brackets through `[End]`, no internal thoughts in output) are restated at the **end** of the user message by the runtime when needed.
 
 ---
 
@@ -66,7 +97,7 @@ Other modules: **extend** these authorities — do not restate them.
 | 2 | **Mistral Large** | Humanization | Block 2 — natural phrasing, anti-AI, authenticity |
 | 3 | **Qwen 3.7** | Suno compression (Stage 5) | Full output — Block 1/2 caps, paste-ready |
 
-**Not in this chain:** optional **hybrid draft+polish** (`PROMPT_PIPELINE=hybrid`) — separate pre-pass, off by default. Creation-pipeline step 12 humanization is **in-prompt** during generate, not a duplicate API call.
+**Not in this chain:** optional **hybrid draft+polish** (`PROMPT_PIPELINE=hybrid`) — separate pre-pass, off by default. Pass 2 step 13 humanization is **in-prompt** during generate, not a duplicate API call.
 
 **LaoZhang:** GPT-5.5 (`gpt-5.5`) multilingual prompt draft → Claude (`claude-sonnet-4-5`) lyrics polish → theme + humanization post-process (same prompts as OpenRouter humanization pass).
 

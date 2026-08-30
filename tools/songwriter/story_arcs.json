@@ -1,0 +1,77 @@
+{
+  "version": "1.0.0",
+  "arcs": [
+    {
+      "id": "hope_loss_acceptance",
+      "label": "Hope → Loss → Acceptance",
+      "sections": {
+        "verse1": "establish hope / ordinary world",
+        "pre": "first crack",
+        "chorus": "name the wanting",
+        "verse2": "loss lands in concrete detail",
+        "bridge": "acceptance without tidy moral",
+        "final_chorus": "same hook, wiser weight"
+      }
+    },
+    {
+      "id": "confidence_doubt_triumph",
+      "label": "Confidence → Doubt → Triumph",
+      "sections": {
+        "verse1": "swagger with a tell",
+        "pre": "doubt sneaks in",
+        "chorus": "affirmation that still has teeth",
+        "verse2": "doubt almost wins",
+        "bridge": "choice / pivot",
+        "final_chorus": "triumph earned, not announced"
+      }
+    },
+    {
+      "id": "love_distance_reunion",
+      "label": "Love → Distance → Reunion",
+      "sections": {
+        "verse1": "intimacy in small objects",
+        "pre": "distance begins",
+        "chorus": "the ache / the pull",
+        "verse2": "life without them, specific",
+        "bridge": "decision to close the gap",
+        "final_chorus": "reunion or honest almost"
+      }
+    },
+    {
+      "id": "freedom_consequences_redemption",
+      "label": "Freedom → Consequences → Redemption",
+      "sections": {
+        "verse1": "break free / new air",
+        "pre": "cost foreshadowed",
+        "chorus": "freedom anthem with shadow",
+        "verse2": "consequences arrive",
+        "bridge": "own it",
+        "final_chorus": "redemption as action, not slogan"
+      }
+    },
+    {
+      "id": "desire_denial_surrender",
+      "label": "Desire → Denial → Surrender",
+      "sections": {
+        "verse1": "wanting under wraps",
+        "pre": "denial",
+        "chorus": "desire named",
+        "verse2": "denial cracks",
+        "bridge": "surrender",
+        "final_chorus": "desire without apology"
+      }
+    },
+    {
+      "id": "party_reflection_release",
+      "label": "Party → Reflection → Release (EDM/dance)",
+      "sections": {
+        "verse1": "scene / body / night",
+        "build": "tension rising",
+        "chorus": "release hook",
+        "verse2": "reflection under the lights",
+        "bridge": "drop-out honesty",
+        "final_chorus": "bigger release"
+      }
+    }
+  ]
+}

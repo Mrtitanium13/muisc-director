@@ -5,9 +5,12 @@ import 'vocal_accent_data.dart';
 
 /// Runtime post-processing: humanization pass (OpenRouter + LaoZhang).
 ///
-/// Source: tools/humanization_pass.txt
+/// Source: tools/humanization_pass.txt — keep [systemPrompt] aligned with that
+/// file; [buildUserMessage] is hand-maintained Dart-only builder logic.
+abstract final class HumanizationPassConfig {
+  HumanizationPassConfig._();
 
-const String kHumanizationSystemPrompt = '''
+  static const String systemPrompt = '''
 
 # POST-PROCESSING: HUMANIZATION PASS (RUNTIME — BLOCK 2 LYRICS)
 
@@ -64,6 +67,82 @@ Return **only** the revised Block 2 body. No Block 1. No scores. No meta.
 
 ''';
 
+  static String buildUserMessage({
+    required String block2Body,
+    required String primaryGenre,
+    required String subGenreFusion,
+    required String vibe,
+    required String lyricThemeNotes,
+    required String language,
+    String? vocalAccent,
+    String? dialectStyleId,
+    String? dialectVariantId,
+    String? audioEnvironmentModeId,
+  }) {
+    final resolvedDialectId =
+        dialectStyleId ?? DialectStyleData.standardEnglishId;
+
+    final extraLines = _buildExtraLines(
+      vocalAccent: vocalAccent,
+      resolvedDialectId: resolvedDialectId,
+      dialectStyleId: dialectStyleId,
+      dialectVariantId: dialectVariantId,
+      audioEnvironmentModeId: audioEnvironmentModeId,
+    );
+
+    final contextHeader = compactGenreContextHeader(
+      primaryGenre: primaryGenre,
+      subGenreFusion: subGenreFusion,
+      vibe: vibe,
+      lyricThemeNotes: lyricThemeNotes,
+      language: language,
+      extraLines: extraLines,
+    );
+
+    final compactBody = compactPayloadText(block2Body);
+
+    return '''
+$contextHeader
+
+BLOCK 2 (humanize; keep structure):
+---
+$compactBody
+---
+
+Return ONLY revised Block 2 through [End]. No Block 1. No commentary.
+'''.trim();
+  }
+
+  static List<String> _buildExtraLines({
+    required String? vocalAccent,
+    required String resolvedDialectId,
+    required String? dialectStyleId,
+    required String? dialectVariantId,
+    required String? audioEnvironmentModeId,
+  }) {
+    // Compact helpers return '' when inactive; filter empties so the header
+    // stays dense. If any helper becomes nullable later, coalesce before filter.
+    return <String>[
+      VocalAccentData.postProcessCompactLine(
+        vocalAccent,
+        dialectStyleId: resolvedDialectId,
+      ),
+      DialectStyleData.postProcessCompactLine(
+        dialectStyleId,
+        dialectVariantId: dialectVariantId,
+      ),
+      VocalAccentData.accentVsDialectCompactLine(
+        vocalAccent,
+        dialectStyleId: resolvedDialectId,
+      ),
+      AudioEnvironmentData.postProcessCompactLine(audioEnvironmentModeId),
+    ].where((line) => line.isNotEmpty).toList(growable: false);
+  }
+}
+
+// Backward-compatible top-level names.
+const String kHumanizationSystemPrompt = HumanizationPassConfig.systemPrompt;
+
 String buildHumanizationUserMessage({
   required String block2Body,
   required String primaryGenre,
@@ -75,43 +154,16 @@ String buildHumanizationUserMessage({
   String? dialectStyleId,
   String? dialectVariantId,
   String? audioEnvironmentModeId,
-}) {
-  final dialectId = dialectStyleId ?? DialectStyleData.standardEnglishId;
-  final extras = <String>[];
-  for (final line in [
-    VocalAccentData.postProcessCompactLine(
-      vocalAccent,
-      dialectStyleId: dialectId,
-    ),
-    DialectStyleData.postProcessCompactLine(
-      dialectStyleId,
+}) =>
+    HumanizationPassConfig.buildUserMessage(
+      block2Body: block2Body,
+      primaryGenre: primaryGenre,
+      subGenreFusion: subGenreFusion,
+      vibe: vibe,
+      lyricThemeNotes: lyricThemeNotes,
+      language: language,
+      vocalAccent: vocalAccent,
+      dialectStyleId: dialectStyleId,
       dialectVariantId: dialectVariantId,
-    ),
-    VocalAccentData.accentVsDialectCompactLine(
-      vocalAccent,
-      dialectStyleId: dialectId,
-    ),
-    AudioEnvironmentData.postProcessCompactLine(audioEnvironmentModeId),
-  ]) {
-    if (line.isNotEmpty) extras.add(line);
-  }
-  final ctx = compactGenreContextHeader(
-    primaryGenre: primaryGenre,
-    subGenreFusion: subGenreFusion,
-    vibe: vibe,
-    lyricThemeNotes: lyricThemeNotes,
-    language: language,
-    extraLines: extras,
-  );
-  final body = compactPayloadText(block2Body);
-  return '''
-$ctx
-
-BLOCK 2 (humanize; keep structure):
----
-$body
----
-
-Return ONLY revised Block 2 through [End]. No Block 1. No commentary.
-'''.trim();
-}
+      audioEnvironmentModeId: audioEnvironmentModeId,
+    );

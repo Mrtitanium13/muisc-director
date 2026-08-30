@@ -1,6 +1,6 @@
 # POST-PROCESSING STAGE: THEME CONSISTENCY PASS (RUNTIME — BLOCK 2 ONLY)
 
-**Model tier (runtime):** LaoZhang **Claude Sonnet 4.5** (`claude-sonnet-4-5`) lyrics + artistic expression / theme (after GPT-5.5 multilingual prompt draft); OpenRouter **Qwen 3.7** (`qwen/qwen3.7-max`). Fallback: Gemini Pro (LaoZhang). Override: `THEME_CONSISTENCY_MODEL` / `OPENROUTER_THEME_MODEL`.
+**Model tier (runtime):** LaoZhang **Claude Sonnet 4.5** (`claude-sonnet-4-5`) lyrics + artistic expression / theme (after GPT-5.5 multilingual prompt draft); OpenRouter **Qwen 3.7 Plus** (`qwen/qwen3.7-plus`). Fallback: Gemini Pro (LaoZhang). Override: `THEME_CONSISTENCY_MODEL` / `OPENROUTER_THEME_MODEL`.
 
 **When:** After lyrics are generated, before output is shown to the user. **Silent** — never print scores, theme labels, or audit notes.
 

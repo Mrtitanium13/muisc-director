@@ -1,0 +1,17 @@
+{
+  "id": "zh-Hans",
+  "version": "1.0.0",
+  "scripts": ["Hans"],
+  "native_syntax": "Write as native Mandarin songwriting, not translated English.",
+  "register": "contemporary C-pop / Mandopop speech; intimate or anthemic as brief requires",
+  "prosody": "Cadence and phrase length matter more than English stress-meter",
+  "rhyme": "Rhyme via final sounds and tone flow; do NOT force English AABB schemes",
+  "punctuation": "Use Chinese punctuation sparingly; section labels may stay ASCII like [Verse]",
+  "idioms": "Prefer lived Mandarin images over calques of English metaphors",
+  "code_switching": "Only if brief enables mixed; keep English at hook pivots",
+  "avoid_patterns": [
+    "literal English to Chinese line mapping",
+    "mechanical rhyme stacking",
+    "empty destiny stacks without concrete scene"
+  ]
+}

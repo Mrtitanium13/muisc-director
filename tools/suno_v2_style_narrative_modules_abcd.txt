@@ -16,7 +16,7 @@ Before finalizing Block 1, ensure the **single paragraph** implicitly or explici
 
 **[4] TEMPO / GROOVE** — state BPM (or tight range) plus groove mechanic: half-time feel, four-on-the-floor, swung/shuffled 16ths, syncopated, driving loop, hypnotic grid.
 
-**[5] VOCAL CHARACTER (mandatory when vocals)** — **2–3** of: timbre (breathy, husky, raspy, velvety, piercing, warm); register (chest, falsetto, head voice, spoken); delivery (rhythmic phrasing, sung-rap, call-and-response, whispered ad-libs, layered doubles, intimate close-mic). Named-artist **style** references only when user supplied or genre-appropriate — translate to **delivery/timbre**, not cosplay.
+**[5] VOCAL CHARACTER (mandatory when vocals)** — **2–3** of: timbre (breathy, husky, raspy, velvety, piercing, warm); register (chest, falsetto, head voice, spoken); delivery (rhythmic phrasing, sung-rap, call-and-response, whispered ad-libs, layered doubles, intimate close-mic). **Always weave thick humanized presence:** ultra-close-mic intimateness, high-compression proximity effect, detailed chest resonance, warm saturation / doubles where genre-fit, dedicated low-mid vocal warmth pocket, pristine high-end air boost so the lead cuts through dense beds — never thin, distant, karaoke-wet, or buried. Named-artist **style** references only when user supplied or genre-appropriate — translate to **delivery/timbre**, not cosplay.
 
 **[6] INSTRUMENTATION & TIMBRE** — always **instrument + sonic character** (see Part D). Examples: warm analog Moog sub; log drum with transient crack; dusty vinyl-sampled Rhodes; đàn tranh with close-mic nail attack; Juno-106 pad with chorus; ribbon-mic fingerpicked acoustic.
 

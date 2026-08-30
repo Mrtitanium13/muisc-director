@@ -16,16 +16,35 @@ Outputs:
 
 - `lib/core/constants/suno_system_prompt_v2_candidate.dart`
 - `lib/core/constants/elite_human_lyricist_directive.dart`
+- `lib/prompts/elite_human_lyricist.dart` (imported by elite directive wrapper)
 - `server/app/suno_system_prompt_v2.py`
 
-## Merge order (aligned to creation pipeline)
+All other prompt fragments (MELODY-SYNC, staging rules, genre humanization, etc.) are embedded only in the merged V2 system prompt — not emitted as separate `lib/prompts/*.dart` extract files.
+
+## Preferred SYSTEM_PROMPT_V2 source
+
+When present, merge uses this single consolidated body instead of stitching fragments:
+
+| File | Role |
+|------|------|
+| `suno_v2_system_prompt_body.txt` | Authoritative full SYSTEM_PROMPT_V2 body (deduped SECTION 0/2 / DSE) |
+
+Edit that file for V2 system-prompt changes, then run `python tools/merge_suno_v2_prompt.py`.
+`elite_human_lyricist_directive.txt` still regenerates the elite Dart extracts separately.
+
+If `suno_v2_system_prompt_body.txt` is absent, merge falls back to the modular order below.
+
+## Modular merge order (fallback — aligned to creation pipeline)
 
 | Order | File | Role |
 |------:|------|------|
+| 0 | *(meta line)* | Section D blacklist scan mandate (first line of prompt) |
+| 0b | `staging_and_accent_rules.txt` | Staging coherence · accent routing · genre hygiene · Section D blacklist |
 | 1 | `suno_v2_p1.txt` | Role paragraph (before `GLOBAL`) |
 | 2 | `suno_v4_master_production_architecture.txt` | V4 role · Platinum layers · audit schema |
 | 3 | `suno_v2_p0_format_law.txt` | SECTION 0B — caps, precedence, opt-out |
-| 4 | `pipeline_architecture.txt` | Stages 1–17 execution order |
+| 4 | `pipeline_architecture.txt` | Two-pass stages 1–17 (Pass 1 Architect → Pass 2 Lyricist → External QA) |
+| 4b | `suno_metatag_syntax.txt` | Pass 2 section-stem whitelist (embed/sync into consolidated body) |
 | 5 | `artist_dna_translation_engine.txt` | Artist DNA analysis |
 | 6 | `suno_v2_architect_vault_snapshot.txt` | Genre vault |
 | 7 | `suno_v2_p1.txt` (rest) | Power codes / temperament |
@@ -44,8 +63,10 @@ Outputs:
 | 20 | `human_authenticity_engine.txt` | Authenticity, compression, DJ outro |
 | 21 | `nigeria_cultural_realism_engine.txt` | Layer 3.5 · Nigerian cultural realism (before genre lanes) |
 | 22 | `genre_specific_humanization_engine.txt` | Layer 3 · genre humanization lanes |
+| 22b | `genre_hybridization_cultural_routing_matrix.txt` | Hybrid Split-DNA (PART 1) + anti-repetition cultural routing (PART 2) |
 | 23 | `human_songwriter_engine_v3.txt` | Platinum Layer 4 macro · `<lyric_audit>` gate |
 | 24 | `suno_v2_p2_block2_protocol.txt` | BLOCK 2 supplementary bans + structure |
+| 24b | `dynamic_structural_engine.txt` | Dynamic Structural Engine — version-routed Block 2 assembly |
 | 25 | `suno_v2_melody_sync_lyric_engine.txt` | MELODY-SYNC syllable routing |
 | 26 | `suno_v2_p2_section2_unified.txt` | SECTION 2 output skeleton |
 | 27 | `suno_v2_block2_arrangement_staging_format.txt` | Arrangement staging authority |
@@ -79,7 +100,7 @@ Outputs:
 | `drum_matrix.json` | `gen_drum_matrix_dart.py` | `drum_matrix.dart` / `drum_matrix.py` |
 | `live_instrument_matrix.json` | `gen_live_instrument_matrix_dart.py` | `live_instrument_matrix.*` |
 | `code_translation_matrix.json` | `gen_code_translation_matrix_dart.py` | `code_translation_matrix.*` |
-| `genre_hardware_profiles_v2_1.json` | `gen_genre_hardware_modules.py` | `genre_hardware_profiles.*` |
+| `genre_hardware_profiles_v2_1.json` | `expand_genre_hardware_158.py` then `gen_genre_hardware_modules.py` | `lib/data/generated/genre_hardware_profiles_data.dart` + `lib/services/genre_hardware_profiles.dart` / `genre_hardware_profiles.py` |
 | `genre_fx_matrix.json` | `gen_genre_fx_matrix_dart.py` | `suno_prompt_builder.dart` / `suno_prompt_builder.py` |
 
 ## Removed (do not restore)
@@ -87,3 +108,9 @@ Outputs:
 - `suno_v2_p2.txt` — replaced by `human_songwriter_engine_v3.txt` + `suno_v2_p2_block2_protocol.txt`
 - `extract_v2_prompt.py` — superseded by `merge_suno_v2_prompt.py`
 - `suno_v2_master_prompt.txt` — duplicate of merged body
+- Root `amapianoDataset.json`, `hardstyleDataset.json`, `futureHouseDataset.json` — duplicates of `tools/lyrics_training/*`; use tools path only
+- `advancedThematicVariator.js` — superseded by `server/app/advanced_thematic_variator.py` + `lib/core/utils/advanced_thematic_variator.dart`
+- `lib/presentation/screens/prompt/prompt_generator_screen.dart` — re-export shim; router uses `lib/features/prompt_generator/screens/prompt_generator_screen.dart`
+- `lib/prompts/{melody_sync,genre_humanization_engine,arrangement_staging_format,staging_and_accent_rules,genre_hybridization_cultural_routing}.dart` — unused V2 extract duplicates; content lives in merged SYSTEM_PROMPT_V2 only
+- `tools/lyrics_training/universalLyricStructureTemplate.txt` — superseded by `tools/dynamic_structural_engine.txt`
+- `tools/accent_routing_engine.txt` — superseded by `tools/staging_and_accent_rules.txt` (Section B)

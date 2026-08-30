@@ -1,6 +1,34 @@
+/// Lightweight genre metadata bundle for melody auto-mode and UI hints.
+class GenreMelodyInfo {
+  const GenreMelodyInfo({
+    required this.label,
+    this.bpmHint,
+    this.defaultMelodyDirectiveId = 'hook_led',
+  });
+
+  final String label;
+  final String? bpmHint;
+  final String defaultMelodyDirectiveId;
+}
+
 /// Genre categories, sub-genres, BPM hints, and quick-pick chips.
+///
+/// Public API is preserved for backward compatibility. Internal lookup
+/// algorithms are hardened against substring-order bugs and derivations are
+/// cached to prevent repeated recomputation.
 class GenreData {
   GenreData._();
+
+  /// Debug / test entry — duplicate subgenre labels across categories fail.
+  static bool? _integrityCache;
+
+  static bool validateIntegrity() {
+    return _integrityCache ??= _validateIntegrity();
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // RAW TAXONOMY DATA
+  // ─────────────────────────────────────────────────────────────────────────────
 
   static const List<String> categories = [
     'EDM',
@@ -47,7 +75,6 @@ class GenreData {
       'Future Funk',
       'Disco House',
       'Vinahouse',
-      'Amapiano',
       'Afro House',
       'Amapiano-Vinahouse',
       'UK Garage',
@@ -92,7 +119,6 @@ class GenreData {
       'J-Pop',
       'C-Pop',
       'Mandopop',
-      'Latin Pop',
       'Synth Pop',
       'Hyperpop',
     ],
@@ -203,7 +229,10 @@ class GenreData {
     ],
   };
 
-  /// Display label -> suggested BPM range text.
+  // ─────────────────────────────────────────────────────────────────────────────
+  // BPM HINTS
+  // ─────────────────────────────────────────────────────────────────────────────
+
   static const Map<String, String> bpmHintByGenre = {
     'Hardstyle': '150–162 BPM',
     'Rawstyle': '150–200 BPM',
@@ -213,33 +242,37 @@ class GenreData {
     'Acid Techno': '128–135 BPM',
     'EDM Bounce': '128–138 BPM',
     'Melodic Techno': '128–138 BPM',
+    'House': '120–128 BPM',
+    'Deep House': '120–128 BPM',
+    'Tech House': '124–126 BPM',
     'Melodic House': '122–128 BPM',
-    'Big Room': '128 BPM',
-    'Big Room Techno': '138–148 BPM',
-    'Progressive House': '124–132 BPM',
+    'Afro House': '118–126 BPM',
     'Soulful House': '118–124 BPM',
+    'Progressive House': '124–132 BPM',
+    'Future House': '125–128 BPM',
+    'Disco House': '110–120 BPM',
     'Nu-Disco': '110–120 BPM',
     'Future Funk': '110–120 BPM',
-    'Disco House': '110–120 BPM',
+    'Big Room': '128 BPM',
+    'Big Room Techno': '138–148 BPM',
     'Vinahouse': '128–140 BPM',
-    'Amapiano': '100–116 BPM',
-    'Amapiano-Vinahouse': '110–120 BPM',
-    'Afro House': '118–126 BPM',
+    'Trance': '128–145 BPM',
+    'Uplifting Trance': '138 BPM',
+    'Dubstep': '140–150 BPM half-time',
+    'Melodic Dubstep': '140 BPM half-time',
+    'Future Bass': '150–160 BPM',
+    'Drum & Bass': '160–175 BPM',
+    'Liquid DnB': '174 BPM',
     'UK Garage': '130–135 BPM',
     'Jersey Club': '135–140 BPM',
     'Gqom': '124–128 BPM',
-    'Trap Soul': '70–85 BPM half-time',
-    'Dembow': '95–105 BPM',
-    'Chillhop': '70–90 BPM',
-    'Dream Pop': '90–100 BPM',
-    'Indie Folk': '80–110 BPM',
-    'Singer-Songwriter': '70–100 BPM',
-    'Synthwave': '100–130 BPM',
-    'Retrowave': '100–130 BPM',
-    'Uplifting Trance': '138 BPM',
-    'Melodic Dubstep': '140 BPM half-time',
-    'Liquid DnB': '174 BPM',
-    'Future House': '125–128 BPM',
+    'Amapiano': '100–116 BPM',
+    'Amapiano-Vinahouse': '110–120 BPM',
+    'Afrobeats': '100–115 BPM',
+    'Afro-Swing': '100–115 BPM',
+    'Afro Rap': '95–115 BPM',
+    'Highlife': '80–120 BPM',
+    'Fuji': '110–130 BPM',
     'Hip Hop': '85–115 BPM',
     'Boom Bap': '80–95 BPM',
     'Trap': '130–160 BPM half-time',
@@ -248,99 +281,122 @@ class GenreData {
     'UK Drill': '138–145 BPM',
     'NY Drill': '140–145 BPM',
     'Phonk': '130–160 BPM',
-    'Afro-Swing': '100–115 BPM',
+    'Cloud Rap': '130–150 BPM',
     'Lo-Fi Hip Hop': '60–90 BPM',
-    'Deep House': '120–128 BPM',
-    'Tech House': '124–126 BPM',
-    'Future Bass': '150–160 BPM',
-    'Trance': '128–145 BPM',
-    'Drum & Bass': '160–175 BPM',
-    'Dubstep': '140–150 BPM half-time',
-    'Neo-Soul': '70–90 BPM',
+    'Chillhop': '70–90 BPM',
+    'Jazz Rap': '80–110 BPM',
+    'R&B': '80–110 BPM',
     'Contemporary R&B': '80–100 BPM',
     '90s R&B': '90–105 BPM',
     'New Jack Swing': '90–105 BPM',
     'Quiet Storm': '60–80 BPM',
-    'Gospel': '65–120 BPM',
-    'Traditional Gospel': '80–95 BPM',
-    'Praise/Worship': '65–110 BPM',
-    'Modern Worship': '70–90 BPM',
-    'Worship Ballad': '60–75 BPM',
-    'Contemporary Gospel': '85–100 BPM',
-    'Afro-Gospel': '100–118 BPM',
-    'Southern Gospel': '80–110 BPM',
-    'CCM': '90–120 BPM',
-    'Afrobeats': '100–115 BPM',
-    'Highlife': '80–120 BPM',
-    'Fuji': '110–130 BPM',
-    'K-Pop': '100–140 BPM',
-    'C-Pop': '85–130 BPM',
+    'Trap Soul': '70–85 BPM half-time',
+    'Neo-Soul': '70–90 BPM',
+    'Soul': '70–110 BPM',
+    'Funk': '95–115 BPM',
+    'Pop': '100–130 BPM',
+    'Mainstream Pop': '90–120 BPM',
+    'Pop / Max Martin': '100–128 BPM',
     'Electropop': '110–128 BPM',
     'Dance Pop': '110–128 BPM',
     'Bedroom Pop': '80–110 BPM',
+    'Indie Pop': '90–125 BPM',
+    'Synth Pop': '110–130 BPM',
     'Hyperpop': '130–180 BPM',
-    'Reggaeton': '90–100 BPM',
-    'Bachata': '130–140 BPM',
-    'Salsa': '180–220 BPM',
-    'Bossa Nova': '120–140 BPM',
-    'Cumbia': '90–130 BPM',
-    'Brazilian Funk': '130–150 BPM',
-    'Sertanejo': '130–150 BPM',
-    'Forró': '110–130 BPM',
-    'Reggae': '60–80 BPM',
-    'Dancehall': '90–105 BPM',
-    'Soca': '100–140 BPM',
-    'Pop': '100–130 BPM',
-    'Mainstream Pop': '90–120 BPM',
+    'K-Pop': '100–140 BPM',
+    'J-Pop': '85–135 BPM',
+    'C-Pop': '85–130 BPM',
+    'Mandopop': '85–135 BPM',
+    'Latin Pop': '90–120 BPM',
+    'City Pop': '100–120 BPM',
     'Rock': '100–160 BPM',
     'Indie Rock': '110–140 BPM',
+    'Alt Rock': '110–140 BPM',
+    'Alternative': '90–150 BPM',
     'Pop Punk': '150–180 BPM',
+    'Emo': '140–180 BPM',
+    'Punk': '140–200 BPM',
+    'Hard Rock': '110–140 BPM',
+    'Classic Rock': '100–140 BPM',
+    'Metal': '120–200 BPM',
+    'Heavy Metal': '120–180 BPM',
     'Metalcore': '130–200 BPM',
+    'Death Metal': '150–250 BPM',
+    'Post-Rock': '70–130 BPM',
     'Shoegaze': '90–100 BPM',
+    'Dream Pop': '90–100 BPM',
     'Country': '80–108 BPM',
     'Modern Country': '90–130 BPM',
     'Outlaw Country': '80–110 BPM',
     'Americana': '80–120 BPM',
+    'Folk-Rock': '90–130 BPM',
     'Bluegrass': '120–180 BPM',
-    'Metal': '120–200 BPM',
+    'Indie Folk': '80–110 BPM',
+    'Singer-Songwriter': '70–100 BPM',
+    'Folk': '80–120 BPM',
+    'Gospel': '65–120 BPM',
+    'Traditional Gospel': '80–95 BPM',
+    'Contemporary Gospel': '85–100 BPM',
+    'Urban Gospel': '80–110 BPM',
+    'Praise/Worship': '65–110 BPM',
+    'Modern Worship': '70–90 BPM',
+    'Worship Ballad': '60–75 BPM',
+    'CCM': '90–120 BPM',
+    'Pop Worship': '70–110 BPM',
+    'Afro-Gospel': '100–118 BPM',
+    'Southern Gospel': '80–110 BPM',
+    'Country Gospel': '80–120 BPM',
     'Jazz': '60–200 BPM',
     'Vocal Jazz': '100–180 BPM',
+    'Bebop': '140–240 BPM',
     'Smooth Jazz': '90–120 BPM',
+    'Jazz Fusion': '90–140 BPM',
+    'Fusion': '90–140 BPM',
     'Nu-Jazz': '90–110 BPM',
+    'Acid Jazz': '90–120 BPM',
+    'Big Band': '120–200 BPM',
     'Blues': '60–120 BPM',
     'Chicago Blues': '80–100 BPM',
-    'Cinematic': '40–180 BPM',
-    'Film Score': '60–120 BPM',
-    'Ambient': '50–80 BPM free',
-    'Vaporwave': '80–100 BPM',
-    'Industrial': '120–150 BPM',
-    'House': '120–128 BPM',
-    'Funk': '95–115 BPM',
-    'Soul': '70–110 BPM',
-    'Latin Pop': '90–120 BPM',
-    'Folk': '80–120 BPM',
-    'City Pop': '100–120 BPM',
+    'Delta Blues': '60–100 BPM',
+    'Reggaeton': '90–100 BPM',
+    'Dembow': '95–105 BPM',
+    'Bachata': '130–140 BPM',
+    'Salsa': '180–220 BPM',
+    'Bossa Nova': '120–140 BPM',
+    'Cumbia': '90–130 BPM',
+    'Vallenato': '100–130 BPM',
+    'Brazilian Funk': '130–150 BPM',
+    'Sertanejo': '130–150 BPM',
+    'Forró': '110–130 BPM',
+    'Reggae': '60–80 BPM',
+    'Roots Reggae': '60–80 BPM',
+    'Dub': '60–90 BPM',
+    'Dancehall': '90–105 BPM',
+    'Soca': '100–140 BPM',
     'Bollywood': '100–160 BPM',
+    'Filmi': '90–140 BPM',
     'Punjabi': '110–140 BPM',
     'Bhangra': '110–140 BPM',
     'Middle Eastern': '80–130 BPM',
-    'Fusion': '90–140 BPM',
-    'Big Band': '120–200 BPM',
+    'Cinematic': '40–180 BPM',
+    'Film Score': '60–120 BPM',
     'Orchestral': '40–120 BPM',
+    'Ambient': '50–80 BPM free',
+    'Dark Ambient': '40–80 BPM free',
     'Ambient Score': '40–100 BPM',
-    'Cloud Rap': '130–150 BPM',
-    'Jazz Rap': '80–110 BPM',
-    'Alternative': '90–150 BPM',
-    'Punk': '140–200 BPM',
-    'Synth Pop': '110–130 BPM',
+    'Trailer': '80–140 BPM',
+    'Vaporwave': '80–100 BPM',
     'New Wave': '110–130 BPM',
-    'Pop / Max Martin': '100–128 BPM',
-    'J-Pop': '85–135 BPM',
-    'Mandopop': '85–135 BPM',
-    'Dub': '60–90 BPM',
+    'Industrial': '120–150 BPM',
+    'EBM': '120–140 BPM',
+    'Synthwave': '100–130 BPM',
+    'Retrowave': '100–130 BPM',
   };
 
-  /// Quick Start row: [0] = chip label (may include emoji), [1] = canonical genre value.
+  // ─────────────────────────────────────────────────────────────────────────────
+  // QUICK PICK ROWS
+  // ─────────────────────────────────────────────────────────────────────────────
+
   static const List<(String, String)> quickPickRows = [
     ('Hip Hop', 'Hip Hop'),
     ('Pop', 'Pop'),
@@ -378,30 +434,29 @@ class GenreData {
     ('Cinematic', 'Cinematic'),
   ];
 
-  /// Canonical sub-genre strings for remix merge (labels stripped).
-  static List<String> get quickPickGenres =>
-      quickPickRows.map((e) => e.$2).toList();
+  static final List<String> quickPickGenres = List<String>.unmodifiable(
+    quickPickRows.map((e) => e.$2).toList(),
+  );
 
-  /// Default remix target when opening the Audio Analyser (must exist in [remixTargetGenres]).
   static const String remixTargetDefault = 'Techno';
 
-  /// Target genres for remix / genre-flip: all sub-genres from [subGenresByCategory] plus
-  /// [quickPickGenres] (e.g. broad **Cinematic**), deduped and A→Z.
-  static List<String> get remixTargetGenres {
+  static final List<String> remixTargetGenres = _buildRemixTargetGenres();
+
+  static List<String> _buildRemixTargetGenres() {
     final merged = <String>{};
     for (final list in subGenresByCategory.values) {
       merged.addAll(list);
     }
     merged.addAll(quickPickGenres);
     final out = merged.toList()
-      ..sort(
-        (a, b) => a.toLowerCase().compareTo(b.toLowerCase()),
-      );
+      ..sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
     return List<String>.unmodifiable(out);
   }
 
-  /// Quick chips: **production / sonic** tags only — no celebrity names (many platforms flag them).
-  /// Users can still type their own project codename or initials in the text field.
+  // ─────────────────────────────────────────────────────────────────────────────
+  // SONIC REFERENCE CHIPS
+  // ─────────────────────────────────────────────────────────────────────────────
+
   static const Map<String, List<String>> suggestedSonicReferenceChips = {
     'Lo-Fi Hip Hop': [
       'dusty swing pocket',
@@ -413,33 +468,67 @@ class GenreData {
       'tight low-end · kick–808 interplay',
       'vocal-forward verse · hook lift',
     ],
+    'Boom Bap': ['cratedigger drum break', 'jazzy horn sample loop', 'gritty MPC swing'],
     'Trap': ['808 slides & rolls', 'dark plugg mood', 'melodic trap leads'],
+    'Melodic Trap': ['emotional pluck melody', 'airy 808 half-time', 'auto-tune vulnerability'],
     'Drill': ['sliding 808 patterns', 'tense minor pads', 'machinegun hi-hat rolls'],
+    'UK Drill': ['uk slide 808', 'dark vocal sample stab', 'syncopated hat triplets'],
+    'NY Drill': ['bronx bounce drill', 'gritty sample chop', 'aggressive vocal pocket'],
     'Phonk': ['Memphis cowbell', 'distorted 808 kick', 'dark detuned saws'],
+    'Cloud Rap': ['hazy reverb tail', 'washed-out sample bed', 'languid vocal drawl'],
     'Afro-Swing': ['log drum + 808 hybrid', 'M1 piano stab', 'talking drum pocket'],
-    'Techno': ['hypnotic 4/4 drive', 'filtered low-end builds', 'warehouse space'],
-    'Melodic Techno': ['analog lead hooks', 'rolling sub groove', 'acid 303 squelch'],
+    'Jazz Rap': ['upright bass pocket', 'brush kit swing', 'rhodes vamp loop'],
+    'House': ['four-on-the-floor swing', 'chunky bassline', 'diva vocal stab'],
     'Deep House': ['U87 soulful vocal', 'Rhodes stab + Juno pad', 'tight sidechain'],
-    'Progressive House': ['supersaw euphoria', 'sidechain pumping', 'festival build'],
+    'Tech House': ['minimal spoken vocal', 'rolling sub groove', 'tight clap pattern'],
+    'Progressive House': [
+      'Ryos-style supersaw lead',
+      'sidechain reez bass pump',
+      'pre-shifted clap build',
+      'mainstage fusion drop',
+    ],
+    'Big Room': [
+      'cinematic hybrid supersaw',
+      'ducking-kick sidechain pump',
+      'hardstyle final drop kick',
+      '148 BPM narrative arc',
+    ],
+    'Melodic House': ['airy pluck lead', 'warm filtered bass', 'emotional riser'],
+    'Techno': ['hypnotic 4/4 drive', 'filtered low-end builds', 'warehouse space'],
+    'Hard Techno': ['punishing kick', 'distorted stab screeches', 'relentless momentum'],
+    'Melodic Techno': ['analog lead hooks', 'rolling sub groove', 'acid 303 squelch'],
+    'Trance': ['euphoric supersaw', 'long tension build', 'anthemic breakdown'],
+    'Uplifting Trance': ['trance arp lead', 'massive white-noise riser', 'emotional major key lift'],
+    'Dubstep': ['grimey wobble bass', 'half-time snare crack', 'dark sub drop'],
+    'Hardstyle': [
+      'distorted reverse-bass kick',
+      'Euro-dance supersaw hook',
+      'hyper snare roll build',
+      'pitch-shifted vocal chop',
+    ],
+    'Rawstyle': ['raw distorted kick', 'dark screech lead', 'industrial mid-bass'],
     'Future Bass': ['vocal chop lead', 'bright supersaw pluck', 'glitchy hats'],
+    'Drum & Bass': ['fast breakbeat chop', 'reese bass growl', 'high-energy rush'],
     'Nu-Disco': ['LinnDrum groove', 'Juno-106 bass', 'string machine stabs'],
-    'Amapiano': ['log drum bounce', 'piano stabs', 'shaker & perc layers'],
-    'Amapiano-Vinahouse': ['log-drum sub pocket', 'đàn tranh motif', 'breathy SM7B vocal'],
     'Vinahouse': [
       'offbeat bounce groove',
       'pentatonic đàn tranh hook',
       'traditional sample layer',
     ],
+    'Amapiano': ['log drum bounce', 'piano stabs', 'shaker & perc layers'],
+    'Amapiano-Vinahouse': ['log-drum sub pocket', 'đàn tranh motif', 'breathy SM7B vocal'],
+    'Afro House': ['shaker-driven groove', 'soulful chant vocal', 'warm log-drum pocket'],
+    'UK Garage': ['shuffled 2-step groove', 'chopped vocal stab', 'sub wobble bass'],
+    'Jersey Club': ['bed squeak sample', 'hard kick pattern', 'chopped vocal'],
+    'Gqom': ['minimal punchy kick', 'tribal percussion', 'warehouse sub'],
     'Chillhop': ['SP-1200 swung pocket', 'Rhodes tape sat', 'vinyl crackle bed'],
     'Dream Pop': ['shimmer reverb wash', 'breathy intimate vocal', 'ribbon guitar stereo'],
     'Indie Folk': ['KM184 + ribbon acoustic', 'brushed kit room', 'dry intimate vocal'],
     'Synthwave': ['gated LinnDrum snare', 'Prophet 5 lead', '80s neon pad'],
-    'UK Garage': ['shuffled 2-step groove', 'chopped vocal stab', 'sub wobble bass'],
-    'Jersey Club': ['bed squeak sample', 'hard kick pattern', 'chopped vocal'],
-    'Gqom': ['minimal punchy kick', 'tribal percussion', 'warehouse sub'],
     'Trap Soul': ['breathy C-800G vocal', 'deep 808 half-time', 'sparse Rhodes pad'],
-    'Dembow': ['dembow kick grid', '808 sub pocket', 'rolling hats'],
+    'Dembow': ['dembow kick grid', '808 sub pocket', 'rim & clap layers'],
     'R&B': ['stacked harmonies', 'tape-warm keys', 'intimate dry vocal'],
+    'Neo-Soul': ['warm Rhodes extensions', 'fingerstyle bass glide', 'behind-the-beat pocket'],
     'Quiet Storm': ['long plate reverb', 'fretless bass glide', 'late-night Rhodes'],
     'Pop / Max Martin': [
       'melodic symmetry A-A-B-A',
@@ -469,8 +558,6 @@ class GenreData {
     'default': ['your project codename', 'era + region vibe', 'target mix: warm / bright'],
   };
 
-  /// Optional **named** reference chips (same matching rules as [sonicReferenceChipsForGenre]).
-  /// Suno and other hosts may flag or block some names — use at your discretion.
   static const Map<String, List<String>> optionalArtistNameChipsByGenre = {
     'Trap': ['Metro Boomin', 'Future', '21 Savage'],
     'Techno': ['Adam Beyer', 'Charlotte de Witte', 'Richie Hawtin'],
@@ -486,46 +573,182 @@ class GenreData {
     'default': ['Artist A', 'Artist B'],
   };
 
+  /// Category-level default melody directive when no sub-genre override exists.
+  static const Map<String, String> defaultMelodyDirectiveByCategory = {
+    'EDM': 'hook_led',
+    'Hip Hop': 'syncopated_rhythmic',
+    'R&B/Soul': 'syncopated_rhythmic',
+    'Pop': 'hook_led',
+    'Rock/Metal': 'hook_led',
+    'Country': 'hook_led',
+    'Gospel': 'anthemic_soaring',
+    'Jazz/Blues': 'blues_inflected',
+    'Latin': 'syncopated_rhythmic',
+    'Reggae/Dub': 'syncopated_rhythmic',
+    'Afro/World': 'hook_led',
+    'Cinematic': 'minimal_spatial',
+  };
+
+  /// Sub-genre overrides — longest match wins (same algorithm as BPM hints).
+  static const Map<String, String> defaultMelodyDirectiveByGenre = {
+    'Amapiano': 'hook_led',
+    'Trance': 'anthemic_soaring',
+    'Uplifting Trance': 'anthemic_soaring',
+    'Progressive House': 'hook_led',
+    'Big Room': 'anthemic_soaring',
+    'Melodic Techno': 'arpeggiated_sequence',
+    'Synthwave': 'arpeggiated_sequence',
+    'Future Bass': 'arpeggiated_sequence',
+    'Lo-Fi Hip Hop': 'minimal_spatial',
+    'Chillhop': 'minimal_spatial',
+    'Quiet Storm': 'minimal_spatial',
+    'Folk': 'conversational_spoken',
+    'Indie Folk': 'conversational_spoken',
+    'Folk-Rock': 'conversational_spoken',
+    'Film Score': 'chromatic_dissonant',
+    'Orchestral': 'minimal_spatial',
+    'Praise/Worship': 'anthemic_soaring',
+    'Gospel': 'anthemic_soaring',
+    'Blues': 'blues_inflected',
+    'Jazz': 'syncopated_rhythmic',
+    'Trap': 'syncopated_rhythmic',
+    'Drill': 'syncopated_rhythmic',
+    'Metal': 'hook_led',
+    'Hard Rock': 'anthemic_soaring',
+  };
+
+  static const String defaultMelodyDirectiveId = 'hook_led';
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // CACHED LOOKUP INDEXES
+  // ─────────────────────────────────────────────────────────────────────────────
+
+  static final List<String> _melodyDirectiveKeysLongestFirst =
+      _sortedKeysLongestFirst(defaultMelodyDirectiveByGenre.keys);
+
+  static final Map<String, String> _subGenreToCategory = _buildSubGenreIndex();
+
+  static final List<String> _bpmKeysLongestFirst =
+      _sortedKeysLongestFirst(bpmHintByGenre.keys);
+
+  static final List<MapEntry<String, List<String>>> _sonicEntriesLongestFirst =
+      _sortedMapEntriesLongestFirst(suggestedSonicReferenceChips);
+
+  static final List<MapEntry<String, List<String>>> _artistEntriesLongestFirst =
+      _sortedMapEntriesLongestFirst(optionalArtistNameChipsByGenre);
+
+  static Map<String, String> _buildSubGenreIndex() {
+    final out = <String, String>{};
+    for (final entry in subGenresByCategory.entries) {
+      for (final sub in entry.value) {
+        out.putIfAbsent(sub, () => entry.key);
+      }
+    }
+    return out;
+  }
+
+  static List<String> _sortedKeysLongestFirst(Iterable<String> keys) {
+    final out = keys.toList()
+      ..sort((a, b) => b.length.compareTo(a.length));
+    return out;
+  }
+
+  static List<MapEntry<String, List<String>>> _sortedMapEntriesLongestFirst(
+    Map<String, List<String>> map,
+  ) {
+    final out = map.entries.where((e) => e.key != 'default').toList()
+      ..sort((a, b) => b.key.length.compareTo(a.key.length));
+    return out;
+  }
+
+  static bool _validateIntegrity() {
+    if (!subGenresByCategory.keys.toSet().containsAll(categories)) return false;
+    if (subGenresByCategory.length != categories.length) return false;
+    for (final list in subGenresByCategory.values) {
+      if (list.isEmpty) return false;
+    }
+    final seen = <String>{};
+    for (final list in subGenresByCategory.values) {
+      for (final sub in list) {
+        if (!seen.add(sub)) return false;
+      }
+    }
+    if (!remixTargetGenres.contains(remixTargetDefault)) return false;
+    return true;
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // PUBLIC API
+  // ─────────────────────────────────────────────────────────────────────────────
+
   static String? bpmHintForLabel(String? label) {
+    assert(validateIntegrity(), 'GenreData integrity check failed — see console.');
     if (label == null || label.isEmpty) return null;
     final direct = bpmHintByGenre[label];
     if (direct != null) return direct;
     final lower = label.toLowerCase();
-    for (final e in bpmHintByGenre.entries) {
-      if (lower.contains(e.key.toLowerCase())) return e.value;
+    for (final key in _bpmKeysLongestFirst) {
+      final keyLower = key.toLowerCase();
+      if (lower == keyLower || lower.contains(keyLower)) {
+        return bpmHintByGenre[key];
+      }
     }
     return null;
   }
 
-  /// Parent category tab that contains [subGenre], or null if unknown.
+  /// Resolves the default [MelodyDirective] id for auto mode from a genre label.
+  static String defaultMelodyDirectiveIdForLabel(String? label) {
+    if (label == null || label.trim().isEmpty) return defaultMelodyDirectiveId;
+
+    final trimmed = label.trim();
+    final direct = defaultMelodyDirectiveByGenre[trimmed];
+    if (direct != null) return direct;
+
+    final lower = trimmed.toLowerCase();
+    for (final key in _melodyDirectiveKeysLongestFirst) {
+      final keyLower = key.toLowerCase();
+      if (lower == keyLower || lower.contains(keyLower)) {
+        return defaultMelodyDirectiveByGenre[key]!;
+      }
+    }
+
+    final category = categoryForSubGenre(trimmed);
+    if (category != null) {
+      return defaultMelodyDirectiveByCategory[category] ?? defaultMelodyDirectiveId;
+    }
+
+    return defaultMelodyDirectiveId;
+  }
+
+  /// Genre metadata for melody auto-mode and related UI.
+  static GenreMelodyInfo infoForLabel(String? label) {
+    final resolved = label?.trim() ?? '';
+    return GenreMelodyInfo(
+      label: resolved,
+      bpmHint: bpmHintForLabel(label),
+      defaultMelodyDirectiveId: defaultMelodyDirectiveIdForLabel(label),
+    );
+  }
+
   static String? categoryForSubGenre(String? subGenre) {
     if (subGenre == null || subGenre.isEmpty) return null;
-    for (final e in subGenresByCategory.entries) {
-      if (e.value.contains(subGenre)) return e.key;
-    }
-    return null;
+    return _subGenreToCategory[subGenre];
   }
 
-  /// Name-free tags for chips; matches longest sub-genre key contained in [genre] label.
   static List<String> sonicReferenceChipsForGenre(String? genre) {
     if (genre == null) return suggestedSonicReferenceChips['default']!;
-    for (final e in suggestedSonicReferenceChips.entries) {
-      if (e.key != 'default' &&
-          genre.toLowerCase().contains(e.key.toLowerCase())) {
-        return e.value;
-      }
+    final lower = genre.toLowerCase();
+    for (final entry in _sonicEntriesLongestFirst) {
+      if (lower.contains(entry.key.toLowerCase())) return entry.value;
     }
     return suggestedSonicReferenceChips['default']!;
   }
 
-  /// Optional artist-name chips; same key matching as [sonicReferenceChipsForGenre].
   static List<String> optionalArtistNameChipsForGenre(String? genre) {
     if (genre == null) return optionalArtistNameChipsByGenre['default']!;
-    for (final e in optionalArtistNameChipsByGenre.entries) {
-      if (e.key != 'default' &&
-          genre.toLowerCase().contains(e.key.toLowerCase())) {
-        return e.value;
-      }
+    final lower = genre.toLowerCase();
+    for (final entry in _artistEntriesLongestFirst) {
+      if (lower.contains(entry.key.toLowerCase())) return entry.value;
     }
     return optionalArtistNameChipsByGenre['default']!;
   }

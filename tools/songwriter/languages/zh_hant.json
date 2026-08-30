@@ -1,0 +1,17 @@
+{
+  "id": "zh-Hant",
+  "version": "1.0.0",
+  "scripts": ["Hant"],
+  "native_syntax": "Traditional Chinese diction; respect TW/HK regional notes in brief.",
+  "register": "Cantopop/Mandopop traditional-script register as brief specifies",
+  "prosody": "Singable phrase chunks; avoid packing too many characters per breath",
+  "rhyme": "Final-sound and cadence rhyme; tone flow over English rhyme charts",
+  "punctuation": "Traditional punctuation sparingly; keep [Section] labels ASCII",
+  "idioms": "Regional idioms only when authentic to narrator",
+  "code_switching": "Purposeful English loanwords at hooks if brief allows",
+  "avoid_patterns": [
+    "simplified-character leakage when zh-Hant requested",
+    "translationese",
+    "forced classical 文言文 unless brief asks"
+  ]
+}

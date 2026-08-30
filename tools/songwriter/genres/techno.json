@@ -1,0 +1,15 @@
+{
+  "id": "techno",
+  "version": "1.0.0",
+  "vocabulary_profile": ["minimal", "industrial", "hypnosis"],
+  "line_length_guidance": "fragmentary; repetition as design",
+  "imagery_guidance": ["machines", "concrete", "pulse", "void"],
+  "energy_profile": "cold drive; tension over catharsis",
+  "hook_style": "mantra / motif more than pop title",
+  "rhyme_density": "low",
+  "rhythmic_guidance": ["lock to 16ths", "leave negative space"],
+  "common_structures": ["Intro-Groove-Break-Peak-Outro"],
+  "vocal_phrasing": ["processed cool", "sparse"],
+  "avoid_patterns": ["sentimental ballad language", "cheerleading"],
+  "cultural_notes": []
+}

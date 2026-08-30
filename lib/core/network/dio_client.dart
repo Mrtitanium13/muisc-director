@@ -9,6 +9,8 @@ export '../utils/api_base_url_normalize.dart'
 abstract final class ApiPaths {
   static const analyze = '/analyze';
   static const generatePrompt = '/generate-prompt';
+  static const generateLyrics = '/generate-lyrics';
+  static const songwriterStatus = '/songwriter/status';
   static const health = '/health';
 }
 
@@ -29,6 +31,16 @@ class PromptGenerationTimeouts {
   static const send = Duration(minutes: 2);
   /// Hybrid draft + polish on the server can exceed 4 minutes.
   static const receive = Duration(minutes: 7);
+}
+
+/// Timeouts for [ApiPaths.generateLyrics] (multi-stage songwriter pipeline).
+class SongwriterTimeouts {
+  SongwriterTimeouts._();
+
+  static const connect = Duration(seconds: 90);
+  static const send = Duration(minutes: 2);
+  /// Full song = up to 12 sequential LLM stages; keep above server budget.
+  static const receive = Duration(minutes: 15);
 }
 
 /// Dio scoped to the Music Director API (`baseUrl` + relative [ApiPaths]).
@@ -65,5 +77,12 @@ Options promptGenerationRequestOptions() => Options(
       connectTimeout: PromptGenerationTimeouts.connect,
       sendTimeout: PromptGenerationTimeouts.send,
       receiveTimeout: PromptGenerationTimeouts.receive,
+      headers: const {'Content-Type': 'application/json'},
+    );
+
+Options songwriterRequestOptions() => Options(
+      connectTimeout: SongwriterTimeouts.connect,
+      sendTimeout: SongwriterTimeouts.send,
+      receiveTimeout: SongwriterTimeouts.receive,
       headers: const {'Content-Type': 'application/json'},
     );

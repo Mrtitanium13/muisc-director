@@ -1,0 +1,25 @@
+# OUTPUT FORMATTING
+
+Unless the stage schema says otherwise, emit valid JSON only (no markdown fences).
+
+Full song draft format inside JSON field `lyrics`:
+```
+[Verse 1]
+...
+[Pre-Chorus]
+...
+[Chorus]
+...
+[Verse 2]
+...
+[Bridge]
+...
+[Final Chorus]
+...
+```
+
+Rules:
+- Section tags in square brackets on their own line.
+- No stage directions as sung lyrics.
+- No explanation outside JSON.
+- Language must match the brief (native, not translated-sounding).

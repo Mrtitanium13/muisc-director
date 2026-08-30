@@ -1,0 +1,74 @@
+# SUNO METATAG SYNTAX — ALLOWLIST (Pass 2 · Arrangement Engine)
+
+**Platform:** Suno only (Udio temporarily disabled).
+**Authority:** Section **stems** must match this allowlist. Staging descriptors inside brackets obey **ARRANGEMENT STAGING FORMAT** + **Section D blacklist** (studio-floor language only).
+**Law:** Never invent metatags Suno will ignore or glitch on (e.g. `[Emotional Crescendo]`, `[Singer cries]`, `[Hook Drop]`, `[Mid-Song Switch]`).
+
+---
+
+## §1. CANONICAL SECTION STEMS (whitelist)
+
+Use these as the **left side** of a section tag (optional number / Final / variant suffix allowed when listed):
+
+| Stem | Examples |
+|------|----------|
+| Intro | `[Intro]`, `[Intro: …]` |
+| Verse | `[Verse]`, `[Verse 1]`, `[Verse 2]` |
+| Pre-Chorus | `[Pre-Chorus]`, `[Pre-Chorus 1]` |
+| Chorus | `[Chorus]`, `[Chorus 2]`, `[Final Chorus]` |
+| Post-Chorus | `[Post-Chorus]` |
+| Bridge | `[Bridge]`, `[Middle Eight]` |
+| Breakdown | `[Breakdown]`, `[Atmospheric Break]` |
+| Build-Up / Riser | `[Build-Up]`, `[Build Up]`, `[Riser]` |
+| Drop | `[Drop]`, `[Drop A]`, `[Drop B]`, `[Main Drop]`, `[Final Drop]` |
+| Break / Fill | `[Break]`, `[Fill]` |
+| Hook / Vamp | `[Hook]`, `[Vamp]` (only when genre roadmap calls for it) |
+| Instrumental | `[Instrumental Interlude]`, `[Instrumental Solo]`, `[Interlude]` |
+| Outro | `[Outro]`, `[Coda]` |
+| DJ / mix (when flags ON) | `[Mix-In]`, `[Mix-Out]`, `[DJ Loop-Out]`, `[Beat-Switch]`, `[DJ Scratch]` |
+| Gospel / worship lanes | `[Spontaneous Flow]`, `[Spontaneous Worship]` |
+| Theme form (jazz / instrumental) | `[Theme A]`, `[Development]`, `[Climax]`, `[A Section]`, `[B Section]`, `[Head Out]`, `[Head Return]` |
+| End | `[End]` — **required** terminator for Block 2 |
+
+**Version density** (how rich the right-side staging text is) is owned by ARRANGEMENT STAGING FORMAT:
+- **v4.5** — minimal section names
+- **v5.0** — hybrid (`[Chorus: Wide Vocal Stack]`)
+- **v5.5** — rich director notes (still stem-whitelisted)
+
+---
+
+## §2. BANNED SECTION NAMES (hard reject)
+
+Never emit these as section labels (replace with a whitelist stem):
+
+- `[Hook Drop]`, `[Chorus Drop]`, `[Beat Drop]`, `[Pre-Drop]`, `[Post-Drop Hook]`
+- `[Emotional Crescendo]`, `[Singer cries]`, `[Crying]`, `[Whispered Confession Scene]`
+- Any full-sentence or narrative stage direction as the **section name**
+
+Performance cues belong in **staging descriptors** after the colon (v5/v5.5), using studio-floor lexicon — not as invented section titles.
+
+---
+
+## §3. PERFORMANCE / ARRANGEMENT CUES (inside brackets — not new section stems)
+
+Allowed **as staging tokens** (after `:`, or on dedicated production cue lines), when version density permits:
+
+- Vocal: intimate / belted / spoken / stacked / close-mic / dry / wide
+- Energy: stripped / full band / heavy bass / filter open / sidechain (EDM lanes only)
+- Space: dead-room / hall / plate / fade out
+- Instrumental: solo guitar / log drum break / riser swell (genre-gated)
+
+Always scan against **Section D blacklist** before emit. Prefer concrete studio language over poetic emotion labels.
+
+---
+
+## §4. QA HOOKS (external runtime)
+
+Deterministic checks may fail Pass 2 when:
+
+1. Block 2 lacks a required stem for the genre roadmap (typically `[Verse]` / `[Chorus]` family, or instrumental equivalents).
+2. Any `[Section]` uses a banned name from §2.
+3. `[End]` is missing (unless Block 2 opt-out).
+4. Hallucinated cognition wrappers appear (`<thinking>`, raw `<master_blueprint>`, etc.) — strip or retry.
+
+---

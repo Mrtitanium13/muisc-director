@@ -8,6 +8,8 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/dio_error_message.dart';
 import '../../../core/utils/haptic_utils.dart';
 import '../../../data/models/user_input_model.dart';
+import '../../../presentation/utils/show_user_notices.dart';
+import '../../../services/composition_pipeline_service.dart';
 import '../../providers/app_providers.dart';
 import '../../widgets/common/md_text_field.dart';
 
@@ -25,6 +27,8 @@ class _AbCompareScreenState extends ConsumerState<AbCompareScreen> {
   String? _outB;
   bool _busyA = false;
   bool _busyB = false;
+  CompositionResult? _composition;
+  bool _noticesShown = false;
 
   @override
   void initState() {
@@ -43,9 +47,20 @@ class _AbCompareScreenState extends ConsumerState<AbCompareScreen> {
     super.dispose();
   }
 
+  CompositionResult _baseComposition() {
+    return _composition ??= CompositionPipelineService.run(
+      userInput: ref.read(promptFormProvider),
+    );
+  }
+
   UserInputModel _withVibe(String vibe) {
-    final base = ref.read(promptFormProvider);
-    return base.copyWith(vibe: vibe.trim());
+    return _baseComposition().withVibe(vibe.trim());
+  }
+
+  void _maybeShowNotices() {
+    if (_noticesShown || !mounted) return;
+    _noticesShown = true;
+    showUserNotices(context, _baseComposition().userNotices);
   }
 
   Future<void> _genA() async {
@@ -60,6 +75,7 @@ class _AbCompareScreenState extends ConsumerState<AbCompareScreen> {
       _outA = null;
     });
     try {
+      _maybeShowNotices();
       final t = await ref
           .read(aiRepositoryProvider)
           .generatePrompt(_withVibe(_vibeA.text));
@@ -87,6 +103,7 @@ class _AbCompareScreenState extends ConsumerState<AbCompareScreen> {
       _outB = null;
     });
     try {
+      _maybeShowNotices();
       final t = await ref
           .read(aiRepositoryProvider)
           .generatePrompt(_withVibe(_vibeB.text));
@@ -105,6 +122,8 @@ class _AbCompareScreenState extends ConsumerState<AbCompareScreen> {
   void _reloadVibesFromForm() {
     final f = ref.read(promptFormProvider);
     setState(() {
+      _composition = null;
+      _noticesShown = false;
       _vibeA.text = f.vibe;
       _vibeB.text =
           f.vibe.isEmpty ? '' : '${f.vibe.trim()} (alt arrangement)';

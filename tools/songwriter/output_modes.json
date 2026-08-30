@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "modes": [
+    { "id": "full_song", "label": "Full song", "stages": ["analyze", "concepts", "select", "arc", "chorus", "verses", "bridge", "transitions", "rhyme", "anti_ai", "singability", "polish"] },
+    { "id": "chorus_only", "label": "Chorus only", "stages": ["analyze", "concepts", "select", "chorus", "rhyme", "anti_ai", "singability", "polish"] },
+    { "id": "verse_only", "label": "Verse only", "stages": ["analyze", "arc", "verses", "rhyme", "anti_ai", "singability", "polish"] },
+    { "id": "bridge_only", "label": "Bridge only", "stages": ["analyze", "arc", "bridge", "rhyme", "anti_ai", "singability", "polish"] },
+    { "id": "hook_ideas", "label": "Hook ideas", "stages": ["analyze", "concepts", "chorus"], "emit": "hooks_list" },
+    { "id": "song_concepts", "label": "Song concepts", "stages": ["analyze", "concepts"], "emit": "concepts_list" },
+    { "id": "song_titles", "label": "Song titles", "stages": ["analyze", "concepts"], "emit": "titles_list" },
+    { "id": "rewrite", "label": "Rewrite lyrics", "stages": ["analyze", "anti_ai", "rhyme", "singability", "polish"], "requires_input_lyrics": true },
+    { "id": "improve", "label": "Improve lyrics", "stages": ["analyze", "rhyme", "singability", "polish"], "requires_input_lyrics": true },
+    { "id": "humanize", "label": "Humanize AI lyrics", "stages": ["anti_ai", "singability", "polish"], "requires_input_lyrics": true },
+    { "id": "translate_singable", "label": "Translate (preserve rhyme/singability)", "stages": ["analyze", "rhyme", "singability", "polish"], "requires_input_lyrics": true },
+    { "id": "variations", "label": "Multiple lyric variations", "stages": ["analyze", "concepts", "chorus", "verses", "polish"], "emit": "variations", "variation_count": 3 }
+  ]
+}

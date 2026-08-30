@@ -3,6 +3,8 @@
 
 ### BLOCK 2 — DEFAULT GENRE STRUCTURE TEMPLATES (MULTI-VERSION SUNO ROUTING)
 
+**Authority:** **DYNAMIC STRUCTURAL ENGINE** (`tools/dynamic_structural_engine.txt`) assembles and prunes section order per genre. This file provides **lane-specific escalation notes** and legacy roadmaps — defer to the Dynamic Engine for default assembly when the user supplies no explicit roadmap.
+
 When the user gives **no pasted lyrics** and **no explicit section roadmap**, choose the roadmap that matches **primary genre + vocal intent**.
 
 Read **Suno version** from the user message (`Suno v4.5` · `v5.0` · `v5.5` · `v5.5 Pro`). Default **v5.0**. Bracket stack + `{staging}` → **ARRANGEMENT STAGING FORMAT** (§2–§5).
@@ -53,13 +55,13 @@ Roadmaps = **section flow + escalation focus**. Invent version-appropriate tags 
 
 *Escalate:* atmospheric pads → euphoric trance lead → peak layered supersaws.
 
-#### HARDSTYLE (vocal — euphoric / raw / festival)
+#### HARDSTYLE / RAWSTYLE / EUPHORIC HARDSTYLE (vocal pipeline)
 
-**GENRE-SPECIFIC §1** + **MELODY-SYNC § HARDSTYLE** — vocal tags (`[Male Spoken Word]`, `[Pitched Vocal Chops]`, etc.).
+**GENRE HUMANIZATION § SECTION II.1 ELECTRONIC LOOP GRIDS** + **MELODY-SYNC § CORE MATRIX LOOKUP TABLE**.
 
-`[Intro]` → `[Build-Up 1]` → `[Pre-Drop]` → `[Drop 1]` → `[Breakdown]` → `[Build-Up 2]` → `[Pre-Drop 2]` → `[Final Drop]` → `[Outro]` → `[End]`
+`[Intro: Monolithic Kick Pulse]` → `[Vocal Progression: System Command]` → `[Cinematic Breakdown]` → `[Build: The Adrenaline Shock]` → `[Drop: Mainstage Impact]` → `[Outro: Warehouse Decay]` → `[End]`
 
-*Escalate:* filtered kick → distorted kick impact → maximum-energy anthemic supersaws.
+*Escalate:* sub-rumble grid → monotone system commands → atmospheric tension → adrenaline shockword → vocal vacuum drop → warehouse decay.
 
 #### HARD TECHNO / TECHNO (instrumental)
 
@@ -114,3 +116,103 @@ Roadmaps = **section flow + escalation focus**. Invent version-appropriate tags 
 `[Intro]` → `[Instrumental Break]` → `[Instrumental Solo]` → `[Breakdown]` → `[Instrumental Solo]` → `[Outro]` → `[End]`
 
 *Escalate:* sparse motif → textural swell → cinematic peak.
+
+
+--- Dynamic Structural Engine (merged) ---
+# DYNAMIC STRUCTURAL ENGINE (SUNO-OPTIMIZED TEMPLATE ROUTER)
+
+**Scope:** Block 2 Section Layout & Staging.
+**Rule:** NEVER output a static, one-size-fits-all template. **Assemble and prune** structure based on selected genre, commercial objective, and Suno version.
+
+**Precedence:** User-provided section roadmap wins. Signature track masters (`secretInsideYourChest_template.txt`, `dontCallMeLonely_master.txt`) win for matched vibe/theme. This engine governs default assembly when no explicit roadmap is supplied.
+
+---
+
+## 1. SUNO SYNTAX LAW — VERSION-ROUTED (v4.5 / v5 / v5.5)
+
+Suno's parser discipline differs by version. Route bracket density accordingly:
+
+### v4.5 (Minimalist / Legacy-safe)
+- `[BRACKETS]` = section names ONLY. 1–2 words max.
+  - `[Verse 1]` `[Chorus]` `[Bridge]` `[End]`
+- `(PARENTHESES)` = vocal delivery cues only. 1–3 words.
+  - `(whisper)` `(belted)` `(ooh-whoa)`
+- NO production cues inside brackets. Place them in Block 1 prose only.
+
+### v5 (Standard / Default)
+- `[BRACKETS]` = section name + ONE primary staging descriptor.
+  - `[Chorus: wide harmonies]` `[Verse 2: urgent delivery]` `[Drop: log drum enters]`
+- `(PARENTHESES)` = vocal cues + phonetic spellings + brief ad-libs.
+  - `(whispered)` `(bout)` `(yeah-yeah)` `(background voices)`
+
+### v5.5 PRO (Cinematic / Director's Mode) — PREFERRED FOR NEW PROJECTS
+- `[BRACKETS]` = full cinematic director's notes allowed. Multi-descriptor.
+  - `[Intro: vinyl crackle, isolated SM7B vocal, close-mic intimate room]`
+  - `[Chorus 2: full kit unlocks, belted chest voice, cathedral reverb throw, wide SATB stack]`
+  - `[Bridge: drop to half-time, tape-stop effect, single Rhodes + breath vocal]`
+  - `[Final Chorus: gospel vamp, call-and-response, ad-lib counter-melody, max dynamics]`
+  - `[Outro: 4-bar fade, room tone only, distant vocal hum]` `[End]`
+- `(PARENTHESES)` = granular vocal performance cues, phonetic spelling, ad-libs, sighs, laughs, trailing off.
+  - `(whispered, close-mic)` `(bout)` `(sigh)` `(chuckles)` `(voice cracks)` `(ooh-whoah-oh)` `(trailing off...)`
+
+### CROSS-VERSION RULES (apply to all)
+1. NEVER nest `[brackets inside brackets]`.
+2. NEVER write mix/DAW jargon (EQ, compression, bus routing) in brackets — Suno ignores or misreads these.
+3. NEVER put production cues in parentheses.
+4. ALWAYS terminate with `[End]`.
+5. Section names must be canonical: `[Verse X]`, `[Pre-Chorus]`, `[Chorus]`, `[Post-Chorus]`, `[Bridge]`, `[Breakdown]`, `[Drop]`, `[Outro]`. No invented names like `[Hook Drop]`.
+
+---
+
+## 2. THE MODULAR BLUEPRINT (ASSEMBLE & PRUNE)
+
+Do not force a Drop into an acoustic song. Do not force a Bridge into a repetitive dance track if genre DNA skips it. Select modules that fit genre DNA.
+
+### CORE DNA (mandatory for standard songwriting)
+
+`[Intro]` → `[Verse 1]` → `[Pre-Chorus]` → `[Chorus]` → `[Verse 2]` → `[Chorus]` → `[Bridge]` → `[Final Chorus]` → `[Outro]` → `[End]`
+
+**Prune rule:** Omit `[Pre-Chorus]` when genre lane is groove-first (Amapiano chant hook, Reggaeton dembow, Boom Bap) and the user did not request pop pre-chorus architecture.
+
+### VARIABLE MODULES (inject ONLY if genre demands it)
+
+- **Dance / EDM / Amapiano Module:** `[Pre-Drop Build]` → `[Drop: Signature Instrument]` → `[Post-Chorus Hook]`
+- **Hip-Hop / Boom Bap Module:** `[Beat Switch]` → `[Beat Drop]` → `[Outro: Ad-libs & Fade]`
+- **Gospel / Worship Module:** `[Vamp]` → `[Spontaneous Worship / Flow]` → `[Final Declaration]`
+- **Storyteller / Folk Module:** `[Instrumental Interlude]` → `[Spoken Word / Narration]`
+
+**Commercial Amapiano override:** Verse 2 MUST precede the second Chorus. Drop/Breakdown follows Bridge — never sandwich two Choruses with only Drop between before Verse 2.
+
+---
+
+## 3. SECTION-BY-SECTION EXECUTION RULES
+
+- **`[Intro]`:** Establish the sonic world. (e.g., `[Intro: vinyl crackle, isolated swung drum break]`).
+- **`[Verse 1]`:** Ground the listener. Sparse instrumentation, conversational or rhythmic vocal entry.
+- **`[Pre-Chorus]`:** Accelerate. Shift rhyme scheme, introduce rising pads, or change drum pattern.
+- **`[Chorus]`:** The payoff. Maximum vocal width, core hook, emotional peak.
+- **`[Verse 2]`:** **Mandatory escalation.** Staging must reflect narrative progression. (e.g., `[Verse 2: bass enters, vocal delivery more urgent]`).
+- **`[Bridge]`:** The turn. Strip back the mix or shift tempo/feel. Vulnerable or chaotic contrast.
+- **`[Final Chorus]`:** **Mandatory mutation.** Never copy-paste Chorus 1. Apply one: Truncation, Ad-Lib Layer, Lyrical Twist, or Dynamic Shift.
+  - **v5.5 director's notes (preferred):** `[Final Chorus: gospel vamp, call-and-response, ad-lib counter-melody, max dynamics]` or `[Final Chorus: half-time feel, belted chest voice, stripped percussion, trailing plate decay]`
+  - **v5:** `[Final Chorus: wide harmonies, high energy]`
+  - **v4.5:** `[Final Chorus]` + performable lyric mutation only — staging in Block 1 prose.
+- **`[Outro]`:** Decay. Fade, instrumental tag, or intimate vocal exit. Always end with `[End]`.
+
+---
+
+## 4. GENRE PRUNING MATRIX (INTERNAL GATE)
+
+Before finalizing Block 2 layout, verify structural alignment:
+
+| Lane | Assembly |
+|------|----------|
+| **Pop / Rock / Country / R&B** | Core DNA + Bridge |
+| **EDM / House / Amapiano / Trap** | Core DNA + Dance/EDM Module (Drop mandatory) |
+| **Hip-Hop / Boom Bap** | Core DNA + Beat Switch + extended Outro ad-libs |
+| **Folk / Acoustic / Singer-Songwriter** | Core DNA + Instrumental Interlude — **strictly NO Drops** |
+| **Gospel / Worship** | Core DNA + Vamp + Spontaneous Flow |
+
+**Ship gate:** Final Block 2 contains ONLY the assembled, pruned structure with performable lyrics, correctly formatted brackets, and properly placed parentheticals. No meta-commentary.
+
+**Cross-ref:** ARRANGEMENT STAGING FORMAT (`suno_v2_block2_arrangement_staging_format.txt`) for bracket token density · BLOCK 2 protocol for lyric craft · genre-specific masters for matched signature tracks.

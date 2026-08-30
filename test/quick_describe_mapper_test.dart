@@ -32,7 +32,7 @@ void main() {
         'boom bap /GRIT /BEASTMODE',
         base,
       );
-      expect(r.merged.lyricTemperamentCodes, contains('/GRIT'));
+      expect(r.merged.activeModifierCodes, contains('/GRIT'));
       expect(r.merged.vibe, contains('/BEASTMODE'));
       expect(r.merged.generateLyrics, isFalse);
     });

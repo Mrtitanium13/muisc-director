@@ -1,5 +1,7 @@
 import '../models/user_input_model.dart';
 import '../services/openai_service.dart';
+import '../../songwriter/models/lyric_result.dart';
+import '../../songwriter/models/song_brief.dart';
 
 class AiRepository {
   AiRepository(this._openAI);
@@ -14,4 +16,7 @@ class AiRepository {
         input,
         preferLightweightModel: preferLightweightModel,
       );
+
+  Future<LyricResult> generateSongwriterLyrics(SongBrief brief) =>
+      _openAI.generateSongwriterLyrics(brief);
 }

@@ -104,24 +104,20 @@ class CodeTranslationMatrix {
     if (codes.isEmpty) return '';
 
     final category = getGenreCategory(primaryGenre, subGenreFusion);
-    final cFinal = applyGenreSpecificCodes(
-      genre: primaryGenre,
-      codesBlob: codesBlob,
-      sunoVersion: sunoVersion,
-      fusionGenre: subGenreFusion,
-      vibe: vibe,
-    );
-    if (cFinal.isEmpty) return '';
-
     final v = _normalizeVersion(sunoVersion);
-    final codeLabels = codes.map((c) => '/$c').join(', ');
-    return [
-      'CODE TRANSLATION MATRIX (DYNAMIC POWER CODE & TEMPERAMENT INJECTION):',
-      'Genre category: [$category]',
-      'Active codes: $codeLabels',
-      'C_final modifier string ($v): $cFinal',
-      'Weave into Block 1 producer prose per version trimming; echo core sentiment in Block 2 meta-tags on v5.5. '
-          'Blend multiple codes logically — never substitute generic code definitions.',
-    ].join('\n');
+    final matrix = CodeTranslationMatrixData.matrix;
+    final lines = <String>[];
+    for (final code in codes) {
+      final phrase = matrix[code]?[category];
+      if (phrase == null || phrase.trim().isEmpty) continue;
+      final prose = _trimModifier(phrase, v);
+      if (prose.isEmpty) continue;
+      lines.add(
+        '[CODE TRANSLATION: /$code for $category] '
+        '(Apply these specific sonic characteristics): $prose',
+      );
+    }
+    if (lines.isEmpty) return '';
+    return lines.join('\n');
   }
 }

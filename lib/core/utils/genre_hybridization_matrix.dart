@@ -1,12 +1,14 @@
-/// Dual-genre split-DNA routing — SUNO V4 §1 Layer 3 Hybridization Law.
+/// Dual-genre split-DNA routing — GENRE HYBRIDIZATION & CULTURAL ROUTING MATRIX PART 1.
 class GenreHybridizationMatrix {
   GenreHybridizationMatrix._();
 
-  static bool _fusionActive(String fusion) {
+  static bool fusionActive(String fusion) {
     final f = fusion.trim().toLowerCase();
     if (f.isEmpty) return false;
     return f != 'none' && f != 'n/a' && f != 'na' && f != '-' && f != '—';
   }
+
+  static bool _fusionActive(String fusion) => fusionActive(fusion);
 
   /// Injects dominant/subordinate roles when Primary + Fusion are both set.
   static String userBlockDirective({
@@ -18,17 +20,19 @@ class GenreHybridizationMatrix {
     if (primary.isEmpty || !_fusionActive(fusion)) return '';
 
     return [
-      'DUAL-GENRE HYBRIDIZATION (mandatory — Split-DNA routing):',
-      'Genre A DOMINANT ($primary): BPM, drum architecture, structural block tags, climax grid.',
-      'Genre B SUBORDINATE ($fusion): signature instruments, vocal texture, regional vocabulary — '
-          'only in low-density sections (Intro, Verse 1, Breakdown).',
+      'GENRE HYBRIDIZATION & CULTURAL ROUTING MATRIX — PART 1 (Split-DNA; _fusionActive=true):',
+      'Genre A DOMINANT primaryGenre=$primary: global BPM, drum grid, structural block tags, '
+          'line symmetry, main climax grid (Section II + Section IV).',
+      'Genre B SUBORDINATE subGenreFusion=$fusion: signature instruments, vocal texture, '
+          'dialect/patois, regional vocabulary — Intro, Verse 1, Breakdown only.',
+      'Subordinate tag accent rule: name Genre B texture exactly once in Intro OR Verse 1 — '
+          'never repeat in later sections.',
       'Hybridization drop rule: at [The Release], [Main Climax], [Drop], or peak chorus, '
-          'subordinate acoustic/organic elements must be sidechained, filtered, delayed, or loop-mutated '
-          "to lock into Genre A's kick grid — never raw acoustic fighting the electronic climax.",
-      'Subordinate tag accent rule: name Genre B texture once in Intro or Verse 1 only — '
-          'do not repeat acoustic/subordinate instrument labels in Verse 2, Bridge, or breaks.',
-      'Amapiano primary: log drum = FM synthesized bass — never tag as live/acoustic log drum.',
-      'Full law: SUNO V4 Master Production Architecture §1 Layer 3 Dual-Genre Hybridization Law.',
+          'sidechain/filter/delay/loop-mutate subordinate organic elements into Genre A kick grid — '
+          'never raw acoustic competing with electronic climax.',
+      'Amapiano primary exception: log drum = FM synthesized bass — never live/acoustic/organic.',
+      'Lyric imagery: apply PART 2 Anti-Repetition + Regional Daily Life matrix for West African lanes.',
+      'Full law: SUNO V4 Master Production Architecture Layer 3 + GENRE HUMANIZATION ENGINE § SECTION V.',
     ].join('\n');
   }
 }

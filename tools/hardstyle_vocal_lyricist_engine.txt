@@ -1,0 +1,64 @@
+# HARDSTYLE VOCAL LYRICIST ENGINE (Hardstyle · Rawstyle · Euphoric Hardstyle · Hard Bounce)
+
+**When:** Primary genre or fusion matches a Hardstyle lane **and** Block 2 has vocals. **Overrides** melodramatic festival poetry and clinical body-horror phrasing.
+
+**Structure:** **GENRE HUMANIZATION ENGINE § SECTION II.1 ELECTRONIC LOOP GRIDS** (Intro → Vocal Progression → Breakdown → Build → Drop → Outro). Syllables → **MELODY-SYNC § HARDSTYLE / HARD RAVES** row.
+
+---
+
+## VIBE / FOCUS
+
+Intense **physical and emotional reality**. Mandatory dynamic shift:
+
+- **[Breakdown]:** Vulnerable, raw, unpolished spoken-word confession or realization — honest internal state, not cinematic narration.
+- **[Build-up]:** Cold, defiant, aggressive survival or total-release energy — demanding, fierce, determined.
+- **[Pre-Drop]:** Single-word yelled/screamed command immediately before peak distortion kick.
+
+---
+
+## ANTI-AI GUARDRAILS
+
+**STRICTLY BAN** melodramatic clichés and clinical AI phrasing, including:
+
+* *we own the night, ghosts pulling near, strobe light flash, hollows out my chest cavity, destroy the grid, absolute power, face the distortion, final warning*
+* Sci-fi/rave metaphor stack (*frequency, neon, galaxies, seismic, vibrations, dissolving*)
+* Forced narrative backdrops and clock-time staging unless user supplied
+
+---
+
+## STYLISTIC GUIDELINES
+
+**Breakdown (confession):** Honest, unpolished, conversational — e.g. *"The room is spinning," "I'm not running away anymore," "I can't pretend I don't feel this."*
+
+**Build-up (turn cold):** Defiant commands and locked-in determination — e.g. *"Look me in the eyes," "We are staying right here," "Don't you move."*
+
+**Pre-drop trigger:** ONE short aggressive word — yelled or screamed — production trigger before kick impact: *"BREATHE," "NEVER," "GO."*
+
+**Drop / chop sections:** Stutter/chop cells and mantra loops only — no flowing poetic sentences.
+
+Honor user **Key Phrase** on build climax when provided.
+
+---
+
+## EURO-DANCE BOOTLEG SUB-PROFILE (`euro_dance_bootleg`)
+
+**Auto-select when:** `Euro-Dance Bootleg` · `Hands Up EDM` · `Festival Rave Bootleg` fusion · hardstyle × early-2000s Euro-dance crossover.
+
+**Overrides default spoken confession** with **commercial topline bootleg arc:**
+
+- **[Verse] / [Breakdown]:** Emotionally charged, dry filtered Euro-dance vocal — short sung lines or intimate spoken phrases, internal conversational realism, not cinematic travelogue.
+- **[Build-up]:** Vocal repeats and chops accelerate — 2–4 word cells stacking, pitch-shift ready, sidechain-pump friendly; defiant release energy building toward drop.
+- **[Pre-Drop]:** ONE yelled/screamed command word OR emotionally heavy 2–5 syllable phrase immediately before distorted kick impact.
+- **[Drop]:** Pitch-shifted anthem hook chops and mantra loops only — chop-ready 2–6 word cells synced to supersaw hook; no narrative sentences.
+
+**Syllables:** **MELODY-SYNC § HARDSTYLE / HARD RAVES** row · Build chop cells 2–4 syllables · Drop mantra 2–6 syllables.
+
+---
+
+## INTERNAL QA (silent)
+
+* Breakdown reads vulnerable; build reads cold/defiant — clear dynamic shift.
+* Pre-drop = single scream-command word.
+* Zero banned melodramatic/clinical cliché hits.
+* MELODY-SYNC syllable law per section.
+* Zero artist names.

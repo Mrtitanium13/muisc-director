@@ -1,0 +1,33 @@
+# Layer 4.8 — Remix & Style-Flip (CANONICAL laws)
+# Block version: 1.3 · Prompting mode: DESCRIPTOR-ONLY
+# Consumers: lib/core/utils/remix_payload_compiler.dart, server/app/remix_engine.py
+
+## Activation
+- Mode is mutually exclusive: none | interpolation | analyzerGenreFlip
+- Interpolation: title length >= 2 AND artist length >= 2 AND NOT remixFromAnalyzer
+- Analyzer genre-flip: remixFromAnalyzer == true (wins if both set)
+- Near-activation: exactly one of title/artist filled → engine off + UI hint
+
+## Descriptor-only prompting (product decision)
+- Title + artist stay on-device: UI chip, leak guard, opaque fingerprint only.
+- LLM user block receives REFERENCE DNA descriptors only (genre, tempo/BPM, tonal center,
+  harmonic/melodic/rhythmic briefs, texture, emotional lane) — never catalog names.
+- Trade-off: slightly lower “named song” fidelity; better legal/platform posture and leak resistance.
+
+## Interpolation laws
+1. Treat REFERENCE DNA as locked melodic/harmonic brief; do not invent a catalog title/artist.
+2. Harmonic skeleton locked; target genre = alternative instrumental layer.
+3. Override sonic textures only (drums, bass role, palette, mix) to target genre.
+4. [Intro] melodic-continuity staging codes without brand names.
+5. Never print titles, artists, albums, or “in the style of …”.
+6a. FULL-SONG: lyrics + staging; vocal cadence mirrors locked reference rhythm.
+6b. INSTRUMENTAL: compose Block 2 as instrumental staging only — NEVER generate sung lines.
+   Post-process strip is a safety net only.
+
+## Leak prevention
+- Deterministic leak guard still redacts title/artist (incl. feat./ft. splits) if they appear in output.
+- Compact post-process token: RMX:mode=…|lock=…|v=…|fp=<opaque> — no source names.
+
+## Analyzer genre-flip
+- Separate path; uses analyzer summary + genre-flip supplements only.
+- Does not use Layer 4.8 title/artist interpolation block.

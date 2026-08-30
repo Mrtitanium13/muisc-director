@@ -27,8 +27,26 @@ def _load_directive() -> str:
 ELITE_HUMAN_LYRICIST_DIRECTIVE = _load_directive()
 
 
-def elite_human_lyricist_user_block() -> str:
+def build_phonetic_integrity_rule(dialect_style_id: str | None = None) -> str:
+    if (dialect_style_id or "").strip() == "nigerian_pidgin":
+        return (
+            "PHONETIC INTEGRITY (runtime): User LYRIC DIALECT is Nigerian Pidgin. "
+            "DO NOT normalize lyric lines back to standard English. Preserve words like "
+            "dey, na, wahala, e don set, small small exactly as intended by the story."
+        )
+    return (
+        "PHONETIC INTEGRITY (runtime): Do not use trailing apostrophes to simulate "
+        "loose casual speech (write breathing not breathin, going to not gonna) unless "
+        "genre/dialect explicitly permits (Reggae/Dub patois, Hip Hop AAVE). "
+        "Ensures clean phoneme mapping in downstream vocal synthesis."
+    )
+
+
+def elite_human_lyricist_user_block(dialect_style_id: str | None = None) -> str:
+    phonetic = build_phonetic_integrity_rule(dialect_style_id)
     return (
         "ELITE HUMAN LYRICIST (Block 2 — mandatory craft layer; maintain genre conventions):\n"
         + ELITE_HUMAN_LYRICIST_DIRECTIVE
+        + "\n\n"
+        + phonetic
     )

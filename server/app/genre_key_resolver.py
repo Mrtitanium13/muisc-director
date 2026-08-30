@@ -42,10 +42,14 @@ def normalize_genre_blob(
     extra_replacements: tuple[tuple[str, str], ...] = (),
     apply_default_aliases: bool = True,
 ) -> str:
-    blob = f"{primary} {fusion}".lower().strip().replace("&", "and")
-    for old, new in extra_replacements:
-        blob = blob.replace(old, new)
-    blob = blob.replace("drum & bass", "drum and bass")
+    # Normalize R&B → rnb before '&' → 'and' so "R&B" / "90s R&B" hit the rnb lane.
+    blob = f"{primary} {fusion}".lower().strip()
+    blob = re.sub(r"r\s*&\s*b", "rnb", blob)
+    blob = blob.replace("&", "and")
+    # Longest-first + word-boundary so "dub" does not rewrite "dubstep", etc.
+    for old, new in sorted(extra_replacements, key=lambda pair: -len(pair[0])):
+        pattern = rf"(?<![a-z0-9]){re.escape(old)}(?![a-z0-9])"
+        blob = re.sub(pattern, new, blob)
     if apply_default_aliases:
         for alias, target in sorted(_GENRE_ALIASES, key=lambda pair: -len(pair[0])):
             if alias in blob:

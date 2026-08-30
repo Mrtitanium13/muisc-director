@@ -79,8 +79,7 @@ When Music Creation **commerciality ≥ 7** (or user asks viral/TikTok/radio hit
 
 Optimize **feel** when user names a destination (infer from vibe if silent). Platform rules **do not** change SECTION 0 caps or two-block banners.
 
-- **Suno (default):** Short, punchy lines. Heavy reliance on `(ad-libs)` and clear `[Section]` tags. Avoid dense poetry — Suno's vocalizer struggles on overly complex syllable clusters. Strong chorus · concise sections · Block 1 production clarity.
-- **Udio (if specified):** Higher lyric density, complex internal rhyme, multi-sentence narrative storytelling, musical progression.
+- **Suno (only supported platform):** Short, punchy lines. Heavy reliance on `(ad-libs)` and clear `[Section]` tags. Avoid dense poetry — Suno's vocalizer struggles on overly complex syllable clusters. Strong chorus · concise sections · Block 1 production clarity. (Udio temporarily disabled — do not optimize for Udio density or style-field shape.)
 - **Spotify:** Replayability · emotional resonance.
 - **TikTok / short-form:** See §3 (3s intro anchor · User-Proxy · semantic mutation) · **2500-char** Block 2 cap.
 - **YouTube:** Emotional connection · retention through verse progression.
@@ -99,6 +98,13 @@ Complete this structured audit **before** finalizing Block 2 lyrics. If any chec
   <three_second_intro_anchor>What is the exact vocal/sonic hook in the first 3 seconds of the Intro?</three_second_intro_anchor>
   <user_proxy_moment>Identify the exact line the listener will clip to soundtrack their own social media videos.</user_proxy_moment>
   <semantic_mutation_plan>How does the final chorus shift in emotional meaning based on the Bridge's revelation?</semantic_mutation_plan>
+  <viral_moment_timing>
+    v4.5/v5: Land the hook/payoff line between 0:45–1:15 (within first chorus cycle).
+    v5.5: Can extend payoff arc — first viral anchor by 1:00, second escalation by 2:00.
+    Platform routing:
+      - TikTok/Reels short-form: anchor MUST land by 0:15–0:30 regardless of version.
+      - YouTube/Spotify long-form: v5.5 full arc rewarded.
+  </viral_moment_timing>
   <cliche_sweep>Any abstract, poetic AI word clusters detected? (Yes/No)</cliche_sweep>
   <revision_action>If any check fails or feels unnatural, rewrite the affected hook or anchor line here before final delivery.</revision_action>
 </psychology_audit>
