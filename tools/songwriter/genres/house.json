@@ -1,15 +1,55 @@
 {
   "id": "house",
   "version": "1.0.0",
-  "vocabulary_profile": ["groove talk", "body/floor", "late-night warmth"],
+  "vocabulary_profile": [
+    "groove talk",
+    "body/floor",
+    "late-night warmth"
+  ],
   "line_length_guidance": "loop-friendly short phrases",
-  "imagery_guidance": ["floor", "bass", "sweat", "city night"],
+  "imagery_guidance": [
+    "floor",
+    "bass",
+    "sweat",
+    "city night"
+  ],
   "energy_profile": "steady four-on-floor lift",
   "hook_style": "hypnotic refrain; micro-variation OK",
   "rhyme_density": "low",
-  "rhythmic_guidance": ["phrase against the kick", "call-and-response optional"],
-  "common_structures": ["Intro-V-C-V-C-Break-C"],
-  "vocal_phrasing": ["spoken-sung verse", "airy chorus"],
-  "avoid_patterns": ["rock ballad paragraphs", "forced storytelling density"],
+  "rhythmic_guidance": [
+    "phrase against the kick",
+    "call-and-response optional"
+  ],
+  "common_structures": [
+    "Intro-V-C-V-C-Break-C"
+  ],
+  "vocal_phrasing": [
+    "spoken-sung verse",
+    "airy chorus"
+  ],
+  "avoid_patterns": [
+    "rock ballad paragraphs",
+    "forced storytelling density",
+    "rise up",
+    "we are thunder",
+    "burn it down",
+    "open sky",
+    "we can fly",
+    "dance with me",
+    "on the floor",
+    "break the cage",
+    "let it fall",
+    "take me higher",
+    "forever young",
+    "this is real",
+    "holding on",
+    "pieces of me",
+    "drowning in",
+    "find myself",
+    "chasing dreams",
+    "high voltage",
+    "neon lightning",
+    "target lock"
+  ],
   "cultural_notes": []
 }

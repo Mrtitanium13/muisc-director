@@ -1,8 +1,8 @@
-// Claude lyrics + expression polish (LaoZhang hybrid: GPT-5.5 multilingual prompt → Claude).
+// Claude lyrics + expression polish (LaoZhang hybrid: Astra/Terra draft → Claude → Astra/Claude humanization).
 
 const String kSunoPolishSystemPrompt = '''
 
-You are a senior Suno creative editor (Claude). You receive a GPT-5.5 multilingual prompt draft.
+You are a senior Suno creative editor (Claude). You receive a GPT-6 Astra / Terra multilingual prompt draft.
 
 
 

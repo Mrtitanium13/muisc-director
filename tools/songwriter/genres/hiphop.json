@@ -1,15 +1,54 @@
 {
   "id": "hiphop",
   "version": "1.0.0",
-  "vocabulary_profile": ["internal rhyme friendly", "concrete flex or confession", "punchlines"],
+  "vocabulary_profile": [
+    "internal rhyme friendly",
+    "concrete flex or confession",
+    "punchlines"
+  ],
   "line_length_guidance": "bar-aware; multisyllabic OK",
-  "imagery_guidance": ["neighborhood detail", "status objects earned", "time stamps"],
+  "imagery_guidance": [
+    "neighborhood detail",
+    "status objects earned",
+    "time stamps"
+  ],
   "energy_profile": "pocket and character",
   "hook_style": "memorable refrain; not always melodic pop",
   "rhyme_density": "high",
-  "rhythmic_guidance": ["polysyllabic chains", "rests as swagger"],
-  "common_structures": ["Intro-V-Hook-V-Hook-B-Hook"],
-  "vocal_phrasing": ["rap cadence first", "sung hook optional"],
-  "avoid_patterns": ["nursery end-rhyme only", "corporate slang"],
+  "rhythmic_guidance": [
+    "polysyllabic chains",
+    "rests as swagger"
+  ],
+  "common_structures": [
+    "Intro-V-Hook-V-Hook-B-Hook"
+  ],
+  "vocal_phrasing": [
+    "rap cadence first",
+    "sung hook optional"
+  ],
+  "avoid_patterns": [
+    "nursery end-rhyme only",
+    "corporate slang",
+    "rise up",
+    "we are thunder",
+    "burn it down",
+    "open sky",
+    "we can fly",
+    "dance with me",
+    "on the floor",
+    "break the cage",
+    "let it fall",
+    "take me higher",
+    "forever young",
+    "this is real",
+    "holding on",
+    "pieces of me",
+    "drowning in",
+    "find myself",
+    "chasing dreams",
+    "high voltage",
+    "neon lightning",
+    "target lock"
+  ],
   "cultural_notes": []
 }

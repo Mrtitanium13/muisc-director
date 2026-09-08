@@ -86,14 +86,20 @@ STRICT WRITING RULES FOR ALL HARDSTYLE:
     "hollows out my chest cavity", "destroy the grid", "absolute power",
     "face the distortion", "final warning", "infinite skies",
     "blinding light", "chasing dreams", "forever young", "in this moment",
-    "let it go", "put your hands up", "feel the bass", "we're going higher".
+    "let it go", "put your hands up", "feel the bass", "we're going higher",
+    "rise up", "burn it down", "we are thunder", "take me higher",
+    "bounce it back", "hit the floor", "shake it out", "lose the weight",
+    "the bounce feels right".
   Also ban sci-fi/rave metaphor stacks: frequency, static tension,
   vibrations, dissolving, galaxies, starlight, seismic, neon, cosmic,
   wavelength, interstellar, sparks fly, electricity, energy, universe.
 
-- HUMAN REALISM: Breakdown must read like a real person confessing under
-  pressure, not like cinematic narration. Build-up must turn cold and
-  commanding. Pre-drop must be a single production trigger.
+- HUMAN AUTHENTICITY (MANDATORY): Breakdown must read like a real person
+  confessing under pressure — unpolished, specific, song-unique. Build
+  turns cold and commanding. Pre-drop is a single production trigger.
+  Drop chops must pass DROP MANTRA TEST (human phrase for THIS conflict,
+  not stock bounce/festival chants). Never name beat/drop/bass/floor as
+  emotional salvation.
 
 - VOCAL DESCRIPTOR HYGIENE: In staging brackets, never use raw
   personality adjectives. Use: gravelly conversational delivery,
@@ -224,7 +230,7 @@ _PROFILE_RULES: tuple[tuple[tuple[str, ...], str], ...] = (
 )
 
 _EUPHORIC_FEW_SHOT_GOOD = """\
-GOOD (write in this style, end with [End]):
+GOOD (write in this style, end with [End] — invent fresh lines; do not copy):
 
 [Intro]
 [Rolling hardstyle kick-and-bass pattern, sharp percussion, rising filter]
@@ -233,34 +239,33 @@ GOOD (write in this style, end with [End]):
 [Heavy instrumental power, distorted reverse-bass kicks, screech patterns, driving energy]
 
 [Breakdown: Cinematic breakdown, kicks cut, lush pads, ultra-vulnerable close-mic lead]
-I remember the floor cold against my face
-Every door I knocked on stayed closed in place
-I had nothing left but the weight of my name
-Then something louder than the silence came
+I kept your voicemail just to hear you breathe
+I played it twice then deleted everything
+I said I was fine to everybody else
+Then the quiet asked me questions I can't help
 
 [Build-up: Accelerating snare rolls, open-vowel urgency, reverb washout expanding]
-I won't break
-I won't break
-Look at me now
-Look at me now
+Still here
+Still here
+Look at me
+Look at me
 
 [Pre-Drop: Single screamed command, vacuum gap after]
 BREATHE
 
-[Drop: Full impact, distorted kicks, stacked supersaws, anthemic mantra]
-We rise
-We rise
-Through the fire
-We rise
-We rise
-Higher
+[Drop: Full impact, distorted kicks, stacked supersaws, human mantra]
+Don't call again
+Don't call again
+I already left
+Don't call again
 
 [Outro: Warehouse decay, lead synths cut, stripping to pure percussive kick]
 
-[End]"""
+[End]
+"""
 
 _RAWSTYLE_FEW_SHOT_GOOD = """\
-GOOD (write in this style, end with [End]):
+GOOD (write in this style, end with [End] — invent fresh lines; do not copy):
 
 [Intro]
 [Industrial kick rumble, metal percussion, dark noise texture]
@@ -272,7 +277,7 @@ GOOD (write in this style, end with [End]):
 They put my name on a wall I didn't build
 Counted my breath like it was something to kill
 Every shadow got a number, every number got a plan
-But I don't answer to the voice inside the machine, man
+I stopped answering the voice in my head, man
 
 [Build-up: Snare rolls accelerating, cold defiant commands]
 Not today
@@ -286,16 +291,16 @@ NEVER
 [Drop: Maximum distortion, raw kick impact, distorted mantra chops]
 No surrender
 No surrender
+Not today
 No surrender
-Burn it down
-Burn it down
 
 [Outro: Industrial percussion decay, feedback ring]
 
-[End]"""
+[End]
+"""
 
 _HARD_BOUNCE_FEW_SHOT_GOOD = """\
-GOOD (write in this style, end with [End]):
+GOOD (write in this style, end with [End] — invent fresh lines; do not copy):
 
 [Intro]
 [Bouncy four-on-the-floor kick, offbeat stab, crisp clap]
@@ -304,34 +309,34 @@ GOOD (write in this style, end with [End]):
 [Hard bounce energy rising, festival stabs, snare builds]
 
 [Breakdown: Percussion drops, conversational female lead, dry filtered]
-I came here with a heart full of maybe
-Now the floor is the only thing that can save me
-No names, no numbers, just the beat and the night
-I don't need a reason if the bounce feels right
+I told my friends I'd stay home
+Then I showed up anyway
+Don't ask me why I'm smiling
+I don't have a clean answer
 
 [Build-up: Vocal chop fragments stacking, rhythmic urgency]
-Lose the weight
-Lose the weight
-Move with me
-Move with me
+Closer
+Closer
+Don't speak
+Don't speak
 
-[Pre-Drop: Short hype command]
-JUMP
+[Pre-Drop: Short command]
+NOW
 
 [Drop: Hard kick, offbeat bounce, pitch-shifted hook chops]
-Bounce it back
-Bounce it back
-Hit the floor
-Bounce it back
-Bounce it back
-Shake it out
+Don't touch me yet
+Don't touch me yet
+Wait for it
+Don't touch me yet
+Don't touch me yet
+Wait for it
 
 [Outro: Strip to kick and bounce stab, festival fade]
 
 [End]"""
 
 _HARD_DANCE_FEW_SHOT_GOOD = """\
-GOOD (write in this style, end with [End]):
+GOOD (write in this style, end with [End] — invent fresh lines; do not copy):
 
 [Intro]
 [Rolling hardstyle kick-and-bass pattern, 32-bar DJ tool layout]
@@ -340,46 +345,46 @@ GOOD (write in this style, end with [End]):
 [Heavy instrumental power, distorted raw kicks, screech layers, cinematic tension]
 
 [Breakdown: Orchestral strings, kicks cut completely, ultra-vulnerable close-mic lead]
-The silence filled the room after the phone went dark
-I waited for the words that never left a mark
-Every promise sounded like a debt I couldn't pay
-Then the quiet taught me what I needed to say
+The phone went dark mid-sentence
+I waited like a fool for three more rings
+Every promise sounded like a bill
+I finally stopped negotiating with silence
 
 [Build-up: Snare rolls, pitch sweeps, rising open-vowel urgency into reverb vacuum]
-I am still here
-I am still here
-Hear me now
-Hear me now
+Still here
+Still here
+Look at me
+Look at me
 
 [Pre-Drop: Single screamed command]
 GO
 
-[Climax Drop: Epic melodic chord progression, massive pitch-shifted kicks, stacked screaming synths, weighty anthemic mantra]
-Through the silence
-Through the war
-I am louder
-Than before
+[Climax Drop: Epic melodic chord progression, massive pitch-shifted kicks, stacked screaming synths, weighty human mantra]
+Stop apologizing
+Stop apologizing
+I already left
+Stop apologizing
 
 [Second Breakdown: Stripped pad and breath vocal]
-I don't need it easy
-I just need it true
+I don't want easy
+I want honest
 
 [Second Build-up: Accelerating snare rolls]
-Rise up
-Rise up
+Look at me
+Look at me
 
 [Final Drop: Full stack, maximum dynamics]
-Through the silence
-Through the war
-I am louder
-Than before
+Stop apologizing
+Stop apologizing
+I already left
+Stop apologizing
 
 [Outro: 32-bar DJ outro runway, lead synths cut, pure percussive fade to silence]
 
 [End]"""
 
 _EURO_BOOTLEG_FEW_SHOT_GOOD = """\
-GOOD (write in this style, end with [End]):
+GOOD (write in this style, end with [End] — invent fresh lines; do not copy):
 
 [Intro]
 [Hardstyle kick under Euro-dance chord stab, bright synth hook teaser]
@@ -389,26 +394,24 @@ GOOD (write in this style, end with [End]):
 
 [Breakdown: Dry filtered Euro-dance vocal, short sung lines, intimate]
 You said goodbye on a Monday
-I found the floor on a Friday night
+I showed up Friday anyway
 I don't need your maybe
-I just need the floor to feel alive
+I need a clean answer
 
 [Build-up: Vocal repeats and chops accelerate, 2–4 word cells]
 Let me go
 Let me go
-Free tonight
-Free tonight
+Say it straight
+Say it straight
 
 [Pre-Drop: Yelled command or heavy phrase]
 NOW
 
 [Drop: Pitch-shifted anthem hook chops, hard kick, supersaw stabs]
-Free tonight
-Free tonight
 I'm not yours
-Free tonight
-Free tonight
-On the floor
+I'm not yours
+Say it straight
+I'm not yours
 
 [Outro: Euro chord fade, kick and percussion tail]
 

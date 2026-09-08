@@ -37,29 +37,31 @@ BOOTLEG_ROLE_PROMPT = (
 
 UNIVERSAL_GUARDRAILS = """CRITICAL HARDSTYLE VOCAL GUARDRAILS:
 1. DYNAMIC SHIFT: [Breakdown] = vulnerable, unpolished spoken-word confession or realization. [Build-up] = cold, defiant, aggressive survival or total release — demanding and determined.
-2. ANTI-AI BAN: Never use melodramatic clichés (we own the night, ghosts pulling near, strobe light flash) or clinical phrasing (hollows out my chest cavity, destroy the grid, absolute power). Ban sci-fi/rave metaphors (frequency, neon, galaxies, seismic, vibrations, dissolving).
-3. PSYCHOLOGICAL REALISM: Prioritize physical and emotional honesty — internal state over forced scene backdrops or clock times.
-4. PRE-DROP TRIGGER: ONE short aggressive word — yelled or screamed — immediately before peak distortion kick (e.g. "BREATHE," "NEVER," "GO").
-5. DROP SECTIONS: Stutter/chop cells and mantra loops only — no flowing poetic sentences in [Drop].
-6. Structure: GENRE HUMANIZATION ENGINE § SECTION II.1 ELECTRONIC LOOP GRIDS. Syllables: MELODY-SYNC HARDSTYLE / HARD RAVES row. Honor user Key Phrase on build climax when provided."""
+2. HUMAN AUTHENTICITY + ANTI-AI BAN: Never use melodramatic clichés (we own the night, ghosts pulling near, strobe light flash) or clinical phrasing (hollows out my chest cavity, destroy the grid, absolute power). Ban sci-fi/rave metaphors (frequency, neon, galaxies, seismic, vibrations, dissolving). Ban festival slogans (rise up, burn it down, we are thunder, take me higher) and stock bounce filler (bounce it back, hit the floor, shake it out, lose the weight) unless user Key Phrase.
+3. DROP MANTRA TEST: Drop chops must be a human phrase for THIS conflict — not a stock bounce/festival chant.
+4. PSYCHOLOGICAL REALISM: Prioritize physical and emotional honesty — internal state over forced scene backdrops or clock times. Never name beat/drop/bass/floor as emotional salvation.
+5. PRE-DROP TRIGGER: ONE short aggressive word — yelled or screamed — immediately before peak distortion kick (e.g. "BREATHE," "NEVER," "GO," "NOW").
+6. DROP SECTIONS: Stutter/chop cells and mantra loops only — no flowing poetic sentences in [Drop].
+7. Structure: GENRE HUMANIZATION ENGINE § SECTION II.1 ELECTRONIC LOOP GRIDS. Syllables: MELODY-SYNC HARDSTYLE / HARD RAVES row. Honor user Key Phrase on build climax when provided."""
 
 BOOTLEG_GUARDRAILS = """CRITICAL EURO-DANCE BOOTLEG VOCAL GUARDRAILS:
 1. DYNAMIC SHIFT: [Verse]/[Breakdown] = emotionally charged dry filtered Euro-dance topline — short sung lines or intimate spoken phrases, internal conversational realism. [Build-up] = vocal repeats and chops accelerate — 2–4 word cells stacking, sidechain-pump friendly. [Drop] = pitch-shifted anthem hook chops and mantra loops only.
-2. ANTI-AI BAN: Same hardstyle ban stack — no melodramatic clichés, clinical phrasing, or sci-fi/rave metaphors. Ban DJ-callout filler (hands up, feel the beat, we're going higher).
+2. ANTI-AI BAN: Same hardstyle ban stack — no melodramatic clichés, clinical phrasing, sci-fi/rave metaphors, or DJ-callout filler (hands up, feel the beat, we're going higher, rise up, free tonight as empty filler).
 3. PRE-DROP TRIGGER: ONE yelled/screamed command word OR emotionally heavy 2–5 syllable phrase before distorted kick impact.
-4. DROP: Chop-ready 2–6 word cells synced to supersaw hook — no narrative sentences.
+4. DROP: Chop-ready 2–6 word cells synced to supersaw hook — no narrative sentences; must pass DROP MANTRA TEST.
 5. Syllables: MELODY-SYNC HARDSTYLE / HARD RAVES row. Honor user Key Phrase on build climax and drop hook when provided."""
 
 STYLISTIC_EXAMPLES = """STYLISTIC EXAMPLES (invent fresh lines — do not copy verbatim):
-- Breakdown confession: "The room is spinning," "I'm not running away anymore."
-- Build defiance: "Look me in the eyes," "We are staying right here."
-- Pre-drop scream: "BREATHE" / "NEVER" / "GO" (single word only)."""
+- Breakdown confession: "I told my friends I'd stay home," "I showed up anyway," "Don't ask for a clean answer."
+- Build defiance: "Closer—," "Don't speak—," "Look at me."
+- Pre-drop scream: "BREATHE" / "NEVER" / "GO" / "NOW" (single word only).
+- Drop mantra: song-specific human phrase (e.g. "Don't touch me yet") — never stock bounce filler."""
 
 BOOTLEG_EXAMPLES = """BOOTLEG EXAMPLES (invent fresh lines — do not copy verbatim):
-- Verse/breakdown: "I can't pretend," "Don't let go," "Say my name."
-- Build chops: "Hold on — hold on — hold on," "All I — all I — wanted."
+- Verse/breakdown: "You said goodbye on a Monday," "I showed up Friday anyway," "I need a clean answer."
+- Build chops: "Let me go — let me go," "Say it straight — say it straight."
 - Pre-drop: "GO" / "NOW" / "NEVER" (single word or 2–5 syllables).
-- Drop mantra: "Never looking back," "Stay with me — stay with me."""
+- Drop mantra: "I'm not yours" — song-specific, not stock hands-up chants."""
 
 
 def _genre_blob(primary: str, fusion: str) -> str:

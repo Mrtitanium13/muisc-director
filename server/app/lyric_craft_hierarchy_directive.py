@@ -2,6 +2,13 @@
 
 from __future__ import annotations
 
+_PATH_A_DIRECTIVE = (
+    "[LYRIC CRAFT HIERARCHY] PATH A — USER LYRICS are primary authority. "
+    "Copy the provided sung lines into BLOCK 2 verbatim. Do not rewrite, "
+    "paraphrase, or replace them. Genre / humanism / temperament may inform "
+    "Block 1 production prose and arrangement staging tags only."
+)
+
 _DIRECTIVE = (
     "[LYRIC CRAFT HIERARCHY] (MANDATORY INSTRUCTION: Apply directives in this "
     "strict order of authority: "
@@ -42,4 +49,6 @@ def lyric_craft_hierarchy_user_block(
         use_vibe_as_lyric_source=use_vibe_as_lyric_source,
     ):
         return ""
+    if str(optional_lyrics or "").strip():
+        return _PATH_A_DIRECTIVE
     return _DIRECTIVE

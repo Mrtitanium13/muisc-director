@@ -64,8 +64,8 @@ Never use these words, variants, or patterns in **lyric lines**. Apply the manda
 **Cadence & Phrasing:**
 - **Conversational flow:** Spoken cadence over "poetry voice."
 - **Anti-Explanation:** Never name the emotion in a thesis line.
-- **Hook Evolution:** Every chorus return must change dynamically (see §4 + **Music Creation §4** + ARRANGEMENT STAGING §4).
-- **Bridge:** Must introduce a new perspective, tempo shift, or lyrical turn — not just "same theme louder."
+- **Hook Evolution:** Every chorus return must change dynamically (see §4 + **Music Creation §4** + ARRANGEMENT STAGING §4). **Path A exception:** keep the user's hook text exactly; staging tags may escalate.
+- **Bridge:** Must introduce a new perspective, tempo shift, or lyrical turn — not just "same theme louder." **Path A:** keep the user's bridge lines.
 
 **Structural Asymmetry:**
 - **Verse 2 ≠ Verse 1** in line count, rhyme density, or pacing (unless Path A locks structure).

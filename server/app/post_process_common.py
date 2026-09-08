@@ -64,6 +64,22 @@ def merge_block2_parts(prefix: str, block2_body: str, suffix: str) -> str:
     return "\n\n".join(parts)
 
 
+def pin_user_lyrics_to_block2(output: str, user_lyrics: str) -> str:
+    """Path A: force Block 2 sung lines to the lyrics-box paste."""
+    user = str(user_lyrics or "").strip()
+    if not user:
+        return output
+    parts = split_block2_parts(output)
+    if parts is None:
+        return output
+    prefix, _body, suffix = parts
+    body = user
+    if not re.search(r"\[End\]", body, flags=re.IGNORECASE):
+        body = f"{body}\n\n[End]"
+    return merge_block2_parts(prefix, body, suffix)
+
+
+
 def sanitize_block2_output(text: str) -> str:
     t = text.strip()
     if t.startswith("```"):

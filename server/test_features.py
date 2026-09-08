@@ -35,8 +35,12 @@ from app.gemini_analysis import (
     sanitize_analyzer_summary,
 )
 from app.llm_config import (
+    LAOZHANG_COMPRESSION_MODEL,
+    LAOZHANG_DRAFT_MODEL,
+    LAOZHANG_DRAFT_MULTILINGUAL_MODEL,
     LAOZHANG_GEMINI_FLASH,
     LAOZHANG_GEMINI_PRO,
+    LAOZHANG_HUMANIZATION_MULTILINGUAL_MODEL,
     LAOZHANG_LYRICS_PRIMARY_MODEL,
     LAOZHANG_PROMPT_MODEL,
     LAOZHANG_THEME_CONSISTENCY_MODEL,
@@ -241,7 +245,7 @@ class TestLlmConfig(unittest.TestCase):
                 resolve_draft_model(
                     language="English", provider="laozhang", lyrics_task=True
                 ),
-                LAOZHANG_VISION_MODEL,
+                LAOZHANG_DRAFT_MODEL,
             )
             self.assertEqual(
                 resolve_draft_model(
@@ -287,7 +291,7 @@ class TestLlmConfig(unittest.TestCase):
                 resolve_draft_model(
                     language="French", lightweight=False, provider="laozhang"
                 ),
-                LAOZHANG_VISION_MODEL,
+                LAOZHANG_DRAFT_MULTILINGUAL_MODEL,
             )
 
     def test_openrouter_prod_env_does_not_override_laozhang(self):
@@ -318,7 +322,7 @@ class TestLlmConfig(unittest.TestCase):
                 resolve_humanization_model(
                     provider="laozhang", language="French"
                 ),
-                LAOZHANG_PROMPT_MODEL,
+                LAOZHANG_HUMANIZATION_MULTILINGUAL_MODEL,
             )
             self.assertEqual(
                 resolve_humanization_model(
@@ -326,11 +330,11 @@ class TestLlmConfig(unittest.TestCase):
                     language="English",
                     dialect_style_id="nigerian_pidgin",
                 ),
-                LAOZHANG_PROMPT_MODEL,
+                LAOZHANG_HUMANIZATION_MULTILINGUAL_MODEL,
             )
             self.assertEqual(
                 resolve_compression_model(provider="laozhang"),
-                LAOZHANG_LYRICS_PRIMARY_MODEL,
+                LAOZHANG_COMPRESSION_MODEL,
             )
             self.assertEqual(
                 resolve_polish_model(provider="laozhang", lyrics_task=True),
@@ -413,10 +417,10 @@ class TestPromptPipeline(unittest.TestCase):
                 max_tokens=500,
             )
         self.assertEqual(text, "BLOCK 1 polished")
-        self.assertIn(LAOZHANG_VISION_MODEL, pipeline)
+        self.assertIn(LAOZHANG_DRAFT_MODEL, pipeline)
         draft_model = client.chat.completions.create.call_args_list[0].kwargs["model"]
         polish_model = client.chat.completions.create.call_args_list[1].kwargs["model"]
-        self.assertEqual(draft_model, LAOZHANG_VISION_MODEL)
+        self.assertEqual(draft_model, LAOZHANG_DRAFT_MODEL)
         self.assertEqual(polish_model, LAOZHANG_LYRICS_PRIMARY_MODEL)
         self.assertEqual(client.chat.completions.create.call_count, 2)
 
@@ -857,10 +861,16 @@ class TestHttpMiddleware(unittest.TestCase):
 
 
 class TestCompletionTokenKwargs(unittest.TestCase):
-    def test_gpt55_uses_max_completion_tokens_only(self):
+    def test_gpt56_sol_uses_max_completion_tokens_only(self):
         from app.llm_config import completion_token_kwargs
 
-        kw = completion_token_kwargs("gpt-5.5", 4096)
+        kw = completion_token_kwargs("gpt-5.6-sol", 4096)
+        self.assertEqual(kw, {"max_completion_tokens": 4096})
+
+    def test_gpt6_astra_uses_max_completion_tokens_only(self):
+        from app.llm_config import completion_token_kwargs
+
+        kw = completion_token_kwargs("gpt-6-astra", 4096)
         self.assertEqual(kw, {"max_completion_tokens": 4096})
         self.assertNotIn("max_tokens", kw)
 
@@ -992,7 +1002,7 @@ class TestApiRoutes(unittest.TestCase):
         self.assertEqual(r.status_code, 200)
         body = r.json()
         self.assertIn("BLOCK 2", body["prompt"])
-        self.assertIn(LAOZHANG_VISION_MODEL, body.get("pipeline", ""))
+        self.assertIn(LAOZHANG_DRAFT_MODEL, body.get("pipeline", ""))
         self.assertEqual(client.chat.completions.create.call_count, 2)
 
     @patch("app.laozhang_post_process.suno_compression_pass_enabled", return_value=False)
@@ -1892,7 +1902,7 @@ class TestSunoCompressionPass(unittest.TestCase):
         self.assertIn("wahala", prompt)
         self.assertIn("purely phonetic", prompt)
         self.assertIn("LaoZhang English song context", prompt)
-        self.assertIn("GPT-5.5", prompt)
+        self.assertIn("GPT-6 Astra", prompt)
 
     def test_laozhang_humanization_model_routing(self):
         self.assertTrue(
@@ -1915,7 +1925,7 @@ class TestSunoCompressionPass(unittest.TestCase):
         self.assertTrue(suno_compression_pass_enabled(provider="laozhang"))
         self.assertEqual(
             resolve_compression_model(provider="laozhang"),
-            "claude-sonnet-4-5",
+            LAOZHANG_COMPRESSION_MODEL,
         )
 
     def test_apply_compression_pass_mocked(self):

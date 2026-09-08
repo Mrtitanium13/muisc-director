@@ -73,7 +73,7 @@ def match_route(genre: str, language: str) -> dict[str, Any]:
     for route in routes:
         if route.get("id") == "default":
             return route
-    return {"id": "default", "primary": "gpt-5.5", "secondary": "gemini-2.5-pro"}
+    return {"id": "default", "primary": "gpt-6-astra", "secondary": "claude-sonnet"}
 
 
 def _slug_for(logical: str, provider: str) -> str:
@@ -97,7 +97,7 @@ def decide_route(
     data = load_routing()
     route = match_route(genre, language)
     stage_prefs = (data.get("stage_preferences") or {}).get(stage) or []
-    primary_logical = route.get("primary") or "gpt-5.5"
+    primary_logical = route.get("primary") or "gpt-6-astra"
     secondary_logical = route.get("secondary") or "gemini-2.5-pro"
 
     ordered: list[str] = []
@@ -115,7 +115,7 @@ def decide_route(
             logicals.append(m)
 
     if not logicals:
-        logicals = ["gpt-5.5"]
+        logicals = ["gpt-6-astra"]
 
     prov = "openrouter" if provider == "openrouter" else "laozhang"
     primary = ModelTarget(

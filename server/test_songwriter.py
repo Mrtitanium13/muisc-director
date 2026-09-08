@@ -56,7 +56,7 @@ class TestLanguagePacks(unittest.TestCase):
 class TestRouting(unittest.TestCase):
     def test_english_pop_prefers_gpt(self):
         route = match_route("pop", "English")
-        self.assertEqual(route.get("primary"), "gpt-5.5")
+        self.assertEqual(route.get("primary"), "gpt-6-astra")
 
     def test_country_prefers_claude(self):
         route = match_route("country", "en")

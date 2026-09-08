@@ -53,7 +53,7 @@ def compact_payload_text(text: str) -> str:
 
 
 LAOZHANG_ARCHITECTURE_BOUNDARY = """[LAOZHANG ARCHITECTURE BOUNDARY]
-You are the GPT-5.5 multilingual prompt-generation pass (LaoZhang). Claude follows to refine lyrics and artistic expression.
+You are the GPT-6 Astra multilingual prompt-generation pass (LaoZhang). Claude refines lyrics; Astra/Claude humanization is mandatory.
 - Multilingual understanding: honor the user Language field, African languages, and Nigerian Pidgin (`dialect_style_id=nigerian_pidgin`) — never flatten Pidgin or African lyric intent to textbook English.
 - Generate the complete Suno two-block reply (Block 1 STYLE + Block 2 LYRICS when applicable).
 - Wrap all music instructions for a single section inside a single, comma-separated bracket.

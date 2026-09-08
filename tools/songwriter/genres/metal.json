@@ -1,15 +1,53 @@
 {
   "id": "metal",
   "version": "1.0.0",
-  "vocabulary_profile": ["intensity", "mythic or personal rage", "precise verbs"],
+  "vocabulary_profile": [
+    "intensity",
+    "mythic or personal rage",
+    "precise verbs"
+  ],
   "line_length_guidance": "compact; syncopated syllables OK",
-  "imagery_guidance": ["pressure", "forge", "storm as earned image"],
+  "imagery_guidance": [
+    "pressure",
+    "forge",
+    "storm as earned image"
+  ],
   "energy_profile": "high intensity; controlled aggression",
   "hook_style": "chant or scream-ready title",
   "rhyme_density": "medium",
-  "rhythmic_guidance": ["syllables lock to riffs", "space for breakdowns"],
-  "common_structures": ["V-C-V-C-B-C"],
-  "vocal_phrasing": ["growl/clean contrast if brief allows"],
-  "avoid_patterns": ["soft-pop filler", "greeting-card hope"],
+  "rhythmic_guidance": [
+    "syllables lock to riffs",
+    "space for breakdowns"
+  ],
+  "common_structures": [
+    "V-C-V-C-B-C"
+  ],
+  "vocal_phrasing": [
+    "growl/clean contrast if brief allows"
+  ],
+  "avoid_patterns": [
+    "soft-pop filler",
+    "greeting-card hope",
+    "rise up",
+    "we are thunder",
+    "burn it down",
+    "open sky",
+    "we can fly",
+    "dance with me",
+    "on the floor",
+    "break the cage",
+    "let it fall",
+    "take me higher",
+    "forever young",
+    "this is real",
+    "holding on",
+    "pieces of me",
+    "drowning in",
+    "find myself",
+    "chasing dreams",
+    "high voltage",
+    "neon lightning",
+    "target lock"
+  ],
   "cultural_notes": []
 }

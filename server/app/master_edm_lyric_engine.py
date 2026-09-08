@@ -126,15 +126,20 @@ STRICT WRITING RULES FOR ALL EDM:
     "infinite skies", "blinding light", "we own the night", "lights go down",
     "scream it out", "side by side", "chasing dreams", "forever young",
     "in this moment", "let it go", "everybody jump", "feel the bass",
-    "drop the bass".
+    "drop the bass", "we are thunder", "rise up", "burn it down",
+    "take me higher", "break free", "set me free", "we carry on",
+    "hold the line", "louder than before", "holding on", "broken inside",
+    "pieces of me", "drowning in", "lost in the dark", "find myself", "open sky", "we can fly", "break the cage", "let it fall", "dance with me", "on the floor", "holding on softer".
   Also ban sci-fi/rave metaphor stacks: frequency, static tension,
   vibrations, dissolving, galaxies, starlight, seismic, neon, cosmic,
   wavelength, interstellar, sparks fly, electricity, energy, universe.
 
-- HUMAN REALISM: EDM lyrics should feel like internal thoughts or
-  intimate confessions, not like a DJ shouting at a crowd. Focus on
-  psychological states: tension, release, boundaries, longing,
-  defiance, vulnerability.
+- HUMAN AUTHENTICITY (MANDATORY): EDM lyrics should feel like internal
+  thoughts or intimate confessions — half-thoughts, blunt speech,
+  song-specific interpersonal friction — not DJ crowd-shouts or AI
+  festival slogans. Drop mantras must pass DROP MANTRA TEST (only fits
+  THIS conflict). Ban production-as-emotion (beat/drop/bass/floor as
+  savior) and templated "I don't need X / I just need Y" couplets.
 
 - VOCAL DESCRIPTOR HYGIENE: In staging brackets, never use raw
   personality adjectives. Use: dry intimate vocal, close-mic lead,
@@ -402,48 +407,51 @@ Bend back
 [End]"""
 
 _TRANCE_FEW_SHOT_GOOD = """\
-GOOD (write in this style, end with [End]):
+GOOD (write in this style, end with [End] — invent fresh lines; do not copy):
 
 [Intro: Arpeggio, lush pad, evolving atmosphere]
 
 [Verse 1: Airy floating female lead, breathy, long vowels]
-I waited at the edge of every word you never said
-Holding onto silence like a promise
-The sky was always gray before you turned away
-Now I'm learning how to find the horizon
+I waited for a text you never sent
+I practiced what I'd say then stayed silent
+You looked busy when I needed you most
+I learned the quiet like a second home
 
 [Pre-Chorus: Harmony doubles, rising pads]
-Take me there
-Take me there
-Hold me here
-Hold me here
+Say my name
+Say my name
+Or don't
+Or don't
 
 [Drop / Chorus: Supersaw lift, euphoric release]
-Open sky
-Open sky
-We can fly
-Open sky
+Don't leave me hanging
+Don't leave me hanging
+Just say it
+Don't leave me hanging
 
 [Breakdown: Stripped pad and lead, intimate]
-I don't need a map to tell me where you are
-I just need the moment when the fear falls apart
+I don't need a speech
+I need one honest line
+I don't need a speech
+I need one honest line
 
 [Build-up 2: Vocal chops, snare roll]
-Open sky
-Open sky
+Say my name
+Say my name
 
 [Final Drop / Chorus: Full stack, octave lift, max dynamics]
-Open sky
-Open sky
-We can fly
-Open sky
+Don't leave me hanging
+Don't leave me hanging
+Just say it
+Don't leave me hanging
 
 [Outro: Pad fade, delay tail]
 
-[End]"""
+[End]
+"""
 
 _FUTURE_BASS_FEW_SHOT_GOOD = """\
-GOOD (write in this style, end with [End]):
+GOOD (write in this style, end with [End] — invent fresh lines; do not copy):
 
 [Intro: Soft pad, pitched vocal chop, sparse drums]
 
@@ -458,88 +466,90 @@ I forget it's not you
 Let it fade
 Let it fade
 Or let it burn
-Let it burn
+Or let it burn
 
 [Drop / Chorus: Heavy sub drop, supersaw chords, wistful hook]
-I still feel you
+I still hear you
 In the quiet
 In the quiet
-I still feel you
+I still hear you
 
 [Verse 2: Bass enters, fuller drums]
 I found your note inside a book I never finished
 You wrote "keep going"
-So I kept the pain and called it courage
+So I kept going without asking why
 
 [Pre-Chorus: Vocal stack enters, drums build]
 Let it fade
 Let it fade
 Or let it burn
-Let it burn
+Or let it burn
 
 [Drop / Chorus: Heavy sub drop, supersaw chords, wistful hook]
-I still feel you
+I still hear you
 In the quiet
 In the quiet
-I still feel you
+I still hear you
 
 [Bridge: Stripped to piano and vocal]
 Maybe healing isn't forgetting
-Maybe healing is holding on softer
+Maybe it's putting the hoodie away
 
 [Final Drop / Chorus: Full arrangement, key lift, vocal stack]
-I still feel you
+I still hear you
 In the quiet
 In the quiet
-I still feel you
+I still hear you
 
 [Outro: Vocal chop fade, reverb wash]
 
-[End]"""
+[End]
+"""
 
 _DUBSTEP_DNB_FEW_SHOT_GOOD = """\
-GOOD (write in this style, end with [End]):
+GOOD (write in this style, end with [End] — invent fresh lines; do not copy):
 
 [Intro: Half-time snare texture, eerie pad, sub rumble]
 
 [Verse 1: Smooth warm male lead, liquid DnB pocket]
-I was carrying a weight I couldn't name
+I was carrying a weight I wouldn't name
 Every step felt like a sentence
-Then the bassline came and shook it loose
-Now I'm running where the rhythm lets me
+Then I said it out loud in the kitchen
+And the room got lighter
 
 [Build-up: Snare roll, rising energy]
-Break the cage
-Break the cage
-Let it fall
-Let it fall
+Say it now
+Say it now
+No more wait
+No more wait
 
 [Pre-Drop: Command]
 FREE
 
 [Drop: Heavy reese bass, rapid breaks, vocal chop]
-Break the cage
-Break the cage
-Free fall
-Break the cage
+Say it now
+Say it now
+Out loud
+Say it now
 
 [Breakdown: Stripped atmosphere, spoken fragment]
 No more waiting for permission
-No more holding my breath in the dark
+No more biting my tongue in the dark
 
 [Build-up 2: Faster snare roll]
-Rise up
-Rise up
+Out loud
+Out loud
 
 [Final Drop: Maximum impact, layered bass]
-Break the cage
-Break the cage
-Free fall
-Break the cage
+Say it now
+Say it now
+Out loud
+Say it now
 
 [Outro: Bass decay, reverb tail]
 
-[End]"""
+[End]
+"""
 
 _AMAPIANO_FEW_SHOT_GOOD = """\
 GOOD (write in this style, end with [End]):
@@ -579,7 +589,7 @@ Baba bless the road
 [End]"""
 
 _GARAGE_FEW_SHOT_GOOD = """\
-GOOD (write in this style, end with [End]):
+GOOD (write in this style, end with [End] — invent fresh lines; do not copy):
 
 [Intro: 2-step garage chop, crisp snare, vocal stab]
 
@@ -587,19 +597,19 @@ GOOD (write in this style, end with [End]):
 Saw you at the counter
 Didn't mean to stare
 You were ordering a drink
-I was planning what to wear
+I was choosing what to wear
 
 [Pre-Chorus: Rapid rhythmic cells]
 Make a move
 Make a move
-Before the night is through
-Before the night is through
+Before I talk myself out
+Before I talk myself out
 
 [Chorus: Bouncy bass, vocal chop hook]
-Dance with me
-Dance with me
-On the floor
-Dance with me
+Come talk to me
+Come talk to me
+Right now
+Come talk to me
 
 [Verse 2: Ad-libs enter, energy up]
 You smiled at the window
@@ -610,30 +620,31 @@ And I don't need more
 [Pre-Chorus: Rapid rhythmic cells]
 Make a move
 Make a move
-Before the night is through
-Before the night is through
+Before I talk myself out
+Before I talk myself out
 
 [Chorus: Bouncy bass, vocal chop hook]
-Dance with me
-Dance with me
-On the floor
-Dance with me
+Come talk to me
+Come talk to me
+Right now
+Come talk to me
 
 [Bridge: Stripped drums, spoken flirtation]
 One more song
 Then we see
-Where this rhythm
-Wants to be
+If this is real
+Or just caffeine
 
 [Final Chorus: Full stack, swing energy]
-Dance with me
-Dance with me
-On the floor
-Dance with me
+Come talk to me
+Come talk to me
+Right now
+Come talk to me
 
 [Outro: Vocal chop fade, 2-step groove tail]
 
-[End]"""
+[End]
+"""
 
 _FEW_SHOT_GOOD: dict[str, str] = {
     PROFILE_HOUSE_DEEP_TECH: _HOUSE_FEW_SHOT_GOOD,

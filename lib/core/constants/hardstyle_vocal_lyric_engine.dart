@@ -30,11 +30,13 @@ You are a master lyricist for Hardstyle / Euro-Dance Festival Bootleg crossovers
   static const String universalGuardrails = '''
 CRITICAL HARDSTYLE VOCAL GUARDRAILS:
 1. DYNAMIC SHIFT: [Breakdown] = vulnerable, unpolished spoken-word confession or realization. [Build-up] = cold, defiant, aggressive survival or total release — demanding and determined.
-2. ANTI-AI BAN: Never use melodramatic clichés (we own the night, ghosts pulling near, strobe light flash) or clinical phrasing (hollows out my chest cavity, destroy the grid, absolute power). Ban sci-fi/rave metaphors (frequency, neon, galaxies, seismic, vibrations, dissolving).
-3. PSYCHOLOGICAL REALISM: Prioritize physical and emotional honesty — internal state over forced scene backdrops or clock times.
-4. PRE-DROP TRIGGER: ONE short aggressive word — yelled or screamed — immediately before peak distortion kick (e.g. "BREATHE," "NEVER," "GO").
-5. DROP SECTIONS: Stutter/chop cells and mantra loops only — no flowing poetic sentences in [Drop].
-6. Structure: GENRE HUMANIZATION ENGINE § SECTION II.1 ELECTRONIC LOOP GRIDS. Syllables: MELODY-SYNC HARDSTYLE / HARD RAVES row. Honor user Key Phrase on build climax when provided.''';
+2. HUMAN AUTHENTICITY (MANDATORY): Write like someone confessing over a loud kick — unpolished speech, awkward honesty, song-specific interpersonal friction. Hard Bounce: playful/restless human tension — never stock bounce/floor/shake filler.
+3. ANTI-AI BAN: Never use melodramatic clichés (we own the night, ghosts pulling near, strobe light flash) or clinical phrasing (hollows out my chest cavity, destroy the grid, absolute power). Ban festival slogans (rise up, burn it down, we are thunder, take me higher, break free, louder than before, hold the line). Ban bounce filler (bounce it back, hit the floor, shake it out, lose the weight, the bounce feels right, beat and the night) unless user Key Phrase forces a word. Ban sci-fi/rave metaphors (frequency, neon, galaxies, seismic, vibrations, dissolving).
+4. DROP MANTRA TEST: If the chop could be any bounce track's stock chant, rewrite to THIS conflict.
+5. PSYCHOLOGICAL REALISM: Prioritize physical and emotional honesty — internal state over forced scene backdrops or clock times.
+6. PRE-DROP TRIGGER: ONE short aggressive word — yelled or screamed — immediately before peak distortion kick (e.g. "BREATHE," "NEVER," "GO").
+7. DROP SECTIONS: Stutter/chop cells and mantra loops only — no flowing poetic sentences in [Drop].
+8. Structure: GENRE HUMANIZATION ENGINE § SECTION II.1 ELECTRONIC LOOP GRIDS. Syllables: MELODY-SYNC HARDSTYLE / HARD RAVES row. Honor user Key Phrase on build climax when provided.''';
 
   static const String bootlegGuardrails = '''
 CRITICAL EURO-DANCE BOOTLEG VOCAL GUARDRAILS:
@@ -47,7 +49,7 @@ CRITICAL EURO-DANCE BOOTLEG VOCAL GUARDRAILS:
   static const String stylisticExamples = '''
 STYLISTIC EXAMPLES (invent fresh lines — do not copy verbatim):
 - Breakdown confession: "The room is spinning," "I'm not running away anymore."
-- Build defiance: "Look me in the eyes," "We are staying right here."
+- Build defiance: "Look me in the eyes," "Don't ask again."
 - Pre-drop scream: "BREATHE" / "NEVER" / "GO" (single word only).''';
 
   static const String bootlegExamples = '''
@@ -55,7 +57,7 @@ BOOTLEG EXAMPLES (invent fresh lines — do not copy verbatim):
 - Verse/breakdown: "I can't pretend," "Don't let go," "Say my name."
 - Build chops: "Hold on — hold on — hold on," "All I — all I — wanted."
 - Pre-drop: "GO" / "NOW" / "NEVER" (single word or 2–5 syllables).
-- Drop mantra: "Never looking back," "Stay with me — stay with me."''';
+- Drop mantra: "Don't call again," "Not today — not today."''';
 
   static String _genreBlob(String primary, String fusion) =>
       '${primary.trim()} ${fusion.trim()}'.toLowerCase();

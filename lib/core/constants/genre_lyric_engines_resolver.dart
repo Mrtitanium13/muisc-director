@@ -5,10 +5,15 @@ import 'big_room_hardstyle_cinematic_hybrid_vocal_lyric_engine.dart';
 import 'edm_breakdown_vocal_lyric_engine.dart';
 import 'genre_lyric_engines_data.dart';
 import 'hardstyle_vocal_lyric_engine.dart';
+import 'master_country_lyric_engine.dart';
 import 'master_edm_lyric_engine.dart';
 import 'master_gospel_lyric_engine.dart';
 import 'master_hardstyle_lyric_engine.dart';
+import 'master_hiphop_lyric_engine.dart';
+import 'master_pop_lyric_engine.dart';
 import 'master_progressive_big_room_house_lyric_engine.dart';
+import 'master_rnb_lyric_engine.dart';
+import 'master_rock_lyric_engine.dart';
 import 'southern_gospel_country_lyric_engine.dart';
 import '../utils/advanced_thematic_variator.dart';
 
@@ -268,6 +273,99 @@ class GenreLyricEnginesResolver {
       return _format(
         GenreLyricEnginesData.fileEngineBodies['edm_breakdown_vocal'] ?? '',
       );
+    }
+
+    // Core commercial lanes (after EDM/gospel specialists).
+    // Order: R&B before Hip-Hop (trap soul), Country before Pop (country pop),
+    // Rock before Pop (pop punk / indie rock).
+    if (MasterRnbLyricEngine.isRnbLane(
+      primaryGenre: primaryGenre,
+      subGenreFusion: subGenreFusion,
+      vibe: vibe,
+      lyricThemeNotes: lyricThemeNotes,
+    )) {
+      final composed = MasterRnbLyricEngine.composeUserBlock(
+        primaryGenre: primaryGenre,
+        subGenreFusion: subGenreFusion,
+        vibe: vibe,
+        lyricThemeNotes: lyricThemeNotes,
+        vocalSpec: vocalSpec,
+        vocalTone: vocalTone,
+        bpmHint: bpmHint,
+      );
+      if (composed.isNotEmpty) return _format(composed);
+    }
+
+    if (MasterHipHopLyricEngine.isHipHopLane(
+      primaryGenre: primaryGenre,
+      subGenreFusion: subGenreFusion,
+      vibe: vibe,
+      lyricThemeNotes: lyricThemeNotes,
+    )) {
+      final composed = MasterHipHopLyricEngine.composeUserBlock(
+        primaryGenre: primaryGenre,
+        subGenreFusion: subGenreFusion,
+        vibe: vibe,
+        lyricThemeNotes: lyricThemeNotes,
+        vocalSpec: vocalSpec,
+        vocalTone: vocalTone,
+        bpmHint: bpmHint,
+      );
+      if (composed.isNotEmpty) return _format(composed);
+    }
+
+    if (MasterCountryLyricEngine.isCountryLane(
+      primaryGenre: primaryGenre,
+      subGenreFusion: subGenreFusion,
+      vibe: vibe,
+      lyricThemeNotes: lyricThemeNotes,
+    )) {
+      final composed = MasterCountryLyricEngine.composeUserBlock(
+        primaryGenre: primaryGenre,
+        subGenreFusion: subGenreFusion,
+        vibe: vibe,
+        lyricThemeNotes: lyricThemeNotes,
+        vocalSpec: vocalSpec,
+        vocalTone: vocalTone,
+        bpmHint: bpmHint,
+      );
+      if (composed.isNotEmpty) return _format(composed);
+    }
+
+    if (MasterRockLyricEngine.isRockLane(
+      primaryGenre: primaryGenre,
+      subGenreFusion: subGenreFusion,
+      vibe: vibe,
+      lyricThemeNotes: lyricThemeNotes,
+    )) {
+      final composed = MasterRockLyricEngine.composeUserBlock(
+        primaryGenre: primaryGenre,
+        subGenreFusion: subGenreFusion,
+        vibe: vibe,
+        lyricThemeNotes: lyricThemeNotes,
+        vocalSpec: vocalSpec,
+        vocalTone: vocalTone,
+        bpmHint: bpmHint,
+      );
+      if (composed.isNotEmpty) return _format(composed);
+    }
+
+    if (MasterPopLyricEngine.isPopLane(
+      primaryGenre: primaryGenre,
+      subGenreFusion: subGenreFusion,
+      vibe: vibe,
+      lyricThemeNotes: lyricThemeNotes,
+    )) {
+      final composed = MasterPopLyricEngine.composeUserBlock(
+        primaryGenre: primaryGenre,
+        subGenreFusion: subGenreFusion,
+        vibe: vibe,
+        lyricThemeNotes: lyricThemeNotes,
+        vocalSpec: vocalSpec,
+        vocalTone: vocalTone,
+        bpmHint: bpmHint,
+      );
+      if (composed.isNotEmpty) return _format(composed);
     }
 
     final fallback = _laneFallback(

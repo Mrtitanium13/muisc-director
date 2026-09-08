@@ -1,15 +1,55 @@
 {
   "id": "rnb",
   "version": "1.0.0",
-  "vocabulary_profile": ["intimate confession", "sensory", "late-night honesty"],
+  "vocabulary_profile": [
+    "intimate confession",
+    "sensory",
+    "late-night honesty"
+  ],
   "line_length_guidance": "melisma-friendly short clauses",
-  "imagery_guidance": ["skin", "rooms", "phones at 2am", "weather as mood"],
+  "imagery_guidance": [
+    "skin",
+    "rooms",
+    "phones at 2am",
+    "weather as mood"
+  ],
   "energy_profile": "slow-burn emotion",
   "hook_style": "earworm with vulnerability",
   "rhyme_density": "medium",
-  "rhythmic_guidance": ["behind-the-beat feel", "space for runs"],
-  "common_structures": ["V-PC-C-V-PC-C-B-C"],
-  "vocal_phrasing": ["breathy verse", "belt or falsetto chorus"],
-  "avoid_patterns": ["rock shout defaults", "EDM drop language"],
+  "rhythmic_guidance": [
+    "behind-the-beat feel",
+    "space for runs"
+  ],
+  "common_structures": [
+    "V-PC-C-V-PC-C-B-C"
+  ],
+  "vocal_phrasing": [
+    "breathy verse",
+    "belt or falsetto chorus"
+  ],
+  "avoid_patterns": [
+    "rock shout defaults",
+    "EDM drop language",
+    "rise up",
+    "we are thunder",
+    "burn it down",
+    "open sky",
+    "we can fly",
+    "dance with me",
+    "on the floor",
+    "break the cage",
+    "let it fall",
+    "take me higher",
+    "forever young",
+    "this is real",
+    "holding on",
+    "pieces of me",
+    "drowning in",
+    "find myself",
+    "chasing dreams",
+    "high voltage",
+    "neon lightning",
+    "target lock"
+  ],
   "cultural_notes": []
 }

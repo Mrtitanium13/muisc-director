@@ -21,7 +21,7 @@ import '../utils/suno_block2_opt_out.dart';
 /// ## Recommended production architecture (summary)
 ///
 /// **Tier 1 — Primary generation (LaoZhang)**  
-/// Hybrid default: [laozhangPromptChatModel] (GPT-5.5) multilingual prompt → [laozhangLyricsPrimaryChatModel] (Claude) lyrics + expression; Gemini Pro fallback.  
+/// Hybrid default: Terra English draft / Astra multilingual → Claude lyrics polish → Astra/Claude humanization.  
 /// Use: full prompts, lyrics + structure (Block 2), BEASTMODE, fusion/remix,
 /// analyzer-heavy user blocks, DJ constraints, v5.0 / v5.5 tiers.
 ///
@@ -101,16 +101,29 @@ class ApiConstants {
   /// Default when docs mention OpenRouter without distinguishing tier / language.
   static const String openRouterModelDefault = openRouterPrimaryChatModel;
 
-  /// LaoZhang multilingual prompt generation — African languages, Nigerian Pidgin, Suno structure.
-  static const String laozhangGpt55Model = 'gpt-5.5';
+  /// LaoZhang GPT-6 Astra — multilingual draft + lyrics humanization (full capability).
+  static const String laozhangGpt6AstraModel = 'gpt-6-astra';
+
+  /// LaoZhang GPT-5.6 Sol — songwriter creative fallback.
+  static const String laozhangGpt56SolModel = 'gpt-5.6-sol';
+
+  /// LaoZhang GPT-5.6 Terra — English Suno structure draft.
+  static const String laozhangGpt56TerraModel = 'gpt-5.6-terra';
+
+  /// LaoZhang GPT-5.6 Luna — mechanical compression / light stages.
+  static const String laozhangGpt56LunaModel = 'gpt-5.6-luna';
 
   /// LaoZhang lyrics + artistic expression (Claude Sonnet 4.5).
   static const String laozhangClaudeSonnet45Model = 'claude-sonnet-4-5';
 
-  static const String laozhangPromptChatModel = laozhangGpt55Model;
+  /// Multilingual / Pidgin prompt draft (Astra).
+  static const String laozhangPromptChatModel = laozhangGpt6AstraModel;
 
-  /// Alias — GPT-5.5 prompt-generation draft model.
+  /// Alias — multilingual frontier draft model.
   static const String laozhangVisionChatModel = laozhangPromptChatModel;
+
+  /// English production draft (Terra).
+  static const String laozhangEnglishDraftChatModel = laozhangGpt56TerraModel;
 
   static const String laozhangLyricsPrimaryChatModel = laozhangClaudeSonnet45Model;
 
@@ -119,7 +132,7 @@ class ApiConstants {
   /// Style-only / Block 2 opt-out — Gemini Pro (large system prompt context).
   static const String laozhangStyleOnlyChatModel = laozhangGeminiProModel;
 
-  static const String laozhangPrimaryChatModel = laozhangPromptChatModel;
+  static const String laozhangPrimaryChatModel = laozhangEnglishDraftChatModel;
 
   static const String laozhangMultilingualPrimaryChatModel =
       laozhangPromptChatModel;
@@ -133,6 +146,17 @@ class ApiConstants {
   /// Theme consistency post-pass — lyrics + expression editorial (Claude on LaoZhang).
   static const String laozhangThemeConsistencyChatModel =
       laozhangLyricsPrimaryChatModel;
+
+  /// Multilingual / Pidgin humanization (Astra — must be humanized).
+  static const String laozhangHumanizationMultilingualChatModel =
+      laozhangGpt6AstraModel;
+
+  /// English humanization (Claude).
+  static const String laozhangHumanizationEnglishChatModel =
+      laozhangLyricsPrimaryChatModel;
+
+  /// Mechanical Suno compression (Luna).
+  static const String laozhangCompressionChatModel = laozhangGpt56LunaModel;
 
   // ── Anthropic (reference — no direct client in app yet) ─────────────
   static const String anthropicMessagesBaseUrl =
@@ -292,7 +316,7 @@ class ApiConstants {
           ? openRouterThemeConsistencyChatModel
           : laozhangThemeConsistencyChatModel;
 
-  /// Humanization: Mistral (OpenRouter) · Claude English · GPT-5.5 multilingual/Pidgin (LaoZhang).
+  /// Humanization: Mistral (OpenRouter) · Claude English · GPT-6 Astra multilingual/Pidgin (LaoZhang).
   static bool laozhangMultilingualHumanization({
     required String language,
     String? dialectStyleId,
@@ -304,7 +328,7 @@ class ApiConstants {
   static String humanizationModelForProvider({required bool useOpenRouter}) =>
       useOpenRouter
           ? openRouterHumanizationChatModel
-          : laozhangLyricsPrimaryChatModel;
+          : laozhangHumanizationEnglishChatModel;
 
   static String humanizationModelForPrompt({
     required bool useOpenRouter,
@@ -316,16 +340,16 @@ class ApiConstants {
       language: language,
       dialectStyleId: dialectStyleId,
     )) {
-      return laozhangPromptChatModel;
+      return laozhangHumanizationMultilingualChatModel;
     }
-    return laozhangLyricsPrimaryChatModel;
+    return laozhangHumanizationEnglishChatModel;
   }
 
-  /// OpenRouter: Qwen 3.7 Plus. LaoZhang: Claude Sonnet 4.5 (Suno cap compliance).
+  /// OpenRouter: Qwen 3.7 Plus. LaoZhang: Luna (mechanical Suno caps).
   static String compressionModelForProvider({required bool useOpenRouter}) =>
       useOpenRouter
           ? openRouterCompressionChatModel
-          : laozhangThemeConsistencyChatModel;
+          : laozhangCompressionChatModel;
 
   static bool openRouterPostProcessEnabled() {
     final v = dotenv.env['OPENROUTER_POST_PROCESS']?.trim().toLowerCase();
@@ -399,7 +423,7 @@ class ApiConstants {
               ? laozhangLyricsSecondaryChatModel
               : laozhangStyleOnlyChatModel);
 
-  /// LaoZhang: GPT-5.5 multilingual prompt draft; Claude lyrics + expression; Gemini style-only; Flash lightweight.
+  /// LaoZhang: Terra English draft · Astra multilingual · Claude polish · Luna compression · Flash light.
   static String laozhangChatModelForPrompt({
     required String language,
     required bool lightweight,
@@ -407,7 +431,10 @@ class ApiConstants {
   }) {
     if (lightweight) return laozhangLightChatModel;
     if (!lyricsTask) return laozhangStyleOnlyChatModel;
-    return laozhangPromptChatModel;
+    if (preferMultilingualPrimaryModelForLanguage(language)) {
+      return laozhangMultilingualPrimaryChatModel;
+    }
+    return laozhangEnglishDraftChatModel;
   }
 
   /// True when [language] requests non-English lyric/instruction output (form: Language field).

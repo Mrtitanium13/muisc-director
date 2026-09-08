@@ -76,7 +76,7 @@ from app.vocal_spec_tone import user_block_line as vocal_spec_tone_user_block_li
 from app.thick_humanized_vocal_presence import thick_humanized_vocal_user_block
 from app.suno_internal_output_strip import strip_internal_cognition_blocks
 from app.suno_lyric_phonetic_sanitize import sanitize_suno_post_output
-from app.suno_output_qa import prompt_qa_snapshot, should_format_retry
+from app.post_process_common import pin_user_lyrics_to_block2
 from app.human_voice_directive import build_stock_retry_suffix, stock_phrase_hits
 from app.remix_engine import (
     REMIX_ANALYZER_BLOCK_MARKER,
@@ -290,7 +290,7 @@ def _v2_field_budget_line(
             f"**{wmin}–{wmax} words** (max {wmax}), **≤{BLOCK1_CUSTOM_MAX}** characters "
             f"(target 850–{BLOCK1_CUSTOM_MAX}). Narrative prose first — not tag-only; "
             "optional 1D/1E tail per SECTION 0B. "
-            f"BLOCK 2 — Lyrics: max {lc} chars through [End]. Path A — refine USER LYRICS."
+            f"BLOCK 2 — Lyrics: max {lc} chars through [End]. Path A — copy USER LYRICS verbatim; do not rewrite sung lines."
         )
     if generate_lyrics:
         return (
@@ -736,7 +736,10 @@ def _build_user_block(b: GeneratePromptBody) -> str:
     if field_mode == "simple":
         lines.append("USER LYRICS (not provided)")
     elif has_lyrics:
-        lines.append("USER LYRICS (provided)")
+        lines.append(
+            "USER LYRICS (provided) — PATH A: copy these sung lines into BLOCK 2 verbatim. "
+            "Do not rewrite, paraphrase, or replace them."
+        )
         lines.append(str(b.optional_lyrics).strip())
     else:
         lines.append("USER LYRICS (not provided)")
@@ -1125,6 +1128,26 @@ def _run_generate_prompt(body: GeneratePromptBody) -> dict[str, str]:
         few_shot_prefix_messages as master_edm_few_shot,
         should_inject_few_shot as should_inject_edm_few_shot,
     )
+    from app.master_rnb_lyric_engine import (
+        few_shot_prefix_messages as master_rnb_few_shot,
+        should_inject_few_shot as should_inject_rnb_few_shot,
+    )
+    from app.master_hiphop_lyric_engine import (
+        few_shot_prefix_messages as master_hiphop_few_shot,
+        should_inject_few_shot as should_inject_hiphop_few_shot,
+    )
+    from app.master_country_lyric_engine import (
+        few_shot_prefix_messages as master_country_few_shot,
+        should_inject_few_shot as should_inject_country_few_shot,
+    )
+    from app.master_rock_lyric_engine import (
+        few_shot_prefix_messages as master_rock_few_shot,
+        should_inject_few_shot as should_inject_rock_few_shot,
+    )
+    from app.master_pop_lyric_engine import (
+        few_shot_prefix_messages as master_pop_few_shot,
+        should_inject_few_shot as should_inject_pop_few_shot,
+    )
 
     pg = str(body.primary_genre or "")
     fg = str(body.sub_genre_fusion or "")
@@ -1177,6 +1200,71 @@ def _run_generate_prompt(body: GeneratePromptBody) -> dict[str, str]:
         lyrics_task=True,
     ):
         chat_prefix = master_edm_few_shot(
+            primary_genre=pg,
+            sub_genre_fusion=fg,
+            vibe=vibe,
+            lyric_theme_notes=theme,
+        )
+    elif lyrics_task and should_inject_rnb_few_shot(
+        primary_genre=pg,
+        sub_genre_fusion=fg,
+        vibe=vibe,
+        lyric_theme_notes=theme,
+        lyrics_task=True,
+    ):
+        chat_prefix = master_rnb_few_shot(
+            primary_genre=pg,
+            sub_genre_fusion=fg,
+            vibe=vibe,
+            lyric_theme_notes=theme,
+        )
+    elif lyrics_task and should_inject_hiphop_few_shot(
+        primary_genre=pg,
+        sub_genre_fusion=fg,
+        vibe=vibe,
+        lyric_theme_notes=theme,
+        lyrics_task=True,
+    ):
+        chat_prefix = master_hiphop_few_shot(
+            primary_genre=pg,
+            sub_genre_fusion=fg,
+            vibe=vibe,
+            lyric_theme_notes=theme,
+        )
+    elif lyrics_task and should_inject_country_few_shot(
+        primary_genre=pg,
+        sub_genre_fusion=fg,
+        vibe=vibe,
+        lyric_theme_notes=theme,
+        lyrics_task=True,
+    ):
+        chat_prefix = master_country_few_shot(
+            primary_genre=pg,
+            sub_genre_fusion=fg,
+            vibe=vibe,
+            lyric_theme_notes=theme,
+        )
+    elif lyrics_task and should_inject_rock_few_shot(
+        primary_genre=pg,
+        sub_genre_fusion=fg,
+        vibe=vibe,
+        lyric_theme_notes=theme,
+        lyrics_task=True,
+    ):
+        chat_prefix = master_rock_few_shot(
+            primary_genre=pg,
+            sub_genre_fusion=fg,
+            vibe=vibe,
+            lyric_theme_notes=theme,
+        )
+    elif lyrics_task and should_inject_pop_few_shot(
+        primary_genre=pg,
+        sub_genre_fusion=fg,
+        vibe=vibe,
+        lyric_theme_notes=theme,
+        lyrics_task=True,
+    ):
+        chat_prefix = master_pop_few_shot(
             primary_genre=pg,
             sub_genre_fusion=fg,
             vibe=vibe,
@@ -1292,8 +1380,8 @@ def _run_generate_prompt(body: GeneratePromptBody) -> dict[str, str]:
         except Exception as e:  # noqa: BLE001
             logger.warning("completion pass failed: %s", e)
 
-    # Cross-genre stock-kit ban (Lagos tile / bleach / receipt) — one lyric retry.
-    if lyrics_task and not block2_opt_out:
+    # Cross-genre stock-kit ban — skip when Path A already locked user lyrics.
+    if lyrics_task and not block2_opt_out and not has_lyrics:
         stock_hits = stock_phrase_hits(text)
         if stock_hits:
             stock_suffix = build_stock_retry_suffix(stock_hits)
@@ -1419,6 +1507,8 @@ def _run_generate_prompt(body: GeneratePromptBody) -> dict[str, str]:
         generation_type=remix_gen_type,
         remix_from_analyzer=bool(body.remix_from_analyzer),
     )
+    if has_lyrics and not remix_instrumental:
+        text = pin_user_lyrics_to_block2(text, lyrics)
     return {"prompt": text, "pipeline": pipeline}
 
 

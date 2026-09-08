@@ -73,8 +73,11 @@ void main() {
       final bounce = MasterHardstyleLyricEngine.fewShotAssistantTurn(
         MasterHardstyleLyricEngine.profileHardBounce,
       );
-      expect(bounce, contains('Lose the weight'));
-      expect(bounce, contains('Hit the floor'));
+      expect(bounce, contains("Don't touch me yet"));
+      expect(bounce, contains('Wait for it'));
+      expect(bounce.toLowerCase(), isNot(contains('bounce it back')));
+      expect(bounce.toLowerCase(), isNot(contains('hit the floor')));
+      expect(bounce.toLowerCase(), isNot(contains('lose the weight')));
     });
 
     test('GenreLyricsDirectives injects master hardstyle for Hardstyle', () {

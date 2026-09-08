@@ -1,15 +1,55 @@
 {
   "id": "pop",
   "version": "1.0.0",
-  "vocabulary_profile": ["everyday speech", "intimate details", "light slang sparingly"],
+  "vocabulary_profile": [
+    "everyday speech",
+    "intimate details",
+    "light slang sparingly"
+  ],
   "line_length_guidance": "short-medium; chorus shorter than verses",
-  "imagery_guidance": ["phones", "rooms", "weather", "small gestures"],
+  "imagery_guidance": [
+    "phones",
+    "rooms",
+    "weather",
+    "small gestures"
+  ],
   "energy_profile": "medium-high clarity",
   "hook_style": "title-in-chorus; immediate",
   "rhyme_density": "medium",
-  "rhythmic_guidance": ["pocket on downbeats", "space for melisma sparingly"],
-  "common_structures": ["V-PC-C-V-PC-C-B-C"],
-  "vocal_phrasing": ["conversational verse", "lifted chorus"],
-  "avoid_patterns": ["overwritten poetry", "prog-rock metaphor stacks"],
+  "rhythmic_guidance": [
+    "pocket on downbeats",
+    "space for melisma sparingly"
+  ],
+  "common_structures": [
+    "V-PC-C-V-PC-C-B-C"
+  ],
+  "vocal_phrasing": [
+    "conversational verse",
+    "lifted chorus"
+  ],
+  "avoid_patterns": [
+    "overwritten poetry",
+    "prog-rock metaphor stacks",
+    "rise up",
+    "we are thunder",
+    "burn it down",
+    "open sky",
+    "we can fly",
+    "dance with me",
+    "on the floor",
+    "break the cage",
+    "let it fall",
+    "take me higher",
+    "forever young",
+    "this is real",
+    "holding on",
+    "pieces of me",
+    "drowning in",
+    "find myself",
+    "chasing dreams",
+    "high voltage",
+    "neon lightning",
+    "target lock"
+  ],
   "cultural_notes": []
 }

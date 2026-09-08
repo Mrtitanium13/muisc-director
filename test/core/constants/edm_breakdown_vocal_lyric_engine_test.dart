@@ -65,7 +65,8 @@ void main() {
       );
       expect(block, contains('master lyricist'));
       expect(block, contains('BAN SCI-FI'));
-      expect(block, contains('INTERNAL CONVERSATIONAL REALISM'));
+      expect(block, contains('HUMAN AUTHENTICITY'));
+      expect(block, contains('BAN AI FESTIVAL'));
       expect(block, contains('thought fragments'));
       expect(block, contains('PRE-DROP TRIGGER'));
       expect(block, contains('[Breakdown]'));

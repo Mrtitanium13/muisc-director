@@ -38,7 +38,7 @@ class SongwriterModelRouter {
         return Map<String, dynamic>.from(route);
       }
     }
-    return {'primary': 'gpt-5.5', 'secondary': 'gemini-2.5-pro'};
+    return {'primary': 'gpt-6-astra', 'secondary': 'claude-sonnet'};
   }
 
   static String preferredLogical({
@@ -49,7 +49,7 @@ class SongwriterModelRouter {
     final route = matchRoute(genre: genre, language: language);
     final stagePrefs =
         ((_routing['stage_preferences'] as Map?)?[stage] as List?) ?? const [];
-    final primary = '${route['primary'] ?? 'gpt-5.5'}';
+    final primary = '${route['primary'] ?? 'gpt-6-astra'}';
     for (final m in stagePrefs) {
       if ('$m' == primary) return primary;
     }

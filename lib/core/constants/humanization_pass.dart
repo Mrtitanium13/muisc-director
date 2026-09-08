@@ -17,7 +17,7 @@ abstract final class HumanizationPassConfig {
 **Model (runtime):**
 - **OpenRouter:** Mistral Large — rewrite lane (natural phrasing, anti-AI, authenticity).
 - **LaoZhang English song context:** Claude Sonnet 4.5 — standard English lyrics, accent-vs-dialect rules.
-- **LaoZhang multilingual / Nigerian Pidgin / African languages:** GPT-5.5 — honor Language field and Pidgin grammar; never flatten to textbook English.
+- **LaoZhang multilingual / Nigerian Pidgin / African languages:** GPT-6 Astra — honor Language field and Pidgin grammar; never flatten to textbook English. Humanization is mandatory for lyric quality.
 
 **When:** After theme consistency, before Suno compression (OpenRouter + LaoZhang). **Silent** — no commentary.
 

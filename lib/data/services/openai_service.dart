@@ -21,6 +21,7 @@ import '../../data/models/song_generation_type.dart';
 import '../../core/utils/suno_lyric_phonetic_sanitize.dart';
 import '../../core/utils/suno_output_qa.dart';
 import '../../core/utils/suno_output_split.dart';
+import '../../core/utils/suno_path_a_lyrics.dart';
 import '../../core/constants/suno_prompt_limits.dart';
 import '../../core/constants/block1_mix_master_directive.dart';
 import '../../services/narrative_brief_builder.dart';
@@ -41,10 +42,15 @@ import '../../songwriter/models/lyric_result.dart';
 import '../../songwriter/models/song_brief.dart';
 import '../../core/constants/prompt_flow_data.dart';
 import '../../core/constants/genre_lyrics_directives.dart';
+import '../../core/constants/master_country_lyric_engine.dart';
 import '../../core/constants/master_edm_lyric_engine.dart';
 import '../../core/constants/master_gospel_lyric_engine.dart';
 import '../../core/constants/master_hardstyle_lyric_engine.dart';
+import '../../core/constants/master_hiphop_lyric_engine.dart';
+import '../../core/constants/master_pop_lyric_engine.dart';
 import '../../core/constants/master_progressive_big_room_house_lyric_engine.dart';
+import '../../core/constants/master_rnb_lyric_engine.dart';
+import '../../core/constants/master_rock_lyric_engine.dart';
 import '../../core/constants/lyric_craft_hierarchy_directive.dart';
 import '../../core/constants/human_realism_config.dart';
 import '../../core/constants/production_intensity_config.dart';
@@ -336,6 +342,71 @@ class OpenAIService {
             lyricsTask: lyricsTask,
           )
         ? MasterEdmLyricEngine.fewShotPrefixMessages(
+            primaryGenre: input.primaryGenre,
+            subGenreFusion: input.subGenreFusion,
+            vibe: input.vibe,
+            lyricThemeNotes: input.lyricThemeNotes,
+          )
+        : MasterRnbLyricEngine.shouldInjectFewShot(
+            primaryGenre: input.primaryGenre,
+            subGenreFusion: input.subGenreFusion,
+            vibe: input.vibe,
+            lyricThemeNotes: input.lyricThemeNotes,
+            lyricsTask: lyricsTask,
+          )
+        ? MasterRnbLyricEngine.fewShotPrefixMessages(
+            primaryGenre: input.primaryGenre,
+            subGenreFusion: input.subGenreFusion,
+            vibe: input.vibe,
+            lyricThemeNotes: input.lyricThemeNotes,
+          )
+        : MasterHipHopLyricEngine.shouldInjectFewShot(
+            primaryGenre: input.primaryGenre,
+            subGenreFusion: input.subGenreFusion,
+            vibe: input.vibe,
+            lyricThemeNotes: input.lyricThemeNotes,
+            lyricsTask: lyricsTask,
+          )
+        ? MasterHipHopLyricEngine.fewShotPrefixMessages(
+            primaryGenre: input.primaryGenre,
+            subGenreFusion: input.subGenreFusion,
+            vibe: input.vibe,
+            lyricThemeNotes: input.lyricThemeNotes,
+          )
+        : MasterCountryLyricEngine.shouldInjectFewShot(
+            primaryGenre: input.primaryGenre,
+            subGenreFusion: input.subGenreFusion,
+            vibe: input.vibe,
+            lyricThemeNotes: input.lyricThemeNotes,
+            lyricsTask: lyricsTask,
+          )
+        ? MasterCountryLyricEngine.fewShotPrefixMessages(
+            primaryGenre: input.primaryGenre,
+            subGenreFusion: input.subGenreFusion,
+            vibe: input.vibe,
+            lyricThemeNotes: input.lyricThemeNotes,
+          )
+        : MasterRockLyricEngine.shouldInjectFewShot(
+            primaryGenre: input.primaryGenre,
+            subGenreFusion: input.subGenreFusion,
+            vibe: input.vibe,
+            lyricThemeNotes: input.lyricThemeNotes,
+            lyricsTask: lyricsTask,
+          )
+        ? MasterRockLyricEngine.fewShotPrefixMessages(
+            primaryGenre: input.primaryGenre,
+            subGenreFusion: input.subGenreFusion,
+            vibe: input.vibe,
+            lyricThemeNotes: input.lyricThemeNotes,
+          )
+        : MasterPopLyricEngine.shouldInjectFewShot(
+            primaryGenre: input.primaryGenre,
+            subGenreFusion: input.subGenreFusion,
+            vibe: input.vibe,
+            lyricThemeNotes: input.lyricThemeNotes,
+            lyricsTask: lyricsTask,
+          )
+        ? MasterPopLyricEngine.fewShotPrefixMessages(
             primaryGenre: input.primaryGenre,
             subGenreFusion: input.subGenreFusion,
             vibe: input.vibe,
@@ -692,7 +763,12 @@ $f
       audioEnvironmentModeId: input.audioEnvironmentModeId,
     );
     out = applyRemixGenerationTypeOutput(input, out);
-    return enforceUnifiedBlock1CharLimit(out, input.sunoFieldOutputMode);
+    out = enforceUnifiedBlock1CharLimit(out, input.sunoFieldOutputMode);
+    if (remixEngineActive(input) &&
+        input.songGenerationType == SongGenerationType.instrumental) {
+      return out;
+    }
+    return pinUserLyricsToBlock2(out, input.optionalLyrics);
   }
 
   Future<String> _deliverSunoOutput(
@@ -724,10 +800,13 @@ $f
         input.songGenerationType == SongGenerationType.instrumental;
 
     var out = text;
-    if (ApiConstants.themeConsistencyEnabled() && !remixInstrumental) {
+    final hasUserLyrics = input.optionalLyrics.trim().isNotEmpty;
+    if (ApiConstants.themeConsistencyEnabled() &&
+        !remixInstrumental &&
+        !hasUserLyrics) {
       out = await _applyThemeConsistencyPass(out, input);
     }
-    if (!remixInstrumental) {
+    if (!remixInstrumental && !hasUserLyrics) {
       out = await _applyHumanizationPass(out, input, useOpenRouter: true);
     }
     out = await _applySunoCompressionPass(out, input, useOpenRouter: true);
@@ -865,10 +944,13 @@ $f
     }
 
     var out = text;
-    if (ApiConstants.themeConsistencyEnabled()) {
+    final hasUserLyrics = input.optionalLyrics.trim().isNotEmpty;
+    if (ApiConstants.themeConsistencyEnabled() && !hasUserLyrics) {
       out = await _applyThemeConsistencyPass(out, input);
     }
-    out = await _applyHumanizationPass(out, input, useOpenRouter: false);
+    if (!hasUserLyrics) {
+      out = await _applyHumanizationPass(out, input, useOpenRouter: false);
+    }
     out = await _applySunoCompressionPass(out, input, useOpenRouter: false);
     return out;
   }
@@ -1841,7 +1923,10 @@ Output ONLY the final complete two-block Suno reply.''';
     if (simple) {
       buf.writeln('USER LYRICS (not provided)');
     } else if (hasLyrics) {
-      buf.writeln('USER LYRICS (provided)');
+      buf.writeln(
+        'USER LYRICS (provided) — PATH A: copy these sung lines into BLOCK 2 verbatim. '
+        'Do not rewrite, paraphrase, or replace them.',
+      );
       buf.writeln(i.optionalLyrics.trim());
     } else {
       buf.writeln('USER LYRICS (not provided)');

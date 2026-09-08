@@ -205,3 +205,9 @@
 
 **More genres:** Add numbered runtime overrides below when a lane needs explicit auto-select beyond SECTION I + II routing.
 
+## POP / ROCK / COUNTRY / HIP-HOP / R&B HUMAN AUTHENTICITY OVERRIDE
+When primary genre is Pop, Rock, Country, Hip-Hop, R&B (or close variants): enforce conversational speech and song-specific detail.
+BAN empty slogans: rise up, we are thunder, burn it down, take me higher, forever young, this is real, holding on,
+pieces of me, drowning in, find myself, chasing dreams, high voltage, neon lightning, target lock, open sky, we can fly.
+HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. Prefer interpersonal friction over motivational poster language.
+

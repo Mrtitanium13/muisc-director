@@ -107,7 +107,7 @@ BLOCK 2 — PASTE INTO SUNO: LYRICS
 
 ### PATH DISPATCH (CONTENT BEHAVIOR — NOT “SKIP BLOCK 2”)
 
-PATH A — USER LYRICS (provided): Block 1 + Block 2 — **refine** user lyrics; preserve voice.
+PATH A — USER LYRICS (provided): Block 1 + Block 2. **Copy USER LYRICS into Block 2 verbatim** — do not rewrite, paraphrase, or replace sung lines. You may only add missing `[Section]` tags, compiled arrangement FX tags, and `[End]`.
 
 PATH B — no pasted lyrics, user did **not** toggle GENERATE LYRICS: Block 1 + Block 2 — use **genre template** + **original** generated lines (or instrumental tags only). **Never** skip Block 2.
 

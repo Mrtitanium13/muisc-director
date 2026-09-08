@@ -95,16 +95,21 @@ STRICT WRITING RULES FOR ALL PROGRESSIVE / BIG ROOM HOUSE:
     "raise your hands", "we're going higher", "let me feel your love tonight",
     "infinite skies", "blinding light", "we own the night", "lights go down",
     "scream it out", "side by side", "chasing dreams", "forever young",
-    "in this moment", "let it go".
+    "in this moment", "let it go", "we are thunder", "rise up", "burn it down",
+    "take me higher", "break free", "set me free", "we carry on", "hold the line",
+    "louder than before", "holding on", "broken inside", "pieces of me",
+    "drowning in", "lost in the dark", "find myself", "this is real".
   Also ban sci-fi/rave metaphors: frequency, static tension, vibrations,
   dissolving, galaxies, starlight, seismic, neon, cosmic, wavelength,
   interstellar, sparks fly, electricity, energy, universe.
 
-- HUMAN REALISM: Build lyrics around an internal psychological conflict:
-  a sudden shift in trust, an unspoken realization, the exact moment a
-  relationship fractures, a choice from which there is no return. Focus
-  on raw friction between two people or within one person, not exterior
-  scene-setting.
+- HUMAN AUTHENTICITY (MANDATORY): Write like a real person mid-conflict —
+  half-thoughts, blunt speech, specific interpersonal friction for THIS
+  song. Plain words over poetic synonyms. Drop/chorus must be a sticky
+  human phrase that only fits THIS conflict (DROP MANTRA TEST). Ban
+  templated "I don't need X / I just need Y" couplets and production-
+  as-emotion (beat/drop/bass/floor as savior). Never paste festival
+  slogans.
 
 - VOCAL DESCRIPTOR HYGIENE: In staging brackets, never use raw
   personality adjectives. Use: close-mic intimacy, breathy verse vocal,
@@ -233,142 +238,142 @@ _PROFILE_RULES: tuple[tuple[tuple[str, ...], str], ...] = (
 )
 
 _PROGRESSIVE_VOCAL_FEW_SHOT_GOOD = """\
-GOOD (write in this style, end with [End]):
+GOOD (write in this style, end with [End] — invent fresh lines; do not copy):
 
 [Intro: Evolving arpeggio, wide stereo pad, sparse drums]
 
 [Verse 1: Close-mic female lead, dry intimate, minimal verb]
-You didn't mean it
-I see the change now
-We hit the limit
-Too quiet
+Stop saying we're fine
+You looked past me twice
+I almost walked then
+Didn't
 
 [Pre-Chorus: Vocal doubles enter, tension build, rising pads]
-Before I break
-Before I break
-Don't look
-Don't look
+Say it
+Say it
+Out loud
+Out loud
 
-[Drop / Chorus: Supersaw lift, sidechain pump, anthemic mantra]
-Let it fall
-Let it fall
-Nothing left
-Let it fall
+[Drop / Chorus: Supersaw lift, sidechain pump, human mantra]
+Don't call me baby
+Don't call me baby
+Not like that
+Don't call me baby
 
 [Breakdown: Stripped to pad and breath vocal, intimate]
-I gave you the key
-You kept a secret
-We crossed the border
-No warning
+You texted almost there
+Hours ago
+I laughed so I wouldn't
+Cry out loud
 
 [Build-up 2: Snare rolls, open-vowel urgency, reverb washout]
-I can't stay
-I can't stay
-It's gone
-It's gone
+Stay gone
+Stay gone
+I'm done
+I'm done
 
 [Pre-Drop: Sharp command]
-Tell me
+Go
 
 [Final Drop / Chorus: Full stack, wider, octave lift, max dynamics]
-Let it fall
-Let it fall
-Nothing left
-Let it fall
+Keep your maybe
+Keep your maybe
+I'm walking
+Keep your maybe
 
 [Outro: Delay tails, filtered pad fade]
 
 [End]"""
 
 _BIG_ROOM_FUSION_FEW_SHOT_GOOD = """\
-GOOD (write in this style, end with [End]):
+GOOD (write in this style, end with [End] — invent fresh lines; do not copy):
 
 [Intro: Festival kick, filtered synth stab, rising white noise]
 
 [Verse 1: Dry intimate female lead, close-mic, sparse]
-I was standing still while the world moved on
-Holding every door for a love already gone
-You said "be careful" like I was made of glass
-I walked through the fire just to prove I could pass
+I kept your jacket by the door
+You never asked for it back
+I still check the hallway when
+Someone laughs like you
 
 [Pre-Chorus: Building chant fragments, percussion lifts]
-Not backing down
-Not backing down
-Hear me now
-Hear me now
+Don't stay
+Don't stay
+Not tonight
+Not tonight
 
-[Drop / Chorus: Big room supersaws, hard kick, crowd mantra]
-We are thunder
-We are thunder
-Louder
-We are thunder
+[Drop / Chorus: Big room supersaws, hard kick, human mantra]
+Leave your jacket
+Leave your jacket
+I'm done waiting
+Leave your jacket
 
 [Breakdown: Stripped drums and vocal, more personal]
-I don't need the crown
-I just need the truth
-I don't need the noise
-I just need the proof
+I practiced what I'd say
+Then you walked in smiling
+All the words went quiet
+I just nodded once
 
 [Build-up 2: Snare roll, rising vocals]
-Rise up
-Rise up
-Burn it down
-Burn it down
+Say less
+Say less
+Walk out
+Walk out
 
 [Pre-Drop: Command]
 Now
 
 [Final Drop / Chorus: Full festival stack, key lift, max width]
-We are thunder
-We are thunder
-Louder
-We are thunder
+Leave your jacket
+Leave your jacket
+I'm done waiting
+Leave your jacket
 
 [Outro: Kick and synth stab tail, long fade]
 
 [End]"""
 
 _FESTIVAL_ANTHEM_FEW_SHOT_GOOD = """\
-GOOD (write in this style, end with [End]):
+GOOD (write in this style, end with [End] — invent fresh lines; do not copy):
 
 [Intro: Crowd texture if live mode, piano-house chord, kick build]
 
 [Verse 1: Whispered female lead, close-mic, intimate]
-We were lost in the same storm
-Holding onto different ropes
-I saw you drowning in the crowd
-And I let go of all my hope
+We shared the same ride home
+You talked about next year
+I stared at my hands and
+Didn't correct you
 
-[Pre-Chorus: Group vocal stack enters, anthem lift]
-Hold on
-Hold on
-Hold the line
-Stay with me
+[Pre-Chorus: Group vocal stack enters, lift]
+Stay quiet
+Stay quiet
+Don't promise
+Don't promise
 
-[Drop / Chorus: Full festival arrangement, supersaw anthem]
-We carry on
-We carry on
-Through the night
-We carry on
+[Drop / Chorus: Full festival arrangement, human mantra]
+Don't promise next year
+Don't promise next year
+Not tonight
+Don't promise next year
 
-[Breakdown: Acoustic guitar or piano only, lead vulnerable]
-Every scar we earned
-Every bridge we burned
-Brought us to this light
-Brought us to this light
+[Breakdown: Sparse keys only, lead vulnerable]
+I wanted to believe you
+That was the problem
+I wanted to believe you
+That was the problem
 
-[Build-up 2: Drum roll, crowd chant texture]
-We carry on
-We carry on
+[Build-up 2: Drum roll]
+Don't promise
+Don't promise
 
 [Pre-Drop: Command]
-Rise
+Stop
 
-[Final Drop / Chorus: Maximum dynamics, crowd sing-along stack]
-We carry on
-We carry on
-Through the night
-We carry on
+[Final Drop / Chorus: Maximum dynamics, sing-along stack]
+Don't promise next year
+Don't promise next year
+Not tonight
+Don't promise next year
 
 [Outro: Piano chord fade, crowd reverb tail if live mode]
 

@@ -20,7 +20,19 @@ _DEFAULT_MAX = 6000
 # (~11.5k chars); 12k keeps heavy-lane master craft from being cut mid-rule.
 _HEAVY_LANE_MAX = 12000
 
-_HEAVY_LANES = frozenset({"amapiano", "gospel", "hardstyle", "edm"})
+_HEAVY_LANES = frozenset(
+    {
+        "amapiano",
+        "gospel",
+        "hardstyle",
+        "edm",
+        "pop",
+        "rock",
+        "country",
+        "hiphop",
+        "rnb",
+    }
+)
 
 
 def genre_engine_max_chars(lane: str | None = None) -> int:
@@ -93,6 +105,50 @@ def detect_master_lane(
         lyric_theme_notes=theme,
     ):
         return "edm"
+    try:
+        from app.master_rnb_lyric_engine import is_rnb_lane
+        from app.master_hiphop_lyric_engine import is_hiphop_lane
+        from app.master_country_lyric_engine import is_country_lane
+        from app.master_rock_lyric_engine import is_rock_lane
+        from app.master_pop_lyric_engine import is_pop_lane
+
+        if is_rnb_lane(
+            primary_genre=genre,
+            sub_genre_fusion=subgenre,
+            vibe=mood,
+            lyric_theme_notes=theme,
+        ):
+            return "rnb"
+        if is_hiphop_lane(
+            primary_genre=genre,
+            sub_genre_fusion=subgenre,
+            vibe=mood,
+            lyric_theme_notes=theme,
+        ):
+            return "hiphop"
+        if is_country_lane(
+            primary_genre=genre,
+            sub_genre_fusion=subgenre,
+            vibe=mood,
+            lyric_theme_notes=theme,
+        ):
+            return "country"
+        if is_rock_lane(
+            primary_genre=genre,
+            sub_genre_fusion=subgenre,
+            vibe=mood,
+            lyric_theme_notes=theme,
+        ):
+            return "rock"
+        if is_pop_lane(
+            primary_genre=genre,
+            sub_genre_fusion=subgenre,
+            vibe=mood,
+            lyric_theme_notes=theme,
+        ):
+            return "pop"
+    except Exception:
+        pass
     return "generic"
 
 

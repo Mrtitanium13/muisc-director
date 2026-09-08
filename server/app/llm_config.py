@@ -14,9 +14,19 @@ OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 LAOZHANG_GEMINI_FLASH = "gemini-2.5-flash"
 LAOZHANG_GEMINI_PRO = "gemini-2.5-pro"
 
-# LaoZhang dual-model rail: GPT-5.5 multilingual prompt gen → Claude lyrics + expression
-LAOZHANG_GPT_55 = "gpt-5.5"
-LAOZHANG_PROMPT_MODEL = LAOZHANG_GPT_55
+# LaoZhang capability ladder (cost ↑): Luna → Terra → Sol → GPT-6 Astra
+# Lyrics engine (must be humanized):
+#   Astra  = multilingual draft + multilingual/Pidgin humanization + songwriter lyric stages
+#   Claude = English lyrics polish / theme / English humanization
+#   Sol    = songwriter creative fallback
+#   Terra  = English Suno draft (structure) — not the humanization lane
+#   Luna   = mechanical compression / analyze·select only
+LAOZHANG_GPT_6_ASTRA = "gpt-6-astra"
+LAOZHANG_GPT_56_SOL = "gpt-5.6-sol"
+LAOZHANG_GPT_56_TERRA = "gpt-5.6-terra"
+LAOZHANG_GPT_56_LUNA = "gpt-5.6-luna"
+# Multilingual / Pidgin draft (frontier — full capability)
+LAOZHANG_PROMPT_MODEL = LAOZHANG_GPT_6_ASTRA
 LAOZHANG_VISION_MODEL = LAOZHANG_PROMPT_MODEL
 LAOZHANG_CLAUDE_SONNET_45 = "claude-sonnet-4-5"
 LAOZHANG_LYRICS_PRIMARY_MODEL = LAOZHANG_CLAUDE_SONNET_45
@@ -35,13 +45,21 @@ OPENROUTER_LIGHT_MODEL = "openai/gpt-4o-mini"
 
 # LaoZhang style-only (Block 2 opt-out): Gemini Pro for full system prompt context
 LAOZHANG_STYLE_ONLY_MODEL = LAOZHANG_GEMINI_PRO
-LAOZHANG_PRIMARY_MODEL = LAOZHANG_VISION_MODEL
-LAOZHANG_MULTILINGUAL_MODEL = LAOZHANG_VISION_MODEL
+# English production draft (balanced structure — Claude + Astra humanize lyrics after)
+LAOZHANG_DRAFT_MODEL = LAOZHANG_GPT_56_TERRA
+# Multilingual / Pidgin draft (Astra)
+LAOZHANG_DRAFT_MULTILINGUAL_MODEL = LAOZHANG_GPT_6_ASTRA
+LAOZHANG_PRIMARY_MODEL = LAOZHANG_DRAFT_MODEL
+LAOZHANG_MULTILINGUAL_MODEL = LAOZHANG_DRAFT_MULTILINGUAL_MODEL
 LAOZHANG_LIGHT_MODEL = LAOZHANG_GEMINI_FLASH
 LAOZHANG_FALLBACK_MODEL = LAOZHANG_LYRICS_SECONDARY_MODEL
-LAOZHANG_DRAFT_MODEL = LAOZHANG_VISION_MODEL
-LAOZHANG_DRAFT_MULTILINGUAL_MODEL = LAOZHANG_VISION_MODEL
 LAOZHANG_POLISH_MODEL = LAOZHANG_LYRICS_PRIMARY_MODEL
+# Humanization is mandatory for lyrics quality — Astra for multilingual/Pidgin/African
+LAOZHANG_HUMANIZATION_MULTILINGUAL_MODEL = LAOZHANG_GPT_6_ASTRA
+# English humanization stays Claude (lived-in phrasing)
+LAOZHANG_HUMANIZATION_ENGLISH_MODEL = LAOZHANG_LYRICS_PRIMARY_MODEL
+# Suno cap compression (mechanical — never the humanization lane)
+LAOZHANG_COMPRESSION_MODEL = LAOZHANG_GPT_56_LUNA
 
 # Theme consistency post-pass (Block 2 editorial): same tier as polish — narrative + cadence
 LAOZHANG_THEME_CONSISTENCY_MODEL = LAOZHANG_LYRICS_PRIMARY_MODEL
@@ -73,7 +91,7 @@ def prefer_laozhang_multilingual_humanization(
     language: str = "English",
     dialect_style_id: str = "",
 ) -> bool:
-    """GPT-5.5 humanization for non-English, Nigerian Pidgin, and African lyric contexts."""
+    """Astra humanization for non-English, Nigerian Pidgin, and African lyric contexts."""
     if is_nigerian_pidgin(dialect_style_id):
         return True
     return prefer_multilingual_primary(language)
@@ -185,7 +203,7 @@ def hybrid_prompt_enabled(
     provider: str | None = None,
     lyrics_task: bool = True,
 ) -> bool:
-    """LaoZhang lyrics: GPT-5.5 multilingual prompt draft → Claude lyrics polish (default). OpenRouter: opt-in."""
+    """LaoZhang lyrics: Terra/Sol draft → Claude lyrics polish (default). OpenRouter: opt-in."""
     if lightweight:
         return _truthy("PROMPT_HYBRID_LIGHTWEIGHT")
     mode = prompt_pipeline_mode()
@@ -220,7 +238,7 @@ def _resolve_laozhang_tier_model(
     provider: str | None,
     lyrics_task: bool = True,
 ) -> str:
-    """LaoZhang: GPT-5.5 multilingual prompt generation (draft); Gemini Pro style-only; Flash lightweight."""
+    """LaoZhang: Astra multilingual draft · Terra English draft · Gemini Pro style-only · Flash light."""
     if lightweight:
         return os.getenv("OPENAI_LIGHT_MODEL", "").strip() or LAOZHANG_LIGHT_MODEL
     if not lyrics_task:
@@ -229,6 +247,7 @@ def _resolve_laozhang_tier_model(
             or os.getenv("OPENAI_PRIMARY_MODEL", "").strip()
             or LAOZHANG_STYLE_ONLY_MODEL
         )
+    # Explicit draft override applies to all languages (ops / A-B).
     vision = (
         os.getenv("PROMPT_VISION_MODEL", "").strip()
         or os.getenv("PROMPT_DRAFT_MODEL", "").strip()
@@ -238,9 +257,13 @@ def _resolve_laozhang_tier_model(
     if prefer_multilingual_primary(language):
         return (
             os.getenv("OPENAI_MULTILINGUAL_MODEL", "").strip()
-            or LAOZHANG_VISION_MODEL
+            or os.getenv("PROMPT_DRAFT_MULTILINGUAL_MODEL", "").strip()
+            or LAOZHANG_DRAFT_MULTILINGUAL_MODEL
         )
-    return os.getenv("OPENAI_PRIMARY_MODEL", "").strip() or LAOZHANG_VISION_MODEL
+    return (
+        os.getenv("OPENAI_PRIMARY_MODEL", "").strip()
+        or LAOZHANG_DRAFT_MODEL
+    )
 
 
 def resolve_laozhang_lyrics_secondary_model() -> str:
@@ -347,7 +370,8 @@ def resolve_humanization_model(
 ) -> str:
     """
     OpenRouter: Mistral Large.
-    LaoZhang: Claude (English song context) · GPT-5.5 (multilingual / Pidgin / African).
+    LaoZhang lyrics engine (must be humanized):
+      Claude English · GPT-6 Astra multilingual / Pidgin / African.
     """
     if llm_provider(provider) == "openrouter":
         or_model = _env_for_openrouter(
@@ -361,18 +385,17 @@ def resolve_humanization_model(
         language=language, dialect_style_id=dialect_style_id
     ):
         return (
-            os.getenv("PROMPT_VISION_MODEL", "").strip()
-            or os.getenv("PROMPT_DRAFT_MODEL", "").strip()
-            or LAOZHANG_PROMPT_MODEL
+            os.getenv("HUMANIZATION_MULTILINGUAL_MODEL", "").strip()
+            or LAOZHANG_HUMANIZATION_MULTILINGUAL_MODEL
         )
     return (
         os.getenv("PROMPT_LYRICS_MODEL", "").strip()
-        or LAOZHANG_LYRICS_PRIMARY_MODEL
+        or LAOZHANG_HUMANIZATION_ENGLISH_MODEL
     )
 
 
 def resolve_compression_model(*, provider: str | None = None) -> str:
-    """OpenRouter: Qwen 3.7 Plus. LaoZhang: Claude Sonnet 4.5 (SUNO_COMPRESSION_MODEL ignored on LaoZhang)."""
+    """OpenRouter: Qwen 3.7 Plus. LaoZhang: Luna (mechanical Suno caps)."""
     if llm_provider(provider) == "openrouter":
         or_model = _env_for_openrouter(
             "OPENROUTER_COMPRESSION_MODEL",
@@ -381,10 +404,13 @@ def resolve_compression_model(*, provider: str | None = None) -> str:
         if or_model:
             return or_model
         return OPENROUTER_COMPRESSION_MODEL
-    return (
-        os.getenv("PROMPT_LYRICS_MODEL", "").strip()
-        or LAOZHANG_LYRICS_PRIMARY_MODEL
-    )
+    # LaoZhang-only override; ignore OpenRouter vendor slugs in shared env.
+    explicit = os.getenv("LAOZHANG_COMPRESSION_MODEL", "").strip() or os.getenv(
+        "SUNO_COMPRESSION_MODEL", ""
+    ).strip()
+    if explicit and not _is_openrouter_vendor_slug(explicit):
+        return explicit
+    return LAOZHANG_COMPRESSION_MODEL
 
 
 def resolve_theme_consistency_fallback_model(*, provider: str | None = None) -> str:
@@ -535,17 +561,19 @@ def prompt_llm_timeout_seconds() -> float:
 def completion_token_kwargs(model: str, max_tokens: int) -> dict[str, int]:
     """Return the correct max-token field for the model.
 
-    gpt-5.x / o-series reject ``max_tokens`` and require ``max_completion_tokens``.
+    gpt-5.x / gpt-6.x / o-series reject ``max_tokens`` and require ``max_completion_tokens``.
     Sending both causes a 400 and wasted fallback calls (credits burn, no lyrics).
     """
     model_l = (model or "").strip().lower()
     # Models that reject max_tokens when max_completion_tokens is required.
     if (
         model_l.startswith("gpt-5")
+        or model_l.startswith("gpt-6")
         or model_l.startswith("o1")
         or model_l.startswith("o3")
         or model_l.startswith("o4")
         or "/gpt-5" in model_l
+        or "/gpt-6" in model_l
         or "gemini" in model_l
     ):
         return {"max_completion_tokens": int(max_tokens)}

@@ -98,7 +98,7 @@ Output mode adapter (full / chorus / rewrite / …)
 
 | Signal | Preferred model (LaoZhang / OpenRouter slug) |
 |--------|-----------------------------------------------|
-| English Pop / EDM / Afrobeats | GPT-5.5 |
+| English Pop / EDM / Afrobeats | GPT-6 Astra |
 | Country / Rock / Metal / Gospel | Claude Opus / Sonnet |
 | Mandopop / Chinese ballads | Kimi |
 | Chinese Rap | DeepSeek |

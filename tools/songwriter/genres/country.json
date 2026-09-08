@@ -1,15 +1,56 @@
 {
   "id": "country",
   "version": "1.0.0",
-  "vocabulary_profile": ["place names", "work", "specific people"],
+  "vocabulary_profile": [
+    "place names",
+    "work",
+    "specific people"
+  ],
   "line_length_guidance": "storytelling verses; chorus plainspoken thesis",
-  "imagery_guidance": ["kitchen table", "highway mile markers", "weather that means something"],
+  "imagery_guidance": [
+    "kitchen table",
+    "highway mile markers",
+    "weather that means something"
+  ],
   "energy_profile": "narrative first",
   "hook_style": "title line that could be said out loud to a friend",
   "rhyme_density": "medium",
-  "rhythmic_guidance": ["natural talk-sing", "chorus lift"],
-  "common_structures": ["V-C-V-C-B-C"],
-  "vocal_phrasing": ["conversational", "twang only if accent brief asks"],
-  "avoid_patterns": ["urban EDM slang", "generic cowboy costume lyrics"],
-  "cultural_notes": ["Specificity beats stereotype"]
+  "rhythmic_guidance": [
+    "natural talk-sing",
+    "chorus lift"
+  ],
+  "common_structures": [
+    "V-C-V-C-B-C"
+  ],
+  "vocal_phrasing": [
+    "conversational",
+    "twang only if accent brief asks"
+  ],
+  "avoid_patterns": [
+    "urban EDM slang",
+    "generic cowboy costume lyrics",
+    "rise up",
+    "we are thunder",
+    "burn it down",
+    "open sky",
+    "we can fly",
+    "dance with me",
+    "on the floor",
+    "break the cage",
+    "let it fall",
+    "take me higher",
+    "forever young",
+    "this is real",
+    "holding on",
+    "pieces of me",
+    "drowning in",
+    "find myself",
+    "chasing dreams",
+    "high voltage",
+    "neon lightning",
+    "target lock"
+  ],
+  "cultural_notes": [
+    "Specificity beats stereotype"
+  ]
 }

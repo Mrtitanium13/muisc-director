@@ -10,6 +10,8 @@
 
 ## SECTION I: THE GENRE-SPECIFIC HUMANIZATION & AUTHENTICITY ENGINE (LAYER 3)
 
+
+**CROSS-GENRE AI SLOGAN BAN (all lanes):** rise up, we are thunder, burn it down, open sky, we can fly, dance with me / on the floor (stock), break the cage, let it fall, take me higher, forever young, this is real, holding on, pieces of me, drowning in, find myself, chasing dreams — unless the line is grounded in a song-specific concrete detail.
 This module handles linguistic, cultural, and idiomatic thematic profiling across your app's entire ecosystem.
 
 ### 1. EDM CATEGORIES (32 SUB-GENRES)
@@ -28,7 +30,8 @@ This module handles linguistic, cultural, and idiomatic thematic profiling acros
 *   **Dubstep / Melodic Dubstep / Drum & Bass / Liquid DnB:**
     *   *Law:* Liquid lanes utilize smooth, soulful, half-time R&B vocal flows. Heavy Dubstep and Drum & Bass lanes utilize sharp, high-aggression, rapid MC-style hype commands.
     *   *Banned:* Monotonous jazz-club phrasing or slow, acoustic-guitar singer-songwriter metrics.
-    *   *Vocabulary:* Rewind, watch the drop, break the cage, liquid sky, heavy pressure, feel the friction.
+    *   *Vocabulary:* Rewind, watch the drop, liquid sky, heavy pressure, feel the friction.
+    *   *Banned AI tokens:* break the cage, rise up, let it fall, open sky.
 *   **Hardstyle / Rawstyle / Hard Bounce / EDM Bounce:**
     *   *Law:* **Dynamic shift mandatory:** [Breakdown] = vulnerable unpolished spoken confession; [Build-up] = cold defiant survival/determination; [Pre-Drop] = ONE yelled/screamed command word before kick impact. Drop = chop/mantra cells only.
     *   *Banned:* Melodramatic clichés (we own the night, ghosts pulling near, strobe light flash), clinical phrasing (hollows out my chest cavity, destroy the grid), sci-fi rave metaphors, cozy mundane filler.
@@ -36,7 +39,8 @@ This module handles linguistic, cultural, and idiomatic thematic profiling acros
 *   **Nu-Disco / Future Funk / Vinahouse / Amapiano-Vinahouse / Afro House / UK Garage / Jersey Club:**
     *   *Law:* Funk/Disco lanes require retro, high-energy, infectious party-groove hooks. Vinahouse/Jersey variants require hyper-repetitive, rapid, loop-ready vocal micro-chops snapped to punchy kick grids.
     *   *Banned:* Long, sprawling ambient prose or somber, melancholy indie-rock laments.
-    *   *Vocabulary:* Hit the floor, bassline bounce, funky rhythm, non-stop, check the clock, step to the beat.
+    *   *Vocabulary (human preferred):* check the clock, step to the beat, make a move, come talk to me, funky rhythm.
+    *   *Banned AI tokens:* Hit the floor, dance with me, on the floor (stock), bassline bounce (as empty mantra).
 
 ### 2. HIP HOP CATEGORIES (13 SUB-GENRES)
 *   **Boom Bap / Hip Hop / Jazz Rap:**
@@ -60,7 +64,8 @@ This module handles linguistic, cultural, and idiomatic thematic profiling acros
 *   **R&B / Contemporary R&B / 90s R&B / New Jack Swing / Trap Soul:**
     *   *Law:* Write highly expressive, silky, melismatic lines utilizing complex vocal runs. Trap Soul must feature dark, moody, relationship-centered vulnerability. New Jack Swing requires high-tempo, swing-beat dance-pop confidence.
     *   *Banned:* Monotone spoken-word robot text or country bluegrass licks.
-    *   *Vocabulary:* Midnight drive, neon shadows, temperature rising, no regrets, silky touch, baseline heartbeat.
+    *   *Vocabulary (human preferred):* your hoodie on my chair, phone face-down, I almost called, don't text me late, I meant what I said.
+    *   *Banned AI tokens:* neon shadows, temperature rising (ungrounded), baseline heartbeat, pieces of me, drowning in you.
 *   **Soul / Neo-Soul / Funk / Quiet Storm:**
     *   *Law:* Prioritize deep, organic chest-voice warmth, vintage analog performance dynamics, socially conscious commentary, or smooth, late-night acoustic intimacy.
     *   *Banned:* Hyperpop robotic glitches or harsh metalcore growls.
@@ -70,7 +75,8 @@ This module handles linguistic, cultural, and idiomatic thematic profiling acros
 *   **Pop / Mainstream Pop / Pop / Max Martin / Electropop / Dance Pop / Synth Pop:**
     *   *Law:* Enforce absolute precision engineering. Hooks must feature hyper-mathematical line symmetry, immediate melodic earworms, and razor-sharp, pristine commercial tracking patterns.
     *   *Banned:* Intentionally unstructured rambling, unrhymed free-verse, or abrasive industrial distortions.
-    *   *Vocabulary:* High voltage, cross the line, target lock, neon lightning, countdown, state of mind.
+    *   *Vocabulary (human preferred):* say it to my face, don't leave me hanging, I meant every word, one more night then I'm gone, keep my name out your mouth.
+    *   *Banned AI tokens:* High voltage, target lock, neon lightning, countdown (as empty mantra), state of mind (ungrounded), forever young, this is real, break free.
 *   **Bedroom Pop / Indie Pop:**
     *   *Law:* Deliver soft, intimate, unpolished, quirky, raw bedroom vulnerability. Vocals must sound like an un-engineered, close-mic home studio setup.
     *   *Banned:* Massively stacked, polished group harmonies or theatrical arena belting.
@@ -78,7 +84,8 @@ This module handles linguistic, cultural, and idiomatic thematic profiling acros
 *   **K-POP / J-POP / C-Pop / Mandopop:**
     *   *Law:* Construct rapid, multi-lingual code-switch blocks. Alternate frequently between native Asian lyrics and catchy English hook phrases. Structure lyrics to sound like a synchronized multi-member idol group performance.
     *   *Banned:* Monotonous single-vocal solo phrasing without any dynamic arrangement switches.
-    *   *Vocabulary:* Starlight eyes, synchronized heart, countdown three-two-one, neon rain, dream chase.
+    *   *Vocabulary (human preferred):* camera flash, missed cue, say my name once, don't freeze on the mark, one take left.
+    *   *Banned AI tokens:* starlight eyes, synchronized heart, neon rain, dream chase, forever young.
 *   **Latin Pop:**
     *   *Law:* Deliver highly romantic, vibrant, rhythmic pop toplines locked directly to infectious acoustic guitar plucking patterns or modern pop-reggaeton grooves.
     *   *Banned:* Dark industrial dystopian content or cold, non-rhythmic indie prose.
@@ -92,11 +99,13 @@ This module handles linguistic, cultural, and idiomatic thematic profiling acros
 *   **Rock / Classic Rock / Hard Rock / Alternative / Alt Rock / Indie Rock:**
     *   *Law:* Target driving, authentic guitar-driven grit, systemic defiance, real room acoustics, and high-energy stadium choruses.
     *   *Banned:* Slick, hyper-quantized electronic club mantras or hip-hop trap triplet code patterns.
-    *   *Vocabulary:* Electric static, wire lines, standard deviation, crash down, neon wild, out of gas.
+    *   *Vocabulary (human preferred):* engine ticking cool, cracked windshield, I said it too loud, don't walk away mid-sentence, out of gas on purpose.
+    *   *Banned AI tokens:* neon wild, standard deviation, electric static (as emotion), rise up, burn it down (empty slogans).
 *   **Pop Punk / Emo / Punk:**
     *   *Law:* Deliver fast, punchy, nasal, angst-fueled staccato vocal lines that open up into explosive, melodic, highly energetic anthemic choruses.
     *   *Banned:* Gentle, jazzy melismatic runs or smooth, detached electronic club whispers.
-    *   *Vocabulary:* Dead-end town, teenage shadows, broken baseline, status quo, screaming loud, baseline exit.
+    *   *Vocabulary (human preferred):* dead-end town, parking-lot fight, I meant the apology, don't call my mom, screaming loud then quiet.
+    *   *Banned AI tokens:* teenage shadows, broken baseline, baseline exit, rise up.
 *   **Metal / Heavy Metal / Metalcore / Death Metal:**
     *   *Law:* Enforce dramatic structural dynamic shifts. Verses must use fast, consonant-heavy staccato patterns over heavy guitars, opening up into soaring clean legato choruses or brutal, guttural breakdown growls.
     *   *Banned:* Bubblegum pop-romance clichés or soft, breathy uncompressed vocal hooks.

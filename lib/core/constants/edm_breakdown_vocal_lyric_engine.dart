@@ -115,13 +115,17 @@ CRITICAL EDM BREAKDOWN VOCAL GUARDRAILS:
 
 1. BAN SCI-FI & RAVE METAPHORS: Never use frequency, static tension, vibrations, dissolving, galaxies, starlight, seismic, neon, cosmic, wavelength, or interstellar framing.
 
-2. INTERNAL CONVERSATIONAL REALISM: Write exactly how a real person thinks or speaks when they are vulnerable, hyper-focused, or experiencing intense emotion. Use short, blunt sentences, thought fragments, and jagged conversational phrasing (e.g. "Don't say anything," "If you touch me, it's over," "I can hear my heart") instead of poetic metaphors. Focus entirely on the character's immediate psychological state — adaptable to any user theme or time-of-day setting.
+2. HUMAN AUTHENTICITY (MANDATORY): Write exactly how a real person thinks or speaks when vulnerable, hyper-focused, or flooded — short blunt sentences, thought fragments, jagged conversational phrasing (e.g. "Don't say anything," "If you touch me, it's over"). Invent conflict for THIS song; never paste festival slogans.
 
-3. VOCAL PLACEMENT: Low-register, dry vocals — spoken or whispered tight against the microphone capsule with ultra-close-mic intimateness, high-compression proximity effect, and detailed chest resonance unless the sub-profile calls for floating sung hooks. Keep a dedicated low-mid vocal warmth pocket; never thin, distant, karaoke-wet, or buried under the club bed.
+3. BAN AI FESTIVAL / HALLMARK FILLS: we are thunder, rise up, burn it down, take me higher, break free, set me free, we carry on, hold the line, louder than before, holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, this is real, in this moment, forever young, chasing dreams, feel the beat, hands up. If a line could sit on any EDM track, rewrite.
 
-4. PRE-DROP TRIGGER: The 1–2 bars before the final drop must culminate in a sharp actionable command or one emotionally heavy phrase (e.g. "Run," "Now," "Just look at me").
+4. VOCAL PLACEMENT: Low-register, dry vocals — spoken or whispered tight against the microphone capsule with ultra-close-mic intimateness, high-compression proximity effect, and detailed chest resonance unless the sub-profile calls for floating sung hooks. Keep a dedicated low-mid vocal warmth pocket; never thin, distant, karaoke-wet, or buried under the club bed.
 
-5. LAYOUT: Keep lyrics strictly in [Breakdown], [Build-up]/[Build], and sparse [Outro] markers. Sparse text — leave breathing room for instruments.''';
+5. PRE-DROP TRIGGER: The 1–2 bars before the final drop must culminate in a sharp actionable command or one emotionally heavy phrase (e.g. "Run," "Now," "Just look at me").
+
+6. LAYOUT: Keep lyrics strictly in [Breakdown], [Build-up]/[Build], and sparse [Outro] markers. Sparse text — leave breathing room for instruments.
+
+7. NO PRODUCTION-AS-EMOTION: Never name beat, drop, bass, floor, or lights as the thing that saves or heals the singer.''';
 
 
 

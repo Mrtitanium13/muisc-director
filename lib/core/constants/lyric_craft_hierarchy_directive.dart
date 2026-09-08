@@ -4,6 +4,12 @@ import 'package:music_director/data/models/user_input_model.dart';
 class LyricCraftHierarchyDirective {
   LyricCraftHierarchyDirective._();
 
+  static const String _pathADirective =
+      '[LYRIC CRAFT HIERARCHY] PATH A — USER LYRICS are primary authority. '
+      'Copy the provided sung lines into BLOCK 2 verbatim. Do not rewrite, '
+      'paraphrase, or replace them. Genre / humanism / temperament may inform '
+      'Block 1 production prose and arrangement staging tags only.';
+
   static const String _directive =
       '[LYRIC CRAFT HIERARCHY] (MANDATORY INSTRUCTION: Apply directives in this '
       'strict order of authority: '
@@ -28,6 +34,7 @@ class LyricCraftHierarchyDirective {
 
   static String? userBlockDirective(UserInputModel input) {
     if (!isComplexLyricPath(input)) return null;
+    if (input.optionalLyrics.trim().isNotEmpty) return _pathADirective;
     return _directive;
   }
 }

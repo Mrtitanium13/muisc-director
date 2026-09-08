@@ -29,11 +29,13 @@ Test: open `http://localhost:8080/health`
 3. **Variables (LaoZhang default)**:
    - `OPENAI_API_KEY` — **required** for `/generate-prompt` and Gemini `/analyze`. Use a key from [api.laozhang.ai/token](https://api.laozhang.ai/token).
    - `OPENAI_BASE_URL` — optional; defaults to `https://api.laozhang.ai/v1` when unset.
-   - `PROMPT_PIPELINE` — `hybrid` (default on LaoZhang lyrics: GPT-5.5 multilingual prompt → Claude lyrics + expression), `two_pass` / `architect` (Pass 1 JSON blueprint → Pass 2 Block 1/2), or `single` (one model).
-   - `PROMPT_VISION_MODEL` / `PROMPT_DRAFT_MODEL` — LaoZhang multilingual prompt generation default `gpt-5.5` (African languages, Nigerian Pidgin).
+   - `PROMPT_PIPELINE` — `hybrid` (default on LaoZhang lyrics: GPT-6 Astra / Terra draft → Claude lyrics + expression), `two_pass` / `architect` (Pass 1 JSON blueprint → Pass 2 Block 1/2), or `single` (one model).
+   - `PROMPT_VISION_MODEL` / `PROMPT_DRAFT_MODEL` — overrides; defaults are Terra English (`gpt-5.6-terra`) and Astra multilingual (`gpt-6-astra`).
    - `PROMPT_LYRICS_MODEL` / `PROMPT_POLISH_MODEL` — LaoZhang lyrics + artistic expression default `claude-sonnet-4-5`.
    - `PROMPT_LYRICS_FALLBACK_MODEL` — last-resort fallback `gemini-2.5-pro`.
-   - `HUMANIZATION_PASS=true` — LaoZhang uses same `humanization_pass.txt` as OpenRouter (Claude for English · GPT-5.5 for multilingual/Pidgin).
+   - `HUMANIZATION_PASS=true` — mandatory for lyrics quality (Claude for English · GPT-6 Astra for multilingual/Pidgin).
+   - `HUMANIZATION_MULTILINGUAL_MODEL` — optional override (default `gpt-6-astra`).
+   - `LAOZHANG_COMPRESSION_MODEL` / bare `SUNO_COMPRESSION_MODEL` — LaoZhang default `gpt-5.6-luna` (OpenRouter vendor slugs ignored on LaoZhang).
    - `PROMPT_STYLE_MODEL` — Block 2 opt-out / style-only default `gemini-2.5-pro`.
    - LaoZhang routing is unchanged when OpenRouter vars are set (provider-scoped resolvers).
    - `OPENAI_MODEL` — if set, forces one model for **single** mode only.

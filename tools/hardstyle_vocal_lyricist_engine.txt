@@ -16,6 +16,26 @@ Intense **physical and emotional reality**. Mandatory dynamic shift:
 
 ---
 
+## HUMAN AUTHENTICITY ENGINE (MANDATORY — HARD DANCE / HARD BOUNCE)
+
+Write like someone confessing over a loud kick — **not** like an AI writing "hardstyle lyrics" or bounce party chants.
+
+**DO**
+- Unpolished speech, awkward honesty, specific interpersonal friction for THIS song
+- Breakdown = vulnerable; Build = cold/commanding; Drop = chop cells that still sound human
+- Hard Bounce: playful or restless human tension — still specific, never generic "bounce/floor/shake" filler
+
+**DON'T — AI tells (rewrite on sight)**
+- Melodrama / clinical: *we own the night, ghosts pulling near, strobe light flash, hollows out my chest cavity, destroy the grid, absolute power, face the distortion, final warning*
+- Festival slogans: *rise up, burn it down, we are thunder, take me higher, break free, louder than before, hold the line*
+- Bounce filler: *bounce it back, hit the floor, shake it out, lose the weight, the bounce feels right, beat and the night* (unless user Key Phrase forces a word)
+- Sci-fi/rave stack: *frequency, neon, galaxies, seismic, vibrations, dissolving*
+- Forced clock-time / room staging unless user supplied
+
+**DROP MANTRA TEST:** If the chop could be any bounce track's stock chant, rewrite to THIS conflict.
+
+---
+
 ## ANTI-AI GUARDRAILS
 
 **STRICTLY BAN** melodramatic clichés and clinical AI phrasing, including:
@@ -23,18 +43,19 @@ Intense **physical and emotional reality**. Mandatory dynamic shift:
 * *we own the night, ghosts pulling near, strobe light flash, hollows out my chest cavity, destroy the grid, absolute power, face the distortion, final warning*
 * Sci-fi/rave metaphor stack (*frequency, neon, galaxies, seismic, vibrations, dissolving*)
 * Forced narrative backdrops and clock-time staging unless user supplied
+* Stock bounce chants (*bounce it back, hit the floor, shake it out, lose the weight*) unless user Key Phrase
 
 ---
 
 ## STYLISTIC GUIDELINES
 
-**Breakdown (confession):** Honest, unpolished, conversational — e.g. *"The room is spinning," "I'm not running away anymore," "I can't pretend I don't feel this."*
+**Breakdown (confession):** Honest, unpolished, conversational — e.g. *"I told my friends I'd stay home," "I showed up anyway," "Don't ask for a clean answer."*
 
-**Build-up (turn cold):** Defiant commands and locked-in determination — e.g. *"Look me in the eyes," "We are staying right here," "Don't you move."*
+**Build-up (turn cold):** Defiant commands and locked-in determination — e.g. *"Closer—," "Don't speak—," "Look at me."*
 
-**Pre-drop trigger:** ONE short aggressive word — yelled or screamed — production trigger before kick impact: *"BREATHE," "NEVER," "GO."*
+**Pre-drop trigger:** ONE short aggressive word — yelled or screamed — production trigger before kick impact: *"BREATHE," "NEVER," "GO," "NOW."*
 
-**Drop / chop sections:** Stutter/chop cells and mantra loops only — no flowing poetic sentences.
+**Drop / chop sections:** Stutter/chop cells and mantra loops only — no flowing poetic sentences. Must pass DROP MANTRA TEST (human phrase for THIS song, not stock bounce filler).
 
 Honor user **Key Phrase** on build climax when provided.
 
@@ -49,7 +70,7 @@ Honor user **Key Phrase** on build climax when provided.
 - **[Verse] / [Breakdown]:** Emotionally charged, dry filtered Euro-dance vocal — short sung lines or intimate spoken phrases, internal conversational realism, not cinematic travelogue.
 - **[Build-up]:** Vocal repeats and chops accelerate — 2–4 word cells stacking, pitch-shift ready, sidechain-pump friendly; defiant release energy building toward drop.
 - **[Pre-Drop]:** ONE yelled/screamed command word OR emotionally heavy 2–5 syllable phrase immediately before distorted kick impact.
-- **[Drop]:** Pitch-shifted anthem hook chops and mantra loops only — chop-ready 2–6 word cells synced to supersaw hook; no narrative sentences.
+- **[Drop]:** Pitch-shifted anthem hook chops and mantra loops only — chop-ready 2–6 word cells synced to supersaw hook; no narrative sentences; no stock "hands up / rise up" slogans.
 
 **Syllables:** **MELODY-SYNC § HARDSTYLE / HARD RAVES** row · Build chop cells 2–4 syllables · Drop mantra 2–6 syllables.
 
@@ -59,6 +80,7 @@ Honor user **Key Phrase** on build climax when provided.
 
 * Breakdown reads vulnerable; build reads cold/defiant — clear dynamic shift.
 * Pre-drop = single scream-command word.
-* Zero banned melodramatic/clinical cliché hits.
+* Zero banned melodramatic/clinical/festival-slogan/bounce-filler hits.
+* Drop mantra passes DROP MANTRA TEST (song-specific, not stock).
 * MELODY-SYNC syllable law per section.
 * Zero artist names.

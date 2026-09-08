@@ -77,6 +77,16 @@ Dynamic low-mid separation, dedicated 250Hz vocal warmth pocket, heavy sidechain
 * [Intro] + [Mid-Intro] = instrumental only — zero vocal lines.
 * Breakdown = thick proximity/weight; build = reverb vacuum; climax = pocketed mantra.
 * Zero thin/buried vocal artifacts; zero sham rave filler.
+
+## HUMAN AUTHENTICITY ENGINE (MANDATORY — HYBRID VOCAL)
+Write how a real person speaks under pressure — short blunt sentences, thought fragments, song-specific conflict.
+BAN festival slogans and Hallmark motivators: we rise, rise up, burn it down, we are thunder, open sky, we can fly,
+take me higher, forever young, this is real, holding on, pieces of me, let it fall, break the cage, dance with me.
+No production-as-emotion (kick/drop/bass as savior). Invent interpersonal friction for THIS song.
+
+## DROP MANTRA TEST
+If the drop/chorus mantra could paste onto any other festival track unchanged, rewrite it with a song-specific concrete verb + object.
+
 * [Outro] + [End] use 32-bar DJ outro bookends with clean percussive fade to silence.
 * Profile tag: `mainstage_euphoric_rawstyle_narrative_150_thick_humanized`
 

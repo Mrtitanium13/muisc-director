@@ -57,7 +57,7 @@
       "2": "[Log Drum Break]",
       "3": "[Percussion Breakdown]\n[Log Drum Build]\n[Drop: Heavy Log Drums]"
     },
-    "lyric_engine_directives": "Syncopated West African pop phrasing, call-and-response hooks, dance-floor gratitude and celebration. Keep lines short, rhythmic, and chant-ready."
+    "lyric_engine_directives": "Syncopated West African pop phrasing, call-and-response hooks, dance-floor gratitude and celebration. Keep lines short, rhythmic, and chant-ready. HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "amapiano": {
     "primary_anchors": [
@@ -73,7 +73,7 @@
       "2": "[Log Drum Verse]",
       "3": "[Breakdown: Log Drum Isolates]\n[Chant Accents Build]\n[Drop: Full Groove Peak]"
     },
-    "lyric_engine_directives": ""
+    "lyric_engine_directives": "HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "ambient": {
     "primary_anchors": [
@@ -105,7 +105,7 @@
       "2": "[Ad-lib Accents]\n[Hook Lift]",
       "3": "[DJ Scratch Break]\n[Ad-lib Flood]\n[Hook: Maximum Pocket]"
     },
-    "lyric_engine_directives": "Story-first bars with concrete detail, internal rhyme, and sample-era authenticity. No motivational poster lines."
+    "lyric_engine_directives": "Story-first bars with concrete detail, internal rhyme, and sample-era authenticity. No motivational poster lines. HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "cinematic": {
     "primary_anchors": [
@@ -122,7 +122,7 @@
       "2": "[Dramatic Crescendo]",
       "3": "[Tension Building Sub-Bass]\n[Epic Orchestral Crescendo]\n[Coda: Full Grand Scale Resolve]"
     },
-    "lyric_engine_directives": "Arc-driven imagery with rising stakes; orchestral section tags. Favor cinematic verbs over abstract emotion labels."
+    "lyric_engine_directives": "Arc-driven imagery with rising stakes; orchestral section tags. Favor cinematic verbs over abstract emotion labels. HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "country": {
     "primary_anchors": [
@@ -138,7 +138,7 @@
       "2": "[Key Change Transition]",
       "3": "[Guitar and Fiddle Duel]\n[Big Drum Fill]\n[Chorus: Upbeat Stadium Country]"
     },
-    "lyric_engine_directives": "Narrative storytelling, concrete place names, family and road imagery. Twang-friendly vowels; avoid generic Nashville clichés."
+    "lyric_engine_directives": "Narrative storytelling, concrete place names, family and road imagery. Twang-friendly vowels; avoid generic Nashville clichés. HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "dnb": {
     "primary_anchors": [
@@ -154,7 +154,7 @@
       "2": "[Rising Groove Build]\n[Drop: Double Time]",
       "3": "[Breakdown: Drums Cut Out]\n[Accelerating Snare Fill]\n[Drop: Maximum Amen Break Energy]"
     },
-    "lyric_engine_directives": "Minimal vocal topline or chop-ready phrases; high-energy chants and breathless build cues. No slow ballad phrasing in drops."
+    "lyric_engine_directives": "Minimal vocal topline or chop-ready phrases; high-energy chants and breathless build cues. No slow ballad phrasing in drops. HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "dubstep": {
     "primary_anchors": [
@@ -170,7 +170,7 @@
       "2": "[Pre-Drop Tension]\n[Drop: Heavy Bass Impact]",
       "3": "[Build: Accelerating Triplets]\n[Pre-Drop Vocal Silence]\n[Drop: Maximum Wobble Bass Chaos]"
     },
-    "lyric_engine_directives": "Pre-drop tension phrases, chop cells, and bass-drop mantras. Avoid flowing poetry in drop sections."
+    "lyric_engine_directives": "Pre-drop tension phrases, chop cells, and bass-drop mantras. Avoid flowing poetry in drop sections. HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "edm": {
     "primary_anchors": [
@@ -187,7 +187,7 @@
       "2": "[Rising Energy Build]\n[Drop: Festival Impact]",
       "3": "[Pre-Chorus]\n[Rising Energy Build]\n[Accelerating Snare Roll]\n[Drop: Full Impact]"
     },
-    "lyric_engine_directives": "Festival-ready hooks, build/release cues, and anthem repetition. Keep drop sections chant-simple."
+    "lyric_engine_directives": "Festival-ready hooks, build/release cues, and anthem repetition. Keep drop sections chant-simple. HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "folk": {
     "primary_anchors": [
@@ -203,7 +203,7 @@
       "2": "[Harmonies In]",
       "3": "[Bridge: Whispered Intimate]\n[Crescendo: Orchestral Folk Swell]"
     },
-    "lyric_engine_directives": "Intimate first-person narrative, acoustic-room honesty, nature and relationship detail."
+    "lyric_engine_directives": "Intimate first-person narrative, acoustic-room honesty, nature and relationship detail. HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "hardstyle": {
     "primary_anchors": [
@@ -220,7 +220,7 @@
       "2": "[Rising Energy Build]\n[Drop: Reverse Bass]",
       "3": "[Monologue]\n[Pre-Chorus]\n[Accelerating Snare Roll]\n[Drop: Reverse Bass Impact]"
     },
-    "lyric_engine_directives": ""
+    "lyric_engine_directives": "HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "hiphop": {
     "primary_anchors": [
@@ -237,7 +237,7 @@
       "2": "[Drum Fill]",
       "3": "[Vinyl Scratch Break]\n[Beat Switch]\n[808 Bass Drop]"
     },
-    "lyric_engine_directives": "Punchy internal rhyme, vivid street/detail imagery, strong hook repetition. No empty flex filler."
+    "lyric_engine_directives": "Punchy internal rhyme, vivid street/detail imagery, strong hook repetition. No empty flex filler. HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "indie": {
     "primary_anchors": [
@@ -253,7 +253,7 @@
       "2": "[Instrumental Outro Fade]",
       "3": "[Bridge: Quiet Intimate Guitars]\n[Explosive Guitars In]\n[Chorus: Wall of Sound]"
     },
-    "lyric_engine_directives": "Understated emotional specificity, conversational phrasing, imperfect rhyme welcome."
+    "lyric_engine_directives": "Understated emotional specificity, conversational phrasing, imperfect rhyme welcome. HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "jazz": {
     "primary_anchors": [
@@ -269,7 +269,7 @@
       "2": "[Saxophone Solo]",
       "3": "[Drum Solo Break]\n[Full Band Swing In]"
     },
-    "lyric_engine_directives": "Sophisticated but singable lines; room for scat/solo sections. Favor mood over plot."
+    "lyric_engine_directives": "Sophisticated but singable lines; room for scat/solo sections. Favor mood over plot. HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "latin": {
     "primary_anchors": [
@@ -285,7 +285,7 @@
       "2": "[Descarga Percusion]",
       "3": "[Solo de Timbales]\n[Mambo: Full Horn Section In]"
     },
-    "lyric_engine_directives": "Romantic or celebratory Spanish/English blend as user language dictates; percussive syllable feel."
+    "lyric_engine_directives": "Romantic or celebratory Spanish/English blend as user language dictates; percussive syllable feel. HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "mandopop": {
     "primary_anchors": [
@@ -301,7 +301,7 @@
       "2": "[Pre-Chorus Build]",
       "3": "[Bridge: Erhu Statement]\n[Key Change]\n[Chorus: Full String Swell Peak]"
     },
-    "lyric_engine_directives": "Melodic, cinematic Mandarin or bilingual hooks; key-change lift language in final chorus."
+    "lyric_engine_directives": "Melodic, cinematic Mandarin or bilingual hooks; key-change lift language in final chorus. HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "metal": {
     "primary_anchors": [
@@ -317,7 +317,7 @@
       "2": "[Breakdown]",
       "3": "[Pre-Breakdown: Guitars Cut Out]\n[Bass Drop Shockwave]\n[Breakdown: Heavy Slam Djent]"
     },
-    "lyric_engine_directives": "Aggressive declarative lines, breakdown chants, scream-ready syllables. No soft pop metaphors in heavy sections."
+    "lyric_engine_directives": "Aggressive declarative lines, breakdown chants, scream-ready syllables. No soft pop metaphors in heavy sections. HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "pop": {
     "primary_anchors": [
@@ -333,7 +333,7 @@
       "2": "[Pre-Chorus Build]\n[Chorus]",
       "3": "[Pre-Chorus: Tension Rises]\n[Dramatic Beat Pause]\n[Chorus: Explosive Pop Hook]"
     },
-    "lyric_engine_directives": "Relatable love/loss/celebration themes, accessible AABB/ABAB hooks, memorable post-chorus earworms."
+    "lyric_engine_directives": "Relatable love/loss/celebration themes, accessible AABB/ABAB hooks, memorable post-chorus earworms. HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "reggae": {
     "primary_anchors": [
@@ -349,7 +349,7 @@
       "2": "[Dub Echo Break]",
       "3": "[Breakdown: Bass and Drums Isolate]\n[Delay Throw Build]\n[Drop: Full One-Drop Return]"
     },
-    "lyric_engine_directives": "Laid-back behind-the-beat phrasing, conscious or romantic themes, patois-friendly hooks when dialect allows; leave space for echo trails."
+    "lyric_engine_directives": "Laid-back behind-the-beat phrasing, conscious or romantic themes, patois-friendly hooks when dialect allows; leave space for echo trails. HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "reggaeton": {
     "primary_anchors": [
@@ -365,7 +365,7 @@
       "2": "[El Bajo Rompe]",
       "3": "[Cambio de Ritmo]\n[Build: Fuego Energy]\n[Drop: Dembow Total]"
     },
-    "lyric_engine_directives": "Dembow-pocket phrasing, romantic or party energy, short hook loops for drop stacking."
+    "lyric_engine_directives": "Dembow-pocket phrasing, romantic or party energy, short hook loops for drop stacking. HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "rnb": {
     "primary_anchors": [
@@ -381,7 +381,7 @@
       "2": "[Bridge: Vocal Ad-libs]",
       "3": "[Sensual Bridge Break]\n[Vocal Run Climaxes]\n[Chorus: Deep Groove Soul]"
     },
-    "lyric_engine_directives": "Sensual specificity, conversational ad-libs, velvet tone in verse; stacked harmonies in chorus."
+    "lyric_engine_directives": "Sensual specificity, conversational ad-libs, velvet tone in verse; stacked harmonies in chorus. HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "rock": {
     "primary_anchors": [
@@ -397,7 +397,7 @@
       "2": "[Drum Roll Transition]",
       "3": "[Bridge: Guitar Feedback Swell]\n[Massive Drum Fill]\n[Chorus: High Energy Stadium Rock]"
     },
-    "lyric_engine_directives": "Anthemic chorus lines, raw emotional honesty, guitar-solo section tags when instrumental breaks apply."
+    "lyric_engine_directives": "Anthemic chorus lines, raw emotional honesty, guitar-solo section tags when instrumental breaks apply. HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "synthwave": {
     "primary_anchors": [
@@ -414,7 +414,7 @@
       "2": "[Retro Synth Arpeggio Break]",
       "3": "[Bridge: Retro Ambient Pads]\n[Gated Drum Fill]\n[Chorus: High Energy Arpeggio]"
     },
-    "lyric_engine_directives": "Retro-futurist nostalgia, neon mood without sci-fi cliché spam, 80s cinematic brevity."
+    "lyric_engine_directives": "Retro-futurist nostalgia, neon mood without sci-fi cliché spam, 80s cinematic brevity. HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "techno": {
     "primary_anchors": [
@@ -430,7 +430,7 @@
       "2": "[Filter Sweep Break]\n[Drop: Heavy Kick]",
       "3": "[Industrial Breakdown]\n[Accelerating Percussion Build]\n[Drop: Driving Sub-Bass and Kick]"
     },
-    "lyric_engine_directives": "Minimal vocal fragments or hypnotic mantra loops; industrial realism over festival poetry."
+    "lyric_engine_directives": "Minimal vocal fragments or hypnotic mantra loops; industrial realism over festival poetry. HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "trap": {
     "primary_anchors": [
@@ -446,7 +446,7 @@
       "2": "[Hook: Beats Stutter Build]\n[Hook: Full Trap Pocket]",
       "3": "[Intense Hi-Hat Build]\n[808 Slide Accent]\n[Hook: Aggressive Trap Beat]"
     },
-    "lyric_engine_directives": "808-pocket phrasing, dark mood, triplet-friendly syllable counts, hook-first repetition."
+    "lyric_engine_directives": "808-pocket phrasing, dark mood, triplet-friendly syllable counts, hook-first repetition. HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   },
   "worship": {
     "primary_anchors": [
@@ -463,7 +463,7 @@
       "2": "[Chorus Lift]",
       "3": "[Bridge: Congregational Vamp]\n[Spontaneous Flow]\n[Chorus: Full Choir Climax]"
     },
-    "lyric_engine_directives": "Themes of grace, redemption, and worship. Call-and-response phrasing, uplifting vocabulary, biblical allusion when natural — avoid secular metaphors in climax sections."
+    "lyric_engine_directives": "Themes of grace, redemption, and worship. Call-and-response phrasing, uplifting vocabulary, biblical allusion when natural — avoid secular metaphors in climax sections. HUMAN AUTHENTICITY: ban secular AI festival slogans (rise up, we are thunder, take me higher as empty motivator). Keep worship language specific to THIS song's testimony."
   },
   "world": {
     "primary_anchors": [
@@ -479,6 +479,6 @@
       "2": "[Percussion Break]",
       "3": "[Breakdown: Hand Percussion Isolates]\n[Hook Chant Build]\n[Chorus: Full Ensemble Peak]"
     },
-    "lyric_engine_directives": "Bollywood, Bhangra, Punjabi, Filmi, and Middle Eastern phrasing — rhythmic hooks, melisma-friendly vowels, celebratory or romantic imagery."
+    "lyric_engine_directives": "Bollywood, Bhangra, Punjabi, Filmi, and Middle Eastern phrasing — rhythmic hooks, melisma-friendly vowels, celebratory or romantic imagery. HUMAN AUTHENTICITY (mandatory): conversational speech, song-specific interpersonal friction, plain words. BAN AI slogans/Hallmark: holding on, broken inside, pieces of me, drowning in, lost in the dark, find myself, chasing dreams, forever young, in this moment, this is real, take me higher, break free, we are thunder, rise up, burn it down, open sky, we can fly, dance with me, on the floor, break the cage, let it fall. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite. No production-as-emotion (beat/drop/bass as savior)."
   }
 }

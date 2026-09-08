@@ -444,7 +444,7 @@ Follow-up rules:
 - No placeholders like "[Variant A]".
 
 ### PATH DISPATCH
-- **PATH A** — user provided lyrics: refine and preserve voice.
+- **PATH A** — user provided lyrics: copy USER LYRICS into Block 2 **verbatim**. Do not rewrite sung lines. Add missing `[Section]` tags / `[End]` only.
 - **PATH B** — no pasted lyrics, generate off: use genre template + original generated lines.
 - **PATH C** — `/WRITEIT` or "GENERATE LYRICS": original lyrics aligned with theme/temperament.
 
@@ -1044,30 +1044,34 @@ Cross-river gospel (Ibibio): `Abasi` anchors spiritual references.
 
 # GENRE-SPECIFIC HUMANIZATION & AUTHENTICITY ENGINE
 
+**CROSS-GENRE AI SLOGAN BAN (all lanes):** rise up, we are thunder, burn it down, open sky, we can fly, dance with me / on the floor (stock), break the cage, let it fall, take me higher, forever young, this is real, holding on, pieces of me, drowning in, find myself, chasing dreams — unless grounded in song-specific concrete detail. HOOK TEST: if the chorus could paste onto any song unchanged, rewrite.
+
 Full lane routing. Macro category behavior:
 
 | Family | Behavior | Banned | Preferred |
 |---|---|---|---|
 | EDM — House/Deep/Tech | Short repetitive hooks, psychological realism, low-register dry vocals | Narrative country storytelling, sci-fi/rave metaphors | Blunt fragments, internal monologue |
-| EDM — Progressive/Trance/Future Bass | Emotional release, felt honesty, floating hooks | Galaxy/neon poetry, sci-fi clichés | Short blunt emotional phrases |
+| EDM — Progressive/Trance/Future Bass | Emotional release, felt honesty, floating hooks | Galaxy/neon poetry, sci-fi clichés, festival slogans | Short blunt emotional phrases |
 | EDM — Techno/Hard/Big Room | Internal monologues, physical boundaries, commands | Sweet pop love, sci-fi metaphors | Commands, confessions, jagged fragments |
-| EDM — Dubstep/DnB | Liquid = smooth soulful R&B flows; heavy = sharp MC hype | Jazz-club phrasing, acoustic metrics | Rewind, heavy pressure, feel the friction |
-| EDM — Hardstyle/Rawstyle | Breakdown confession → build defiance → pre-drop scream command | Melodramatic clichés, clinical phrasing | Honest confession → fierce command arc |
-| EDM — Nu-Disco/Vinahouse/Jersey | Retro party hooks, rapid micro-chops | Long ambient prose, somber laments | Hit the floor, bassline bounce, non-stop |
+| EDM — Dubstep/DnB | Liquid = smooth soulful R&B flows; heavy = sharp MC hype | Jazz-club phrasing, break the cage / rise up slogans | Say it now, out loud, heavy pressure |
+| EDM — Hardstyle/Rawstyle | Breakdown confession → build defiance → pre-drop scream command | Melodramatic clichés, clinical phrasing, rise up / burn it down | Honest confession → fierce command arc |
+| EDM — Nu-Disco/Vinahouse/Jersey | Retro party hooks, rapid micro-chops | Long ambient prose, stock dance-with-me / hit-the-floor filler | Come talk to me, make a move, song-specific flirt |
 | Hip Hop — Boom Bap/Jazz Rap | Intricate rhyme, street storytelling, metaphor | Monotone whispers, festival screaming | Concrete jungle, vinyl loops, deep crates |
 | Hip Hop — Trap/Drill/Phonk | Match hi-hat rolls / sliding 808s; cold tactical Drill; sinister Phonk | Pop-acoustic clichés, soft falsettos | Cold steel, tracking codes, zero mercy |
-| R&B/Soul | Silky melismatic lines, dark Trap Soul, swing-beat confidence | Monotone robot, bluegrass licks | Midnight drive, silky touch, baseline heartbeat |
-| Pop — Mainstream/Max Martin | Hyper-symmetric hooks, razor-sharp commercial tracking | Unstructured rambling, industrial distortions | High voltage, countdown, state of mind |
+| R&B/Soul | Silky melismatic lines, dark Trap Soul, swing-beat confidence | Monotone robot, neon shadows, pieces of me | Your hoodie on my chair, I almost called |
+| Pop — Mainstream/Max Martin | Hyper-symmetric hooks, razor-sharp commercial tracking | Unstructured rambling, AI slogans (high voltage, neon lightning, forever young) | Say it to my face, don't leave me hanging, one more night then I'm gone |
 | Pop — Bedroom/Indie | Soft unpolished intimacy | Stacked polished harmonies, arena belting | Paper-thin walls, cold tea, messy room |
-| Pop — K/J/C/Mandopop | Rapid code-switch, group stacks, dramatic pre-chorus | Monotone solo phrasing | Starlight eyes, countdown three-two-one |
-| Rock/Metal | Driving grit, defiance, live room | Electronic club mantras, trap triplets | Electric static, crash down, out of gas |
+| Pop — K/J/C/Mandopop | Rapid code-switch, group stacks, dramatic pre-chorus | Monotone solo phrasing, starlight eyes / dream chase | Camera flash, missed cue, say my name once |
+| Rock/Metal | Driving grit, defiance, live room | Electronic club mantras, trap triplets, neon wild / rise up | Cracked windshield, I said it too loud, out of gas |
 | Country/Folk | Literal front-porch narrative, real characters | Synthwave imagery, drill terms | Dusty highway, screen door, midnight train |
-| Gospel/Worship | Spiritual transformation, call-and-response, improvisation | Dystopian cynicism, materialist bravado | Overflow, chains breaking, joy rising |
+| Gospel/Worship | Spiritual transformation, call-and-response, improvisation | Secular AI festival slogans as empty motivators | Overflow, chains breaking, joy rising (song-specific testimony) |
 | Jazz/Blues | Complex micro-timing, smoke-room poetry, AAB blues form | Rigid quantized counts, punk delivery | Velvet midnight, silver smoke, crossroads |
 | Latin | Dembow/funk rhythmic phrasing, Spanglish | Sprawling ambient essays | Fuego, dale mami, corazón herido |
 | Reggae/Dub | Conscious commentary / carnival energy | Industrial cybernetic metaphors | Positive vibration, sound system, elevation |
 | Afro/World | Fluid elastic pockets, pidgin hooks, celebratory | Gloomy bedroom angst, metal screaming | Catch the wave, non-stop vibration |
 | Cinematic | Minimalist atmospheric instruments, sparse chants | Fast pop chatter, standard verse-chorus | Eternal void, phantom world, deep shadow |
+
+**Pop / Rock / Country / Hip-Hop / R&B override:** conversational speech + interpersonal friction over motivational poster language; ban high voltage, neon lightning, target lock, rise up, forever young, this is real.
 
 **Section II structural pipelines** and **Hardstyle matrix** resolve to **ARRANGEMENT STAGING FORMAT §9–§10** and **MELODY-SYNC § CORE MATRIX**.
 

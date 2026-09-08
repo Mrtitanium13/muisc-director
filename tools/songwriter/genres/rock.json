@@ -1,15 +1,54 @@
 {
   "id": "rock",
   "version": "1.0.0",
-  "vocabulary_profile": ["direct verbs", "grit", "confrontation"],
+  "vocabulary_profile": [
+    "direct verbs",
+    "grit",
+    "confrontation"
+  ],
   "line_length_guidance": "punchy lines; chorus shoutable",
-  "imagery_guidance": ["roads", "rooms", "action over abstract heart"],
+  "imagery_guidance": [
+    "roads",
+    "rooms",
+    "action over abstract heart"
+  ],
   "energy_profile": "drive and attitude",
   "hook_style": "title shout; guitar-space aware",
   "rhyme_density": "medium",
-  "rhythmic_guidance": ["downbeat punches", "held notes on chorus"],
-  "common_structures": ["V-C-V-C-B-C"],
-  "vocal_phrasing": ["edge in verse", "belt chorus"],
-  "avoid_patterns": ["EDM drop language", "over-polite diction"],
+  "rhythmic_guidance": [
+    "downbeat punches",
+    "held notes on chorus"
+  ],
+  "common_structures": [
+    "V-C-V-C-B-C"
+  ],
+  "vocal_phrasing": [
+    "edge in verse",
+    "belt chorus"
+  ],
+  "avoid_patterns": [
+    "EDM drop language",
+    "over-polite diction",
+    "rise up",
+    "we are thunder",
+    "burn it down",
+    "open sky",
+    "we can fly",
+    "dance with me",
+    "on the floor",
+    "break the cage",
+    "let it fall",
+    "take me higher",
+    "forever young",
+    "this is real",
+    "holding on",
+    "pieces of me",
+    "drowning in",
+    "find myself",
+    "chasing dreams",
+    "high voltage",
+    "neon lightning",
+    "target lock"
+  ],
   "cultural_notes": []
 }

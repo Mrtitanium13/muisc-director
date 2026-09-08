@@ -25,19 +25,21 @@ Ultra-close-mic intimateness, high-compression proximity effect, detailed chest 
   static const String universalGuardrails = '''
 CRITICAL FESTIVAL ANTHEM VOCAL GUARDRAILS:
 
-1. THE NARRATIVE PIVOT SYSTEM (EMOTIONAL ENGAGEMENT OVER OBJECTS)
-- Never hardcode fixed backdrops, specific items (like cars, clocks, weather), or physical locations into your memory bank unless explicitly requested by the user.
-- Build the lyrics around an internal psychological conflict: a sudden shift in trust, an unspoken realization, the exact moment a relationship fractures, or a choice from which there is no return.
-- The story must feel deeply human and urgent. Focus on the raw friction between two people, capturing a fleeting internal state rather than describing an exterior scene.
+1. HUMAN AUTHENTICITY ENGINE (MANDATORY)
+- Write like a real person mid-conflict — half-thoughts, blunt speech, specific friction for THIS song.
+- DROP MANTRA TEST: if the hook could paste onto any festival track, rewrite until it only fits THIS conflict.
+- BAN AI slogans: we are thunder, rise up, burn it down, take me higher, break free, we carry on, hold the line, louder than before, holding on, broken inside, pieces of me, drowning in, lost in the dark.
+- BAN production-as-emotion (beat/drop/bass/floor as savior) and templated "I don't need X / I just need Y" couplets.
+- Never hardcode fixed backdrops (cars, clocks, weather, locations) unless the user requested them.
 
 2. STRICT VOCAL ARRANGER STRUCTURE (METRIC & SYLLABIC ALIGNMENT)
 - [VERSE]: Short, low-register, blunt conversational fragments. Maximum 4–7 syllables per line. Heavy pauses. Emulate sparse bedroom pop realism with close-mic proximity weight.
-- [BUILD-UP]: Exponentially increasing rhythmic urgency. Shift to repeating 2-to-3-word rhythmic cells. Every line must end on an open, long-held vowel sound (A, E, O) so it can be stretched naturally across the rising chord progression — optional expanding wet hall washout into a vacuum gap before drop.
-- [PRE-DROP TRIGGER]: A single, high-impact emotional realization or command spanning exactly 1 to 4 syllables. This is your absolute peak tension vector.
-- [DROP CHORUS]: An aggressive, syncopated metric mantra loop. Maximum 2 distinct lines repeated rhythmically. It must be written explicitly for vocal chopping and sampling (stutter blocks) — dry, weighty, pocketed above the supersaw wall.
+- [BUILD-UP]: Exponentially increasing rhythmic urgency. Shift to repeating 2-to-3-word rhythmic cells. Prefer open, long-held vowels (A, E, O) — optional expanding wet hall washout into a vacuum gap before drop.
+- [PRE-DROP TRIGGER]: A single, high-impact emotional realization or command spanning exactly 1 to 4 syllables.
+- [DROP CHORUS]: Syncopated metric mantra loop. Maximum 2 distinct lines. Chop/stutter-ready — dry, weighty, pocketed above the supersaw wall. Must pass DROP MANTRA TEST.
 
 3. EXPANDED PHRASE BAN LIST (THE CRINGE FILTER)
-- BANNED CLICHÉS: hands up, put your hands up, feel the beat, when the drop hits, raise your hands, we're going higher, let me feel your love tonight, infinite skies, blinding light, we own the night, lights go down, scream it out, side by side, chasing dreams, forever young, in this moment, let it go.
+- BANNED CLICHÉS: hands up, put your hands up, feel the beat, when the drop hits, raise your hands, we're going higher, let me feel your love tonight, infinite skies, blinding light, we own the night, lights go down, scream it out, side by side, chasing dreams, forever young, in this moment, let it go, we are thunder, rise up, burn it down, take me higher, break free, set me free, we carry on, hold the line, louder than before.
 - BANNED SCI-FI/RAVE METAPHORS: frequency, static tension, vibrations, dissolving, galaxies, starlight, seismic, neon, cosmic, wavelength, interstellar, sparks fly, electricity, energy, universe.
 - BANNED THIN VOCAL ARTIFACTS: thin, distant, karaoke-wet, buried, or breath-only leads without body.
 
@@ -45,45 +47,45 @@ CRITICAL FESTIVAL ANTHEM VOCAL GUARDRAILS:
 - If the user provides a custom theme or Key Phrase, you must use it exactly as the climactic final line of the Build-up or as the foundational rhythm cell of the Drop Mantra.''';
 
   static const String stylisticExamples = '''
-VOCAL BLUEPRINT TEMPLATES FOR UNIQUE STORY GENERATION:
+STYLE PATTERNS (cadence only — invent fresh lines; never copy):
 
-[ARCHETYPE A: INTERNAL CONFLICT]
+[PATTERN: QUIET CONFRONTATION]
 [Verse]
-You didn't mean it.
-I see the change now.
-We hit the limit.
-Too quiet.
+Stop saying we're fine
+You looked past me twice
+I almost walked then
+Didn't
 [Build-up]
-Before I break—
-Before I break—
-Don't look—
-Don't look—
+Say it—
+Say it—
+Out loud—
+Out loud—
 [Pre-Drop Trigger]
-Tell me.
+Please
 [Drop Chorus]
-Let it fall.
-Let it fall.
-Nothing left.
-Let it fall.
+Don't call me baby
+Don't call me baby
+Not like that
+Don't call me baby
 
-[ARCHETYPE B: THE BREAKING POINT]
+[PATTERN: DELAYED EXIT]
 [Verse]
-I gave up waiting.
-You kept a secret.
-We crossed the border.
-No warning.
+You texted almost there
+Hours ago
+I laughed so I wouldn't
+Cry out loud
 [Build-up]
-I can't stay—
-I can't stay—
-It's gone—
-It's gone—
+Stay gone—
+Stay gone—
+I'm done—
+I'm done—
 [Pre-Drop Trigger]
-Let go.
+Go
 [Drop Chorus]
-Walk away.
-Walk away.
-Out of time.
-Walk away.''';
+Keep your maybe
+Keep your maybe
+I'm walking
+Keep your maybe''';
 
   static String _genreBlob(String primary, String fusion) =>
       '${primary.trim()} ${fusion.trim()}'.toLowerCase();

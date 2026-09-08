@@ -236,7 +236,27 @@ SONGWRITER_PROMPTS = {
       ],
       "avoid_patterns": [
         "urban EDM slang",
-        "generic cowboy costume lyrics"
+        "generic cowboy costume lyrics",
+        "rise up",
+        "we are thunder",
+        "burn it down",
+        "open sky",
+        "we can fly",
+        "dance with me",
+        "on the floor",
+        "break the cage",
+        "let it fall",
+        "take me higher",
+        "forever young",
+        "this is real",
+        "holding on",
+        "pieces of me",
+        "drowning in",
+        "find myself",
+        "chasing dreams",
+        "high voltage",
+        "neon lightning",
+        "target lock"
       ],
       "cultural_notes": [
         "Specificity beats stereotype"
@@ -309,7 +329,27 @@ SONGWRITER_PROMPTS = {
       ],
       "avoid_patterns": [
         "crowd noise tags as lyric",
-        "overlong storytelling before first hook"
+        "overlong storytelling before first hook",
+        "rise up",
+        "we are thunder",
+        "burn it down",
+        "open sky",
+        "we can fly",
+        "dance with me",
+        "on the floor",
+        "break the cage",
+        "let it fall",
+        "take me higher",
+        "forever young",
+        "this is real",
+        "holding on",
+        "pieces of me",
+        "drowning in",
+        "find myself",
+        "chasing dreams",
+        "high voltage",
+        "neon lightning",
+        "target lock"
       ],
       "cultural_notes": [
         "EDM vocals serve the drop; clarity over density"
@@ -414,7 +454,27 @@ SONGWRITER_PROMPTS = {
       ],
       "avoid_patterns": [
         "nursery end-rhyme only",
-        "corporate slang"
+        "corporate slang",
+        "rise up",
+        "we are thunder",
+        "burn it down",
+        "open sky",
+        "we can fly",
+        "dance with me",
+        "on the floor",
+        "break the cage",
+        "let it fall",
+        "take me higher",
+        "forever young",
+        "this is real",
+        "holding on",
+        "pieces of me",
+        "drowning in",
+        "find myself",
+        "chasing dreams",
+        "high voltage",
+        "neon lightning",
+        "target lock"
       ],
       "cultural_notes": []
     },
@@ -449,7 +509,27 @@ SONGWRITER_PROMPTS = {
       ],
       "avoid_patterns": [
         "rock ballad paragraphs",
-        "forced storytelling density"
+        "forced storytelling density",
+        "rise up",
+        "we are thunder",
+        "burn it down",
+        "open sky",
+        "we can fly",
+        "dance with me",
+        "on the floor",
+        "break the cage",
+        "let it fall",
+        "take me higher",
+        "forever young",
+        "this is real",
+        "holding on",
+        "pieces of me",
+        "drowning in",
+        "find myself",
+        "chasing dreams",
+        "high voltage",
+        "neon lightning",
+        "target lock"
       ],
       "cultural_notes": []
     },
@@ -548,7 +628,27 @@ SONGWRITER_PROMPTS = {
         "rap break optional"
       ],
       "avoid_patterns": [
-        "generic American prom lyrics without K-pop structure"
+        "generic American prom lyrics without K-pop structure",
+        "rise up",
+        "we are thunder",
+        "burn it down",
+        "open sky",
+        "we can fly",
+        "dance with me",
+        "on the floor",
+        "break the cage",
+        "let it fall",
+        "take me higher",
+        "forever young",
+        "this is real",
+        "holding on",
+        "pieces of me",
+        "drowning in",
+        "find myself",
+        "chasing dreams",
+        "high voltage",
+        "neon lightning",
+        "target lock"
       ],
       "cultural_notes": [
         "Code-switch only if language brief allows"
@@ -654,7 +754,27 @@ SONGWRITER_PROMPTS = {
       ],
       "avoid_patterns": [
         "soft-pop filler",
-        "greeting-card hope"
+        "greeting-card hope",
+        "rise up",
+        "we are thunder",
+        "burn it down",
+        "open sky",
+        "we can fly",
+        "dance with me",
+        "on the floor",
+        "break the cage",
+        "let it fall",
+        "take me higher",
+        "forever young",
+        "this is real",
+        "holding on",
+        "pieces of me",
+        "drowning in",
+        "find myself",
+        "chasing dreams",
+        "high voltage",
+        "neon lightning",
+        "target lock"
       ],
       "cultural_notes": []
     },
@@ -689,7 +809,27 @@ SONGWRITER_PROMPTS = {
       ],
       "avoid_patterns": [
         "overwritten poetry",
-        "prog-rock metaphor stacks"
+        "prog-rock metaphor stacks",
+        "rise up",
+        "we are thunder",
+        "burn it down",
+        "open sky",
+        "we can fly",
+        "dance with me",
+        "on the floor",
+        "break the cage",
+        "let it fall",
+        "take me higher",
+        "forever young",
+        "this is real",
+        "holding on",
+        "pieces of me",
+        "drowning in",
+        "find myself",
+        "chasing dreams",
+        "high voltage",
+        "neon lightning",
+        "target lock"
       ],
       "cultural_notes": []
     },
@@ -756,7 +896,27 @@ SONGWRITER_PROMPTS = {
       ],
       "avoid_patterns": [
         "rock shout defaults",
-        "EDM drop language"
+        "EDM drop language",
+        "rise up",
+        "we are thunder",
+        "burn it down",
+        "open sky",
+        "we can fly",
+        "dance with me",
+        "on the floor",
+        "break the cage",
+        "let it fall",
+        "take me higher",
+        "forever young",
+        "this is real",
+        "holding on",
+        "pieces of me",
+        "drowning in",
+        "find myself",
+        "chasing dreams",
+        "high voltage",
+        "neon lightning",
+        "target lock"
       ],
       "cultural_notes": []
     },
@@ -790,7 +950,27 @@ SONGWRITER_PROMPTS = {
       ],
       "avoid_patterns": [
         "EDM drop language",
-        "over-polite diction"
+        "over-polite diction",
+        "rise up",
+        "we are thunder",
+        "burn it down",
+        "open sky",
+        "we can fly",
+        "dance with me",
+        "on the floor",
+        "break the cage",
+        "let it fall",
+        "take me higher",
+        "forever young",
+        "this is real",
+        "holding on",
+        "pieces of me",
+        "drowning in",
+        "find myself",
+        "chasing dreams",
+        "high voltage",
+        "neon lightning",
+        "target lock"
       ],
       "cultural_notes": []
     },
@@ -984,15 +1164,18 @@ SONGWRITER_PROMPTS = {
     }
   },
   "model_routing": {
-    "version": "1.0.0",
-    "description": "Songwriter model routing — genre + language → preferred model. Provider slugs are OpenAI-compatible (LaoZhang bare id / OpenRouter vendor/model).",
+    "version": "1.1.0",
+    "description": "Songwriter lyrics engine routing — Astra for humanized lyric stages; Terra/Luna for structure/select; Claude for English craft. Provider slugs are OpenAI-compatible (LaoZhang bare id / OpenRouter vendor/model).",
     "tiers": {
       "tier1": [
-        "gpt-5.5",
+        "gpt-6-astra",
+        "gpt-5.6-sol",
         "claude-opus",
         "gemini-2.5-pro"
       ],
       "tier2": [
+        "gpt-5.6-terra",
+        "gpt-5.6-luna",
         "kimi",
         "deepseek",
         "qwen",
@@ -1001,9 +1184,21 @@ SONGWRITER_PROMPTS = {
       ]
     },
     "logical_models": {
-      "gpt-5.5": {
-        "laozhang": "gpt-5.5",
-        "openrouter": "openai/gpt-5.5"
+      "gpt-6-astra": {
+        "laozhang": "gpt-6-astra",
+        "openrouter": "openai/gpt-6-astra"
+      },
+      "gpt-5.6-sol": {
+        "laozhang": "gpt-5.6-sol",
+        "openrouter": "openai/gpt-5.6-sol"
+      },
+      "gpt-5.6-terra": {
+        "laozhang": "gpt-5.6-terra",
+        "openrouter": "openai/gpt-5.6-terra"
+      },
+      "gpt-5.6-luna": {
+        "laozhang": "gpt-5.6-luna",
+        "openrouter": "openai/gpt-5.6-luna"
       },
       "claude-opus": {
         "laozhang": "claude-opus-4-5",
@@ -1043,57 +1238,60 @@ SONGWRITER_PROMPTS = {
       }
     },
     "fallback_chain": [
+      "gpt-5.6-sol",
+      "claude-sonnet",
       "gemini-2.5-pro",
-      "gpt-5.5",
-      "qwen",
-      "claude-sonnet"
+      "gpt-5.6-terra",
+      "qwen"
     ],
     "stage_preferences": {
       "analyze": [
-        "gpt-5.5",
+        "gpt-5.6-luna",
         "claude-sonnet"
       ],
       "concepts": [
-        "gpt-5.5",
+        "gpt-6-astra",
         "claude-opus"
       ],
       "select": [
-        "gpt-5.5"
+        "gpt-5.6-luna",
+        "gpt-5.6-terra"
       ],
       "arc": [
         "claude-sonnet",
-        "gpt-5.5"
+        "gpt-5.6-terra"
       ],
       "chorus": [
-        "gpt-5.5",
+        "gpt-6-astra",
         "claude-opus"
       ],
       "verses": [
-        "claude-opus",
-        "gpt-5.5"
+        "gpt-6-astra",
+        "claude-opus"
       ],
       "bridge": [
-        "claude-sonnet",
-        "gpt-5.5"
-      ],
-      "transitions": [
+        "gpt-6-astra",
         "claude-sonnet"
       ],
+      "transitions": [
+        "claude-sonnet",
+        "gpt-5.6-terra"
+      ],
       "rhyme": [
-        "gpt-5.5",
+        "gpt-5.6-terra",
         "deepseek"
       ],
       "anti_ai": [
-        "claude-opus",
-        "claude-sonnet"
+        "gpt-6-astra",
+        "claude-opus"
       ],
       "singability": [
-        "gpt-5.5",
+        "gpt-6-astra",
         "claude-sonnet"
       ],
       "polish": [
-        "claude-opus",
-        "gpt-5.5"
+        "gpt-6-astra",
+        "claude-opus"
       ],
       "judge": [
         "claude-sonnet",
@@ -1114,7 +1312,7 @@ SONGWRITER_PROMPTS = {
             "synthpop"
           ]
         },
-        "primary": "gpt-5.5",
+        "primary": "gpt-6-astra",
         "secondary": "claude-opus"
       },
       {
@@ -1134,7 +1332,7 @@ SONGWRITER_PROMPTS = {
             "trance"
           ]
         },
-        "primary": "gpt-5.5",
+        "primary": "gpt-6-astra",
         "secondary": "claude-sonnet"
       },
       {
@@ -1151,7 +1349,7 @@ SONGWRITER_PROMPTS = {
           ]
         },
         "primary": "claude-opus",
-        "secondary": "claude-sonnet"
+        "secondary": "gpt-6-astra"
       },
       {
         "id": "rock_metal",
@@ -1168,7 +1366,7 @@ SONGWRITER_PROMPTS = {
           ]
         },
         "primary": "claude-opus",
-        "secondary": "gpt-5.5"
+        "secondary": "gpt-6-astra"
       },
       {
         "id": "afrobeats",
@@ -1184,7 +1382,7 @@ SONGWRITER_PROMPTS = {
             "amapiano"
           ]
         },
-        "primary": "gpt-5.5",
+        "primary": "gpt-6-astra",
         "secondary": "claude-sonnet"
       },
       {
@@ -1202,7 +1400,7 @@ SONGWRITER_PROMPTS = {
             "drill"
           ]
         },
-        "primary": "gpt-5.5",
+        "primary": "gpt-6-astra",
         "secondary": "deepseek"
       },
       {
@@ -1220,7 +1418,7 @@ SONGWRITER_PROMPTS = {
           ]
         },
         "primary": "claude-opus",
-        "secondary": "gpt-5.5"
+        "secondary": "gpt-6-astra"
       },
       {
         "id": "mandopop",
@@ -1240,7 +1438,7 @@ SONGWRITER_PROMPTS = {
           ]
         },
         "primary": "kimi",
-        "secondary": "qwen"
+        "secondary": "gpt-6-astra"
       },
       {
         "id": "chinese_ballad",
@@ -1276,7 +1474,7 @@ SONGWRITER_PROMPTS = {
           ]
         },
         "primary": "deepseek",
-        "secondary": "qwen"
+        "secondary": "gpt-6-astra"
       },
       {
         "id": "mixed_zh_en",
@@ -1290,8 +1488,8 @@ SONGWRITER_PROMPTS = {
             "*"
           ]
         },
-        "primary": "qwen",
-        "secondary": "kimi"
+        "primary": "gpt-6-astra",
+        "secondary": "qwen"
       },
       {
         "id": "kpop_jpop",
@@ -1309,7 +1507,7 @@ SONGWRITER_PROMPTS = {
             "jpop"
           ]
         },
-        "primary": "gpt-5.5",
+        "primary": "gpt-6-astra",
         "secondary": "qwen"
       },
       {
@@ -1328,8 +1526,8 @@ SONGWRITER_PROMPTS = {
             "salsa"
           ]
         },
-        "primary": "claude-sonnet",
-        "secondary": "gpt-5.5"
+        "primary": "gpt-6-astra",
+        "secondary": "claude-sonnet"
       },
       {
         "id": "default",
@@ -1341,12 +1539,12 @@ SONGWRITER_PROMPTS = {
             "*"
           ]
         },
-        "primary": "gpt-5.5",
-        "secondary": "gemini-2.5-pro"
+        "primary": "gpt-6-astra",
+        "secondary": "claude-sonnet"
       }
     ],
     "unavailable_policy": {
-      "description": "If primary slug fails auth/404, walk secondary then fallback_chain.",
+      "description": "If primary slug fails auth/404, walk secondary then fallback_chain. Lyric stages (chorus/verses/anti_ai/singability/polish) prefer Astra then Sol.",
       "max_attempts": 4
     }
   },

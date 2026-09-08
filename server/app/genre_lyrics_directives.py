@@ -32,6 +32,11 @@ from app.master_edm_lyric_engine import (
     is_edm_lane as is_master_edm_lane,
     master_edm_user_block,
 )
+from app.master_pop_lyric_engine import master_pop_user_block
+from app.master_rock_lyric_engine import master_rock_user_block
+from app.master_country_lyric_engine import master_country_user_block
+from app.master_hiphop_lyric_engine import master_hiphop_user_block
+from app.master_rnb_lyric_engine import master_rnb_user_block
 from app.southern_gospel_country_lyric_engine import southern_gospel_country_user_block
 from app.suno_prompt_builder import resolve_genre_fx_key
 from app.genre_lyric_engines import (
@@ -394,6 +399,28 @@ def genre_lyrics_user_block(
         )
         if edm_block:
             engine_body = edm_block
+
+    if not engine_body.strip():
+        # Core commercial masters (R&B before Hip-Hop; Country/Rock before Pop).
+        for composer in (
+            master_rnb_user_block,
+            master_hiphop_user_block,
+            master_country_user_block,
+            master_rock_user_block,
+            master_pop_user_block,
+        ):
+            block = composer(
+                primary_genre=primary_genre,
+                sub_genre_fusion=sub_genre_fusion,
+                vibe=vibe,
+                lyric_theme_notes=lyric_theme_notes,
+                vocal_spec=vocal_spec,
+                vocal_tone=vocal_tone,
+                bpm_hint=bpm_hint,
+            )
+            if block.strip():
+                engine_body = block
+                break
 
     if not engine_body.strip():
         lane = (genre_fx_lane or "").strip().lower() or resolve_genre_fx_key(

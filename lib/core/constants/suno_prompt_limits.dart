@@ -182,7 +182,7 @@ class SunoPromptLimits {
 
           '$block1CustomModeCharTargetMin–$block1CustomModeCharMax). Narrative prose first — not tag-only; optional 1D/1E tail per SECTION 0B. '
 
-          'BLOCK 2 — Lyrics: max $lyricsCharLimit chars through [End]. Path A — refine USER LYRICS; preserve voice.';
+          'BLOCK 2 — Lyrics: max $lyricsCharLimit chars through [End]. Path A — copy USER LYRICS verbatim; do not rewrite sung lines.';
 
     }
 

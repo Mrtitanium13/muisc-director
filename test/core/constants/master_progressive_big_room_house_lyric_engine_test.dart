@@ -90,7 +90,23 @@ void main() {
           MasterProgressiveBigRoomHouseLyricEngine.fewShotAssistantTurn(
         MasterProgressiveBigRoomHouseLyricEngine.profileFestivalAnthem,
       );
-      expect(festival, contains('Hold the line'));
+      expect(festival, contains("Don't promise next year"));
+      expect(festival.toLowerCase(), isNot(contains('we are thunder')));
+      expect(festival.toLowerCase(), isNot(contains('hold the line')));
+      expect(festival.toLowerCase(), isNot(contains('we carry on')));
+      final progressive =
+          MasterProgressiveBigRoomHouseLyricEngine.fewShotAssistantTurn(
+        MasterProgressiveBigRoomHouseLyricEngine.profileProgressiveVocal,
+      );
+      expect(progressive, contains("Don't call me baby"));
+      expect(progressive.toLowerCase(), isNot(contains('let it fall')));
+      final bigRoom =
+          MasterProgressiveBigRoomHouseLyricEngine.fewShotAssistantTurn(
+        MasterProgressiveBigRoomHouseLyricEngine.profileBigRoomFusion,
+      );
+      expect(bigRoom, contains('Leave your jacket'));
+      expect(bigRoom.toLowerCase(), isNot(contains('we are thunder')));
+      expect(bigRoom.toLowerCase(), isNot(contains('rise up')));
       final melodic =
           MasterProgressiveBigRoomHouseLyricEngine.fewShotAssistantTurn(
         MasterProgressiveBigRoomHouseLyricEngine.profileMelodicProg,

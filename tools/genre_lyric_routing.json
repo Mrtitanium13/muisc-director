@@ -11,7 +11,12 @@
     "hardstyle_vocal": "tools/hardstyle_vocal_lyricist_engine.txt",
     "big_room_fusion_progressive": "tools/big_room_fusion_progressive_vocal_lyricist_engine.txt",
     "big_room_hardstyle_hybrid": "tools/big_room_hardstyle_cinematic_hybrid_vocal_lyricist_engine.txt",
-    "edm_breakdown_vocal": "tools/edm_breakdown_vocal_lyricist_engine.txt"
+    "edm_breakdown_vocal": "tools/edm_breakdown_vocal_lyricist_engine.txt",
+    "pop_vocal": "tools/pop_vocal_lyricist_engine.txt",
+    "rock_vocal": "tools/rock_vocal_lyricist_engine.txt",
+    "country_vocal": "tools/country_vocal_lyricist_engine.txt",
+    "hiphop_vocal": "tools/hiphop_vocal_lyricist_engine.txt",
+    "rnb_vocal": "tools/rnb_vocal_lyricist_engine.txt"
   },
   "routes": [
     {"type": "gospel_master", "priority": 10},
@@ -21,6 +26,11 @@
     {"type": "future_house", "inline": "future_house", "priority": 50},
     {"type": "big_room_fusion_progressive", "engine": "big_room_fusion_progressive", "priority": 60},
     {"type": "amapiano", "inline": "amapiano", "priority": 70},
-    {"type": "edm_breakdown_vocal", "engine": "edm_breakdown_vocal", "priority": 80}
+    {"type": "edm_breakdown_vocal", "engine": "edm_breakdown_vocal", "priority": 80},
+    {"type": "rnb_master", "engine": "rnb_vocal", "priority": 90},
+    {"type": "hiphop_master", "engine": "hiphop_vocal", "priority": 100},
+    {"type": "country_master", "engine": "country_vocal", "priority": 110},
+    {"type": "rock_master", "engine": "rock_vocal", "priority": 120},
+    {"type": "pop_master", "engine": "pop_vocal", "priority": 130}
   ]
 }
