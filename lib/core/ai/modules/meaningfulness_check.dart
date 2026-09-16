@@ -157,15 +157,28 @@ class MeaningfulnessCheck {
     'mateo',
   ];
 
-  static const List<String> _familyTags = [
-    'mama said',
-    'mama told',
-    'daddy said',
-    'daddy told',
-    'papa said',
-    'mama says',
-    'daddy says',
-  ];
+  /// Punctuation/spacing-tolerant phrase match that does not match inside
+  /// Latin words. Chinese phrases may occur without surrounding spaces.
+  static bool containsLyricPhrase(String lyrics, String phrase) {
+    String fold(String value) => value
+        .toLowerCase()
+        .replaceAll(RegExp(r'[^\p{L}\p{N}]+', unicode: true), ' ')
+        .trim();
+
+    final text = fold(lyrics);
+    final needle = fold(phrase);
+    if (needle.isEmpty) return false;
+
+    final hanStart = RegExp('^[\\u3400-\\u4dbf\\u4e00-\\u9fff]');
+    final hanEnd = RegExp('[\\u3400-\\u4dbf\\u4e00-\\u9fff]\$');
+    final before = hanStart.hasMatch(needle) ? '' : r'(?:^|[^\p{L}\p{N}])';
+    final after = hanEnd.hasMatch(needle) ? '' : r'(?:$|[^\p{L}\p{N}])';
+
+    return RegExp(
+      '$before${RegExp.escape(needle)}$after',
+      unicode: true,
+    ).hasMatch(text);
+  }
 
   /// Known recycled "concrete" kits the model learned from prompt examples.
   /// Hitting any of these is a QA failure even if checklist dimensions pass.
@@ -220,11 +233,6 @@ class MeaningfulnessCheck {
     caseSensitive: false,
   );
 
-  static final RegExp _familyTagPattern = RegExp(
-    '\\b(?:${_familyTags.map(RegExp.escape).join('|')})\\b',
-    caseSensitive: false,
-  );
-
   /// One precompiled pattern per sense category (longest tokens first).
   static final List<RegExp> _sensePatterns = [
     for (final category in _senses)
@@ -255,10 +263,7 @@ class MeaningfulnessCheck {
   }
 
   bool hasProperNoun(String lyrics) {
-    final lower = lyrics.toLowerCase();
-    if (_properNounPattern.hasMatch(lower)) return true;
-    if (_familyTagPattern.hasMatch(lower)) return true;
-    return false;
+    return _properNounPattern.hasMatch(lyrics);
   }
 
   bool hasSpecificNumber(String lyrics) {
@@ -276,40 +281,42 @@ class MeaningfulnessCheck {
 
   /// Stock "concrete" kits that pass checklist bingo but read as nonsense.
   List<String> stockPhraseHits(String lyrics) {
-    final lower = lyrics.toLowerCase();
     return [
       for (final p in stockPhrasePatterns)
-        if (lower.contains(p)) p,
+        if (containsLyricPhrase(lyrics, p)) p,
     ];
   }
 
   bool hasStockPhrases(String lyrics) => stockPhraseHits(lyrics).isNotEmpty;
 
-  /// Score 0.0–1.0 across 5 dimensions; default threshold is 0.6 (≥3 of 5).
-  ///
-  /// The fifth dimension (through-line) is awarded automatically because the
-  /// generation prompt enforces a narrative through-line.
+  /// Score 0.0–1.0 across the runtime-verifiable dimensions (through-line is
+  /// a generation-side rule, not measurable here). The default threshold of
+  /// 0.6 therefore requires ≥3 of the 4 measured dimensions.
   /// Stock-phrase kits zero the score — checklist bingo is not meaningfulness.
   double score(String lyrics) {
     if (hasStockPhrases(lyrics)) return 0.0;
     final details = scoreDetails(lyrics);
-    var pass = 0;
-    for (final dim in MeaningfulnessDimension.values) {
-      if (details[dim] == true) pass++;
-    }
-    return pass / MeaningfulnessDimension.values.length;
+    final evaluated = details.entries.where(
+      (e) => e.key != MeaningfulnessDimension.throughline,
+    );
+    final pass = evaluated.where((e) => e.value).length;
+    return pass / evaluated.length;
   }
 
   /// Per-dimension breakdown. Useful for logging / retry prompts.
+  ///
+  /// Scores sung text only — bracketed Suno scaffolding must not supply
+  /// imagery/number credits the lyric lines never earned.
   Map<MeaningfulnessDimension, bool> scoreDetails(String lyrics) {
+    final sungLyrics = lyrics.replaceAll(RegExp(r'\[[^\]]*\]'), ' ').trim();
     return {
       MeaningfulnessDimension.sensory:
-          sensoryCount(lyrics) >= minSenseCategories,
-      MeaningfulnessDimension.properNoun: hasProperNoun(lyrics),
-      MeaningfulnessDimension.specificNumber: hasSpecificNumber(lyrics),
-      MeaningfulnessDimension.dialogue: hasDialogue(lyrics),
-      // Assumed enforced by generation prompt (kHumanVoiceDirective).
-      MeaningfulnessDimension.throughline: true,
+          sensoryCount(sungLyrics) >= minSenseCategories,
+      MeaningfulnessDimension.properNoun: hasProperNoun(sungLyrics),
+      MeaningfulnessDimension.specificNumber: hasSpecificNumber(sungLyrics),
+      MeaningfulnessDimension.dialogue: hasDialogue(sungLyrics),
+      // Not measurable at runtime — enforced by kHumanVoiceDirective.
+      MeaningfulnessDimension.throughline: false,
     };
   }
 

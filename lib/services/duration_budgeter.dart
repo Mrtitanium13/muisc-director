@@ -33,7 +33,7 @@ class DurationBudgeter {
   }) {
     final multiplier =
         EngineConfig.tempoEnergy[tempo]?.durationMultiplier ?? 1.0;
-    final profile = EngineConfig.modelProfiles[modelVersion]!;
+    final profile = EngineConfig.profileFor(modelVersion);
     final safeLimit = profile.maxSafeDurationSec;
     final maxSong = profile.maxSongDurationSec;
 

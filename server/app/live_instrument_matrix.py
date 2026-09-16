@@ -289,11 +289,13 @@ def _match_selected(
     return out
 
 
-def _normalize_version(version: str) -> str:
-    v = (version or "v5.0").strip().lower()
-    if v == "v4.5":
+def _normalize_version(version: str | None) -> str:
+    from app.suno_version import PREFERRED, density_key_for
+
+    key = density_key_for(version or PREFERRED)
+    if key == "v4.5":
         return "v4.5"
-    if v.startswith("v5.5"):
+    if key == "v5.5":
         return "v5.5pro"
     return "v5"
 
@@ -301,7 +303,7 @@ def _normalize_version(version: str) -> str:
 def generate_live_instrument_prompt(
     genre: str,
     selection_raw: str,
-    version: str = "v5.0",
+    version: str | None = None,
     power_codes: str = "",
     fusion: str = "",
     *,
@@ -383,7 +385,7 @@ def live_instrument_user_block(
     primary_genre: str,
     sub_genre_fusion: str = "",
     selection_raw: str,
-    suno_version: str = "v5.0",
+    suno_version: str | None = None,
     power_codes: str = "",
     audio_environment_mode: str = "studio_isolated",
 ) -> str:

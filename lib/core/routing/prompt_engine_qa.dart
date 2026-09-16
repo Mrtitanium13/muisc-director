@@ -45,15 +45,24 @@ class PromptEngineQa {
   static const stylePromptSoftLimit = 200;
   static const stylePromptHardLimit = 240;
 
-  static List<String> blacklistScan(String text) {
-    final lower = text.toLowerCase();
-    return bannedWords.where(lower.contains).toList();
-  }
+  /// Whole-word match — "rich" must not flag "Richard", "lush" not "plush".
+  static List<String> _bannedWordHits(String text, List<String> words) =>
+      words.where((word) {
+        final pattern = RegExp(
+          r'(?<![\p{L}\p{M}\p{N}_])' +
+              RegExp.escape(word) +
+              r'(?![\p{L}\p{M}\p{N}_])',
+          caseSensitive: false,
+          unicode: true,
+        );
+        return pattern.hasMatch(text);
+      }).toList();
 
-  static List<String> blacklistViolation(String stylePrompt) {
-    final lower = stylePrompt.toLowerCase();
-    return stylePromptBannedWords.where(lower.contains).toList();
-  }
+  static List<String> blacklistScan(String text) =>
+      _bannedWordHits(text, bannedWords);
+
+  static List<String> blacklistViolation(String stylePrompt) =>
+      _bannedWordHits(stylePrompt, stylePromptBannedWords);
 
   static List<String> qaCheckStylePromptContract(String stylePrompt) {
     final issues = <String>[];
@@ -104,10 +113,15 @@ class PromptEngineQa {
   }
 
   static bool _looksLikeLegacyCommaTagList(String stylePrompt) {
-    if (!stylePrompt.contains(',')) return false;
-    final parts = stylePrompt.split(',').map((s) => s.trim()).toList();
-    if (parts.length < 4) return false;
-    return !stylePrompt.contains(' ');
+    final parts = stylePrompt
+        .trim()
+        .split(',')
+        .map((part) => part.trim())
+        .toList(growable: false);
+    if (parts.length < 4 || parts.any((part) => part.isEmpty)) return false;
+    // A natural-language prompt has multi-word phrases; a legacy tag list is
+    // all single-word tags (spaces after commas must not bypass detection).
+    return parts.every((part) => !RegExp(r'\s').hasMatch(part));
   }
 
   static List<String> qaCheckSunoOutput(String text) {

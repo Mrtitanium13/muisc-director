@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphor_icons/phosphor_icons.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/dio_error_message.dart';
@@ -117,7 +117,18 @@ class _BatchGenerateScreenState extends ConsumerState<BatchGenerateScreen> {
               height: 1.45,
             ),
           ),
-          if (ready &&
+          if (ready && form.optionalLyrics.trim().isNotEmpty) ...[
+            const SizedBox(height: 10),
+            Text(
+              'Lyrics box: your pasted/written lyrics will be used on each run (Path A).',
+              style: GoogleFonts.inter(
+                fontSize: 12,
+                color: AppColors.accentPrimary,
+                height: 1.35,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ] else if (ready &&
               form.generateLyrics &&
               form.optionalLyrics.trim().isEmpty) ...[
             const SizedBox(height: 10),

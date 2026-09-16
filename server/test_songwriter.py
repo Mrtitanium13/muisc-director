@@ -76,6 +76,34 @@ class TestRouting(unittest.TestCase):
         self.assertIn("primary", as_dict)
         self.assertIn("fallbacks", as_dict)
 
+    def test_select_uses_luna_then_gemini25(self):
+        d = decide_route(genre="pop", language="English", stage="select")
+        self.assertEqual(d.primary.logical, "gpt-5.6-luna")
+        fallbacks = [f.logical for f in d.fallbacks]
+        self.assertIn("gemini-2.5-pro", fallbacks)
+
+    def test_rhyme_uses_gemini31(self):
+        d = decide_route(genre="pop", language="English", stage="rhyme")
+        self.assertEqual(d.primary.logical, "gemini-3.1-pro")
+        self.assertEqual(d.primary.slug, "gemini-3.1-pro-preview")
+
+    def test_arc_and_transitions_claude_then_gemini31(self):
+        arc = decide_route(genre="pop", language="English", stage="arc")
+        trans = decide_route(genre="pop", language="English", stage="transitions")
+        self.assertEqual(arc.primary.logical, "claude-sonnet")
+        self.assertEqual(trans.primary.logical, "claude-sonnet")
+        self.assertIn("gemini-3.1-pro", [f.logical for f in arc.fallbacks])
+        self.assertIn("gemini-3.1-pro", [f.logical for f in trans.fallbacks])
+
+    def test_judge_keeps_gemini25_backup(self):
+        d = decide_route(genre="pop", language="English", stage="judge")
+        self.assertEqual(d.primary.logical, "claude-sonnet")
+        self.assertIn("gemini-2.5-pro", [f.logical for f in d.fallbacks])
+
+    def test_chorus_stays_astra(self):
+        d = decide_route(genre="pop", language="English", stage="chorus")
+        self.assertEqual(d.primary.logical, "gpt-6-astra")
+
 
 class TestLinting(unittest.TestCase):
     def test_forbidden_hit(self):

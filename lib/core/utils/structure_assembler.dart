@@ -1,4 +1,5 @@
 import '../constants/song_structure_data.dart';
+import '../constants/suno_version.dart';
 import 'structural_family_resolver.dart';
 
 export 'final_chorus_mutation_rule.dart';
@@ -109,7 +110,7 @@ class StructureAssembler {
     List<SongSection> sections, {
     required String sunoVersion,
   }) {
-    final v55 = sunoVersion.trim().toLowerCase().startsWith('v5.5');
+    final v55 = SunoVersion.isRichDensity(sunoVersion);
     return sections.map((s) => s.toSunoBracket(v5_5: v55)).toList();
   }
 

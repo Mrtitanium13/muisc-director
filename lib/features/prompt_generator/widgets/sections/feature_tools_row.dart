@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphor_icons/phosphor_icons.dart';
 
 import 'package:music_director/core/utils/haptic_utils.dart';
 import 'package:music_director/features/prompt_generator/utils/form_navigation.dart';

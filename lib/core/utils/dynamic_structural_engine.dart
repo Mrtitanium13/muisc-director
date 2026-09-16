@@ -181,8 +181,8 @@ abstract final class DynamicStructuralEngine {
     String mutationHint = '',
     bool folkNoDrop = false,
   }) {
-    final v = sunoVersion.trim().toLowerCase();
-    final maxArc = v.startsWith('v5.5')
+    final v = SunoVersion.densityKeyFor(sunoVersion);
+    final maxArc = v == 'v5.5'
         ? 'v5.5_max_arc=true (full ~4-min single-pass allowed)'
         : 'v5.5_max_arc=false';
     final syntax = SunoSyntaxRenderer.syntaxDocBlock(sunoVersion);

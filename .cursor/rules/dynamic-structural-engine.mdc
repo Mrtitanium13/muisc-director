@@ -32,9 +32,11 @@ alwaysApply: false
 - `[Brackets]` = section + ONE staging descriptor
 - `(Parentheses)` = vocal cues + phonetics + brief ad-libs
 
-### v5.5 PRO (preferred for new projects)
+### v5.5 / v6 PRO (preferred for new projects — density key `v5.5`)
 - `[Brackets]` = full cinematic director's notes (multi-descriptor)
 - `(Parentheses)` = granular performance cues: `(sigh)`, `(chuckles)`, `(trailing off...)`, phonetics
+- **v6-wild** = same rich density + exploratory intent
+- **v6-mini** = hybrid (one descriptor), density key `v5.0`
 
 ### Cross-version rules
 1. Never nest brackets
@@ -56,7 +58,8 @@ alwaysApply: false
 |--------|----------------|
 | Music Creation | `<suno_version_routing>` in `<master_blueprint>` |
 | Block 2 Protocol | §9 `v5.5_max_arc` |
-| App default | `SunoVersion.preferredValue` = `v5.5` |
+| App default | `SunoVersion.preferredValue` = `v6` |
+| UI chips | `v6` · `v6-wild` · `v6-mini` (density aliases to v5.5 / v5.5 / v5.0) |
 | UI paste examples | `SunoStructureExamples` (preview only — not generation) |
 
 Runtime: `dynamic_structural_user_block()` / `DynamicStructuralEngine.userBlockDirective()`

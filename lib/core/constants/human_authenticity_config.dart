@@ -13,6 +13,7 @@ abstract final class HumanAuthenticityConfig {
     'festival edm',
     'progressive trance',
     'melodic techno',
+    'melodic house',
     'progressive house',
     'big room techno',
     'techno',
@@ -20,6 +21,9 @@ abstract final class HumanAuthenticityConfig {
     'house',
     'future bass',
     'electro',
+    // Mantra-dominant lanes are electronic too — without this they miss the
+    // electronic directive and DJ-friendly outro handling.
+    ..._mantraDominantLanes,
   ];
 
   static const List<String> _festivalVocalLanes = [
@@ -206,21 +210,23 @@ abstract final class HumanAuthenticityConfig {
 
     if (isGospelLane(primaryGenre, subGenreFusion)) {
       _addGospelLines(lines, audioEnvironmentModeId, djOutro);
-    } else if (isFestivalVocalLane(primaryGenre, subGenreFusion)) {
-      lines.add(
-        '- Festival/melodic electronic: simple singable choruses; breakdown = intimate '
-        '(whispered/double-track optional); hook repetition OK.',
-      );
-      lines.add(
-        '- Melodic impact allowed in Block 1: chorus lift, octave jump, sustained peak note.',
-      );
-      lines.add(
-        '- Electronic: breakdown intimacy vs drop energy; optional whispered/stripped breakdown vocals.',
-      );
-    } else if (isElectronicLane(primaryGenre, subGenreFusion)) {
-      lines.add(
-        '- Electronic: breakdown intimacy vs drop energy; optional whispered/stripped breakdown vocals.',
-      );
+    } else {
+      // Festival vocal lanes are a superset of the electronic lanes — keep
+      // these as independent checks so the electronic directive is reachable.
+      if (isFestivalVocalLane(primaryGenre, subGenreFusion)) {
+        lines.add(
+          '- Festival/melodic electronic: simple singable choruses; breakdown = intimate '
+          '(whispered/double-track optional); hook repetition OK.',
+        );
+        lines.add(
+          '- Melodic impact allowed in Block 1: chorus lift, octave jump, sustained peak note.',
+        );
+      }
+      if (isElectronicLane(primaryGenre, subGenreFusion)) {
+        lines.add(
+          '- Electronic: breakdown intimacy vs drop energy; optional whispered/stripped breakdown vocals.',
+        );
+      }
     }
 
     if (!isGospelLane(primaryGenre, subGenreFusion) &&

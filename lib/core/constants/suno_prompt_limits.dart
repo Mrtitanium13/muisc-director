@@ -1,17 +1,11 @@
 import 'api_constants.dart';
-
+import 'suno_version.dart';
 import '../../data/models/suno_field_output_mode.dart';
 
-
-
 /// Suno-facing limits: V2 **Block 1** (Style / Description) producer prose +
-
 /// **Block 2** lyrics. Block 1 cap is **fixed** (~1000 chars / ~150 words) for
-
-/// all Suno model versions — the UI limit does not scale with v4.5 / v5.0 / v5.5.
-
+/// all Suno model versions — the UI limit does not scale with model generation.
 class SunoPromptLimits {
-
   SunoPromptLimits._();
 
 
@@ -207,25 +201,15 @@ class SunoPromptLimits {
   /// Inclusive word range [min, max] for the **SUNO STYLE** paragraph only (legacy v1).
 
   static ({int min, int max}) wordRangeFor(String sunoVersion) {
-
-    switch (sunoVersion.trim()) {
-
+    switch (SunoVersion.densityKeyFor(sunoVersion)) {
       case 'v4.5':
-
         return (min: 80, max: 150);
-
       case 'v5.5':
-
         return (min: 200, max: 350);
-
       case 'v5.0':
-
       default:
-
         return (min: 150, max: 250);
-
     }
-
   }
 
 
@@ -325,25 +309,15 @@ class SunoPromptLimits {
 
 
   static ({int min, int max}) structureWordRangeFor(String sunoVersion) {
-
-    switch (sunoVersion.trim()) {
-
+    switch (SunoVersion.densityKeyFor(sunoVersion)) {
       case 'v4.5':
-
         return (min: 50, max: 130);
-
       case 'v5.5':
-
         return (min: 80, max: 200);
-
       case 'v5.0':
-
       default:
-
         return (min: 60, max: 160);
-
     }
-
   }
 
 
@@ -360,7 +334,9 @@ class SunoPromptLimits {
 
     final sr = structureWordRangeFor(sunoVersion);
 
-    final v = sunoVersion.trim().isEmpty ? 'v5.5' : sunoVersion.trim();
+    final v = sunoVersion.trim().isEmpty
+        ? SunoVersion.preferredValue
+        : sunoVersion.trim();
 
     if (!hasUserLyrics) {
 
@@ -400,7 +376,9 @@ class SunoPromptLimits {
 
   static String remixFromAnalyzerUserBlockSupplementV2(String sunoVersion) {
 
-    final v = sunoVersion.trim().isEmpty ? 'v5.5' : sunoVersion.trim();
+    final v = sunoVersion.trim().isEmpty
+        ? SunoVersion.preferredValue
+        : sunoVersion.trim();
 
     final w = block1StyleWordRangeFor(sunoVersion);
 
@@ -422,7 +400,9 @@ class SunoPromptLimits {
 
     final sr = structureWordRangeFor(sunoVersion);
 
-    final v = sunoVersion.trim().isEmpty ? 'v5.5' : sunoVersion.trim();
+    final v = sunoVersion.trim().isEmpty
+        ? SunoVersion.preferredValue
+        : sunoVersion.trim();
 
     return 'REMIX / GENRE-FLIP (from audio analysis): Describe how the source becomes the target '
 

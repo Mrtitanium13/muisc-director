@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/constants/suno_version.dart';
 import '../../presentation/screens/audio/audio_analyzer_screen.dart';
 import '../../presentation/screens/auth/login_screen.dart';
 import '../../presentation/screens/history/history_screen.dart';
@@ -159,7 +160,8 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                     BatchOutputItem(
                       label: e['label']?.toString() ?? '',
                       prompt: e['prompt']?.toString() ?? '',
-                      sunoVersion: e['version']?.toString() ?? 'v5.0',
+                      sunoVersion: e['version']?.toString() ??
+                          SunoVersion.preferredValue,
                     ),
                   );
                 }
@@ -190,7 +192,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) {
           final extra = state.extra;
           String prompt = '';
-          String version = 'v5.0';
+          String version = SunoVersion.preferredValue;
           var fieldModeName = 'custom';
           var trustedGenerationInput = false;
           if (extra is Map) {

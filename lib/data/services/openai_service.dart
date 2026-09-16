@@ -8,6 +8,7 @@ import '../../core/utils/api_connectivity.dart';
 import '../../core/utils/chat_completion_helpers.dart';
 import '../../core/ai/modules/genre_lyrics_emission.dart';
 import '../../core/ai/modules/humanized_lyrics_qa.dart';
+import '../../songwriter/qa/forbidden_phrase_scrubber.dart';
 import '../../core/constants/song_structure_data.dart';
 import '../../core/constants/structural_hierarchy_directive.dart';
 import '../../core/constants/suno_system_prompt_v2_candidate.dart';
@@ -23,6 +24,7 @@ import '../../core/utils/suno_output_qa.dart';
 import '../../core/utils/suno_output_split.dart';
 import '../../core/utils/suno_path_a_lyrics.dart';
 import '../../core/constants/suno_prompt_limits.dart';
+import '../../core/constants/suno_version.dart';
 import '../../core/constants/block1_mix_master_directive.dart';
 import '../../services/narrative_brief_builder.dart';
 import '../../core/suno_prompt_router.dart';
@@ -600,6 +602,16 @@ class OpenAIService {
     );
   }
 
+  /// Deterministic forbidden-phrase scan over the delivered lyric body
+  /// (complements HumanizedLyricsQa with the songwriter blacklist).
+  List<String> _forbiddenHitsOnDelivered(String delivered, UserInputModel input) {
+    if (!_shouldRunLyricQualityGate(input)) return const [];
+    final parsed = parseSunoOutput(_finalizeSunoV2Output(delivered, input));
+    final lyrics = parsed.lyricsBody?.trim() ?? '';
+    if (lyrics.isEmpty) return const [];
+    return ForbiddenPhraseScrubber.findHits(lyrics);
+  }
+
   /// Post-process delivery, then optionally one lyric-quality regenerate pass.
   Future<String> _deliverWithLyricQualityGate(
     String text,
@@ -619,13 +631,20 @@ class OpenAIService {
       applyThemePass: applyThemePass,
     );
     var bestQa = _lyricQaOnDelivered(bestDelivered, input);
-    if (bestQa == null || !bestQa.shouldRegenerate) {
+    var bestForbidden = _forbiddenHitsOnDelivered(bestDelivered, input);
+    if ((bestQa == null || !bestQa.shouldRegenerate) && bestForbidden.isEmpty) {
       return bestDelivered;
     }
     var activeQa = bestQa;
 
     for (var attempt = 0; attempt < _maxLyricQualityRetries; attempt++) {
-      final suffix = HumanizedLyricsQa.buildRegenerateSuffix(activeQa);
+      final suffix = <String>[
+        if (activeQa != null) HumanizedLyricsQa.buildRegenerateSuffix(activeQa),
+        if (bestForbidden.isNotEmpty)
+          'Rewrite the lyrics to remove these forbidden stock phrases: '
+              '${bestForbidden.join("; ")}. Replace the stock imagery, '
+              'not merely its spelling.',
+      ].join('\n');
       final retryMaxTok = (_baseMaxCompletionTokens(input) * 1.2).ceil().clamp(
             1400,
             8192,
@@ -655,12 +674,18 @@ class OpenAIService {
         recordSession: false,
       );
       if (retryQa == null) continue;
+      final retryForbidden = _forbiddenHitsOnDelivered(retryDelivered, input);
 
-      if (HumanizedLyricsQa.isBetterResult(retryQa, activeQa)) {
+      final better = retryForbidden.length < bestForbidden.length ||
+          (retryForbidden.length == bestForbidden.length &&
+              (activeQa == null ||
+                  HumanizedLyricsQa.isBetterResult(retryQa, activeQa)));
+      if (better) {
         bestDelivered = retryDelivered;
         activeQa = retryQa;
+        bestForbidden = retryForbidden;
       }
-      if (!retryQa.shouldRegenerate) break;
+      if (!retryQa.shouldRegenerate && retryForbidden.isEmpty) break;
     }
 
     return bestDelivered;
@@ -1727,8 +1752,12 @@ Output ONLY the final complete two-block Suno reply.''';
         blockInjected: false,
       );
     }
+    buf.writeln('Suno version: ${i.sunoVersion}');
+    final intent = SunoVersion.modelIntentDirective(i.sunoVersion);
+    if (intent.isNotEmpty) {
+      buf.writeln(intent);
+    }
     buf
-      ..writeln('Suno version: ${i.sunoVersion}')
       ..writeln(
         'Primary genre: ${primaryGenreWithDjToolModifier(
           primaryGenre: i.primaryGenre,

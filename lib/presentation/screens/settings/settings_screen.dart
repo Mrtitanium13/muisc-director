@@ -276,7 +276,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ),
           const SizedBox(height: 4),
           Text(
-            'api.laozhang.ai/token — GPT-5.5 multilingual prompt + Claude lyrics & expression (Gemini 2.5 Pro fallback); Gemini Pro for style-only.',
+            'api.laozhang.ai/token — GPT-6 Astra multilingual draft + humanization · Gemini 3.1 Pro English draft · Claude lyrics polish (Gemini 2.5 fallback); Luna compression.',
             style: GoogleFonts.inter(
               color: AppColors.textTertiary,
               height: 1.4,

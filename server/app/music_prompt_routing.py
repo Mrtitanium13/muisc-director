@@ -9,6 +9,7 @@ from app.dialect_style import is_nigerian_pidgin
 from app.genre_hybridization import fusion_active
 from app.human_voice_directive import HUMAN_VOICE_DIRECTIVE, emits_lyrics
 from app.llm_config import (
+    LAOZHANG_DRAFT_MODEL,
     LAOZHANG_GEMINI_FLASH,
     LAOZHANG_LYRICS_PRIMARY_MODEL,
     LAOZHANG_LIGHT_MODEL,
@@ -334,7 +335,7 @@ def _slug(model_key: str, *, provider: str | None, lightweight: bool) -> str:
         }.get(model_key, OPENROUTER_GENERATE_MODEL)
     return {
         "claude-sonnet": LAOZHANG_LYRICS_PRIMARY_MODEL,
-        "gpt-5": LAOZHANG_PROMPT_MODEL,
+        "gpt-5": LAOZHANG_DRAFT_MODEL,
         "glm": LAOZHANG_PROMPT_MODEL,
         "mistral": LAOZHANG_PROMPT_MODEL,
         "qwen": LAOZHANG_GEMINI_FLASH,

@@ -98,12 +98,11 @@ def decide_route(
     route = match_route(genre, language)
     stage_prefs = (data.get("stage_preferences") or {}).get(stage) or []
     primary_logical = route.get("primary") or "gpt-6-astra"
-    secondary_logical = route.get("secondary") or "gemini-2.5-pro"
+    secondary_logical = route.get("secondary") or "claude-sonnet"
 
+    # Stage list wins first (select/rhyme/arc/transitions), then genre route, then fallbacks.
     ordered: list[str] = []
-    for m in stage_prefs:
-        if m in (primary_logical, secondary_logical) or m == primary_logical:
-            ordered.append(m)
+    ordered.extend(stage_prefs)
     ordered.extend([primary_logical, secondary_logical])
     ordered.extend(data.get("fallback_chain") or [])
 

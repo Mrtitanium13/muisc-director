@@ -16,9 +16,11 @@
 
 ## §1. VERSION-ROUTED BRACKET DENSITY (CANONICAL)
 
-Read Suno version from user message. Three branches only (v5.5 and v5.5 Pro share one syntax branch). **Default: v5.0.**
+Read Suno version from user message. **Current UI chips:** `v6` · `v6-wild` · `v6-mini` (Suno retired pre-v6 models Sep 2026). Density aliases: **v6 / v6-wild / legacy v5.5** → rich cinematic; **v6-mini / legacy v5.0** → hybrid one-descriptor; **legacy v4.5** → minimal. **Default: v6** (rich).
 
-### v4.5 (Minimalist / Legacy-safe)
+Also honor any `SUNO MODEL INTENT (...)` line in the user block (wild = exploratory texture; mini = lean hybrid; v6 = precise/polished).
+
+### v4.5 / minimal density (legacy-safe)
 
 `[BRACKETS]` = **section name only, 1–2 words max**. No production cues inside brackets. Place mix textures in Block 1 prose only.
 
@@ -32,7 +34,7 @@ Read Suno version from user message. Three branches only (v5.5 and v5.5 Pro shar
 
 **Never** multi-descriptor brackets in v4.5. Never production tokens inside bracket text.
 
-### v5.0 (Structured — default)
+### v5.0 / v6-mini (Structured hybrid)
 
 Section bracket + **ONE primary staging descriptor** joined by colon:
 `[Chorus: wide harmonies]` `[Verse 2: urgent delivery]` `[Drop: log drum enters]`
@@ -44,7 +46,9 @@ Then optional **one** staging bracket on its own line (dense comma-separated tok
 
 **Max 1 intra-lyric micro-tag per section.**
 
-### v5.5 (Cinematic / Director's Mode — preferred for new projects, includes v5.5 Pro)
+### v5.5 / v6 / v6-wild (Cinematic / Director's Mode — preferred; includes legacy v5.5 Pro)
+
+**v6-wild note:** use the same multi-descriptor bracket law, but prefer textured, unexpected-yet-musical staging choices (still stem-whitelisted). Do not invent junk tags.
 
 Section bracket with multi-descriptor director's notes allowed, comma-separated:
 
@@ -328,7 +332,7 @@ Before finalizing Block 2 layout, verify structural alignment:
 
 Run silently before emitting Block 2. Fail any check → rewrite internally before emitting.
 
-1. **Version routing:** Staging brackets match the selected version's density rules (v4.5 minimal / v5.0 colon-descriptor / v5.5 cinematic)?
+1. **Version routing:** Staging brackets match the selected version's density rules (v6/v6-wild/v5.5 cinematic · v6-mini/v5.0 colon-descriptor · v4.5 minimal)?
 2. **Character budget:** Each individual bracket ≤ 120 chars ideally, 150 hard ceiling?
 3. **No literal placeholders:** Zero `[{staging}]` tokens anywhere?
 4. **Instrumental-staging constraint:** Zero verb phrases (`Feature`, `Play`, `Let the`) inside instrumental brackets? Zero prose sentences?

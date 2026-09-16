@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphor_icons/phosphor_icons.dart';
 
 import 'package:music_director/core/theme/app_colors.dart';
+import 'package:music_director/data/models/suno_field_output_mode.dart';
 import 'package:music_director/features/prompt_generator/utils/form_hydration.dart';
 import 'package:music_director/features/prompt_generator/widgets/common/collapsible_panel.dart';
 import 'package:music_director/features/prompt_generator/widgets/common/workflow_step_label.dart';
@@ -21,6 +22,7 @@ import 'package:music_director/features/prompt_generator/widgets/sections/sub_ge
 import 'package:music_director/features/prompt_generator/widgets/sections/suno_field_mode_section.dart';
 import 'package:music_director/features/prompt_generator/widgets/sections/suno_version_section.dart';
 import 'package:music_director/features/prompt_generator/widgets/sections/track_duration_section.dart';
+import 'package:music_director/presentation/providers/app_providers.dart';
 import 'package:music_director/presentation/widgets/common/recent_prompts_pro_tip_section.dart';
 import 'package:music_director/presentation/widgets/shell/main_shell.dart';
 
@@ -118,7 +120,7 @@ class _PromptGeneratorScreenState extends ConsumerState<PromptGeneratorScreen> {
           CollapsiblePanel(
             step: 3,
             title: 'Song details',
-            subtitle: 'Language · structure · lyrics',
+            subtitle: 'Language · structure',
             child: const Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -137,21 +139,16 @@ class _PromptGeneratorScreenState extends ConsumerState<PromptGeneratorScreen> {
                 ),
                 SizedBox(height: 12),
                 SongStructureSection(compact: true),
-                SizedBox(height: 20),
-                WorkflowStepLabel(
-                  step: 3,
-                  title: 'Write lyrics',
-                  subtitle: 'Theme + optional Advanced songwriter.',
-                ),
-                SizedBox(height: 12),
-                LyricsSection(compact: true),
               ],
             ),
           ),
           const SizedBox(height: 10),
 
+          const _LyricsBoxStep(),
+          const SizedBox(height: 10),
+
           CollapsiblePanel(
-            step: 4,
+            step: 5,
             title: 'Suno target',
             subtitle: 'Version + Style / Lyrics field mode',
             child: const Column(
@@ -166,7 +163,7 @@ class _PromptGeneratorScreenState extends ConsumerState<PromptGeneratorScreen> {
           const SizedBox(height: 10),
 
           CollapsiblePanel(
-            step: 5,
+            step: 6,
             title: 'Track length',
             subtitle: 'Duration target for Suno',
             child: const TrackDurationSection(),
@@ -174,7 +171,7 @@ class _PromptGeneratorScreenState extends ConsumerState<PromptGeneratorScreen> {
           const SizedBox(height: 10),
 
           CollapsiblePanel(
-            step: 6,
+            step: 7,
             title: 'Production & mix',
             subtitle: 'FX · instruments · melody · BPM · realism',
             child: const ProductionOptionsCard(),
@@ -182,7 +179,7 @@ class _PromptGeneratorScreenState extends ConsumerState<PromptGeneratorScreen> {
           const SizedBox(height: 20),
 
           const WorkflowStepLabel(
-            step: 7,
+            step: 8,
             title: 'Generate',
             subtitle: 'Build Block 1 style + Block 2 lyrics for Suno.',
           ),
@@ -220,11 +217,13 @@ class _PromptGeneratorScreenState extends ConsumerState<PromptGeneratorScreen> {
         backgroundColor: AppColors.surface,
         title: const Text('How to use'),
         content: const Text(
-          'Pro tips and shortcuts sit at the top. Open steps 1–6 in order '
-          '(Genre → Mood → Details → Suno → Length → Production), then Generate. '
-          'Everything stays collapsed until you need it. Arrow cues on chip rows '
-          'mean more options are off-screen — tap or swipe to see them. Remix '
-          'and history stay optional below.',
+          'Pro tips and shortcuts sit at the top. Open steps 1–7 in order '
+          '(Genre → Mood → Details → Lyrics box → Suno → Length → Production), '
+          'then Generate. Paste your own lyrics in the Lyrics box to use them as '
+          'Suno Block 2; leave it empty to let Music Director write them. Everything '
+          'stays collapsed until you need it. Arrow cues on chip rows mean more '
+          'options are off-screen — tap or swipe to see them. Remix and history '
+          'stay optional below.',
         ),
         actions: [
           TextButton(
@@ -236,3 +235,33 @@ class _PromptGeneratorScreenState extends ConsumerState<PromptGeneratorScreen> {
     );
   }
 }
+
+class _LyricsBoxStep extends ConsumerWidget {
+  const _LyricsBoxStep();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isSimple = ref.watch(
+      promptFormProvider.select(
+        (f) => f.sunoFieldOutputMode == SunoFieldOutputMode.simple,
+      ),
+    );
+    final hasOwnLyrics = ref.watch(
+      promptFormProvider.select((f) => f.optionalLyrics.trim().isNotEmpty),
+    );
+    final subtitle = isSimple
+        ? 'Simple mode — no lyrics block'
+        : hasOwnLyrics
+            ? 'Your lyrics will be used on Generate'
+            : 'Paste or write your own lyrics (optional)';
+
+    return CollapsiblePanel(
+      step: 4,
+      title: 'Lyrics box',
+      subtitle: subtitle,
+      initiallyExpanded: true,
+      child: const LyricsSection(compact: true),
+    );
+  }
+}
+

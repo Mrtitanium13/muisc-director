@@ -71,9 +71,91 @@ class SimplificationStep {
 }
 
 class EngineConfig {
-  static const String version = '7.0.0';
+  static const String version = '7.1.0';
+
+  /// Anti-artifact UI dropdown — current Suno v6 family only.
+  static const List<String> uiModelKeys = [
+    'suno_v6',
+    'suno_v6_wild',
+    'suno_v6_mini',
+  ];
+
+  static const String preferredModelKey = 'suno_v6';
+
+  /// Map retired / alias keys onto a profile that still exists in [modelProfiles].
+  static String migrateModelKey(String raw) {
+    final v = raw.trim().toLowerCase();
+    if (v.isEmpty) return preferredModelKey;
+    if (v == 'suno_v6' || v == 'v6') return 'suno_v6';
+    if (v == 'suno_v6_wild' ||
+        v == 'suno_v6-wild' ||
+        v == 'v6-wild' ||
+        v == 'v6wild') {
+      return 'suno_v6_wild';
+    }
+    if (v == 'suno_v6_mini' ||
+        v == 'suno_v6-mini' ||
+        v == 'v6-mini' ||
+        v == 'v6mini') {
+      return 'suno_v6_mini';
+    }
+    // Retired pre-v6 anti-artifact keys → flagship (soft cut).
+    if (v == 'suno_v3.5' ||
+        v == 'suno_v4' ||
+        v == 'suno_v4.5' ||
+        v == 'suno_v5' ||
+        v == 'suno_v5.5_pro') {
+      return preferredModelKey;
+    }
+    if (modelProfiles.containsKey(raw)) return raw;
+    return preferredModelKey;
+  }
+
+  static ModelProfile profileFor(String raw) {
+    // Exact key wins (preserves legacy soft-cut budgets for in-flight state/tests).
+    final direct = modelProfiles[raw];
+    if (direct != null) return direct;
+    return modelProfiles[migrateModelKey(raw)]!;
+  }
 
   static const Map<String, ModelProfile> modelProfiles = {
+    'suno_v6': ModelProfile(
+      tokenBudgetMax: 16,
+      tokenBudgetMin: 8,
+      maxSafeDurationSec: 360,
+      maxSongDurationSec: 480,
+      maxStyleChars: 1000,
+      promptMode: PromptMode.naturalLanguage,
+      versionNotes: [
+        'Flagship (Pro/Premier) — precise, polished, natural-language Style.',
+        'Prefer genre + mood + production intent over fidelity tag stacks.',
+      ],
+    ),
+    'suno_v6_wild': ModelProfile(
+      tokenBudgetMax: 16,
+      tokenBudgetMin: 8,
+      maxSafeDurationSec: 360,
+      maxSongDurationSec: 480,
+      maxStyleChars: 1000,
+      promptMode: PromptMode.naturalLanguage,
+      versionNotes: [
+        'Exploratory (Pro/Premier) — textured / unexpected turns.',
+        'Keep prompts coherent; refine polished takes on suno_v6 afterward.',
+      ],
+    ),
+    'suno_v6_mini': ModelProfile(
+      tokenBudgetMax: 10,
+      tokenBudgetMin: 6,
+      maxSafeDurationSec: 300,
+      maxSongDurationSec: 480,
+      maxStyleChars: 1000,
+      promptMode: PromptMode.naturalLanguage,
+      versionNotes: [
+        'Lean / free-tier — shorter token budget; drop low-priority mood/custom first.',
+        'Still natural-language Style; avoid over-stuffing fidelity tags.',
+      ],
+    ),
+    // Legacy keys kept for in-flight form state / older tests until migrate runs.
     'suno_v3.5': ModelProfile(
       tokenBudgetMax: 8,
       tokenBudgetMin: 5,
@@ -81,7 +163,9 @@ class EngineConfig {
       maxSongDurationSec: 240,
       maxStyleChars: 120,
       promptMode: PromptMode.tagList,
-      versionNotes: ['Short tag prompts only. Very artifact-prone past 2:30.'],
+      versionNotes: [
+        'RETIRED — migrate to suno_v6. Kept only for soft-cut compatibility.',
+      ],
     ),
     'suno_v4': ModelProfile(
       tokenBudgetMax: 12,
@@ -90,7 +174,9 @@ class EngineConfig {
       maxSongDurationSec: 240,
       maxStyleChars: 200,
       promptMode: PromptMode.tagList,
-      versionNotes: ['Remaster available. Tag lists work well.'],
+      versionNotes: [
+        'RETIRED — migrate to suno_v6. Kept only for soft-cut compatibility.',
+      ],
     ),
     'suno_v4.5': ModelProfile(
       tokenBudgetMax: 12,
@@ -100,8 +186,7 @@ class EngineConfig {
       maxStyleChars: 1000,
       promptMode: PromptMode.tagList,
       versionNotes: [
-        'Expanded 1000-char style box. Better genre fusion handling.',
-        'Long songs possible but still degrade — use Extend past 5:00.',
+        'RETIRED — migrate to suno_v6. Kept only for soft-cut compatibility.',
       ],
     ),
     'suno_v5': ModelProfile(
@@ -112,9 +197,7 @@ class EngineConfig {
       maxStyleChars: 1000,
       promptMode: PromptMode.naturalLanguage,
       versionNotes: [
-        'Responds better to descriptive sentences than comma tag lists.',
-        'Cleaner vocals by default — over-stacking fidelity tags causes sterile "AI sheen".',
-        'Fidelity boilerplate largely unnecessary; genre + mood + production intent is enough.',
+        'RETIRED — migrate to suno_v6. Kept only for soft-cut compatibility.',
       ],
     ),
     'suno_v5.5_pro': ModelProfile(
@@ -125,8 +208,7 @@ class EngineConfig {
       maxStyleChars: 1000,
       promptMode: PromptMode.naturalLanguage,
       versionNotes: [
-        'ASSUMED profile — verify limits against actual platform behavior.',
-        'Treat like v5: natural language prompts, minimal fidelity boilerplate.',
+        'RETIRED — migrate to suno_v6. Kept only for soft-cut compatibility.',
       ],
     ),
   };
@@ -231,10 +313,18 @@ class EngineConfig {
 
   static const int maxGenreTokens = 2;
   static const Map<String, int> syllableCapBonus = {
+    'suno_v6': 2,
+    'suno_v6_wild': 2,
+    'suno_v6_mini': 1,
+    // Legacy aliases
     'suno_v5': 2,
     'suno_v5.5_pro': 2,
   };
   static const Map<String, int> maxGenresByModel = {
+    'suno_v6': 3,
+    'suno_v6_wild': 3,
+    'suno_v6_mini': 2,
+    // Legacy aliases
     'suno_v3.5': 2,
     'suno_v4': 2,
     'suno_v4.5': 2,
@@ -249,7 +339,7 @@ class EngineConfig {
     'played not programmed',
   ];
   static const String v5SheenTip =
-      'v5 models over-polish by default. Add ONE humanizing token to avoid the sterile AI sheen.';
+      'v6 models polish strongly by default. Add ONE humanizing token to avoid a sterile AI sheen.';
   static const List<List<String>> riskyPairs = [
     ['acoustic_orchestral', 'rock_metal'],
     ['acoustic_orchestral', 'electronic'],

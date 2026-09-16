@@ -1,3 +1,4 @@
+import '../constants/suno_version.dart';
 import 'structural_family_resolver.dart';
 
 /// Per-genre default mutation for the Final Chorus (spec §3).
@@ -82,11 +83,11 @@ abstract final class FinalChorusMutationRule {
     bool inline = false,
   }) {
     final staging = stagingNoteFor(mutation);
-    final v = sunoVersion.trim().toLowerCase();
+    final v = SunoVersion.densityKeyFor(sunoVersion);
 
     if (inline) {
       if (v == 'v4.5') return '';
-      if (v.startsWith('v5.5')) return staging;
+      if (v == 'v5.5') return staging;
       return staging.split(',').first.trim();
     }
 

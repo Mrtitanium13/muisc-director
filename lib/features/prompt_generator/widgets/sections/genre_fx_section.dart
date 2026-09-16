@@ -76,7 +76,7 @@ class _GenreFxSectionState extends ConsumerState<GenreFxSection> {
           const SizedBox(height: 4),
           Text(
             'Pick a production lane and FX intensity. Arrangement tags appear in '
-            'YOUR FX LAYOUT below — songwriter lyrics stay in YOUR LYRICS.',
+            'YOUR FX LAYOUT below — your lyrics stay in the Lyrics box.',
             style: GoogleFonts.inter(
               fontSize: 12,
               color: AppColors.textSecondary,
@@ -258,8 +258,8 @@ class _FxLayoutPreviewBox extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            'Arrangement tags for this lane + intensity. Separate from YOUR LYRICS '
-            '(Advanced songwriter). Merged at Generate.',
+            'Arrangement tags for this lane + intensity. Separate from the Lyrics '
+            'box. Merged at Generate.',
             style: GoogleFonts.inter(
               fontSize: 11,
               color: AppColors.textTertiary,

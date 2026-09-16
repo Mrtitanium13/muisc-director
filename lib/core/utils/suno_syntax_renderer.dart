@@ -1,4 +1,5 @@
 import '../constants/song_structure_data.dart';
+import '../constants/suno_version.dart';
 import 'final_chorus_mutation_rule.dart';
 import 'structural_family_resolver.dart';
 import 'suno_sonic_lexicon.dart';
@@ -122,10 +123,10 @@ class SunoSyntaxRenderer {
   }) {
     final reformulated = SunoStagingReformulator.reformulate(staging);
     if (reformulated.isEmpty) return '[$label]';
-    final v = version.toLowerCase();
+    final v = SunoVersion.densityKeyFor(version);
 
     if (v == 'v4.5') return '[$label]';
-    if (v.startsWith('v5.5')) {
+    if (v == 'v5.5') {
       final clean = _capStaging(_sanitiseStaging(reformulated), v55StagingCap);
       return clean.isEmpty ? '[$label]' : '[$label: $clean]';
     }
@@ -170,19 +171,26 @@ class SunoSyntaxRenderer {
   }
 
   static String syntaxDocBlock(String sunoVersion) {
-    final v = sunoVersion.trim().toLowerCase();
-    if (v == 'v4.5') {
+    final key = SunoVersion.densityKeyFor(sunoVersion);
+    final raw = sunoVersion.trim().toLowerCase();
+    if (key == 'v4.5') {
       return 'v4.5 syntax: [Brackets] = section names ONLY (1–2 words). '
           '(Parentheses) = vocal delivery 1–3 words. '
           'NO production cues in brackets — Block 1 prose only.';
     }
-    if (v.startsWith('v5.5')) {
-      return 'v5.5 PRO syntax (preferred): [Brackets] = cinematic director\'s notes '
+    if (key == 'v5.5') {
+      final label = raw.startsWith('v6')
+          ? (SunoVersion.isWildIntent(raw)
+                ? 'v6-wild rich syntax'
+                : 'v6 rich syntax (flagship)')
+          : 'v5.5 PRO syntax';
+      return '$label: [Brackets] = cinematic director\'s notes '
           '(multi-descriptor). (Parentheses) = granular vocal/phonetic cues including '
           '(sigh), (chuckles), (trailing off...). Cross-rules: no nested brackets; '
           'no DAW jargon in brackets; always [End].';
     }
-    return 'v5 syntax: [Brackets] = section + ONE staging descriptor. '
+    final label = raw.startsWith('v6') ? 'v6-mini hybrid syntax' : 'v5 syntax';
+    return '$label: [Brackets] = section + ONE staging descriptor. '
         '(Parentheses) = vocal cues + phonetics + brief ad-libs. '
         'Cross-rules: no nested brackets; no mix notes in parens; always [End].';
   }

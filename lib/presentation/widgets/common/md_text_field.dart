@@ -9,6 +9,7 @@ class MdTextField extends StatelessWidget {
     this.controller,
     this.label,
     this.hint,
+    this.minLines,
     this.maxLines = 1,
     this.maxLength,
     this.readOnly = false,
@@ -20,6 +21,7 @@ class MdTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String? label;
   final String? hint;
+  final int? minLines;
   final int maxLines;
   final int? maxLength;
   final bool readOnly;
@@ -29,6 +31,11 @@ class MdTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final lines = () {
+      var n = maxLines < 1 ? 1 : maxLines;
+      if (minLines != null && n < minLines!) n = minLines!;
+      return n;
+    }();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -47,16 +54,29 @@ class MdTextField extends StatelessWidget {
           ),
         TextField(
           controller: controller,
-          maxLines: maxLines,
+          minLines: minLines,
+          maxLines: lines,
           maxLength: maxLength,
           readOnly: readOnly,
           onTap: onTap,
           keyboardType: keyboardType,
+          textAlignVertical:
+              lines > 1 ? TextAlignVertical.top : TextAlignVertical.center,
           onChanged: onChanged,
-          style: GoogleFonts.inter(color: AppColors.textPrimary),
+          style: const TextStyle(
+            color: AppColors.textPrimary,
+            fontSize: 14,
+          ),
           decoration: InputDecoration(
             hintText: hint,
-            counterStyle: const TextStyle(color: AppColors.textTertiary, fontSize: 11),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 14,
+              vertical: 12,
+            ),
+            counterStyle: const TextStyle(
+              color: AppColors.textTertiary,
+              fontSize: 11,
+            ),
           ),
         ),
       ],

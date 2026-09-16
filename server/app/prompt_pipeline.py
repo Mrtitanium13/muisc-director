@@ -48,7 +48,7 @@ def _completion_max_tokens(max_tokens: int) -> int:
     return min(max(int(max_tokens * 1.5), 4200), _COMPLETION_MAX_TOKENS_CAP)
 
 
-_POLISH_SYSTEM = """You are a senior Suno creative editor (Claude). You receive a GPT-6 Astra / Terra multilingual prompt draft.
+_POLISH_SYSTEM = """You are a senior Suno creative editor (Claude). You receive a GPT-6 Astra / Gemini 3.1 Pro prompt draft.
 
 YOUR FOCUS — LYRICS & ARTISTIC EXPRESSION:
 - Hooks, storytelling, vocal personality, singable choruses, concrete imagery, genre-fit cadence, poetic/cinematic expression.
@@ -391,7 +391,7 @@ def generate_prompt_hybrid(
     chat_prefix_turns: list[dict[str, str]] | None = None,
 ) -> tuple[str, str]:
     """
-    LaoZhang: Terra English / Astra multilingual draft → Claude polish → Astra/Claude humanization (mandatory).
+    LaoZhang: Gemini 3.1 Pro English / Astra multilingual draft → Claude polish → Astra/Claude humanization (mandatory).
     Returns (final_text, pipeline_label).
     """
     draft_model = draft_model_override or resolve_draft_model(

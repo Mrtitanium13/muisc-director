@@ -28,15 +28,14 @@ Humanize lyrics: natural speech, genre-appropriate authenticity, zero AI-artifac
 
 ---
 
-## ACCENT VS. DIALECT CONSTRAINT (STAGE 3 — MANDATORY WHEN ACCENT IS SET)
+## ACCENT VS. DIALECT CONSTRAINT (STAGE 3)
 
-When a regional accent or delivery style is specified (e.g. Nigerian, British, Jamaican) **and** lyric dialect is **not** Nigerian Pidgin:
+Language controls the written lyric language. LYRIC DIALECT controls grammar and vocabulary. Vocal accent controls delivery only.
 
-* Write lyrics in **clear, standard English**.
-* You are **strictly forbidden** from translating text into slang, broken dialects, or patois (completely ban words like `dey`, `na`, `wahala`, `gonna` in lyric lines).
-* Vocal performance style stays **purely phonetic** in staging tags; written lyric text must stay pristine, high-end, and universally legible.
-
-**Exception:** When user LYRIC DIALECT = Nigerian Pidgin, Pidgin grammar in lyric lines is required — accent still lives in staging tags only.
+* Preserve the requested Language during humanization, including when a vocal accent is set. Never translate non-English lyrics into English merely to satisfy an accent setting.
+* When LYRIC DIALECT = Nigerian Pidgin, preserve native Pidgin grammar and vocabulary; never normalize it to standard English.
+* For English lyrics with no requested dialect, use natural, conversational English. Ordinary contractions and colloquial phrasing are allowed; do not invent a regional dialect from the accent alone.
+* Keep accent instructions in existing performance/staging tags. Do not introduce phonetic accent spellings into lyric lines.
 
 ---
 

@@ -3,6 +3,7 @@ import 'package:music_director/core/ai/modules/genre_lyrics_emission.dart';
 import 'package:music_director/core/ai/modules/humanized_lyrics_qa.dart';
 import 'package:music_director/core/ai/modules/k_genre_cliche_blacklist.dart';
 import 'package:music_director/core/ai/modules/k_human_voice_directive.dart';
+import 'package:music_director/core/constants/api_constants.dart';
 import 'package:music_director/core/constants/dialect_style_data.dart';
 import 'package:music_director/core/ai/modules/meaningfulness_check.dart';
 import 'package:music_director/core/routing/music_prompt_routing.dart';
@@ -167,6 +168,19 @@ void main() {
       );
       expect(c.routingKey, RoutingKeys.hybridMultiGenre);
       expect(Stage2ModelRouter.pickModelKey(c), ModelKeys.glm);
+    });
+
+    test('Western pop English draft uses Gemini 3.1 Pro on LaoZhang', () {
+      final c = _classify(_input(vibe: 'Indie rock US'));
+      expect(Stage2ModelRouter.pickModelKey(c), ModelKeys.gpt5);
+      expect(
+        Stage2ModelRouter.resolveDraftModelSlug(
+          classification: c,
+          useOpenRouter: false,
+          lightweight: false,
+        ),
+        ApiConstants.laozhangGemini31ProModel,
+      );
     });
 
     test('routing user block append includes routing_key', () {
@@ -632,7 +646,9 @@ the hum echo whisper in the dark shadow glow
 warm and cold grit under my skin
 somewhere lost inside
 ''';
-      expect(check.score(weak), 0.4);
+      // 1 of 4 measured dimensions (sensory only; through-line is a
+      // generation-side rule and no longer earns a free point).
+      expect(check.score(weak), 0.25);
       expect(check.score(weak), lessThan(MeaningfulnessCheck().score('''
 James said, "Meet me at Oak Cliff by 3 AM."
 Salt on your lips, whiskey smoke in the air.
@@ -642,7 +658,8 @@ Seventeen dollars in my pocket, gravel rough under boots.
     });
 
     test('clichePackFor resolves genre families', () {
-      expect(clichePackFor('Amapiano'), isNull);
+      // Amapiano maps to the EDM-vocal pack (festival-cliché coverage).
+      expect(clichePackKeyFor('Amapiano'), 'edm_vocal');
       expect(clichePackFor('Contemporary Gospel'), isNotNull);
       expect(clichePackKeyFor('Contemporary Gospel'), 'worship_gospel');
       expect(clichePackKeyFor('Alt Rock'), 'rock_alt');

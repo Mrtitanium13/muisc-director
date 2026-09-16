@@ -8,7 +8,7 @@ import '../../../services/reroll_coach.dart';
 
 class ArtifactFormState {
   const ArtifactFormState({
-    this.modelVersion = 'suno_v4',
+    this.modelVersion = EngineConfig.preferredModelKey,
     this.genres = const ['electronic'],
     this.tempo = 'mid',
     this.vocal = 'female',
@@ -65,10 +65,12 @@ class ArtifactFormState {
 class ArtifactFormNotifier extends StateNotifier<ArtifactFormState> {
   ArtifactFormNotifier() : super(const ArtifactFormState());
 
-  void setModelVersion(String v) => state = state.copyWith(modelVersion: v);
+  void setModelVersion(String v) =>
+      state = state.copyWith(modelVersion: EngineConfig.migrateModelKey(v));
 
   void toggleGenre(String key) {
-    final maxGenres = EngineConfig.maxGenresByModel[state.modelVersion] ??
+    final resolved = EngineConfig.migrateModelKey(state.modelVersion);
+    final maxGenres = EngineConfig.maxGenresByModel[resolved] ??
         EngineConfig.maxGenreTokens;
     final current = List<String>.from(state.genres);
     if (current.contains(key)) {

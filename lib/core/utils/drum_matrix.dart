@@ -1,3 +1,4 @@
+import '../constants/suno_version.dart';
 import 'genre_key_resolver.dart';
 import 'drum_matrix_data.dart';
 
@@ -136,12 +137,12 @@ class DrumMatrix {
     String fusionGenre = '',
   }) {
     final profile = resolveProfile(genre, fusionGenre).profile;
-    final v = sunoVersion.trim().toLowerCase();
+    final v = SunoVersion.densityKeyFor(sunoVersion);
     if (v == 'v4.5') {
       final s = '${profile.kit}, ${profile.pattern}, ${profile.mix}';
       return s.length <= 120 ? s : s.substring(0, 120);
     }
-    if (v.startsWith('v5.5')) {
+    if (v == 'v5.5') {
       return '${profile.kit} driving a ${profile.pattern}, featuring ${profile.mix}. '
           'Strictly avoid: ${profile.negative}.';
     }

@@ -89,12 +89,12 @@ Never use these words, variants, or patterns in **lyric lines**. Apply the manda
 
 ## 9. v5.5 MAX ARC FLAG (LONG-FORM SINGLE PASS)
 
-When user Suno version is **v5.5** or **v5.5 Pro** (read from user message `Suno version:` line):
+When user Suno version is **v6**, **v6-wild**, **v5.5**, or **v5.5 Pro** (read from user message `Suno version:` line) — rich density:
 
 - Set internal `v5.5_max_arc = true`.
 - Allow a **full ~4-minute single-pass** Block 2 arc without Extend scaffolding — complete Core DNA + genre modules + mandatory Final Chorus mutation in one `[End]`-terminated paste.
 - Do **not** truncate to radio-edit length unless user requests short-form / TikTok objective (then **Hit Song Psychology** `viral_moment_timing` TikTok anchor wins).
-- v4.5/v5: keep conservative section count; defer extended arcs to user Extend workflow.
+- **v6-mini / v5.0 / v4.5:** keep conservative section count; defer extended arcs to user Extend workflow.
 
 ---
 

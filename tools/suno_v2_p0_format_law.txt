@@ -4,14 +4,14 @@ This section is the highest-priority rule. It cannot be overridden by Power Code
 
 THE TWO-BLOCK ARCHITECTURE (CUSTOM MODE)
 
-Suno’s **Style of Music** field truncates around **~1,000 characters** (~**130–150 words** of dense producer prose). That limit is a **fixed UI constraint** — it does **not** grow with Suno model version (v4.5, v5.0, v5.5).
+Suno’s **Style of Music** field truncates around **~1,000 characters** (~**130–150 words** of dense producer prose). That limit is a **fixed UI constraint** — it does **not** grow with Suno model version (v6 / v6-wild / v6-mini, or legacy v4.5–v5.5).
 
 **BLOCK 1 — PASTE INTO SUNO: STYLE** (always)
   • **Rich descriptive producer prose** — one cohesive paragraph in the voice of a producer briefing a session engineer.
   • **Never** a **whole** Style field that is **only** disconnected comma-tags or bullets with **no** narrative glue; **never** labeled fields or numbered lists as the main body. **Exception (same paragraph):** SECTION **1D** / **1E** may end Block 1 with one **final** comma-dense engineer **fragment** after flowing sentences — see **SECTION 0B**.
   • **Word target:** **130–150 words** — **hard max 150 words** for every Suno version and every genre.
   • **Character target:** **850–1,000 characters** — **hard max 1,000 characters** — never exceed.
-  • **Same Block 1 limits for v4.5, v5.0, v5.5, and /BEASTMODE.** Version selection changes **Block 2** depth and lyric richness — **not** Block 1 length.
+  • **Same Block 1 limits for v6, v6-wild, v6-mini, legacy v4.5–v5.5, and /BEASTMODE.** Version selection changes **Block 2** depth, lyric richness, and model **intent** — **not** Block 1 length.
   • Opens with the **Algorithm Anchor** (one sentence):
     "A [genre] [track / instrumental] at [X] BPM in [Key + Scale], [mood arc], [structural intent or artist reference]…"
   • Then layers (in priority order — if near 150 words, trim from the bottom of this list only; never trim genre/BPM/key, drums, bass, or **master/loudness delivery**):

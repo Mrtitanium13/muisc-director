@@ -117,22 +117,14 @@ class FormCommit {
       ref.read(chordProgressionControllerProvider).text.trim(),
     );
 
-    final mode = form.sunoFieldOutputMode;
-    if (mode == SunoFieldOutputMode.simple) {
-      n.setOptionalLyrics('');
-      n.setGenerateLyrics(false);
-    } else {
-      final lyricsTrim = ref.read(lyricsControllerProvider).text.trim();
-      var genLyrics = ref.read(generateLyricsProvider);
-      if (form.useVibeAsLyricSource) genLyrics = true;
-      if (lyricsTrim.isNotEmpty) genLyrics = false;
-      n.setGenerateLyrics(genLyrics);
-      if (genLyrics) {
-        n.setOptionalLyrics('');
-      } else {
-        n.setOptionalLyrics(lyricsTrim);
-      }
-    }
+    final resolved = resolveLyricsBox(
+      simpleMode: form.sunoFieldOutputMode == SunoFieldOutputMode.simple,
+      lyricsText: ref.read(lyricsControllerProvider).text,
+      generateLyrics: ref.read(generateLyricsProvider),
+      useVibeAsLyricSource: form.useVibeAsLyricSource,
+    );
+    n.setOptionalLyrics(resolved.optionalLyrics);
+    n.setGenerateLyrics(resolved.generateLyrics);
 
     n.setLyricThemeNotes(ref.read(lyricThemeControllerProvider).text.trim());
     n.setActiveModifierCodes(_temperamentLine(ref));
@@ -146,6 +138,26 @@ class FormCommit {
       ref.read(remixArtistControllerProvider).text.trim(),
     );
     n.setSongGenerationType(form.songGenerationType);
+  }
+
+  /// Lyrics box → Path A when the user pasted/wrote lyrics; otherwise Path B/C.
+  static ({String optionalLyrics, bool generateLyrics}) resolveLyricsBox({
+    required bool simpleMode,
+    required String lyricsText,
+    required bool generateLyrics,
+    required bool useVibeAsLyricSource,
+  }) {
+    if (simpleMode) {
+      return (optionalLyrics: '', generateLyrics: false);
+    }
+    final lyricsTrim = lyricsText.trim();
+    var genLyrics = generateLyrics;
+    if (useVibeAsLyricSource) genLyrics = true;
+    if (lyricsTrim.isNotEmpty) genLyrics = false;
+    if (genLyrics) {
+      return (optionalLyrics: '', generateLyrics: true);
+    }
+    return (optionalLyrics: lyricsTrim, generateLyrics: false);
   }
 
   static void _syncGenre(WidgetRef ref) {

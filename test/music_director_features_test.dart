@@ -1676,7 +1676,7 @@ Tonight''';
           useOpenRouter: false,
           language: 'French',
         ),
-        ApiConstants.laozhangGpt55Model,
+        ApiConstants.laozhangGpt6AstraModel,
       );
       expect(
         ApiConstants.humanizationModelForPrompt(
@@ -1684,7 +1684,7 @@ Tonight''';
           language: 'English',
           dialectStyleId: 'nigerian_pidgin',
         ),
-        ApiConstants.laozhangGpt55Model,
+        ApiConstants.laozhangGpt6AstraModel,
       );
       expect(
         ApiConstants.compressionModelForProvider(useOpenRouter: true),
@@ -1692,7 +1692,7 @@ Tonight''';
       );
       expect(
         ApiConstants.compressionModelForProvider(useOpenRouter: false),
-        ApiConstants.laozhangClaudeSonnet45Model,
+        ApiConstants.laozhangGpt56LunaModel,
       );
       expect(
         ApiConstants.themeConsistencyModelForPromptWithProvider(
@@ -2014,14 +2014,14 @@ Tonight''';
       );
     });
 
-    test('laozhang chatModelForPrompt uses GPT-5.5 multilingual prompt draft', () {
+    test('laozhang chatModelForPrompt uses Gemini 3.1 Pro English / Astra multilingual', () {
       expect(
         ApiConstants.chatModelForPrompt(
           language: 'English',
           lightweight: false,
           apiKey: 'lz-key-abc',
         ),
-        ApiConstants.laozhangGpt55Model,
+        ApiConstants.laozhangGemini31ProModel,
       );
       expect(
         ApiConstants.chatModelForPrompt(
@@ -2029,7 +2029,7 @@ Tonight''';
           lightweight: false,
           apiKey: 'lz-key-abc',
         ),
-        ApiConstants.laozhangMultilingualPrimaryChatModel,
+        ApiConstants.laozhangGpt6AstraModel,
       );
       expect(
         ApiConstants.onDeviceChatCompletionsUrl('lz-key'),
@@ -2944,7 +2944,7 @@ A Soulful House track at 122 BPM in a dark, hopeful minor key, executing an emot
 
     test('applyChatTokenLimits sets max_completion_tokens for gpt and claude', () {
       final payload = <String, dynamic>{'max_tokens': 1200};
-      applyChatTokenLimits(payload, 'gpt-5.5', 1200);
+      applyChatTokenLimits(payload, 'gpt-5.6-sol', 1200);
       expect(payload['max_completion_tokens'], 1200);
       applyChatTokenLimits(payload, 'claude-sonnet-4-5', 2000);
       expect(payload['max_completion_tokens'], 2000);

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import '../utils/structural_family_resolver.dart';
+import 'suno_version.dart';
 
 /// Per-family canonical DJ intro/outro bar counts (4/4).
 /// Soft budget only — SECTION 1F prioritizes sonic language over bar math.
@@ -87,10 +88,10 @@ String buildDjMixUserBlock({
     return '';
   }
 
-  final v = sunoVersion.trim().toLowerCase();
-  final isV45 = v == 'v4.5';
-  final isV55 = v.startsWith('v5.5');
-  final isV5 = !isV45 && v.startsWith('v5') && !isV55;
+  final key = SunoVersion.densityKeyFor(sunoVersion);
+  final isV45 = key == 'v4.5';
+  final isV55 = SunoVersion.isRichDensity(sunoVersion);
+  final isV5 = key == 'v5.0';
   final useV2Impl = v2UnifiedOutput || isV5 || isV55;
   final bars = djBarConfigFor(family);
 

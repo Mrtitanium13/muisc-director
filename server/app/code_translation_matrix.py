@@ -62,11 +62,13 @@ def extract_active_codes(*blobs: str) -> list[str]:
     return found
 
 
-def _normalize_version(version: str) -> str:
-    v = (version or "v5.0").strip().lower()
-    if v == "v4.5":
+def _normalize_version(version: str | None) -> str:
+    from app.suno_version import PREFERRED, density_key_for
+
+    key = density_key_for(version or PREFERRED)
+    if key == "v4.5":
         return "v4.5"
-    if v.startswith("v5.5"):
+    if key == "v5.5":
         return "v5.5pro"
     return "v5"
 
@@ -86,7 +88,7 @@ def _trim_modifier(modifier: str, version: str) -> str:
 def apply_genre_specific_codes(
     genre: str,
     codes_blob: str,
-    version: str = "v5.0",
+    version: str | None = None,
     fusion: str = "",
     *,
     vibe: str = "",
@@ -119,7 +121,7 @@ def code_translation_user_block(
     primary_genre: str,
     sub_genre_fusion: str = "",
     codes_blob: str = "",
-    suno_version: str = "v5.0",
+    suno_version: str | None = None,
     vibe: str = "",
 ) -> str:
     codes = extract_active_codes(codes_blob, vibe)

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import '../utils/structure_assembler.dart';
 import '../utils/suno_syntax_renderer.dart';
+import 'suno_version.dart';
 
 /// Canonical section types recognized by Suno across versions.
 enum SectionKind {
@@ -939,7 +940,7 @@ abstract final class SongStructureData {
   static String userBlockDirective({
     required String presetId,
     required String customNotes,
-    String sunoVersion = 'v5.5',
+    String sunoVersion = SunoVersion.preferredValue,
     String primaryGenre = '',
     String subGenreFusion = '',
     String? commercialLane,

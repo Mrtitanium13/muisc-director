@@ -60,13 +60,15 @@ def build_drum_staging_line(profile: DrumProfile, max_len: int = 120) -> str:
     return line[: max_len - 1] + "…"
 
 
-def drum_matrix_user_block(primary: str, fusion: str = "", suno_version: str = "v5.0") -> str:
+def drum_matrix_user_block(primary: str, fusion: str = "", suno_version: str | None = None) -> str:
+    from app.suno_version import PREFERRED, density_key_for
+
     key, profile = resolve_drum_profile(primary, fusion)
     staging = build_drum_staging_line(profile)
-    v = (suno_version or "v5.0").strip().lower()
-    if v in ("v4.5",):
+    v = density_key_for(suno_version or PREFERRED)
+    if v == "v4.5":
         style_hint = f"{profile.kit}, {profile.pattern}, {profile.mix}"[:120]
-    elif v.startswith("v5.5"):
+    elif v == "v5.5":
         style_hint = (
             f"{profile.kit} driving a {profile.pattern}, featuring {profile.mix}. "
             f"Strictly avoid: {profile.negative}."

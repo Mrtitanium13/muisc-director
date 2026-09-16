@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/constants/api_constants.dart';
+import '../../core/constants/suno_version.dart';
 import '../../core/network/dio_client.dart';
 import '../../data/models/audio_analysis_model.dart';
 import '../../data/models/audio_session.dart';
@@ -87,8 +88,9 @@ class PromptFormNotifier extends Notifier<UserInputModel> {
   void reset() => state = const UserInputModel();
 
   void setSunoVersion(String v) {
-    if (state.sunoVersion == v) return;
-    state = state.copyWith(sunoVersion: v);
+    final next = SunoVersion.migrateToUiValue(v);
+    if (state.sunoVersion == next) return;
+    state = state.copyWith(sunoVersion: next);
   }
 
   void setPrimaryGenre(String g) {

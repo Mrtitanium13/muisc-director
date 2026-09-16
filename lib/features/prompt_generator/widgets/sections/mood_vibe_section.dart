@@ -254,7 +254,7 @@ class MoodVibeSection extends ConsumerWidget {
               ? 'Paste the full story, chat, poem, or scene you want turned into lyrics…'
               : 'e.g. late-night drive after the show, rooftop summer, breakup voicemail…',
           maxLines: form.useVibeAsLyricSource ? 12 : 4,
-          maxLength: form.useVibeAsLyricSource ? 8000 : 500,
+          maxLength: form.useVibeAsLyricSource ? 8000 : 2000,
         ),
       ],
     );

@@ -1,3 +1,4 @@
+import '../constants/suno_version.dart';
 import 'live_instrument_matrix_data.dart';
 
 /// Genre-accurate live instrument profiles (tools/live_instrument_matrix.json).
@@ -231,9 +232,9 @@ class LiveInstrumentMatrix {
   }
 
   static String _normalizeVersion(String version) {
-    final v = version.trim().toLowerCase();
-    if (v == 'v4.5') return 'v4.5';
-    if (v.startsWith('v5.5')) return 'v5.5pro';
+    final key = SunoVersion.densityKeyFor(version);
+    if (key == 'v4.5') return 'v4.5';
+    if (key == 'v5.5') return 'v5.5pro';
     return 'v5';
   }
 

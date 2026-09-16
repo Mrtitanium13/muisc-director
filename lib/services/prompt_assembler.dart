@@ -188,8 +188,10 @@ class PromptAssembler {
   static AssemblerOutput assemble(AssemblerInput input) {
     final warnings = <String>[];
     final dropped = <String>[];
-    final profile = EngineConfig.modelProfiles[input.modelVersion]!;
+    final profile = EngineConfig.profileFor(input.modelVersion);
     final maxGenres = EngineConfig.maxGenresByModel[input.modelVersion] ??
+        EngineConfig.maxGenresByModel[
+            EngineConfig.migrateModelKey(input.modelVersion)] ??
         EngineConfig.maxGenreTokens;
 
     var genres = input.genres.take(maxGenres).toList();
@@ -281,8 +283,10 @@ class PromptAssembler {
       warnings.add(EngineConfig.overExclusionWarning);
     }
 
-    final syllableBonus =
-        EngineConfig.syllableCapBonus[input.modelVersion] ?? 0;
+    final syllableBonus = EngineConfig.syllableCapBonus[input.modelVersion] ??
+        EngineConfig.syllableCapBonus[
+            EngineConfig.migrateModelKey(input.modelVersion)] ??
+        0;
     final syllableCap =
         (vocalDef.syllableCapOverride ?? tempoDef.syllableCap) + syllableBonus;
 

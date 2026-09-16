@@ -1,5 +1,6 @@
 import '../../data/models/user_input_model.dart';
 import 'big_room_fusion_progressive_engine.dart';
+import 'suno_version.dart';
 
 /// Quick-start preset — delegates to [BigRoomFusionProgressiveEngine] elite module.
 class BigRoomFusionProgressivePreset {
@@ -30,7 +31,7 @@ class BigRoomFusionProgressivePreset {
       );
 
   static const templateModel = UserInputModel(
-    sunoVersion: 'v5.5',
+    sunoVersion: SunoVersion.preferredValue,
     primaryGenre: primaryGenre,
     subGenreFusion: subGenreFusion,
     vibe: _vibeSeed,
@@ -75,7 +76,7 @@ BIG ROOM PROGRESSIVE HOUSE — MANDATORY INSTANT TENSION ARRANGEMENT ROADMAP:
 
   /// Generates a flexible instantiation mapping runtime inputs dynamically.
   static UserInputModel userInputModel({
-    String sunoVersion = 'v5.5',
+    String sunoVersion = SunoVersion.preferredValue,
     String songStructurePresetId = 'edm_drop',
     String? bpm,
     String? keyRoot,

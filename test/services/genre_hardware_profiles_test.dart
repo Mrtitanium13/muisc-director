@@ -29,12 +29,16 @@ void main() {
   });
 
   group('Version routing', () {
-    test('parseVersion maps v4.5 / v5 / v5.5 prefixes', () {
+    test('parseVersion maps v4.5 / v5 / v5.5 / v6 density', () {
       expect(GenreHardwareProfiles.parseVersion('v4.5'), SunoVersion.v4_5);
       expect(GenreHardwareProfiles.parseVersion('v5'), SunoVersion.v5);
       expect(GenreHardwareProfiles.parseVersion('v5.0'), SunoVersion.v5);
       expect(GenreHardwareProfiles.parseVersion('v5.5-alpha'), SunoVersion.v5_5);
-      expect(GenreHardwareProfiles.parseVersion(''), SunoVersion.preferred);
+      expect(GenreHardwareProfiles.parseVersion('v6'), SunoVersion.v5_5);
+      expect(GenreHardwareProfiles.parseVersion('v6-wild'), SunoVersion.v5_5);
+      expect(GenreHardwareProfiles.parseVersion('v6-mini'), SunoVersion.v5);
+      // Unknown / empty → rich density (legacy v5.5 formatter)
+      expect(GenreHardwareProfiles.parseVersion(''), SunoVersion.v5_5);
     });
 
     test('v4.5 output is ≤ 200 chars', () {

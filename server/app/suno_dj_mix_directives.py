@@ -141,9 +141,12 @@ def build_dj_mix_user_block(
         return ""
 
     v = (suno_version or "").strip().lower()
-    is_v45 = v == "v4.5"
-    is_v55 = v.startswith("v5.5")
-    is_v5 = not is_v45 and v.startswith("v5") and not is_v55
+    from app.suno_version import density_key_for, is_rich_density
+
+    key = density_key_for(suno_version)
+    is_v45 = key == "v4.5"
+    is_v55 = is_rich_density(suno_version)
+    is_v5 = key == "v5.0"
     use_v2_impl = v2_unified_output or is_v5 or is_v55
     bars = dj_bar_config_for(family)
 

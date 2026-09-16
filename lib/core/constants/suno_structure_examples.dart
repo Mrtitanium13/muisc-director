@@ -4,6 +4,8 @@
 /// Suno version. Each example is self-contained and compliant with the
 /// Suno Syntax Law (see Dynamic Structural Engine).
 // ignore_for_file: constant_identifier_names
+import 'suno_version.dart';
+
 class SunoStructureExamples {
   SunoStructureExamples._();
 
@@ -168,13 +170,11 @@ class SunoStructureExamples {
     },
   };
 
-  /// Normalize UI/API version strings to table keys.
+  /// Normalize UI/API version strings to table keys (density alias).
   static String normalizeVersion(String raw) {
-    final v = raw.trim().toLowerCase();
-    if (v == 'v4.5') return 'v4.5';
-    if (v.startsWith('v5.5')) return 'v5.5';
-    if (v == 'v5.0' || v == 'v5') return 'v5';
-    return 'v5.5';
+    final key = SunoVersion.densityKeyFor(raw);
+    if (key == 'v5.0') return 'v5';
+    return key;
   }
 
   static String exampleForVersion({

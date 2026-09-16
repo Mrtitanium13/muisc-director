@@ -28,63 +28,140 @@ class LyricLinter {
   static const _tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
 
   static String numberToWords(int n) {
-    if (n < 20) return _smallNums[n];
-    if (n < 100) {
-      final rem = n % 10;
-      return _tens[n ~/ 10] + (rem != 0 ? '-${_smallNums[rem]}' : '');
+    String belowThousand(int value) {
+      if (value < 20) return _smallNums[value];
+      if (value < 100) {
+        final rem = value % 10;
+        return _tens[value ~/ 10] + (rem != 0 ? '-${_smallNums[rem]}' : '');
+      }
+      final rem = value % 100;
+      return '${_smallNums[value ~/ 100]} hundred'
+          '${rem != 0 ? ' ${belowThousand(rem)}' : ''}';
     }
-    if (n < 1000) {
-      final rem = n % 100;
-      return '${_smallNums[n ~/ 100]} hundred${rem != 0 ? ' ${numberToWords(rem)}' : ''}';
+
+    const scales = [
+      '',
+      'thousand',
+      'million',
+      'billion',
+      'trillion',
+      'quadrillion',
+      'quintillion',
+    ];
+
+    final raw = n.toString();
+    final negative = raw.startsWith('-');
+    final digits = negative ? raw.substring(1) : raw;
+    final parts = <String>[];
+    var end = digits.length;
+    var scale = 0;
+    while (end > 0) {
+      final start = end > 3 ? end - 3 : 0;
+      final value = int.parse(digits.substring(start, end));
+      if (value != 0) {
+        final suffix = scales[scale];
+        parts.insert(
+          0,
+          '${belowThousand(value)}${suffix.isEmpty ? '' : ' $suffix'}',
+        );
+      }
+      end = start;
+      scale++;
     }
-    return '$n';
+    final words = parts.isEmpty ? 'zero' : parts.join(' ');
+    return negative ? 'minus $words' : words;
   }
 
   static String normalizeLyrics(String text) {
-    var out = text;
+    String normalizeText(String value) {
+      var out = value
+          .replaceAll('\u201c', '"')
+          .replaceAll('\u201d', '"')
+          .replaceAll('\u2018', "'")
+          .replaceAll('\u2019', "'")
+          .replaceAll('\u2014', '-')
+          .replaceAll('\u2013', '-')
+          .replaceAll('\u2026', '...');
 
-    out = out
-        .replaceAll('\u201c', '')
-        .replaceAll('\u201d', '')
-        .replaceAll('\u2018', "'")
-        .replaceAll('\u2019', "'")
-        .replaceAll('\u2014', '-')
-        .replaceAll('\u2013', '-')
-        .replaceAll('\u2026', '');
+      EngineConfig.expandSymbols.forEach((sym, word) {
+        out = out.replaceAll(sym, ' $word ');
+      });
 
-    EngineConfig.expandSymbols.forEach((sym, word) {
-      out = out.replaceAll(sym, ' $word ');
-    });
+      EngineConfig.expandAbbreviations.forEach((abbr, word) {
+        final escaped = RegExp.escape(abbr);
+        out = out.replaceAllMapped(
+          RegExp(
+            r'(?<![\p{L}\p{M}\p{N}_])' + escaped + r'(?![\p{L}\p{M}\p{N}_])',
+            caseSensitive: false,
+            unicode: true,
+          ),
+          (_) => word,
+        );
+      });
 
-    EngineConfig.expandAbbreviations.forEach((abbr, word) {
-      final escaped = RegExp.escape(abbr);
+      // Skip decimals, times, and grouped numbers so "3.14" or "1,000"
+      // are not corrupted into "three.fourteen" / "one,zero zero zero".
       out = out.replaceAllMapped(
-        RegExp(r'\b' + escaped, caseSensitive: false),
-        (_) => word,
+        RegExp(
+          r'(?<![\p{L}\p{M}\p{N}_.,:/+\-])'
+          r'-?\d+'
+          r'(?![\p{L}\p{M}\p{N}_:/]|[.,]\d)',
+          unicode: true,
+        ),
+        (m) {
+          final value = int.tryParse(m.group(0)!);
+          return value == null ? m.group(0)! : numberToWords(value);
+        },
       );
-    });
 
-    out = out.split('\n').map((line) {
-      if (line.trimLeft().startsWith('[')) return line;
-      return line.replaceAllMapped(
-        RegExp(r'\b\d{1,3}\b'),
-        (m) => numberToWords(int.parse(m.group(0)!)),
-      );
+      return out.replaceAll(RegExp(r'[ \t]{2,}'), ' ');
+    }
+
+    // Bracketed staging tags are protected: their contents pass through
+    // verbatim (bar counts, modifiers) — only sung text is normalized.
+    final bracketRe = RegExp(r'\[[^\]\r\n]*\]');
+    return text.split('\n').map((line) {
+      final buffer = StringBuffer();
+      var cursor = 0;
+      for (final match in bracketRe.allMatches(line)) {
+        buffer.write(normalizeText(line.substring(cursor, match.start)));
+        buffer.write(match.group(0)!);
+        cursor = match.end;
+      }
+      buffer.write(normalizeText(line.substring(cursor)));
+      return buffer.toString();
     }).join('\n');
-
-    out = out.replaceAll(RegExp(r'[ \t]{2,}'), ' ');
-    return out;
   }
 
   static int countSyllables(String word) {
-    final w = word.toLowerCase().replaceAll(RegExp(r'[^a-z]'), '');
-    if (w.isEmpty) return 0;
-    if (w.length <= 3) return 1;
-    var s = w
-        .replaceAll(RegExp(r'(?:[^laeiouy]es|ed|[^laeiouy]e)$'), '')
-        .replaceAll(RegExp(r'^y'), '');
-    final groups = RegExp(r'[aeiouy]{1,2}').allMatches(s).length;
-    return groups > 0 ? groups : 1;
+    final tokens = word.toLowerCase().split(RegExp(r'[-‐-—]'));
+    var total = 0;
+    for (final token in tokens) {
+      final w = token.replaceAll(RegExp(r'[^a-z]'), '');
+      if (w.isEmpty) continue;
+      if (w.length <= 3) {
+        total++;
+        continue;
+      }
+      var count = RegExp(r'[aeiouy]+').allMatches(w).length;
+      if (w.startsWith('y') && RegExp(r'^y[aeiou]').hasMatch(w)) count--;
+      if (w.endsWith('ed')) {
+        if (!RegExp(r'[td]ed$').hasMatch(w) &&
+            RegExp(r'[^aeiouy]ed$').hasMatch(w)) {
+          count--;
+        }
+      } else if (w.endsWith('es')) {
+        if (!RegExp(r'(?:[sxz]|[cs]h|[cg]|[^aeiouy]l)es$').hasMatch(w)) {
+          count--;
+        }
+      } else if (w.endsWith('e') &&
+          !RegExp(r'[^aeiouy]le$').hasMatch(w) &&
+          !RegExp(r'[aeiouy]e$').hasMatch(w)) {
+        count--;
+      }
+      total += count > 0 ? count : 1;
+    }
+    return total;
   }
 
   static int lineSyllables(String line) => line
@@ -99,6 +176,12 @@ class LyricLinter {
     final issues = <LintIssue>[];
     final lines = text.split('\n');
     final bracketRe = RegExp(r'^\[.+\]$');
+    final sectionRe = RegExp(
+      r'^\[(?:intro|outro|verse|(?:pre[- ]?|post[- ]?)chorus|'
+      r'chorus|bridge|hook|refrain|breakdown|break|interlude|'
+      r'instrumental|solo|drop|build(?:[- ]?up)?|end)\b',
+      caseSensitive: false,
+    );
     final elongationRe = RegExp(r'([a-z])\1{2,}', caseSensitive: false);
 
     var consecutiveLyricLines = 0;
@@ -111,27 +194,34 @@ class LyricLinter {
       final line = lines[i].trim();
 
       if (bracketRe.hasMatch(line)) {
-        sawAnyBracket = true;
-        consecutiveLyricLines = 0;
-
         if (line.toLowerCase() == '[end]') sawEndTag = true;
 
-        if (lastBracketWasEmpty && lastBracketLine >= 0) {
-          final prev = lines[lastBracketLine].trim().toLowerCase();
-          final exempt = prev == '[intro]' ||
-              prev == '[outro]' ||
-              prev == '[end]' ||
-              prev.contains('instrumental');
-          if (!exempt) {
-            issues.add(LintIssue(
-              line: lastBracketLine,
-              severity: LintSeverity.warning,
-              code: 'EMPTY_SECTION',
-              message:
-                  "Empty section causes hallucinated ad-libs ('yeah', 'oh'). Add lyrics or change to [Instrumental Break].",
-              fix: '[Instrumental Break]',
-            ));
+        // Only true section headers open/close lyric sections — staging and
+        // performance tags ([warm whisper], [crowd chant]) must not.
+        if (sectionRe.hasMatch(line)) {
+          sawAnyBracket = true;
+          consecutiveLyricLines = 0;
+
+          if (lastBracketWasEmpty && lastBracketLine >= 0) {
+            final prev = lines[lastBracketLine].trim().toLowerCase();
+            final exempt = prev == '[intro]' ||
+                prev == '[outro]' ||
+                prev == '[end]' ||
+                prev.contains('instrumental');
+            if (!exempt) {
+              issues.add(LintIssue(
+                line: lastBracketLine,
+                severity: LintSeverity.warning,
+                code: 'EMPTY_SECTION',
+                message:
+                    "Empty section causes hallucinated ad-libs ('yeah', 'oh'). Add lyrics or change to [Instrumental Break].",
+                fix: '[Instrumental Break]',
+              ));
+            }
           }
+
+          lastBracketLine = i;
+          lastBracketWasEmpty = true;
         }
 
         final modMatch = RegExp(r'^\[[^\-\]]+-\s*(.+)\]$').firstMatch(line);
@@ -148,13 +238,17 @@ class LyricLinter {
           }
         }
 
-        lastBracketLine = i;
-        lastBracketWasEmpty = true;
         continue;
       }
 
-      if (line.isEmpty) continue;
+      if (line.isEmpty) {
+        // A blank line satisfies the LONG_RUN "insert a break" guidance.
+        consecutiveLyricLines = 0;
+        continue;
+      }
       lastBracketWasEmpty = false;
+      // Lyrics after [End] are unreachable — re-arm the missing-end check.
+      sawEndTag = false;
 
       if (!sawAnyBracket) {
         issues.add(LintIssue(

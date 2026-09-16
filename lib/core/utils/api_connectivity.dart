@@ -143,7 +143,7 @@ Future<MusicDirectorConnectionTestResult> runMusicDirectorConnectionTest(
     await dio.post<Map<String, dynamic>>(
       ApiPaths.generatePrompt,
       data: {
-        'suno_version': 'v5.0',
+        'suno_version': 'v6',
         'primary_genre': 'test',
         'vibe': 'test',
       },

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphor_icons/phosphor_icons.dart';
 
 import 'package:music_director/features/prompt_generator/widgets/common/collapsible_panel.dart';
 import 'package:music_director/features/prompt_generator/widgets/common/workflow_step_label.dart';
@@ -36,7 +36,7 @@ class SongBriefWorkflowCard extends ConsumerWidget {
         const SizedBox(height: 12),
         CollapsiblePanel(
           title: 'Song details',
-          subtitle: '3–5 · Language · structure · lyrics',
+          subtitle: '3–5 · Language · structure · lyrics box',
           icon: PhosphorIconsRegular.notebook,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -59,8 +59,8 @@ class SongBriefWorkflowCard extends ConsumerWidget {
               const SizedBox(height: 20),
               const WorkflowStepLabel(
                 step: 5,
-                title: 'Write lyrics',
-                subtitle: 'Theme + optional Advanced songwriter, then review.',
+                title: 'Lyrics box',
+                subtitle: 'Paste or write your own lyrics, or run Advanced songwriter.',
               ),
               const SizedBox(height: 12),
               const LyricsSection(compact: true),

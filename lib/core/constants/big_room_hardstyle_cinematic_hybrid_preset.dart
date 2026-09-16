@@ -1,5 +1,6 @@
 import '../../data/models/user_input_model.dart';
 import 'big_room_hardstyle_cinematic_hybrid_engine.dart';
+import 'suno_version.dart';
 
 /// Quick-start preset — Pure Mainstage Euphoric & Raw Hardstyle with dynamic parameters.
 ///
@@ -32,7 +33,7 @@ class BigRoomHardstyleCinematicHybridPreset {
 
   /// Baseline fallback template settings.
   static const templateModel = UserInputModel(
-    sunoVersion: 'v5.5',
+    sunoVersion: SunoVersion.preferredValue,
     primaryGenre: primaryGenre,
     subGenreFusion: subGenreFusion,
     vibe: _vibeSeed,
@@ -114,7 +115,7 @@ COMPACT LYRIC TEMPLATE (MANDATORY Hardstyle Arrangement Boundaries — Replicate
 
   /// Factory constructor providing absolute structural runtime customization.
   static UserInputModel userInputModel({
-    String sunoVersion = 'v5.5',
+    String sunoVersion = SunoVersion.preferredValue,
     String songStructurePresetId = 'edm_drop',
     String keyRoot = 'F#',
     String scale = 'Minor',

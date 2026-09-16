@@ -88,6 +88,15 @@ class Stage2ModelRouter {
           ? ApiConstants.openRouterLightChatModel
           : ApiConstants.laozhangLightChatModel;
     }
+    // Pidgin drafts must go to GPT-6 Astra on LaoZhang (design: Astra owns
+    // multilingual/Pidgin draft + humanization; Claude owns English polish).
+    // The regional map above predates that split and would send Pidgin
+    // drafts to Claude.
+    if (!useOpenRouter &&
+        (classification.routingKey == RoutingKeys.genAfricanPidgin ||
+            classification.pidginSubVariant != null)) {
+      return ApiConstants.laozhangPromptChatModel;
+    }
     return _slugForModelKey(
       pickModelKey(classification),
       useOpenRouter: useOpenRouter,
@@ -137,7 +146,7 @@ class Stage2ModelRouter {
       case ModelKeys.claudeSonnet:
         return ApiConstants.laozhangLyricsPrimaryChatModel;
       case ModelKeys.gpt5:
-        return ApiConstants.laozhangPromptChatModel;
+        return ApiConstants.laozhangEnglishDraftChatModel;
       case ModelKeys.glm:
       case ModelKeys.mistral:
         return ApiConstants.laozhangPromptChatModel;

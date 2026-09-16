@@ -31,9 +31,9 @@ Use these as the **left side** of a section tag (optional number / Final / varia
 | End | `[End]` — **required** terminator for Block 2 |
 
 **Version density** (how rich the right-side staging text is) is owned by ARRANGEMENT STAGING FORMAT:
-- **v4.5** — minimal section names
-- **v5.0** — hybrid (`[Chorus: Wide Vocal Stack]`)
-- **v5.5** — rich director notes (still stem-whitelisted)
+- **v6-mini / legacy v4.5** — minimal or hybrid (mini = one descriptor; v4.5 = section names)
+- **legacy v5.0** — hybrid (`[Chorus: Wide Vocal Stack]`)
+- **v6 / v6-wild / legacy v5.5** — rich director notes (still stem-whitelisted; wild = exploratory texture)
 
 ---
 

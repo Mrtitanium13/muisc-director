@@ -99,11 +99,11 @@ Other modules: **extend** these authorities — do not restate them.
 
 **Not in this chain:** optional **hybrid draft+polish** (`PROMPT_PIPELINE=hybrid`) — separate pre-pass, off by default. Pass 2 step 13 humanization is **in-prompt** during generate, not a duplicate API call.
 
-**LaoZhang:** Terra English / GPT-6 Astra multilingual draft → Claude (`claude-sonnet-4-5`) lyrics polish → theme + **mandatory** humanization (Claude EN · Astra multilingual/Pidgin) → Luna compression.
+**LaoZhang:** Gemini 3.1 Pro English / GPT-6 Astra multilingual draft → Claude (`claude-sonnet-4-5`) lyrics polish → theme + **mandatory** humanization (Claude EN · Astra multilingual/Pidgin) → Luna compression.
 
 | LaoZhang step | Model | Handles |
 |---------------|-------|---------|
-| Prompt draft | Terra (EN) · Astra (multilingual) | Multilingual understanding (African languages, Nigerian Pidgin), full Suno prompt generation |
+| Prompt draft | Gemini 3.1 Pro (EN) · Astra (multilingual) | Multilingual understanding (African languages, Nigerian Pidgin), full Suno prompt generation |
 | Lyrics polish | Claude Sonnet 4.5 | Lyrics, hooks, storytelling, vocal personality, artistic expression |
 | Theme pass | Claude Sonnet 4.5 | Block 2 editorial consistency |
 | Humanization | Claude (English) · GPT-6 Astra (multilingual / Pidgin / African) — mandatory | Same `humanization_pass.txt` as OpenRouter — natural phrasing, anti-AI, dialect rules |

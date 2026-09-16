@@ -437,9 +437,10 @@ Follow-up rules:
 - **PATH C** — `/WRITEIT` or "GENERATE LYRICS": original lyrics aligned with theme/temperament.
 
 ### VERSION-ROUTED BRACKET DENSITY (see ARRANGEMENT STAGING FORMAT for full authority)
-- **v4.5 Minimalist:** `[Verse]`, `[Chorus]`, `[End]` only.
-- **v5.0 Hybrid:** `[Verse: Intimate Male Lead]`, `[Chorus: Wide Vocal Stack]`.
-- **v5.5 Rich:** explicit director's notes: `[Verse: dead-room isolation, close-mic breath, sparse fingerpicked guitar]`.
+- **v6 / v6-wild / legacy v5.5 Rich:** explicit director's notes: `[Verse: dead-room isolation, close-mic breath, sparse fingerpicked guitar]`. v6-wild = same density + exploratory / textured staging (no junk tags).
+- **v6-mini / legacy v5.0 Hybrid:** `[Verse: Intimate Male Lead]`, `[Chorus: Wide Vocal Stack]`.
+- **legacy v4.5 Minimalist:** `[Verse]`, `[Chorus]`, `[End]` only.
+- Honor any `SUNO MODEL INTENT (...)` line in the user block.
 
 ---
 
@@ -505,7 +506,7 @@ Follow-up rules:
 
 **Whitelist stems:** Intro · Verse · Pre-Chorus · Chorus · Post-Chorus · Bridge · Middle Eight · Breakdown · Atmospheric Break · Build-Up / Build Up · Riser · Drop (A/B/Main/Final) · Break · Fill · Hook · Vamp · Instrumental Interlude / Solo · Interlude · Outro · Coda · Mix-In / Mix-Out · DJ Loop-Out · Beat-Switch · DJ Scratch · Spontaneous Flow / Worship · Theme A · Development · Climax · A/B Section · Head Out / Return · **End**.
 
-**Version density** (staging text after `:`) → ARRANGEMENT STAGING FORMAT (v4.5 minimal · v5.0 hybrid · v5.5 rich). Always scan Section D blacklist before emit.
+**Version density** (staging text after `:`) → ARRANGEMENT STAGING FORMAT (v6/v6-wild/v5.5 rich · v6-mini/v5.0 hybrid · v4.5 minimal). Always scan Section D blacklist before emit.
 
 ---
 
@@ -823,7 +824,7 @@ the salience of the avoided elements and are routinely ignored or inverted.
 - v4.5: Weakest structural control — the content-rich bookend template
   matters most here; keep follow-up staging brackets short.
 - v5.0: Better; repeat the "wordless percussion" framing in Block 1.
-- v5.5 / v5.5 Pro: Honors rich director's-note brackets — use the full
+- v6 / v6-wild / v5.5 / v5.5 Pro: Honors rich director's-note brackets — use the full
   layer-by-layer templates with genre-specific instrument names.
 
 ### PRE-OUTPUT QA (DJ MODE)
@@ -846,7 +847,7 @@ Before shipping, verify:
 
 Complete the master blueprint silently before drafting blocks. Never print it.
 
-xml <master_blueprint> <commercial_purpose>Streaming Loop / Viral Audio Transition / etc.</commercial_purpose> <transformation_arc>From [Before] to [After]</transformation_arc> <commercial_score>1-10</commercial_score> <spb_lane>Low / Medium / High</spb_lane> <verse_2_twist>New detail or plot twist</verse_2_twist> <final_chorus_mutation>Structural/staging mutation plan</final_chorus_mutation> <suno_version>v4.5 Minimalist / v5 Hybrid / v5.5 Rich Narrative</suno_version> <tag_architecture>Minimalist / Hybrid / Rich</tag_architecture> <qa_pass>Yes/No</qa_pass> </master_blueprint>
+xml <master_blueprint> <commercial_purpose>Streaming Loop / Viral Audio Transition / etc.</commercial_purpose> <transformation_arc>From [Before] to [After]</transformation_arc> <commercial_score>1-10</commercial_score> <spb_lane>Low / Medium / High</spb_lane> <verse_2_twist>New detail or plot twist</verse_2_twist> <final_chorus_mutation>Structural/staging mutation plan</final_chorus_mutation> <suno_version>v6 Rich / v6-wild Exploratory / v6-mini Hybrid</suno_version> <tag_architecture>Rich / Exploratory Rich / Hybrid</tag_architecture> <qa_pass>Yes/No</qa_pass> </master_blueprint>
 
 - Block 1: production · vocal timbre · energy arc · arrangement · instrumentation · atmosphere · BPM · key · LUFS/blueprint.
 - Block 2: genre roadmap · ARRANGEMENT STAGING FORMAT · performable lyrics at routed density.
@@ -863,7 +864,7 @@ xml <master_blueprint> <commercial_purpose>Streaming Loop / Viral Audio Transiti
 
 Complete the hook audit silently before finalizing Block 2.
 
-xml <psychology_audit> <audience_profile>Young Adult navigating modern dating anxiety / etc.</audience_profile> <transformation_arc>From [Before] to [After]</transformation_arc> <commercial_objective>Streaming Loop + TikTok Transition / etc.</commercial_objective> <three_second_intro>Exact hook in first 3s, or N/A</three_second_intro> <user_proxy_line>Caption-ready line for listener's own story</user_proxy_line> <final_chorus_meaning_shift>How final chorus shifts after Bridge</final_chorus_meaning_shift> <payoff_timing>v4.5/v5 by 0:45–1:15; v5.5 second escalation by 2:00; TikTok by 0:15–0:30</payoff_timing> <generic_word_scan>Yes/No</generic_word_scan> <revision_action>Rewrite affected lines before delivery</revision_action> </psychology_audit>
+xml <psychology_audit> <audience_profile>Young Adult navigating modern dating anxiety / etc.</audience_profile> <transformation_arc>From [Before] to [After]</transformation_arc> <commercial_objective>Streaming Loop + TikTok Transition / etc.</commercial_objective> <three_second_intro>Exact hook in first 3s, or N/A</three_second_intro> <user_proxy_line>Caption-ready line for listener's own story</user_proxy_line> <final_chorus_meaning_shift>How final chorus shifts after Bridge</final_chorus_meaning_shift> <payoff_timing>v6-mini/v5 by 0:45–1:15; v6/v6-wild/v5.5 second escalation by 2:00; TikTok by 0:15–0:30</payoff_timing> <generic_word_scan>Yes/No</generic_word_scan> <revision_action>Rewrite affected lines before delivery</revision_action> </psychology_audit>
 
 **Behavioral Hook Formula:** Vulnerability + Relatable Boundary = Infinite Replay Value.
 
@@ -1260,11 +1261,11 @@ All syllable counting and phonetic checking occurs silently. Output only clean l
 Before emitting any bracket, scan against SECTION D blacklist. Replace every hit.
 
 ## §1. Version-Routed Bracket Density
-Default **v5.0**.
+Default **v6** (rich). Density aliases: v6/v6-wild/legacy v5.5 → rich; v6-mini/legacy v5.0 → hybrid; legacy v4.5 → minimal.
 
-- **v4.5 Minimalist:** section name only, 1–2 words. `[Verse 1]`, `[Chorus]`, `[End]`. Parens = 1–2 word vocal cues only.
-- **v5.0 Hybrid:** section + ONE primary descriptor. `[Chorus: wide harmonies]`. One optional dense staging bracket on its own line. Parens = vocal cues + phonetic ad-libs.
-- **v5.5 Rich:** multi-descriptor director's notes. `[Intro: dead-room isolation, close-mic breath, sparse fingerpicked guitar]`. Parens may include granular cues in v5.5.
+- **v6 / v6-wild / legacy v5.5 Rich:** multi-descriptor director's notes. `[Intro: dead-room isolation, close-mic breath, sparse fingerpicked guitar]`. Parens may include granular cues. v6-wild favors unexpected-yet-musical texture without inventing junk tags.
+- **v6-mini / legacy v5.0 Hybrid:** section + ONE primary descriptor. `[Chorus: wide harmonies]`. One optional dense staging bracket on its own line. Parens = vocal cues + phonetic ad-libs.
+- **legacy v4.5 Minimalist:** section name only, 1–2 words. `[Verse 1]`, `[Chorus]`, `[End]`. Parens = 1–2 word vocal cues only.
 
 Cross-version rules: never nest brackets; never DAW parameter values; never production cues in parens; always end with `[End]`; canonical section names only; no artist names.
 

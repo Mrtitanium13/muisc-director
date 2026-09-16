@@ -358,7 +358,8 @@ class _GenreMapping {
   });
 }
 
-/// Order matters: the first matching mapping wins.
+/// Resolution is longest-keyword-match (see [clichePackKeyFor]); list order
+/// only breaks ties between keywords of equal length.
 final List<_GenreMapping> _genreMappings = [
   _GenreMapping('worship_gospel', _normAll(['gospel', 'worship', 'ccm', 'praise', 'hymn'])),
   _GenreMapping(
@@ -439,7 +440,19 @@ final List<_GenreMapping> _genreMappings = [
   ),
   _GenreMapping(
     'edm_vocal',
-    _normAll(['edm', 'house', 'techno', 'trance', 'dubstep', 'future bass']),
+    _normAll([
+      'edm',
+      'house',
+      'techno',
+      'trance',
+      'dubstep',
+      'future bass',
+      'amapiano',
+      'gqom',
+      'uk garage',
+      'ukg',
+      'afrohouse',
+    ]),
   ),
 ];
 
@@ -447,17 +460,31 @@ List<String> _normAll(List<String> keywords) =>
     keywords.map(normalizeClicheGenre).toList(growable: false);
 
 /// Returns the cliché pack key for [genre], or `null` if no pack applies.
+///
+/// Canonical pack keys resolve directly; otherwise the most specific
+/// (longest) matching keyword wins so e.g. "latin pop" resolves to the
+/// latin_pop pack rather than the broader pop match.
 String? clichePackKeyFor(String genre) {
   final g = normalizeClicheGenre(genre);
+  for (final entry in kClichePacks.entries) {
+    if (g == normalizeClicheGenre(entry.key)) return entry.key;
+  }
+
+  String? bestKey;
+  var bestLength = -1;
   for (final mapping in _genreMappings) {
-    if (!_containsAny(g, mapping.keywords)) continue;
     if (mapping.alsoRequires != null &&
         !_containsAny(g, mapping.alsoRequires!)) {
       continue;
     }
-    return mapping.packKey;
+    for (final keyword in mapping.keywords) {
+      if (!_hasPhrase(g, keyword)) continue;
+      if (keyword.length <= bestLength) continue;
+      bestLength = keyword.length;
+      bestKey = mapping.packKey;
+    }
   }
-  return null;
+  return bestKey;
 }
 
 /// Returns the phrase set for [genre], or `null` if no pack applies.

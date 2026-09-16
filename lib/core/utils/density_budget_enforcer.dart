@@ -1,3 +1,5 @@
+import '../constants/suno_version.dart';
+
 /// Enforces the 30% structural-density budget on rendered bracket lines.
 class DensityBudgetEnforcer {
   DensityBudgetEnforcer._();
@@ -8,13 +10,14 @@ class DensityBudgetEnforcer {
   static String enforce({
     required String renderedSections,
     required int cap,
-    String sunoVersion = 'v5.5',
+    String sunoVersion = SunoVersion.preferredValue,
   }) {
     if (cap <= 0) {
       return renderedSections.split('\n').map(_stripAllStaging).join('\n');
     }
 
-    final perBracketCap = sunoVersion.trim().toLowerCase().startsWith('v5.5')
+    final key = SunoVersion.densityKeyFor(sunoVersion);
+    final perBracketCap = key == 'v5.5'
         ? v55PerBracketCap
         : v5PerBracketCap;
 

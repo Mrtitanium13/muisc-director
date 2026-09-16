@@ -29,8 +29,8 @@ Test: open `http://localhost:8080/health`
 3. **Variables (LaoZhang default)**:
    - `OPENAI_API_KEY` — **required** for `/generate-prompt` and Gemini `/analyze`. Use a key from [api.laozhang.ai/token](https://api.laozhang.ai/token).
    - `OPENAI_BASE_URL` — optional; defaults to `https://api.laozhang.ai/v1` when unset.
-   - `PROMPT_PIPELINE` — `hybrid` (default on LaoZhang lyrics: GPT-6 Astra / Terra draft → Claude lyrics + expression), `two_pass` / `architect` (Pass 1 JSON blueprint → Pass 2 Block 1/2), or `single` (one model).
-   - `PROMPT_VISION_MODEL` / `PROMPT_DRAFT_MODEL` — overrides; defaults are Terra English (`gpt-5.6-terra`) and Astra multilingual (`gpt-6-astra`).
+   - `PROMPT_PIPELINE` — `hybrid` (default on LaoZhang lyrics: GPT-6 Astra / Gemini 3.1 Pro draft → Claude lyrics + expression), `two_pass` / `architect` (Pass 1 JSON blueprint → Pass 2 Block 1/2), or `single` (one model).
+   - `PROMPT_VISION_MODEL` / `PROMPT_DRAFT_MODEL` — overrides; defaults are Gemini 3.1 Pro English (`gemini-3.1-pro-preview`) and Astra multilingual (`gpt-6-astra`).
    - `PROMPT_LYRICS_MODEL` / `PROMPT_POLISH_MODEL` — LaoZhang lyrics + artistic expression default `claude-sonnet-4-5`.
    - `PROMPT_LYRICS_FALLBACK_MODEL` — last-resort fallback `gemini-2.5-pro`.
    - `HUMANIZATION_PASS=true` — mandatory for lyrics quality (Claude for English · GPT-6 Astra for multilingual/Pidgin).

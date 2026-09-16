@@ -21,7 +21,7 @@ import '../utils/suno_block2_opt_out.dart';
 /// ## Recommended production architecture (summary)
 ///
 /// **Tier 1 — Primary generation (LaoZhang)**  
-/// Hybrid default: Terra English draft / Astra multilingual → Claude lyrics polish → Astra/Claude humanization.  
+/// Hybrid default: Gemini 3.1 Pro English draft / Astra multilingual → Claude lyrics polish → Astra/Claude humanization.  
 /// Use: full prompts, lyrics + structure (Block 2), BEASTMODE, fusion/remix,
 /// analyzer-heavy user blocks, DJ constraints, v5.0 / v5.5 tiers.
 ///
@@ -65,8 +65,11 @@ class ApiConstants {
   /// LaoZhang Gemini (server `/analyze` + lightweight prompt tier).
   static const String laozhangGeminiFlashModel = 'gemini-2.5-flash';
 
-  /// LaoZhang primary Suno prompt model (large context for ~150k-char system prompt).
+  /// LaoZhang style-only / lyrics fallback (stable 2.5 Pro).
   static const String laozhangGeminiProModel = 'gemini-2.5-pro';
+
+  /// LaoZhang Gemini 3.1 Pro — English Suno structure draft.
+  static const String laozhangGemini31ProModel = 'gemini-3.1-pro-preview';
 
   // ── OpenRouter (OpenAI-compatible, optional) ───────────────────────
   static const String openRouterChatCompletions =
@@ -107,7 +110,7 @@ class ApiConstants {
   /// LaoZhang GPT-5.6 Sol — songwriter creative fallback.
   static const String laozhangGpt56SolModel = 'gpt-5.6-sol';
 
-  /// LaoZhang GPT-5.6 Terra — English Suno structure draft.
+  /// LaoZhang GPT-5.6 Terra — songwriter structure/select (not the Suno English draft).
   static const String laozhangGpt56TerraModel = 'gpt-5.6-terra';
 
   /// LaoZhang GPT-5.6 Luna — mechanical compression / light stages.
@@ -122,8 +125,8 @@ class ApiConstants {
   /// Alias — multilingual frontier draft model.
   static const String laozhangVisionChatModel = laozhangPromptChatModel;
 
-  /// English production draft (Terra).
-  static const String laozhangEnglishDraftChatModel = laozhangGpt56TerraModel;
+  /// English production draft (Gemini 3.1 Pro).
+  static const String laozhangEnglishDraftChatModel = laozhangGemini31ProModel;
 
   static const String laozhangLyricsPrimaryChatModel = laozhangClaudeSonnet45Model;
 
@@ -423,7 +426,7 @@ class ApiConstants {
               ? laozhangLyricsSecondaryChatModel
               : laozhangStyleOnlyChatModel);
 
-  /// LaoZhang: Terra English draft · Astra multilingual · Claude polish · Luna compression · Flash light.
+  /// LaoZhang: Gemini 3.1 Pro English draft · Astra multilingual · Claude polish · Luna compression · Flash light.
   static String laozhangChatModelForPrompt({
     required String language,
     required bool lightweight,

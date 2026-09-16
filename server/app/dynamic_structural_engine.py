@@ -18,6 +18,8 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Callable, List, Optional
 
+from app.suno_version import PREFERRED, density_key_for, is_rich_density, is_wild_intent
+
 STRUCTURAL_DENSITY_CAP = 0.30
 SUNO_LYRICS_FIELD_CAP = 2500
 STRUCTURAL_PREAMBLE_CAP = int(SUNO_LYRICS_FIELD_CAP * STRUCTURAL_DENSITY_CAP)
@@ -186,11 +188,11 @@ def directive_for(
     inline: bool = False,
 ) -> str:
     staging = staging_note_for(mutation)
-    v = (suno_version or "v5.5").strip().lower()
+    v = density_key_for(suno_version)
     if inline:
         if v == "v4.5":
             return ""
-        if v.startswith("v5.5"):
+        if v == "v5.5":
             return staging
         return staging.split(",", 1)[0].strip()
     if v == "v4.5":
@@ -210,7 +212,7 @@ def inline_staging_for(family: StructuralFamily, suno_version: str) -> str:
 
 def assemble_sections(
     family: StructuralFamily,
-    suno_version: str = "v5.5",
+    suno_version: str = PREFERRED,
     intent: SongIntent = SongIntent.STANDARD,
     include_dj_intro: bool = False,
     include_dj_outro: bool = False,
@@ -257,7 +259,7 @@ def enforce_density_budget(
 def user_block_directive(
     primary_genre: str = "",
     sub_genre_fusion: str = "",
-    suno_version: str = "v5.5",
+    suno_version: str = PREFERRED,
     user_sections: Optional[List[SongSection]] = None,
     commercial_lane: Optional[str] = None,
     intent: SongIntent = SongIntent.STANDARD,
@@ -302,7 +304,7 @@ def user_block_directive(
 def dynamic_structural_user_block(
     primary: str,
     fusion: str = "",
-    suno_version: str = "v5.5",
+    suno_version: str = PREFERRED,
 ) -> str:
     """Backwards-compatible entry used by server/app/main.py."""
     return user_block_directive(
@@ -486,7 +488,7 @@ def _render_section(
     suno_version: str,
     family: Optional[StructuralFamily],
 ) -> str:
-    v = (suno_version or "v5.5").strip().lower()
+    v = density_key_for(suno_version)
     if section.kind == "end":
         return "[End]"
     staging = section.staging_note or _default_staging(section.kind)
@@ -496,7 +498,7 @@ def _render_section(
             staging = inline
     if v == "v4.5":
         return f"[{section.label}]"
-    if v.startswith("v5.5"):
+    if v == "v5.5":
         clean = _sanitise_staging(staging)
         return f"[{section.label}: {clean}]" if clean else f"[{section.label}]"
     first = staging.split(",")[0].strip()
@@ -505,22 +507,29 @@ def _render_section(
 
 
 def _syntax_doc_block(suno_version: str) -> str:
-    v = (suno_version or "v5.5").strip().lower()
-    if v == "v4.5":
+    key = density_key_for(suno_version)
+    raw = (suno_version or PREFERRED).strip().lower()
+    if key == "v4.5":
         return (
             "v4.5 syntax: [Brackets] = section names ONLY (1–2 words). "
             "(Parentheses) = vocal delivery 1–3 words. "
             "NO production cues in brackets — Block 1 prose only."
         )
-    if v.startswith("v5.5"):
+    if key == "v5.5":
+        label = (
+            "v6-wild rich syntax"
+            if is_wild_intent(raw)
+            else ("v6 rich syntax (flagship)" if raw.startswith("v6") else "v5.5 PRO syntax")
+        )
         return (
-            "v5.5 PRO syntax (preferred): [Brackets] = cinematic director's notes "
+            f"{label}: [Brackets] = cinematic director's notes "
             "(multi-descriptor). (Parentheses) = granular vocal/phonetic cues including "
             "(sigh), (chuckles), (trailing off...). Cross-rules: no nested brackets; "
             "no DAW jargon in brackets; always [End]."
         )
+    label = "v6-mini hybrid syntax" if raw.startswith("v6") else "v5 syntax"
     return (
-        "v5 syntax: [Brackets] = section + ONE staging descriptor. "
+        f"{label}: [Brackets] = section + ONE staging descriptor. "
         "(Parentheses) = vocal cues + phonetics + brief ad-libs. "
         "Cross-rules: no nested brackets; no mix notes in parens; always [End]."
     )
@@ -535,10 +544,9 @@ def _emit_directive(
     mutation_hint: str = "",
     folk_no_drop: bool = False,
 ) -> str:
-    v = (suno_version or "v5.5").strip().lower()
     max_arc = (
         "v5.5_max_arc=true (full ~4-min single-pass allowed)"
-        if v.startswith("v5.5")
+        if is_rich_density(suno_version)
         else "v5.5_max_arc=false"
     )
     folk_note = " — STRICTLY NO [Drop] modules." if folk_no_drop else ""

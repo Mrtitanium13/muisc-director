@@ -6,7 +6,7 @@ import 'package:music_director/data/models/suno_field_output_mode.dart';
 import 'package:music_director/features/prompt_generator/providers/prompt_form_providers.dart';
 import 'package:music_director/presentation/providers/app_providers.dart';
 
-/// Keeps FX arrangement tags in [fxLayoutControllerProvider], never in YOUR LYRICS.
+/// Keeps FX arrangement tags in [fxLayoutControllerProvider], never in the Lyrics box.
 void syncFxLayoutPreview(WidgetRef ref, {bool syncProvider = true}) {
   if (ref.read(promptFormProvider).sunoFieldOutputMode ==
       SunoFieldOutputMode.simple) {

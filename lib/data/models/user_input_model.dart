@@ -107,7 +107,8 @@ class UserInputModel {
   /// When preset is `custom`, user-defined section order / notes.
   final String songStructureCustom;
 
-  /// Raw lyrics supplied by the user — when non-empty, generation includes a Suno Lyrics box section.
+  /// Lyrics-box text: write/paste your own lyrics. When non-empty, Generate
+  /// uses Path A (USER LYRICS provided) for Suno Block 2.
   final String optionalLyrics;
 
   /// Set when the form was filled via Audio Analyzer **Remix** (genre flip).

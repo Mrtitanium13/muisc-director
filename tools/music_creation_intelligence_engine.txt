@@ -90,12 +90,14 @@ Complete this structured blueprint **before** drafting Block 1 and Block 2. If `
   <narrative_escalation>What new psychological detail or plot twist does Verse 2 introduce?</narrative_escalation>
   <semantic_mutation_plan>Specify structural/staging mutation for the Final Chorus</semantic_mutation_plan>
   <suno_version_routing>
-    Target: v4.5 | v5 | v5.5 (default to v5.5 unless user explicitly requests legacy)
-    If v5.5 → enable cinematic brackets, aggressive Final Chorus mutation, full 4-min arc.
-    If v5 → standard staging, moderate mutation hooks.
-    If v4.5 → minimal brackets, conservative staging, defer production cues to Block 1.
+    Target: v6 | v6-wild | v6-mini (default to v6 unless user explicitly requests mini/wild)
+    Density aliases: v6/v6-wild/legacy v5.5 → rich; v6-mini/legacy v5 → hybrid; legacy v4.5 → minimal
+    If rich → enable cinematic brackets, aggressive Final Chorus mutation, full 4-min arc.
+    If v6-wild → same rich density + exploratory / textured staging (no junk tags).
+    If hybrid/mini → one staging descriptor; balanced depth.
+    If minimal → minimal brackets, conservative staging, defer production cues to Block 1.
   </suno_version_routing>
-  <suno_tag_architecture>TBD (align with suno_version_routing — v4.5 Minimalist / v5 Hybrid / v5.5 Rich Narrative)</suno_tag_architecture>
+  <suno_tag_architecture>TBD (align with suno_version_routing — v6 Rich / v6-wild Exploratory Rich / v6-mini Hybrid)</suno_tag_architecture>
   <qa_pass>Yes/No (Verify all modules align without internal contradiction)</qa_pass>
 </master_blueprint>
 ```

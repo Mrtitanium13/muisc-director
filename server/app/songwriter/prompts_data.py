@@ -1164,13 +1164,14 @@ SONGWRITER_PROMPTS = {
     }
   },
   "model_routing": {
-    "version": "1.1.0",
-    "description": "Songwriter lyrics engine routing — Astra for humanized lyric stages; Terra/Luna for structure/select; Claude for English craft. Provider slugs are OpenAI-compatible (LaoZhang bare id / OpenRouter vendor/model).",
+    "version": "1.2.0",
+    "description": "Songwriter lyrics engine routing — Astra/Claude for humanized lyric stages; Gemini 3.1 Pro for rhyme/arc/transitions craft; Luna/Gemini 2.5 Pro for select; Claude+Gemini 2.5 Pro for judge. Provider slugs are OpenAI-compatible (LaoZhang bare id / OpenRouter vendor/model).",
     "tiers": {
       "tier1": [
         "gpt-6-astra",
         "gpt-5.6-sol",
         "claude-opus",
+        "gemini-3.1-pro",
         "gemini-2.5-pro"
       ],
       "tier2": [
@@ -1208,6 +1209,10 @@ SONGWRITER_PROMPTS = {
         "laozhang": "claude-sonnet-4-5",
         "openrouter": "anthropic/claude-sonnet-4"
       },
+      "gemini-3.1-pro": {
+        "laozhang": "gemini-3.1-pro-preview",
+        "openrouter": "google/gemini-3.1-pro-preview"
+      },
       "gemini-2.5-pro": {
         "laozhang": "gemini-2.5-pro",
         "openrouter": "google/gemini-2.5-pro"
@@ -1241,7 +1246,7 @@ SONGWRITER_PROMPTS = {
       "gpt-5.6-sol",
       "claude-sonnet",
       "gemini-2.5-pro",
-      "gpt-5.6-terra",
+      "gemini-3.1-pro",
       "qwen"
     ],
     "stage_preferences": {
@@ -1255,11 +1260,11 @@ SONGWRITER_PROMPTS = {
       ],
       "select": [
         "gpt-5.6-luna",
-        "gpt-5.6-terra"
+        "gemini-2.5-pro"
       ],
       "arc": [
         "claude-sonnet",
-        "gpt-5.6-terra"
+        "gemini-3.1-pro"
       ],
       "chorus": [
         "gpt-6-astra",
@@ -1275,10 +1280,10 @@ SONGWRITER_PROMPTS = {
       ],
       "transitions": [
         "claude-sonnet",
-        "gpt-5.6-terra"
+        "gemini-3.1-pro"
       ],
       "rhyme": [
-        "gpt-5.6-terra",
+        "gemini-3.1-pro",
         "deepseek"
       ],
       "anti_ai": [

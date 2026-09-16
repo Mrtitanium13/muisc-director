@@ -13,13 +13,15 @@ OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 # LaoZhang Gemini (large context for ~150k-char Suno system prompt + /analyze)
 LAOZHANG_GEMINI_FLASH = "gemini-2.5-flash"
 LAOZHANG_GEMINI_PRO = "gemini-2.5-pro"
+LAOZHANG_GEMINI_31_PRO = "gemini-3.1-pro-preview"
 
 # LaoZhang capability ladder (cost ↑): Luna → Terra → Sol → GPT-6 Astra
 # Lyrics engine (must be humanized):
 #   Astra  = multilingual draft + multilingual/Pidgin humanization + songwriter lyric stages
 #   Claude = English lyrics polish / theme / English humanization
 #   Sol    = songwriter creative fallback
-#   Terra  = English Suno draft (structure) — not the humanization lane
+#   Gemini 3.1 Pro = English Suno draft (structure) — not the humanization lane
+#   Terra  = songwriter structure/select (legacy)
 #   Luna   = mechanical compression / analyze·select only
 LAOZHANG_GPT_6_ASTRA = "gpt-6-astra"
 LAOZHANG_GPT_56_SOL = "gpt-5.6-sol"
@@ -46,7 +48,7 @@ OPENROUTER_LIGHT_MODEL = "openai/gpt-4o-mini"
 # LaoZhang style-only (Block 2 opt-out): Gemini Pro for full system prompt context
 LAOZHANG_STYLE_ONLY_MODEL = LAOZHANG_GEMINI_PRO
 # English production draft (balanced structure — Claude + Astra humanize lyrics after)
-LAOZHANG_DRAFT_MODEL = LAOZHANG_GPT_56_TERRA
+LAOZHANG_DRAFT_MODEL = LAOZHANG_GEMINI_31_PRO
 # Multilingual / Pidgin draft (Astra)
 LAOZHANG_DRAFT_MULTILINGUAL_MODEL = LAOZHANG_GPT_6_ASTRA
 LAOZHANG_PRIMARY_MODEL = LAOZHANG_DRAFT_MODEL
@@ -203,7 +205,7 @@ def hybrid_prompt_enabled(
     provider: str | None = None,
     lyrics_task: bool = True,
 ) -> bool:
-    """LaoZhang lyrics: Terra/Sol draft → Claude lyrics polish (default). OpenRouter: opt-in."""
+    """LaoZhang lyrics: Gemini 3.1 Pro English / Astra multilingual draft → Claude lyrics polish (default). OpenRouter: opt-in."""
     if lightweight:
         return _truthy("PROMPT_HYBRID_LIGHTWEIGHT")
     mode = prompt_pipeline_mode()
@@ -238,7 +240,7 @@ def _resolve_laozhang_tier_model(
     provider: str | None,
     lyrics_task: bool = True,
 ) -> str:
-    """LaoZhang: Astra multilingual draft · Terra English draft · Gemini Pro style-only · Flash light."""
+    """LaoZhang: Astra multilingual draft · Gemini 3.1 Pro English draft · Gemini 2.5 Pro style-only · Flash light."""
     if lightweight:
         return os.getenv("OPENAI_LIGHT_MODEL", "").strip() or LAOZHANG_LIGHT_MODEL
     if not lyrics_task:

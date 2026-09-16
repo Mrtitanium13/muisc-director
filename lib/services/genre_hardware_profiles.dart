@@ -159,11 +159,16 @@ class GenreHardwareProfiles {
   // ---------------------------------------------------------------------------
 
   static SunoVersion parseVersion(String sunoVersion) {
-    final v = sunoVersion.trim().toLowerCase();
-    if (v == 'v4.5') return SunoVersion.v4_5;
-    if (v.startsWith('v5.5')) return SunoVersion.v5_5;
-    if (v.startsWith('v5')) return SunoVersion.v5;
-    return SunoVersion.preferred;
+    // Map UI + legacy strings onto density-equivalent legacy enums for
+    // compact/full hardware text routing.
+    switch (SunoVersion.densityProfileFor(sunoVersion)) {
+      case SunoDensityProfile.minimal:
+        return SunoVersion.v4_5;
+      case SunoDensityProfile.hybrid:
+        return SunoVersion.v5;
+      case SunoDensityProfile.rich:
+        return SunoVersion.v5_5;
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -250,10 +255,10 @@ class GenreHardwareProfiles {
 
     final list = profiles.isEmpty ? [HardwareProfile.fallback] : profiles;
 
-    return switch (parseVersion(sunoVersion)) {
-      SunoVersion.v4_5 => _compactV45(list),
-      SunoVersion.v5 => _compactV5(list),
-      SunoVersion.v5_5 => _fullV55(list),
+    return switch (SunoVersion.densityProfileFor(sunoVersion)) {
+      SunoDensityProfile.minimal => _compactV45(list),
+      SunoDensityProfile.hybrid => _compactV5(list),
+      SunoDensityProfile.rich => _fullV55(list),
     };
   }
 

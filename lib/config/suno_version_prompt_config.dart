@@ -65,13 +65,25 @@ class SunoPromptVersionConfig {
     if (v.contains('v3.5') || v == 'v3' || v == 'suno_v3.5') {
       return SunoPromptTier.v3_5;
     }
-    if (v.contains('v4.5') || v == 'suno_v4.5') return SunoPromptTier.v4_5Pro;
-    if (v.contains('v5.5') || v.startsWith('v5.5') || v == 'suno_v5.5_pro') {
+    // v6 family (current) + legacy v5.5 → richest tier
+    if (v == 'v6' ||
+        v == 'v6-wild' ||
+        v == 'v6wild' ||
+        v.startsWith('v5.5') ||
+        v == 'suno_v5.5_pro') {
       return SunoPromptTier.v5_5Pro;
     }
-    if (v.contains('v5') || v == 'suno_v5') return SunoPromptTier.v5;
+    // v6-mini + legacy v5 → v5 tier
+    if (v == 'v6-mini' ||
+        v == 'v6mini' ||
+        v.contains('v5') ||
+        v == 'suno_v5') {
+      return SunoPromptTier.v5;
+    }
+    if (v.contains('v4.5') || v == 'suno_v4.5') return SunoPromptTier.v4_5Pro;
     if (v.contains('v4') || v == 'suno_v4') return SunoPromptTier.v4;
-    return SunoPromptTier.v4_5Pro;
+    // Unknown → treat as flagship-rich
+    return SunoPromptTier.v5_5Pro;
   }
 
   static SunoPromptVersionConfig forVersion(String sunoVersion) {

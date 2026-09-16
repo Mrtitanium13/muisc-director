@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import '../../core/constants/suno_version.dart';
+
 class SavedPromptModel {
   SavedPromptModel({
     required this.id,
@@ -29,7 +31,9 @@ class SavedPromptModel {
       createdAt: DateTime.parse(j['createdAt'] as String),
       genreTag: j['genreTag'] as String,
       promptText: j['promptText'] as String,
-      sunoVersion: j['sunoVersion'] as String? ?? 'v5.5',
+      sunoVersion: SunoVersion.migrateToUiValue(
+        j['sunoVersion'] as String? ?? SunoVersion.preferredValue,
+      ),
     );
   }
 

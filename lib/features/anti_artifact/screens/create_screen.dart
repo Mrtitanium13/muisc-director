@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphor_icons/phosphor_icons.dart';
 
 import '../../../config/engine_config.dart';
 import '../../../core/theme/app_colors.dart';
@@ -254,9 +254,19 @@ class _CreateScreenState extends ConsumerState<CreateScreen> {
         .where((w) => !form.dismissedWarnings.contains(w))
         .toList();
     final showSheenTip = visibleWarnings.contains(EngineConfig.v5SheenTip);
-    final maxGenres = EngineConfig.maxGenresByModel[form.modelVersion] ??
+    final maxGenres = EngineConfig.maxGenresByModel[
+            EngineConfig.migrateModelKey(form.modelVersion)] ??
         EngineConfig.maxGenreTokens;
-    final modelProfile = EngineConfig.modelProfiles[form.modelVersion]!;
+    final modelProfile = EngineConfig.profileFor(form.modelVersion);
+    final uiModelVersion = EngineConfig.migrateModelKey(form.modelVersion);
+
+    if (uiModelVersion != form.modelVersion) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ref
+            .read(artifactFormProvider.notifier)
+            .setModelVersion(uiModelVersion);
+      });
+    }
 
     final budgetRatio = output.budgetMax > 0
         ? (output.tokenCount / output.budgetMax).clamp(0.0, 1.5)
@@ -297,12 +307,12 @@ class _CreateScreenState extends ConsumerState<CreateScreen> {
         children: [
           _sectionLabel('Model version'),
           DropdownButtonFormField<String>(
-            initialValue: form.modelVersion,
+            initialValue: uiModelVersion,
             dropdownColor: AppColors.surfaceElevated,
             decoration: _inputDecoration(),
             items: [
-              for (final key in EngineConfig.modelProfiles.keys)
-                DropdownMenuItem(value: key, child: Text(key)),
+              for (final key in EngineConfig.uiModelKeys)
+                DropdownMenuItem(value: key, child: Text(_modelLabel(key))),
             ],
             onChanged: (v) {
               if (v != null) {
@@ -669,6 +679,19 @@ class _CreateScreenState extends ConsumerState<CreateScreen> {
         ],
       ),
     );
+  }
+
+  String _modelLabel(String key) {
+    switch (key) {
+      case 'suno_v6':
+        return 'v6 (flagship)';
+      case 'suno_v6_wild':
+        return 'v6-wild (exploratory)';
+      case 'suno_v6_mini':
+        return 'v6-mini (lean)';
+      default:
+        return key;
+    }
   }
 
   Widget _sectionLabel(String text) => Padding(

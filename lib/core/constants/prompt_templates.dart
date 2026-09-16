@@ -396,7 +396,7 @@ abstract final class PromptTemplates {
     id: 'bracket_edm_structure',
     title: 'Bracketed EDM structure',
     description:
-        'Custom outline: v5.5 EDM bracket example (build/drop); paste-friendly for Suno',
+        'Custom outline: v6 EDM bracket example (build/drop); paste-friendly for Suno',
     model: UserInputModel(
       sunoVersion: SunoVersion.preferredValue,
       primaryGenre: 'Progressive House',

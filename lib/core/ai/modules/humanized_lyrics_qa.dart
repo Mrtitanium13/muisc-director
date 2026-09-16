@@ -33,7 +33,7 @@ class HumanizedLyricsSession {
   @visibleForTesting
   static void reset() => _counts.clear();
 
-  static String _key(String genre) => genre.toLowerCase().trim();
+  static String _key(String genre) => normalizeClicheGenre(genre);
 }
 
 class HumanizedLyricsQaResult {
@@ -180,7 +180,8 @@ class HumanizedLyricsQa {
 
     final hits = <String>[
       for (final phrase in pack.phrases)
-        if (lowerLyrics.contains(phrase)) phrase,
+        if (MeaningfulnessCheck.containsLyricPhrase(lowerLyrics, phrase))
+          phrase,
     ];
 
     if (hits.isEmpty) {
@@ -285,12 +286,13 @@ class HumanizedLyricsQa {
     if (candidate.shouldRegenerate != incumbent.shouldRegenerate) {
       return !candidate.shouldRegenerate;
     }
-    if (candidate.clicheHits.length != incumbent.clicheHits.length) {
-      return candidate.clicheHits.length < incumbent.clicheHits.length;
-    }
-    // Prefer less severe: none (2) > tier2 (1) > tier1 (0).
+    // Severity outranks hit count: one T1 hit is worse than two T2 hits.
+    // Enum order is tier1(0) < tier2(1) < none(2), so higher index = milder.
     if (candidate.severity.index != incumbent.severity.index) {
       return candidate.severity.index > incumbent.severity.index;
+    }
+    if (candidate.clicheHits.length != incumbent.clicheHits.length) {
+      return candidate.clicheHits.length < incumbent.clicheHits.length;
     }
     return candidate.meaningfulnessScore > incumbent.meaningfulnessScore;
   }

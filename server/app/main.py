@@ -72,6 +72,11 @@ from app.payload_optimization import (
 from app.dialect_style import dialect_style_user_block
 from app.vocal_accent import vocal_accent_user_block
 from app.vocal_spec_tone import user_block_directive as vocal_spec_tone_user_block
+from app.suno_version import (
+    PREFERRED as SUNO_VERSION_PREFERRED,
+    density_key_for,
+    model_intent_directive,
+)
 from app.vocal_spec_tone import user_block_line as vocal_spec_tone_user_block_line
 from app.thick_humanized_vocal_presence import thick_humanized_vocal_user_block
 from app.suno_internal_output_strip import strip_internal_cognition_blocks
@@ -112,7 +117,7 @@ def _active_system_prompt() -> str:
 
 
 class GeneratePromptBody(BaseModel):
-    suno_version: str = Field(default="v5.5")
+    suno_version: str = Field(default=SUNO_VERSION_PREFERRED)
     primary_genre: str = ""
     sub_genre_fusion: str = ""
     vibe: str = ""
@@ -259,7 +264,7 @@ def _v2_field_budget_line(
     field_mode: str,
     block2_opt_out: bool,
 ) -> str:
-    _ = (suno_version or "").strip() or "v5.5"
+    _ = (suno_version or "").strip() or SUNO_VERSION_PREFERRED
     fm = _normalize_field_mode(field_mode)
     wmin, wmax = BLOCK1_WORD_MIN, BLOCK1_WORD_MAX
     lc = LYRICS_CHAR_MAX
@@ -306,7 +311,7 @@ def _v2_field_budget_line(
 
 def _suno_style_word_range(suno_version: str) -> tuple[int, int]:
     """Inclusive [min, max] for SUNO STYLE only — aligned with Flutter SunoPromptLimits."""
-    v = (suno_version or "").strip()
+    v = density_key_for(suno_version)
     if v == "v4.5":
         return 80, 150
     if v == "v5.5":
@@ -316,7 +321,7 @@ def _suno_style_word_range(suno_version: str) -> tuple[int, int]:
 
 def _suno_structure_word_range(suno_version: str) -> tuple[int, int]:
     """Inclusive [min, max] for SUNO STRUCTURE — aligned with Flutter structureWordRangeFor."""
-    v = (suno_version or "").strip()
+    v = density_key_for(suno_version)
     if v == "v4.5":
         return 50, 130
     if v == "v5.5":
@@ -377,7 +382,7 @@ def _max_completion_tokens(
 def _word_budget_line(suno_version: str, *, has_user_lyrics: bool) -> str:
     wmin, wmax = _suno_style_word_range(suno_version)
     smin, smax = _suno_structure_word_range(suno_version)
-    v = (suno_version or "").strip() or "v5.5"
+    v = (suno_version or "").strip() or SUNO_VERSION_PREFERRED
     if not has_user_lyrics:
         return (
             f"WORD BUDGET (Suno {v}): Output SUNO STRUCTURE then SUNO STYLE in that order. "
@@ -408,7 +413,7 @@ def _remix_from_analyzer_user_block_supplement(suno_version: str) -> str:
     """Aligned with Flutter SunoPromptLimits.remixFromAnalyzerUserBlockSupplement (legacy v1)."""
     wmin, wmax = _suno_style_word_range(suno_version)
     smin, smax = _suno_structure_word_range(suno_version)
-    v = (suno_version or "").strip() or "v5.5"
+    v = (suno_version or "").strip() or SUNO_VERSION_PREFERRED
     return (
         "REMIX / GENRE-FLIP (from audio analysis): Describe how the source becomes the target "
         "genre in SUNO STYLE only — weave analyzer cues briefly; do not paste or summarize raw "
@@ -421,7 +426,7 @@ def _remix_from_analyzer_user_block_supplement(suno_version: str) -> str:
 
 def _remix_from_analyzer_user_block_supplement_v2(suno_version: str) -> str:
     """Aligned with Flutter SunoPromptLimits.remixFromAnalyzerUserBlockSupplementV2."""
-    v = (suno_version or "").strip() or "v5.5"
+    v = (suno_version or "").strip() or SUNO_VERSION_PREFERRED
     wmin, wmax = BLOCK1_WORD_MIN, BLOCK1_WORD_MAX
     return (
         "REMIX / GENRE-FLIP (from audio analysis): Describe the transformation in "
@@ -446,7 +451,7 @@ def _dj_mix_user_block(b: GeneratePromptBody) -> str:
     return build_dj_mix_user_block(
         dj_intro_mix_in=bool(b.dj_intro_mix_in),
         dj_outro_mix_out=bool(b.dj_outro_mix_out),
-        suno_version=str(b.suno_version or "v5.5"),
+        suno_version=str(b.suno_version or SUNO_VERSION_PREFERRED),
         primary_genre=str(b.primary_genre or ""),
         fusion_genre=str(b.sub_genre_fusion or ""),
         commercial_lane=str(b.genre_fx_lane or ""),
@@ -543,7 +548,7 @@ def _build_user_block(b: GeneratePromptBody) -> str:
             primary_genre=str(b.primary_genre or ""),
             sub_genre_fusion=str(b.sub_genre_fusion or ""),
             codes_blob=str(b.active_modifier_codes or ""),
-            suno_version=str(b.suno_version or "v5.5"),
+            suno_version=str(b.suno_version or SUNO_VERSION_PREFERRED),
             vibe=str(b.vibe or ""),
         )
     from app.suno_dj_mix_directives import primary_genre_with_dj_tool_modifier
@@ -563,6 +568,13 @@ def _build_user_block(b: GeneratePromptBody) -> str:
     lines.extend(
         [
             f"Suno version: {b.suno_version}",
+        ]
+    )
+    intent = model_intent_directive(str(b.suno_version or ""))
+    if intent:
+        lines.append(intent)
+    lines.extend(
+        [
             f"Primary genre: {primary_genre_line}",
             f"Fusion / sub-genre: {b.sub_genre_fusion}",
         ]
@@ -669,7 +681,7 @@ def _build_user_block(b: GeneratePromptBody) -> str:
                     primary_genre=str(b.primary_genre or ""),
                     sub_genre_fusion=str(b.sub_genre_fusion or ""),
                     selection_raw=ri,
-                    suno_version=str(b.suno_version or "v5.5"),
+                    suno_version=str(b.suno_version or SUNO_VERSION_PREFERRED),
                     power_codes=str(b.active_modifier_codes or ""),
                     audio_environment_mode=str(b.audio_environment_mode or ""),
                 )
@@ -761,14 +773,14 @@ def _build_user_block(b: GeneratePromptBody) -> str:
                 dynamic_structural_user_block(
                     str(b.primary_genre or ""),
                     fusion=str(b.sub_genre_fusion or ""),
-                    suno_version=str(b.suno_version or "v5.5"),
+                    suno_version=str(b.suno_version or SUNO_VERSION_PREFERRED),
                 )
             )
             lines.append(
                 drum_matrix_user_block(
                     str(b.primary_genre or ""),
                     fusion=str(b.sub_genre_fusion or ""),
-                    suno_version=str(b.suno_version or "v5.5"),
+                    suno_version=str(b.suno_version or SUNO_VERSION_PREFERRED),
                 )
             )
         hierarchy = lyric_craft_hierarchy_user_block(
